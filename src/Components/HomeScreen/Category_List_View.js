@@ -2,10 +2,16 @@ import React, {useRef} from 'react';
 import {View, Text, Animated, StyleSheet} from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
+import styled from 'styled-components/native';
+
+const List_Item = styled.View`
+  margin: 10px 35px 10px 5px;
+  flex-direction: row;
+  justify-content: space-between;
+`;
 
 const Category_View = ({dataas}) => {
   const swiper = useRef();
-  console.log(dataas);
 
   const MoveTo_List_Action = (text, color, x, progress) => {
     const trans = progress.interpolate({
@@ -56,7 +62,7 @@ const Category_View = ({dataas}) => {
   const renderRightActions = (progress) => (
     <View
       style={{
-        width: 192,
+        width: 193,
         flexDirection: 'row',
       }}>
       {MoveTo_List_Action(<Text>asdf</Text>, '#2fc4b2', 192, progress)}
@@ -74,16 +80,16 @@ const Category_View = ({dataas}) => {
       friction={2}
       rightThreshold={40}
       renderRightActions={renderRightActions}>
-      <View style={styles.item}>
+      <List_Item>
         <Text>{dataas.item.title}</Text>
         <Text>1</Text>
-      </View>
+      </List_Item>
     </Swipeable>
   );
 };
 
 const styles = StyleSheet.create({
-  item: {},
+  item: {marginBottom: 10},
   leftAction: {
     flex: 1,
     backgroundColor: '#497AFC',
