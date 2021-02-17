@@ -10,7 +10,7 @@ const List_Item = styled.View`
   justify-content: space-between;
 `;
 
-const Category_View = ({dataas}) => {
+const Category_View = ({data}) => {
   const swiper = useRef();
 
   const MoveTo_List_Action = (text, color, x, progress) => {
@@ -81,8 +81,7 @@ const Category_View = ({dataas}) => {
       rightThreshold={40}
       renderRightActions={renderRightActions}>
       <List_Item>
-        <Text>{dataas.item.title}</Text>
-        <Text>1</Text>
+        <Text>{data.item.title}</Text>
       </List_Item>
     </Swipeable>
   );

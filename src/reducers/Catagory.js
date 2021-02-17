@@ -1,58 +1,10 @@
 import produce from 'immer';
 
 export const init = {
-  user_book_data_done: false,
-  user_book_data: [],
-
-  user_bokk_basket_done: false,
-  user_book_basket: [],
-
-  user_book_load_data: [],
-
-  selected_Book_Data: [],
-
-  test_data: [],
-  test_remove: false,
-
-  new_test: [],
-
-  bookMarkColor: null,
-
-  book_mark_data_loading: false,
-  book_mark_data_done: false,
-  book_mark_data_error: null,
-
-  book_data_loading: false,
-  book_data_done: false,
-  book_data_error: null,
-
-  basket_data_loading: false,
-  basket_data_done: false,
-  basket_data_error: null,
-
-  move_basket_data_loading: false,
-  move_basket_data_done: false,
-  move_basket_data_error: null,
-
-  serach_book_data_loading: false,
-  serach_book_data_done: false,
-  serach_book_data_error: null,
-  serach_book_data: [],
+  categoryList: [],
 };
 
-export const MY_BOOKLIST_DATA = 'MY_BOOKLIST_DATA';
-
-export const MY_BOOKBASKET_DATA = 'MY_BOOKBASKET_DATA';
-
-export const TEST_DATA_TEST = 'TEST_DATA_TEST';
-export const BOOK_MARK_DATA = 'BOOK_MARK_DATA';
-export const TEST_DATA_TEST_RESET = 'TEST_DATA_TEST_RESET';
-
-export const MY_BOOKLIST_DATA_ADD = 'MY_BOOKLIST_DATA_ADD';
-
-export const SELECT_BOOK_DATA = 'SELECT_BOOK_DATA';
-
-export const BOOK_MARK_COLOR = 'BOOK_MARK_COLOR';
+export const MY_CATEGORY_DATA = 'MY_CATEGORY_DATA';
 
 export const SERACH_BOOK_DATA_REQUEST = 'SERACH_BOOK_DATA_REQUEST';
 export const SERACH_BOOK_DATA_SUCCESS = 'SERACH_BOOK_DATA_SUCCESS';
@@ -78,37 +30,8 @@ export const MOVE_TO_BASKET_ERROR = 'MOVE_TO_BASKET_ERROR';
 const reducer = (state = init, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
-      case BOOK_MARK_COLOR:
-        draft.bookMarkColor = action.data;
-        break;
-
-      case TEST_DATA_TEST:
-        draft.test_data = action.data;
-        break;
-
-      case TEST_DATA_TEST_RESET:
-        draft.test_data = [];
-        break;
-
-      case SELECT_BOOK_DATA:
-        draft.selected_Book_Data = action.data;
-        break;
-
-      case MY_BOOKLIST_DATA:
-        draft.user_book_data_done = true;
-        draft.user_book_data = action.data;
-
-        break;
-
-      case MY_BOOKBASKET_DATA:
-        draft.user_book_basket_done = true;
-        draft.user_book_basket = action.data;
-
-        break;
-
-      case MY_BOOKLIST_DATA_ADD:
-        draft.user_book_load_data = action.data;
-
+      case MY_CATEGORY_DATA:
+        draft.categoryList = action.data;
         break;
 
       ////////////////////////////////////////////

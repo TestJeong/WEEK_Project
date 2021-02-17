@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -9,8 +9,10 @@ import {
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
+import Realm from 'realm';
+import {useSelector} from 'react-redux';
 
-import Category_View from './Category_List_View';
+import Category_List_View from './Category_List_View';
 import Category_Modal_View from './Category_Modal_View';
 
 const TitleText = styled.Text`
@@ -27,27 +29,20 @@ const PlusText = styled.Text`
 `;
 
 const FlatListView = styled.FlatList`
-  background-color: gray;
-  border-radius: 20px;
+  background-color: #bdbfa3;
+  border-radius: 15px;
   padding: 0px 20px;
 `;
 
 const HomeScreen = () => {
+  useEffect(() => {
+    Realm.open({}).then((realm) => {
+      console.log('Realm is located at: ' + realm.path.toString());
+    });
+  }, []);
+
   const [isModalVisible, setModalVisible] = useState(false);
-  const category = [
-    {
-      title: '11번',
-    },
-    {
-      title: '22번',
-    },
-    {
-      title: '33번',
-    },
-    {
-      title: '44번',
-    },
-  ];
+  const {categoryList} = useSelector((state) => state.Catagory);
 
   const opneModal = () => {
     setModalVisible(!isModalVisible);
@@ -66,8 +61,8 @@ const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => '#' + index}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-          data={category}
-          renderItem={(item) => <Category_View dataas={item} />}
+          data={categoryList}
+          renderItem={(item) => <Category_List_View data={item} />}
         />
         <TouchableOpacity onPress={opneModal}>
           <PlusText>카테고리 추가</PlusText>
