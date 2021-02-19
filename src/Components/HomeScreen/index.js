@@ -16,7 +16,7 @@ import Category_List_View from './Category_List_View';
 import Category_Modal_View from './Category_Modal_View';
 
 const TitleText = styled.Text`
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 800;
   margin-bottom: 15px;
 `;
@@ -24,14 +24,30 @@ const TitleText = styled.Text`
 const PlusText = styled.Text`
   font-size: 15px;
   font-weight: 600;
-  color: blue;
   margin-top: 15px;
 `;
 
 const FlatListView = styled.FlatList`
   background-color: #bdbfa3;
   border-radius: 15px;
-  padding: 0px 20px;
+  padding: 0px 0px 0px 20px;
+`;
+
+const Main_Container = styled.View`
+  height: 50%;
+  justify-content: flex-end;
+`;
+
+const Column_View = styled.View`
+  flex-direction: row;
+  height: 30%;
+  justify-content: space-between;
+  margin-bottom: 35px;
+`;
+
+const Column_Btn = styled.TouchableOpacity`
+  width: 45%;
+  border-radius: 15px;
 `;
 
 const HomeScreen = () => {
@@ -53,12 +69,31 @@ const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1, margin: 10}}>
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
+
+      <Main_Container>
+        <TitleText>안녕하세요 미리알림</TitleText>
+        <Column_View>
+          <Column_Btn style={{backgroundColor: 'red'}}>
+            <Text>11</Text>
+          </Column_Btn>
+          <Column_Btn style={{backgroundColor: 'blue'}}>
+            <Text>22</Text>
+          </Column_Btn>
+        </Column_View>
+        <Column_View>
+          <Column_Btn style={{backgroundColor: 'green'}}>
+            <Text>33</Text>
+          </Column_Btn>
+          <Column_Btn style={{backgroundColor: 'yellow'}}>
+            <Text>44</Text>
+          </Column_Btn>
+        </Column_View>
+      </Main_Container>
       <View style={styles.container}>
-        <TitleText>나의 목록</TitleText>
+        <TitleText>CATEGORY</TitleText>
         <FlatListView
-          showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => '#' + index}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           data={categoryList}
@@ -74,7 +109,7 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 20,
+    height: '50%',
   },
   separator: {
     backgroundColor: 'rgb(200, 199, 204)',

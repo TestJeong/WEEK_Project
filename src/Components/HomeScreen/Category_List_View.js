@@ -5,9 +5,14 @@ import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 const List_Item = styled.View`
-  margin: 10px 35px 10px 5px;
+  margin: 15px 35px 15px 5px;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const List_Text = styled.Text`
+  font-size: 17px;
+  font-weight: 500;
 `;
 
 const Category_View = ({data}) => {
@@ -62,11 +67,11 @@ const Category_View = ({data}) => {
   const renderRightActions = (progress) => (
     <View
       style={{
-        width: 193,
+        width: 133,
         flexDirection: 'row',
       }}>
-      {MoveTo_List_Action(<Text>asdf</Text>, '#2fc4b2', 192, progress)}
-      {Delete_List_Action(<Text>123123</Text>, '#dd2c00', 128, progress)}
+      {MoveTo_List_Action(<Text>세부사항</Text>, '#2fc4b2', 192, progress)}
+      {Delete_List_Action(<Text>삭제</Text>, '#dd2c00', 128, progress)}
     </View>
   );
 
@@ -81,7 +86,7 @@ const Category_View = ({data}) => {
       rightThreshold={40}
       renderRightActions={renderRightActions}>
       <List_Item>
-        <Text>{data.item.title}</Text>
+        <List_Text>{data.item.title}</List_Text>
       </List_Item>
     </Swipeable>
   );
