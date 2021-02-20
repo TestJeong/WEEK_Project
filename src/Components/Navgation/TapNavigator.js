@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 import realm from '../../db';
 import HomeScreen from '../HomeScreen';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
+import ToDoStackNavigator from '../../Components/Navgation/StackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +20,7 @@ const TapNavigator = () => {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen name="HOME" component={HomeScreen} />
+      <Tab.Screen name="HOME" component={ToDoStackNavigator} />
       <Tab.Screen name="CALENDAR" component={HomeScreen} />
       <Tab.Screen name="SETTING" component={HomeScreen} />
     </Tab.Navigator>

@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
-import {View, Text, Animated, StyleSheet} from 'react-native';
+import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
@@ -17,6 +18,7 @@ const List_Text = styled.Text`
 
 const Category_View = ({data}) => {
   const swiper = useRef();
+  const navigation = useNavigation();
 
   const MoveTo_List_Action = (text, color, x, progress) => {
     const trans = progress.interpolate({
@@ -79,15 +81,21 @@ const Category_View = ({data}) => {
     swiper.current.close();
   };
 
+  const goToList = () => {
+    navigation.navigate('ToDoList', {categoryName: data.item.title});
+  };
+
   return (
     <Swipeable
       ref={swiper}
       friction={2}
       rightThreshold={40}
       renderRightActions={renderRightActions}>
-      <List_Item>
-        <List_Text>{data.item.title}</List_Text>
-      </List_Item>
+      <TouchableOpacity onPress={goToList}>
+        <List_Item>
+          <List_Text>{data.item.title}</List_Text>
+        </List_Item>
+      </TouchableOpacity>
     </Swipeable>
   );
 };
