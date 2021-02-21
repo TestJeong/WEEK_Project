@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  Keyboard,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -24,15 +25,13 @@ const ToDoList = ({route}) => {
     });
   }, [categoryName]);
 
-  const opop = () => {
-    inputRef.current.focus();
-  };
   const opneModal = () => {
     setModalVisible(!isModalVisible);
   };
 
   const closeModal = () => {
     setModalVisible(false);
+    Keyboard.dismiss();
   };
 
   return (

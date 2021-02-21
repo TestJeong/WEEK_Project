@@ -17,7 +17,7 @@ const Modal_Container = styled(Modal)`
   flex: 1;
   justify-content: flex-end;
   align-items: center;
-  margin: 0;
+  margin: 0px;
 `;
 
 const ModalView = styled.View`
@@ -62,14 +62,20 @@ const ToDOInputModal = ({isOpen, close}) => {
   const inputRef = useRef();
 
   useEffect(() => {
-    if (isOpen === true) {
-      console.log('맞음?');
-      inputRef.current.focus();
+    if (isOpen) {
+      Platform.OS === 'ios'
+        ? inputRef.current.focus()
+        : setTimeout(() => inputRef.current.focus(), 20);
     }
-  }, [isOpen === true]);
+  }, [isOpen]);
 
   return (
-    <Modal_Container isVisible={isOpen} onBackdropPress={close}>
+    <Modal_Container
+      animationInTiming={Platform.OS === 'ios' ? 30 : 200}
+      animationOutTiming={50}
+      backdropOpacity={0.5}
+      isVisible={isOpen}
+      onBackdropPress={close}>
       <KeyboardAvoidingView
         style={{width: '100%'}}
         behavior={Platform.OS === 'ios' ? 'padding' : null}>
