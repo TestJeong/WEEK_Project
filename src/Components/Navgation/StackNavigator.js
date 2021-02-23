@@ -25,4 +25,17 @@ const ToDoStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-export default ToDoStackNavigator;
+
+const ModalView = () => {
+  return (
+    <Stack.Navigator screenOptions={screenOptionStyle}>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen name="ToDoList" component={ToDo_List} />
+    </Stack.Navigator>
+  );
+};
+export {ToDoStackNavigator, ModalView};

@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux';
 import realm from '../../db';
 import HomeScreen from '../HomeScreen';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
-import ToDoStackNavigator from '../../Components/Navgation/StackNavigator';
+import {ToDoStackNavigator} from '../../Components/Navgation/StackNavigator';
 
 const Tab = createBottomTabNavigator();
 
