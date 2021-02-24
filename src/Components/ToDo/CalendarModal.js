@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
-import {TextInput, View, Text, TouchableOpacity} from 'react-native';
+import {TextInput, View, Text, TouchableOpacity, Button} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 
 import Modal from 'react-native-modal';
+import {useDispatch} from 'react-redux';
 
 import styled from 'styled-components/native';
+import {CLICK_DAY} from '../../reducers/Catagory';
+import Icon from 'react-native-vector-icons/AntDesign';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {BBo} from './Test';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -23,13 +28,16 @@ const ModalView = styled.View`
   padding: 10px 5px;
 `;
 
-const Text_Input_Container = styled.TextInput`
-  font-size: 17px;
-  line-height: 30px;
-  padding: 5px;
-  height: 120px;
-  width: 90%;
-  border: 0.7px solid #b4baba;
+const Time_Input_Container = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 10px;
+`;
+
+const Time_Icon_Container = styled.View`
+  flex-direction: row;
+  align-items: center;
 `;
 
 const Button_View = styled.View`
@@ -38,6 +46,7 @@ const Button_View = styled.View`
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-around;
+  margin-bottom: 20px;
 `;
 
 const Text_Close = styled.Text`
@@ -46,45 +55,65 @@ const Text_Close = styled.Text`
 `;
 
 const CalendarModal = ({openModal, closeModal}) => {
+  const dispatch = useDispatch();
+
   const [clickDay, setClickDay] = useState('');
+
+  const SaveCalendar = () => {
+    dispatch({type: CLICK_DAY, data: clickDay});
+    closeModal();
+  };
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn('A date has been picked: ', date);
+    hideDatePicker();
+  };
+
   return (
     <Modal_Container
       useNativeDriverForBackdrop={true}
       isVisible={openModal}
       onBackdropPress={closeModal}
       backdropOpacity={0.2}>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="time"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        headerTextIOS="시간"
+        confirmTextIOS="확인"
+        cancelTextIOS="취소"
+      />
       <ModalView>
         <Calendar
-          // Initially visible month. Default = Date()
           current={Date()}
-          // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-
           onDayPress={(day) => {
             setClickDay(day.dateString);
             console.log('클릭', clickDay);
           }}
-          // Handler which gets executed on day long press. Default = undefined
           onDayLongPress={(day) => {
             console.log('selected day', day);
           }}
-          // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
           monthFormat={'yyyy MM'}
-          // Handler which gets executed when visible month changes in calendar. Default = undefined
           onMonthChange={(month) => {
             console.log('month changed', month);
           }}
-          // Hide month navigation arrows. Default = false
           hideArrows={false}
-          // Replace default arrows with custom ones (direction can be 'left' or 'right')
           renderArrow={(direction) =>
             direction === 'left' ? (
-              <View>
-                <Text>A</Text>
-              </View>
+              <Icon name="arrowleft" size={25} color="#4F8EF7" />
             ) : (
-              <View>
-                <Text>B</Text>
-              </View>
+              <Icon name="arrowright" size={25} color="#4F8EF7" />
             )
           }
           // Do not show days of other months in month page. Default = false
@@ -121,10 +150,28 @@ const CalendarModal = ({openModal, closeModal}) => {
             '2012-05-19': {disabled: true, disableTouchEvent: true} */
           }}
         />
+
+        <Time_Input_Container onPress={showDatePicker}>
+          <Time_Icon_Container>
+            <Icon name="clockcircleo" size={23} />
+            <Text style={{marginLeft: 15, fontSize: 16}}>시간</Text>
+          </Time_Icon_Container>
+          <Text style={{fontSize: 16}}>
+            없음 &nbsp; &nbsp;
+            <Icon name="right" size={15} />
+          </Text>
+        </Time_Input_Container>
+
         <Button_View>
           <TouchableOpacity
+            onPress={closeModal}
             hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={SaveCalendar}
+            hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+            <Text_Close style={{color: '#2653af'}}>저장</Text_Close>
           </TouchableOpacity>
         </Button_View>
       </ModalView>

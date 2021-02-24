@@ -9,7 +9,6 @@ import {
   Keyboard,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
 import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
 
 const ToDoList = ({route}) => {
@@ -17,7 +16,6 @@ const ToDoList = ({route}) => {
   const navigation = useNavigation();
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const inputRef = useRef();
 
   useLayoutEffect(() => {
     navigation.setOptions({
