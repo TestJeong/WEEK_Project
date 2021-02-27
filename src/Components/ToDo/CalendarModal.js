@@ -3,13 +3,12 @@ import {TextInput, View, Text, TouchableOpacity, Button} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 
 import Modal from 'react-native-modal';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import styled from 'styled-components/native';
-import {CLICK_DAY} from '../../reducers/Catagory';
+import {CLICK_DAY, CLICK_TIME} from '../../reducers/Catagory';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {BBo} from './Test';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -56,8 +55,10 @@ const Text_Close = styled.Text`
 
 const CalendarModal = ({openModal, closeModal}) => {
   const dispatch = useDispatch();
+  const {onClickTime} = useSelector((state) => state.Catagory);
 
-  const [clickDay, setClickDay] = useState('');
+  const [clickDay, setClickDay] = useState(null);
+  const [clickTime, setClickTime] = useState(null);
 
   const SaveCalendar = () => {
     dispatch({type: CLICK_DAY, data: clickDay});
@@ -75,7 +76,17 @@ const CalendarModal = ({openModal, closeModal}) => {
   };
 
   const handleConfirm = (date) => {
-    console.warn('A date has been picked: ', date);
+    const num = (date.getHours() + 24) % 12 || 12;
+    const TimeSheet =
+      num < 10
+        ? date.toLocaleTimeString().substring(0, 7)
+        : date.toLocaleTimeString().substring(0, 8);
+
+    dispatch({
+      type: CLICK_TIME,
+      data: TimeSheet,
+    });
+
     hideDatePicker();
   };
 
@@ -86,6 +97,7 @@ const CalendarModal = ({openModal, closeModal}) => {
       onBackdropPress={closeModal}
       backdropOpacity={0.2}>
       <DateTimePickerModal
+        locale="ko_KR"
         isVisible={isDatePickerVisible}
         mode="time"
         onConfirm={handleConfirm}
@@ -157,7 +169,7 @@ const CalendarModal = ({openModal, closeModal}) => {
             <Text style={{marginLeft: 15, fontSize: 16}}>시간</Text>
           </Time_Icon_Container>
           <Text style={{fontSize: 16}}>
-            없음 &nbsp; &nbsp;
+            {onClickTime ? onClickTime : '없음'}&nbsp; &nbsp;
             <Icon name="right" size={15} />
           </Text>
         </Time_Input_Container>
