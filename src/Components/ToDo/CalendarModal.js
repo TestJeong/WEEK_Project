@@ -4,11 +4,11 @@ import {Calendar} from 'react-native-calendars';
 
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
-
 import styled from 'styled-components/native';
-import {CLICK_DAY, CLICK_TIME} from '../../reducers/Catagory';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
+import {CLICK_DAY, CLICK_TIME} from '../../reducers/Catagory';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -76,6 +76,7 @@ const CalendarModal = ({openModal, closeModal}) => {
   };
 
   const handleConfirm = (date) => {
+    const hee = date.toString();
     const num = (date.getHours() + 24) % 12 || 12;
     const TimeSheet =
       num < 10
@@ -84,9 +85,9 @@ const CalendarModal = ({openModal, closeModal}) => {
 
     dispatch({
       type: CLICK_TIME,
-      data: TimeSheet,
+      data: hee,
     });
-
+    setClickTime(TimeSheet);
     hideDatePicker();
   };
 
@@ -169,7 +170,7 @@ const CalendarModal = ({openModal, closeModal}) => {
             <Text style={{marginLeft: 15, fontSize: 16}}>시간</Text>
           </Time_Icon_Container>
           <Text style={{fontSize: 16}}>
-            {onClickTime ? onClickTime : '없음'}&nbsp; &nbsp;
+            {onClickTime ? clickTime : '없음'}&nbsp; &nbsp;
             <Icon name="right" size={15} />
           </Text>
         </Time_Input_Container>

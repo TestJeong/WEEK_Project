@@ -6,6 +6,7 @@ import realm from '../../db';
 import HomeScreen from '../HomeScreen';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import {ToDoStackNavigator} from '../../Components/Navgation/StackNavigator';
+import ToDo_Notification from '../ToDo/ToDo_Notification';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +22,7 @@ const TapNavigator = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen name="HOME" component={ToDoStackNavigator} />
-      <Tab.Screen name="CALENDAR" component={HomeScreen} />
+      <Tab.Screen name="CALENDAR" component={ToDo_Notification} />
       <Tab.Screen name="SETTING" component={HomeScreen} />
     </Tab.Navigator>
   );

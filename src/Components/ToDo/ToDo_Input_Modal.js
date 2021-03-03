@@ -8,12 +8,16 @@ import {
   Platform,
   Button,
   Keyboard,
+  StyleSheet,
+  ImageBackground,
+  ScrollView,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {useNavigation} from '@react-navigation/native';
 
 import CalendarModal from '../../Components/ToDo/CalendarModal';
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -45,6 +49,7 @@ const Button_View = styled.View`
   width: 100%;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   padding: 15px 20px;
 `;
 
@@ -54,11 +59,26 @@ const Input_Title = styled.Text`
   font-weight: 600;
 `;
 
+const PPmodal = styled.View`
+  display: ${(props) => (props.momo === true ? 'flex' : 'none')};
+  position: ${(props) =>
+    Platform.OS === 'android' ? 'relative' : 'absolute '};
+  left: 50%;
+  bottom: 100px;
+  background-color: green;
+  height: 180px;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+`;
+
 const ToDOInputModal = ({isOpen, close}) => {
   const [categoryTitle, setcategoryTitle] = useState('');
   const inputRef = useRef();
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
+
+  const [testBtn, setTestBtn] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -75,6 +95,16 @@ const ToDOInputModal = ({isOpen, close}) => {
   const closeCalendarModal = () => {
     setcalendarModalVisible(false);
   };
+
+  const likeOpen = () => {
+    setTestBtn(!testBtn);
+  };
+
+  const menu = useRef();
+
+  const hideMenu = () => menu.current.hide();
+
+  const showMenu = () => menu.current.show();
 
   return (
     <>
@@ -101,15 +131,27 @@ const ToDOInputModal = ({isOpen, close}) => {
               placeholder="카테고리 제목을 입력하세요"
             />
             <Button_View>
-              <TouchableOpacity onPress={opneModal}>
-                <Input_Title>캘린더</Input_Title>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Input_Title>라벨</Input_Title>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Input_Title>우선순위</Input_Title>
-              </TouchableOpacity>
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity onPress={opneModal} style={{marginRight: 30}}>
+                  <Icon name="calendar" size={23} />
+                </TouchableOpacity>
+
+                <PPmodal momo={testBtn}>
+                  <Text>Hell</Text>
+                </PPmodal>
+                <TouchableOpacity onPress={likeOpen} style={{marginRight: 30}}>
+                  <Icon name="like2" size={23} />
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                  <Icon name="tago" size={23} />
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity>
+                  <Icon name="enter" size={23} />
+                </TouchableOpacity>
+              </View>
             </Button_View>
           </ModalView>
         </KeyboardAvoidingView>
@@ -117,5 +159,20 @@ const ToDOInputModal = ({isOpen, close}) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'none',
+    position: 'absolute',
+    left: '50%',
+    bottom: 100,
+    backgroundColor: 'green',
+    height: 180,
+    width: 150,
+
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default ToDOInputModal;
