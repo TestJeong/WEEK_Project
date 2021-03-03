@@ -18,6 +18,7 @@ import CalendarModal from '../../Components/ToDo/CalendarModal';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
+import Priority_Modal from './ Priority';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -59,19 +60,6 @@ const Input_Title = styled.Text`
   font-weight: 600;
 `;
 
-const PPmodal = styled.View`
-  display: ${(props) => (props.momo === true ? 'flex' : 'none')};
-  position: ${(props) =>
-    Platform.OS === 'android' ? 'relative' : 'absolute '};
-  left: 50%;
-  bottom: 100px;
-  background-color: green;
-  height: 180px;
-  width: 150px;
-  align-items: center;
-  justify-content: center;
-`;
-
 const ToDOInputModal = ({isOpen, close}) => {
   const [categoryTitle, setcategoryTitle] = useState('');
   const inputRef = useRef();
@@ -100,11 +88,10 @@ const ToDOInputModal = ({isOpen, close}) => {
     setTestBtn(!testBtn);
   };
 
-  const menu = useRef();
-
-  const hideMenu = () => menu.current.hide();
-
-  const showMenu = () => menu.current.show();
+  const ModalClose = () => {
+    close();
+    setTestBtn(false);
+  };
 
   return (
     <>
@@ -115,11 +102,15 @@ const ToDOInputModal = ({isOpen, close}) => {
         animationOutTiming={50}
         backdropOpacity={0.2}
         isVisible={isOpen}
-        onBackdropPress={close}>
+        onBackdropPress={ModalClose}>
         <CalendarModal
           openModal={calendarModalVisible}
           closeModal={closeCalendarModal}
         />
+        {testBtn && Platform.OS === 'android' && (
+          <Priority_Modal closeModal={() => setTestBtn(false)} />
+        )}
+
         <KeyboardAvoidingView
           style={{width: '100%'}}
           behavior={Platform.OS === 'ios' ? 'padding' : null}>
@@ -130,15 +121,15 @@ const ToDOInputModal = ({isOpen, close}) => {
               onChangeText={setcategoryTitle}
               placeholder="카테고리 제목을 입력하세요"
             />
+            {testBtn && Platform.OS === 'ios' && (
+              <Priority_Modal closeModal={() => setTestBtn(false)} />
+            )}
             <Button_View>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity onPress={opneModal} style={{marginRight: 30}}>
                   <Icon name="calendar" size={23} />
                 </TouchableOpacity>
 
-                <PPmodal momo={testBtn}>
-                  <Text>Hell</Text>
-                </PPmodal>
                 <TouchableOpacity onPress={likeOpen} style={{marginRight: 30}}>
                   <Icon name="like2" size={23} />
                 </TouchableOpacity>
@@ -159,20 +150,5 @@ const ToDOInputModal = ({isOpen, close}) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'none',
-    position: 'absolute',
-    left: '50%',
-    bottom: 100,
-    backgroundColor: 'green',
-    height: 180,
-    width: 150,
-
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default ToDOInputModal;
