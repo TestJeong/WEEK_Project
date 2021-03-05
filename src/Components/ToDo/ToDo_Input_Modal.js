@@ -93,6 +93,10 @@ const ToDOInputModal = ({isOpen, close}) => {
     setTestBtn(false);
   };
 
+  const TestEnd = () => {
+    console.log('ad', categoryTitle);
+  };
+
   return (
     <>
       <Modal_Container
@@ -119,7 +123,7 @@ const ToDOInputModal = ({isOpen, close}) => {
               ref={inputRef}
               value={categoryTitle}
               onChangeText={setcategoryTitle}
-              placeholder="카테고리 제목을 입력하세요"
+              placeholder="할일 목록 입력하세요"
             />
             {testBtn && Platform.OS === 'ios' && (
               <Priority_Modal closeModal={() => setTestBtn(false)} />
@@ -139,7 +143,7 @@ const ToDOInputModal = ({isOpen, close}) => {
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={TestEnd}>
                   <Icon name="enter" size={23} />
                 </TouchableOpacity>
               </View>

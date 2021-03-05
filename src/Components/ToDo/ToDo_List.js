@@ -10,6 +10,13 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
+import {FlatList} from 'react-native-gesture-handler';
+import styled from 'styled-components/native';
+import ToDo_List_View from './ToDo_List_View';
+
+const FlatListView = styled.FlatList`
+  padding: 5px 0px 20px 0px;
+`;
 
 const ToDoList = ({route}) => {
   const {categoryName} = route.params;
@@ -32,11 +39,38 @@ const ToDoList = ({route}) => {
     Keyboard.dismiss();
   };
 
+  const dda = [
+    {name: '아침먹기'},
+    {name: '내일 갈만 한 카페 찾아보기'},
+    {name: 3},
+    {name: 4},
+    {name: 5},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+    {name: 6},
+  ];
+
   return (
     <>
       <ToDoInputModal isOpen={isModalVisible} close={closeModal} />
       <View>
-        <Text>asdfasdfasdioj</Text>
+        <FlatListView
+          keyExtractor={(item, index) => '#' + index}
+          data={dda}
+          renderItem={(item) => <ToDo_List_View data={item} />}
+        />
       </View>
       <TouchableOpacity
         activeOpacity={0.5}
