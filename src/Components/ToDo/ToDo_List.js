@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState, useRef} from 'react';
+import React, {useLayoutEffect, useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -11,18 +11,24 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
 import {FlatList} from 'react-native-gesture-handler';
+import {useSelector, useDispatch} from 'react-redux';
+
 import styled from 'styled-components/native';
+
 import ToDo_List_View from './ToDo_List_View';
+import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
 `;
 
 const ToDoList = ({route}) => {
-  const {categoryName} = route.params;
+  const {categoryName, categoryTime} = route.params;
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const [isModalVisible, setModalVisible] = useState(false);
+  const {clickCategory} = useSelector((state) => state.Catagory);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -39,36 +45,18 @@ const ToDoList = ({route}) => {
     Keyboard.dismiss();
   };
 
-  const dda = [
-    {name: '아침먹기'},
-    {name: '내일 갈만 한 카페 찾아보기'},
-    {name: 3},
-    {name: 4},
-    {name: 5},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-    {name: 6},
-  ];
-
   return (
     <>
-      <ToDoInputModal isOpen={isModalVisible} close={closeModal} />
+      <ToDoInputModal
+        isOpen={isModalVisible}
+        close={closeModal}
+        categoryName={categoryName}
+        categoryTime={categoryTime}
+      />
       <View>
         <FlatListView
           keyExtractor={(item, index) => '#' + index}
-          data={dda}
+          data={clickCategory.todoData}
           renderItem={(item) => <ToDo_List_View data={item} />}
         />
       </View>

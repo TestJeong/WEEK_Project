@@ -4,6 +4,8 @@ import {useNavigation} from '@react-navigation/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
+import {useDispatch} from 'react-redux';
+import {CLICK_CATEGORY} from '../../reducers/Catagory';
 
 const List_Item = styled.View`
   margin: 15px 35px 15px 5px;
@@ -19,6 +21,7 @@ const List_Text = styled.Text`
 const Category_View = ({data}) => {
   const swiper = useRef();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const MoveTo_List_Action = (text, color, x, progress) => {
     const trans = progress.interpolate({
@@ -82,7 +85,11 @@ const Category_View = ({data}) => {
   };
 
   const goToList = () => {
-    navigation.navigate('ToDoList', {categoryName: data.item.title});
+    navigation.navigate('ToDoList', {
+      categoryName: data.item.title,
+      categoryTime: data.item.createTime,
+    });
+    dispatch({type: CLICK_CATEGORY, data: data.item});
   };
 
   return (

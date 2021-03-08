@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -6,24 +6,26 @@ import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
+import {useSelector} from 'react-redux';
+
 const List_Item = styled.View`
-  height: 50px;
+  height: 40px;
   border-radius: 10px;
   background-color: white;
-  margin: 10px 10px 10px 10px;
+  margin: 10px 10px 10px 15px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
 
 const List_Text = styled.Text`
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
-  padding-bottom: 7px;
 `;
 
 const List_Clock_Text = styled.Text`
   font-size: 13px;
+  padding-top: 7px;
   color: #adb5bd;
 `;
 
@@ -33,7 +35,7 @@ const List_Title_View = styled.View`
 `;
 
 const List_Title_Content = styled.View`
-  margin-left: 40px;
+  margin-left: 25px;
 `;
 
 const List_Icon_View = styled.View``;
@@ -41,6 +43,8 @@ const List_Icon_View = styled.View``;
 const ToDo_List_View = ({data}) => {
   const swiper = useRef();
   const navigation = useNavigation();
+
+  const {clickCategory} = useSelector((state) => state.Catagory);
 
   const MoveTo_List_Action = (text, color, x, progress) => {
     const trans = progress.interpolate({
@@ -132,11 +136,11 @@ const ToDo_List_View = ({data}) => {
           <List_Item>
             <List_Title_View>
               <TouchableOpacity>
-                <Icon name="checkcircleo" size={35} />
+                <Icon name="checkcircleo" size={30} />
               </TouchableOpacity>
 
               <List_Title_Content>
-                <List_Text>{data.item.name}</List_Text>
+                <List_Text>{data.item.listContent}</List_Text>
                 <List_Clock_Text>오전 08:30</List_Clock_Text>
               </List_Title_Content>
             </List_Title_View>

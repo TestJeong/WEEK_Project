@@ -11,14 +11,20 @@ import {
   StyleSheet,
   ImageBackground,
   ScrollView,
+  addons,
 } from 'react-native';
-import Modal from 'react-native-modal';
 
-import CalendarModal from '../../Components/ToDo/CalendarModal';
-import styled from 'styled-components/native';
+import Modal from 'react-native-modal';
+import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
+import styled from 'styled-components/native';
+
+import realm from '../../db';
+import CalendarModal from '../../Components/ToDo/CalendarModal';
 import Priority_Modal from './ Priority';
+import {Day} from '../Day';
+import {MY_CATEGORY_DATA, TEST_TT} from '../../reducers/Catagory';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -60,9 +66,13 @@ const Input_Title = styled.Text`
   font-weight: 600;
 `;
 
-const ToDOInputModal = ({isOpen, close}) => {
-  const [categoryTitle, setcategoryTitle] = useState('');
+const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
+  const [todoContents, setTodoContents] = useState('');
+
   const inputRef = useRef();
+
+  const {categoryList} = useSelector((state) => state.Catagory);
+  const dispatch = useDispatch();
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
 
@@ -93,8 +103,32 @@ const ToDOInputModal = ({isOpen, close}) => {
     setTestBtn(false);
   };
 
-  const TestEnd = () => {
-    console.log('ad', categoryTitle);
+  const ToDoInput_Enter = () => {
+    const CategoryData = realm.objects('CategoryList');
+    const SortCategoryDate = CategoryData.sorted('createTime');
+    realm.write(() => {
+      let city = realm.create(
+        'TodoDataList',
+        {
+          createTime: Day(),
+          categoryTitle: categoryName,
+          listContent: todoContents,
+          listDay: 'Asdf',
+          listPriority: 'asdf',
+        },
+        true,
+      );
+      let user = realm.create(
+        'CategoryList',
+        {
+          createTime: categoryTime,
+        },
+        true,
+      );
+      user.todoData.unshift(city);
+    });
+    dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
+    setTodoContents('');
   };
 
   return (
@@ -104,7 +138,7 @@ const ToDOInputModal = ({isOpen, close}) => {
         useNativeDriverForBackdrop={true}
         animationInTiming={Platform.OS === 'ios' ? 30 : 200}
         animationOutTiming={50}
-        backdropOpacity={0.2}
+        backdropOpacity={0.1}
         isVisible={isOpen}
         onBackdropPress={ModalClose}>
         <CalendarModal
@@ -121,8 +155,8 @@ const ToDOInputModal = ({isOpen, close}) => {
           <ModalView>
             <Text_Input_Container
               ref={inputRef}
-              value={categoryTitle}
-              onChangeText={setcategoryTitle}
+              value={todoContents}
+              onChangeText={setTodoContents}
               placeholder="할일 목록 입력하세요"
             />
             {testBtn && Platform.OS === 'ios' && (
@@ -143,7 +177,9 @@ const ToDOInputModal = ({isOpen, close}) => {
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity onPress={TestEnd}>
+                <TouchableOpacity
+                  hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+                  onPress={ToDoInput_Enter}>
                   <Icon name="enter" size={23} />
                 </TouchableOpacity>
               </View>
