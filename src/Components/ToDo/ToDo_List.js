@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 import styled from 'styled-components/native';
 
@@ -20,6 +21,7 @@ import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
+  height: 100%;
 `;
 
 const ToDoList = ({route}) => {
@@ -64,7 +66,7 @@ const ToDoList = ({route}) => {
         activeOpacity={0.5}
         onPress={opneModal}
         style={styles.touchableOpacityStyle}>
-        <Image
+        {/*    <Image
           // FAB using TouchableOpacity with an image
           // For online image
           source={{
@@ -74,7 +76,8 @@ const ToDoList = ({route}) => {
           // For local image
           //source={require('./images/float-add-icon.png')}
           style={styles.floatingButtonStyle}
-        />
+        /> */}
+        <Icon name="plus" color={'white'} size={30} />
       </TouchableOpacity>
     </>
   );
@@ -89,12 +92,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: 30,
     bottom: 30,
-  },
-  floatingButtonStyle: {
-    resizeMode: 'contain',
-    width: 50,
-    height: 50,
-    //backgroundColor:'black'
+    backgroundColor: 'green',
+    borderRadius: 100,
   },
 });
 

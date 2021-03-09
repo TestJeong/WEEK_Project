@@ -62,7 +62,7 @@ const Text_Close = styled.Text`
 
 const CalendarModal = ({openModal, closeModal}) => {
   const dispatch = useDispatch();
-  const {onClickTime} = useSelector((state) => state.Catagory);
+  const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
 
   const [clickDay, setClickDay] = useState(null);
   const [clickTime, setClickTime] = useState(null);
@@ -109,6 +109,18 @@ const CalendarModal = ({openModal, closeModal}) => {
     hideDatePicker();
   };
 
+  const Calendar_Mark = () => {
+    const Mark = {
+      [clickDay]: {
+        selected: true,
+        marked: false,
+        selectedColor: '#477660',
+      },
+    };
+
+    return Mark;
+  };
+
   return (
     <Modal_Container
       useNativeDriverForBackdrop={true}
@@ -130,7 +142,6 @@ const CalendarModal = ({openModal, closeModal}) => {
           current={Date()}
           onDayPress={(day) => {
             setClickDay(day.dateString);
-            console.log('클릭', clickDay);
           }}
           onDayLongPress={(day) => {
             console.log('selected day', day);
@@ -170,16 +181,7 @@ const CalendarModal = ({openModal, closeModal}) => {
           disableAllTouchEventsForDisabledDays={true}
           /** Replace default month and year title with custom one. the function receive a date as parameter. */
           //renderHeader={(date) => {/*Return JSX*/}}
-          markedDates={{
-            [clickDay]: {
-              selected: true,
-              marked: false,
-              selectedColor: '#477660',
-            },
-            /*    '2012-05-17': {marked: true},
-            '2012-05-18': {marked: true, dotColor: 'red', activeOpacity: 0},
-            '2012-05-19': {disabled: true, disableTouchEvent: true} */
-          }}
+          markedDates={clickDay ? Calendar_Mark() : null}
         />
 
         <Time_Input_Container onPress={showDatePicker}>

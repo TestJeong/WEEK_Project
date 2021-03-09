@@ -6,7 +6,8 @@ import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {TODO_LIST_DATA_REQUEST} from '../../reducers/Catagory';
 
 const List_Item = styled.View`
   height: 40px;
@@ -20,7 +21,7 @@ const List_Item = styled.View`
 
 const List_Text = styled.Text`
   font-size: 16px;
-  font-weight: 500;
+  width: 85%;
 `;
 
 const List_Clock_Text = styled.Text`
@@ -32,10 +33,13 @@ const List_Clock_Text = styled.Text`
 const List_Title_View = styled.View`
   flex-direction: row;
   align-items: center;
+
+  width: 95%;
 `;
 
 const List_Title_Content = styled.View`
-  margin-left: 25px;
+  margin-left: 17px;
+  width: 100%;
 `;
 
 const List_Icon_View = styled.View``;
@@ -43,6 +47,7 @@ const List_Icon_View = styled.View``;
 const ToDo_List_View = ({data}) => {
   const swiper = useRef();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const {clickCategory} = useSelector((state) => state.Catagory);
 
@@ -54,7 +59,7 @@ const ToDo_List_View = ({data}) => {
     });
 
     const MoveToList = () => {
-      dispatch({type: MOVE_TO_BASKET_REQUEST, data: bookData});
+      dispatch({type: MOVE_TO_BASKET_REQUEST, data: data});
       close();
     };
 
@@ -84,7 +89,7 @@ const ToDo_List_View = ({data}) => {
     });
 
     const pressHandler = () => {
-      dispatch({type: REMOVE_BASKET_REQUEST, data: bookData});
+      dispatch({type: TODO_LIST_DATA_REQUEST, data: data});
       close();
     };
 
@@ -140,8 +145,10 @@ const ToDo_List_View = ({data}) => {
               </TouchableOpacity>
 
               <List_Title_Content>
-                <List_Text>{data.item.listContent}</List_Text>
-                <List_Clock_Text>오전 08:30</List_Clock_Text>
+                <List_Text numberOfLines={1}>{data.item.listContent}</List_Text>
+                {data.item.listDay ? (
+                  <List_Clock_Text>{data.item.listDay}</List_Clock_Text>
+                ) : null}
               </List_Title_Content>
             </List_Title_View>
 

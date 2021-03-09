@@ -71,7 +71,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   const inputRef = useRef();
 
-  const {categoryList} = useSelector((state) => state.Catagory);
+  const {onClickDay, onClickTime} = useSelector((state) => state.Catagory);
   const dispatch = useDispatch();
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
@@ -113,8 +113,8 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
           createTime: Day(),
           categoryTitle: categoryName,
           listContent: todoContents,
-          listDay: 'Asdf',
-          listPriority: 'asdf',
+          listDay: onClickTime ? onClickTime : null,
+          listPriority: null,
         },
         true,
       );
