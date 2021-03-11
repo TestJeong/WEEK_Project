@@ -14,11 +14,13 @@ export const init = {
   todo_List_data_loading: false,
   todo_List_data_done: false,
   todo_List_data_error: null,
+
+  Agenda_TEST: null,
 };
 
 export const MY_CATEGORY_DATA = 'MY_CATEGORY_DATA';
 
-export const TEST_TT = 'TEST_TT';
+export const AGENDA_TEST = 'AGENDA_TEST';
 
 export const CLICK_CATEGORY = 'CLICK_CATEGORY';
 export const CLICK_CATEGORY_RESET = 'CLICK_CATEGORY_RESET';
@@ -33,8 +35,8 @@ export const TODO_LIST_DATA_ERROR = 'TODO_LIST_DATA_ERROR';
 const reducer = (state = init, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
-      case TEST_TT:
-        draft.testhoho = true;
+      case AGENDA_TEST:
+        draft.Agenda_TEST = action.data;
         break;
 
       case MY_CATEGORY_DATA:

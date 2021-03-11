@@ -1,40 +1,76 @@
 import React, {useState, useEffect} from 'react';
 import {View, TouchableOpacity, Text, SafeAreaView} from 'react-native';
 import {Agenda} from 'react-native-calendars';
+import {useDispatch, useSelector} from 'react-redux';
+
+import realm from '../../db';
+import {AGENDA_TEST} from '../../reducers/Catagory';
+
+const timeToString = (time) => {
+  const date = new Date(time);
+  return date.toISOString().split('T')[0];
+};
 
 const Schedule = () => {
   const [items, setItems] = useState({});
+  const dispatch = useDispatch();
+  const {Agenda_TEST} = useSelector((state) => state.Catagory);
 
-  const loadItems = (day) => {
-    /*  setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = timeToString(time);
+  useEffect(() => {
+    const CategoryData = realm.objects('TodoDataList');
+    dispatch({type: AGENDA_TEST, data: CategoryData});
+  }, []);
+
+  const loadItems = () => {
+    setTimeout(() => {
+      for (let el in Agenda_TEST) {
+        const strTime = Agenda_TEST[el].listDay;
         if (!items[strTime]) {
           items[strTime] = [];
-          const numItems = Math.floor(Math.random() * 3 + 1);
-          for (let j = 0; j < numItems; j++) {
-            items[strTime].push({
-              name: 'Item for ' + strTime + ' #' + j,
-              height: Math.max(50, Math.floor(Math.random() * 150)),
-            });
-          }
+
+          items[strTime].push({
+            name: 'Item for ' + Agenda_TEST[el].listContent + ' #',
+          });
+        } else {
+          items[strTime].push({
+            name: 'Item for ' + Agenda_TEST[el].listContent + ' #',
+          });
         }
       }
       const newItems = {};
       Object.keys(items).forEach((key) => {
         newItems[key] = items[key];
       });
+      console.log('object', Object.keys(items));
+      console.log('items', items);
+      console.log(
+        'forEach',
+        Object.keys(items).forEach((key) => {
+          console.log('key', key);
+        }),
+      );
       setItems(newItems);
-    }, 1000); */
+    }, 1000);
   };
 
-  const hhi = '2021-03-13';
+  /* useEffect(() => {
+    const CategoryData = realm.objects('TodoDataList');
+    dispatch({type: AGENDA_TEST, data: CategoryData});
 
-  const hello = {
-    [hhi]: [{name: '마트 장보기', height: 80}],
-    '2021-03-12': [{name: 'item12 - any js object', height: 80}],
-  };
+    for (let el in Agenda_TEST) {
+      const date = Agenda_TEST[el].listDay;
+
+      if (!items[date]) {
+        items[date] = [];
+        items[date].push({
+          name: Agenda_TEST[el].listContent,
+        }); //Agenda_TEST에 배열 값들이 하나도 없을때
+      } else {
+        const OPOP = {name: Agenda_TEST[el].listContent};
+        items[date].push({...OPOP});
+      } //Agenda_TEST에 배열 값들이 들어있을때
+    }
+  }, []); */
 
   const renderItem = (item) => {
     return (
@@ -46,6 +82,8 @@ const Schedule = () => {
             alignItems: 'center',
             backgroundColor: 'white',
             height: 80,
+            borderRadius: 10,
+            paddingLeft: 20,
           }}>
           <Text>{item.name}</Text>
         </View>
@@ -56,8 +94,8 @@ const Schedule = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Agenda
-        items={hello}
-        /* loadItemsForMonth={loadItems} */
+        items={items}
+        loadItemsForMonth={loadItems}
         renderItem={renderItem}
         renderEmptyData={() => {
           return (
