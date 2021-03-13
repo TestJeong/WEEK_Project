@@ -129,6 +129,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
       user.todoData.unshift(city);
     });
     dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
+
     setTodoContents('');
   };
 

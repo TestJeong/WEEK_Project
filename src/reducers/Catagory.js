@@ -15,18 +15,23 @@ export const init = {
   todo_List_data_done: false,
   todo_List_data_error: null,
 
-  Agenda_TEST: null,
+  Agenda_DATA: null,
+  Agenda_DATA_loading: false,
+  Agenda_DATA_done: false,
+  Agenda_DATA_error: null,
 };
 
 export const MY_CATEGORY_DATA = 'MY_CATEGORY_DATA';
-
-export const AGENDA_TEST = 'AGENDA_TEST';
 
 export const CLICK_CATEGORY = 'CLICK_CATEGORY';
 export const CLICK_CATEGORY_RESET = 'CLICK_CATEGORY_RESET';
 
 export const CLICK_DAY = 'CLICK_DAY';
 export const CLICK_TIME = 'CLICK_TIME';
+
+export const AGENDA_DATA_REQUEST = 'AGENDA_DATA_REQUEST';
+export const AGENDA_DATA_SUCCESS = 'AGENDA_DATA_SUCCESS';
+export const AGENDA_DATA_ERROR = 'AGENDA_DATA_ERROR';
 
 export const TODO_LIST_DATA_REQUEST = 'TODO_LIST_DATA_REQUEST';
 export const TODO_LIST_DATA_SUCCESS = 'TODO_LIST_DATA_SUCCESS';
@@ -35,10 +40,6 @@ export const TODO_LIST_DATA_ERROR = 'TODO_LIST_DATA_ERROR';
 const reducer = (state = init, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
-      case AGENDA_TEST:
-        draft.Agenda_TEST = action.data;
-        break;
-
       case MY_CATEGORY_DATA:
         draft.categoryList = action.data;
         draft.onClickTime = null;
@@ -59,6 +60,28 @@ const reducer = (state = init, action) => {
 
       case CLICK_TIME:
         draft.onClickTime = action.data;
+        break;
+
+      ///////////////////////////////////////////
+
+      case AGENDA_DATA_REQUEST:
+        draft.Agenda_DATA = null;
+        draft.Agenda_DATA_loading = true;
+        draft.Agenda_DATA_done = false;
+        draft.Agenda_DATA_error = null;
+
+        break;
+      case AGENDA_DATA_SUCCESS:
+        draft.Agenda_DATA = action.data;
+        draft.Agenda_DATA_loading = false;
+        draft.Agenda_DATA_done = true;
+        draft.Agenda_DATA_error = null;
+
+        break;
+      case AGENDA_DATA_ERROR:
+        draft.Agenda_DATA_loading = false;
+        draft.Agenda_DATA_done = false;
+        draft.Agenda_DATA_error = action.data;
         break;
 
       ///////////////////////////////////////////

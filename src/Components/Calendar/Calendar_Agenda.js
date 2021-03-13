@@ -1,76 +1,88 @@
 import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Text, SafeAreaView} from 'react-native';
+import {View, TouchableOpacity, Text, SafeAreaView, Button} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 
 import realm from '../../db';
-import {AGENDA_TEST} from '../../reducers/Catagory';
+import {AGENDA_DATA_REQUEST} from '../../reducers/Catagory';
 
-const timeToString = (time) => {
-  const date = new Date(time);
-  return date.toISOString().split('T')[0];
-};
-
-const Schedule = () => {
+const Schedule = ({navigation}) => {
   const [items, setItems] = useState({});
   const dispatch = useDispatch();
-  const {Agenda_TEST} = useSelector((state) => state.Catagory);
+  const {Agenda_DATA} = useSelector((state) => state.Catagory);
 
   useEffect(() => {
-    const CategoryData = realm.objects('TodoDataList');
-    dispatch({type: AGENDA_TEST, data: CategoryData});
-  }, []);
-
-  const loadItems = () => {
-    setTimeout(() => {
-      for (let el in Agenda_TEST) {
+    navigation.addListener('focus', () => {
+      /* for (let el in Agenda_TEST) {
         const strTime = Agenda_TEST[el].listDay;
-        if (!items[strTime]) {
-          items[strTime] = [];
+        items[strTime] = [];
+        const BookMarkaa = AgendaData.filtered('listDay == $0', strTime);
 
-          items[strTime].push({
-            name: 'Item for ' + Agenda_TEST[el].listContent + ' #',
-          });
-        } else {
-          items[strTime].push({
-            name: 'Item for ' + Agenda_TEST[el].listContent + ' #',
-          });
-        }
-      }
-      const newItems = {};
-      Object.keys(items).forEach((key) => {
-        newItems[key] = items[key];
-      });
-      console.log('object', Object.keys(items));
-      console.log('items', items);
-      console.log(
-        'forEach',
-        Object.keys(items).forEach((key) => {
-          console.log('key', key);
-        }),
-      );
-      setItems(newItems);
-    }, 1000);
-  };
+        BookMarkaa.map((date) => items[strTime].push({name: date.listContent})); */
+
+      dispatch({type: AGENDA_DATA_REQUEST});
+    });
+  }, [Agenda_DATA]);
 
   /* useEffect(() => {
     const CategoryData = realm.objects('TodoDataList');
     dispatch({type: AGENDA_TEST, data: CategoryData});
 
     for (let el in Agenda_TEST) {
-      const date = Agenda_TEST[el].listDay;
+      const strTime = Agenda_TEST[el].listDay;
+      console.log('aapple', Agenda_TEST[el].listContent);
 
-      if (!items[date]) {
-        items[date] = [];
-        items[date].push({
-          name: Agenda_TEST[el].listContent,
-        }); //Agenda_TEST에 배열 값들이 하나도 없을때
-      } else {
-        const OPOP = {name: Agenda_TEST[el].listContent};
-        items[date].push({...OPOP});
-      } //Agenda_TEST에 배열 값들이 들어있을때
+      if (!items[strTime]) {
+        items[strTime] = [];
+
+        const BookMarkaa = CategoryData.filtered('listDay == $0', strTime);
+
+        BookMarkaa.map((date) => items[strTime].push({name: date.listContent}));
+        console.log('if');
+      }
+      const newItems = {};
+      Object.keys(items).forEach((key) => {
+        newItems[key] = items[key];
+      });
+      setItems(newItems);
     }
   }, []); */
+
+  /* useEffect(() => {
+    const CategoryData = realm.objects('TodoDataList');
+    dispatch({type: AGENDA_TEST, data: CategoryData});
+  }, []);
+
+  const loadItems = () => {
+    for (let el in Agenda_TEST) {
+      const strTime = Agenda_TEST[el].listDay;
+
+      if (!items[strTime]) {
+        items[strTime] = [];
+        const CategoryData = realm.objects('TodoDataList');
+        const BookMarkaa = CategoryData.filtered('listDay == $0', strTime);
+
+        BookMarkaa.map((date) => items[strTime].push({name: date.listContent}));
+      }
+      const newItems = {};
+      Object.keys(items).forEach((key) => {
+        newItems[key] = items[key];
+      });
+      setItems(newItems);
+    }
+  }; */
+
+  /* const loadItems = () => {
+    const CategoryData = realm.objects('TodoDataList');
+    for (let el in Agenda_TEST) {
+      const strTime = Agenda_TEST[el].listDay;
+
+      items[strTime] = [];
+
+      const BookMarkaa = CategoryData.filtered('listDay == $0', strTime);
+      BookMarkaa.map((date) => items[strTime].push({name: date.listContent}));
+    }
+  }; */
 
   const renderItem = (item) => {
     return (
@@ -91,12 +103,17 @@ const Schedule = () => {
     );
   };
 
+  const _rowHasChanged = (r1, r2) => {
+    return r1.name !== r2.name;
+  };
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Agenda
-        items={items}
-        loadItemsForMonth={loadItems}
+        items={Agenda_DATA}
+        /*     loadItemsForMonth={loadItems} */
         renderItem={renderItem}
+        rowHasChanged={_rowHasChanged}
         renderEmptyData={() => {
           return (
             <View>

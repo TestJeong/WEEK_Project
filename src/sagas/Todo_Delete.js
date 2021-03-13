@@ -12,6 +12,23 @@ export const ToDoList_View_Delete = (term) => {
   });
 };
 
+export const Agenda_Call_Data = () => {
+  const AgendaData = realm.objects('TodoDataList');
+
+  let items = {};
+
+  for (let el in AgendaData) {
+    const strTime = AgendaData[el].listDay;
+
+    items[strTime] = [];
+    const BookMarkaa = AgendaData.filtered('listDay == $0', strTime);
+
+    BookMarkaa.map((date) => items[strTime].push({name: date.listContent}));
+  }
+
+  return items;
+};
+
 /* export const book_Delete = (term) => {
   const BookAll = realm.objects('User');
   const BookFil = BookAll.filtered('bookName == $0', term.item.bookName);
