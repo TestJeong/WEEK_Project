@@ -5,7 +5,10 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
-import {CLICK_CATEGORY} from '../../reducers/Catagory';
+import {
+  CATEGORY_LIST_DATA_REQUEST,
+  CLICK_CATEGORY,
+} from '../../reducers/Catagory';
 
 const List_Item = styled.View`
   margin: 15px 35px 15px 5px;
@@ -54,7 +57,7 @@ const Category_View = ({data}) => {
     });
 
     const pressHandler = () => {
-      dispatch({type: REMOVE_BASKET_REQUEST, data: bookData});
+      dispatch({type: CATEGORY_LIST_DATA_REQUEST, data: data});
       close();
     };
 

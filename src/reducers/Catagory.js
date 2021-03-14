@@ -15,6 +15,10 @@ export const init = {
   todo_List_data_done: false,
   todo_List_data_error: null,
 
+  category_List_data_loading: false,
+  category_List_data_done: false,
+  category_List_data_error: null,
+
   Agenda_DATA: null,
   Agenda_DATA_loading: false,
   Agenda_DATA_done: false,
@@ -36,6 +40,10 @@ export const AGENDA_DATA_ERROR = 'AGENDA_DATA_ERROR';
 export const TODO_LIST_DATA_REQUEST = 'TODO_LIST_DATA_REQUEST';
 export const TODO_LIST_DATA_SUCCESS = 'TODO_LIST_DATA_SUCCESS';
 export const TODO_LIST_DATA_ERROR = 'TODO_LIST_DATA_ERROR';
+
+export const CATEGORY_LIST_DATA_REQUEST = 'CATEGORY_LIST_DATA_REQUEST';
+export const CATEGORY_LIST_DATA_SUCCESS = 'CATEGORY_LIST_DATA_SUCCESS';
+export const CATEGORY_LIST_DATA_ERROR = 'CATEGORY_LIST_DATA_ERROR';
 
 const reducer = (state = init, action) => {
   return produce(state, (draft) => {
@@ -102,6 +110,26 @@ const reducer = (state = init, action) => {
         draft.todo_List_data_loading = false;
         draft.todo_List_data_done = false;
         draft.todo_List_data_error = action.data;
+        break;
+
+      ////////////////////////////////////////////
+
+      case CATEGORY_LIST_DATA_REQUEST:
+        draft.category_List_data_loading = true;
+        draft.tcategory_List_data_done = false;
+        draft.category_List_data_error = null;
+
+        break;
+      case CATEGORY_LIST_DATA_SUCCESS:
+        draft.category_List_data_loading = false;
+        draft.category_List_data_done = true;
+        draft.category_List_data_error = null;
+        draft.categoryList = state.categoryList;
+        break;
+      case CATEGORY_LIST_DATA_ERROR:
+        draft.category_List_data_loading = false;
+        draft.category_List_data_done = false;
+        draft.category_List_data_error = action.data;
         break;
 
       ////////////////////////////////////////////

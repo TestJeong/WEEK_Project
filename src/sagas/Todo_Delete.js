@@ -12,8 +12,28 @@ export const ToDoList_View_Delete = (term) => {
   });
 };
 
+export const Category_List_View_Delete = (term) => {
+  const Category_List = realm.objects('CategoryList');
+  const Category_List_Data = Category_List.filtered(
+    'title == $0',
+    term.item.title,
+  );
+
+  const TodoList_View = realm.objects('TodoDataList');
+  const TodoList_View_Data = TodoList_View.filtered(
+    'categoryTitle == $0',
+    term.item.title,
+  );
+
+  realm.write(() => {
+    realm.delete(Category_List_Data);
+    realm.delete(TodoList_View_Data);
+  });
+};
+
 export const Agenda_Call_Data = () => {
   const AgendaData = realm.objects('TodoDataList');
+  const CategoryData = realm.objects('CategoryList');
 
   let items = {};
 
@@ -21,9 +41,12 @@ export const Agenda_Call_Data = () => {
     const strTime = AgendaData[el].listDay;
 
     items[strTime] = [];
-    const BookMarkaa = AgendaData.filtered('listDay == $0', strTime);
+    const TodoData_Day = AgendaData.filtered('listDay == $0', strTime);
 
-    BookMarkaa.map((date) => items[strTime].push({name: date.listContent}));
+    TodoData_Day.map((date) => {
+      const Category = CategoryData.filtered('title == $0', date.categoryTitle);
+      items[strTime].push({name: date.listContent, colors: Category[0].color});
+    });
   }
 
   return items;

@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {TODO_LIST_DATA_REQUEST} from '../../reducers/Catagory';
+import {useState} from 'react/cjs/react.development';
 
 const List_Item = styled.View`
   height: 40px;
@@ -48,8 +49,19 @@ const ToDo_List_View = ({data}) => {
   const swiper = useRef();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [ListDay, setListDay] = useState(null);
 
-  const {clickCategory} = useSelector((state) => state.Catagory);
+  useEffect(() => {
+    if (data.item.listDay) {
+      const ListDay_Month =
+        data.item.listDay.substring(5, 7) > 10
+          ? data.item.listDay.substring(5, 7)
+          : data.item.listDay.substring(6, 7);
+      const ListDay_Day = data.item.listDay.substring(8, 10);
+      const ListDay_Total = ListDay_Month + '월' + ListDay_Day + '일 ';
+      setListDay(ListDay_Total);
+    }
+  }, [data.item.listDay]);
 
   const MoveTo_List_Action = (text, color, x, progress) => {
     const trans = progress.interpolate({
@@ -147,13 +159,17 @@ const ToDo_List_View = ({data}) => {
               <List_Title_Content>
                 <List_Text numberOfLines={1}>{data.item.listContent}</List_Text>
                 {data.item.listDay ? (
-                  <List_Clock_Text>{data.item.listDay}</List_Clock_Text>
+                  <List_Clock_Text>
+                    {ListDay}
+                    <Icon name="bells" size={12} color={'orange'} />
+                  </List_Clock_Text>
                 ) : null}
               </List_Title_Content>
             </List_Title_View>
 
             <List_Icon_View>
-              <Icon name="bells" size={20} />
+              <Icon name="star" size={12} color={'pink'} />
+              <Icon name="star" size={12} color={'pink'} />
             </List_Icon_View>
           </List_Item>
         </TouchableOpacity>

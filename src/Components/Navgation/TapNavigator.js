@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useDispatch} from 'react-redux';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 import realm from '../../db';
 import HomeScreen from '../HomeScreen';
@@ -24,10 +25,34 @@ const TapNavigator = () => {
   }, []);
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="HOME" component={ToDoStackNavigator} />
-      <Tab.Screen name="CALENDAR" component={Calendar_Agenda} />
-      <Tab.Screen name="SETTING" component={HomeScreen} />
+    <Tab.Navigator tabBarOptions={{showLabel: false}}>
+      <Tab.Screen
+        name="HOME"
+        component={ToDoStackNavigator}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Icon name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="CALENDAR"
+        component={Calendar_Agenda}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Icon name="calendar" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="SETTING"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Icon name="setting" size={size} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };

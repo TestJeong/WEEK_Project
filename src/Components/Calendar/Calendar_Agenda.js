@@ -1,129 +1,89 @@
-import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Text, SafeAreaView, Button} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
+import styled from 'styled-components/native';
 
-import realm from '../../db';
 import {AGENDA_DATA_REQUEST} from '../../reducers/Catagory';
+import Render_Empty from './Render_Empty';
+
+const Render_View = styled.View`
+  flex-direction: row;
+  background-color: white;
+  height: 90px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  padding: 15px;
+  border-top-color: red;
+  border-top-width: 7px;
+`;
+
+const Render_Text = styled.Text`
+  font-size: 16px;
+  margin-bottom: 15px;
+`;
+
+const Time_Text = styled.Text`
+  font-size: 13px;
+  color: #adb5bd;
+`;
+
+const List_View = styled.View``;
 
 const Schedule = ({navigation}) => {
-  const [items, setItems] = useState({});
   const dispatch = useDispatch();
   const {Agenda_DATA} = useSelector((state) => state.Catagory);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
-      /* for (let el in Agenda_TEST) {
-        const strTime = Agenda_TEST[el].listDay;
-        items[strTime] = [];
-        const BookMarkaa = AgendaData.filtered('listDay == $0', strTime);
-
-        BookMarkaa.map((date) => items[strTime].push({name: date.listContent})); */
-
       dispatch({type: AGENDA_DATA_REQUEST});
     });
   }, [Agenda_DATA]);
 
-  /* useEffect(() => {
-    const CategoryData = realm.objects('TodoDataList');
-    dispatch({type: AGENDA_TEST, data: CategoryData});
-
-    for (let el in Agenda_TEST) {
-      const strTime = Agenda_TEST[el].listDay;
-      console.log('aapple', Agenda_TEST[el].listContent);
-
-      if (!items[strTime]) {
-        items[strTime] = [];
-
-        const BookMarkaa = CategoryData.filtered('listDay == $0', strTime);
-
-        BookMarkaa.map((date) => items[strTime].push({name: date.listContent}));
-        console.log('if');
-      }
-      const newItems = {};
-      Object.keys(items).forEach((key) => {
-        newItems[key] = items[key];
-      });
-      setItems(newItems);
-    }
-  }, []); */
-
-  /* useEffect(() => {
-    const CategoryData = realm.objects('TodoDataList');
-    dispatch({type: AGENDA_TEST, data: CategoryData});
-  }, []);
-
-  const loadItems = () => {
-    for (let el in Agenda_TEST) {
-      const strTime = Agenda_TEST[el].listDay;
-
-      if (!items[strTime]) {
-        items[strTime] = [];
-        const CategoryData = realm.objects('TodoDataList');
-        const BookMarkaa = CategoryData.filtered('listDay == $0', strTime);
-
-        BookMarkaa.map((date) => items[strTime].push({name: date.listContent}));
-      }
-      const newItems = {};
-      Object.keys(items).forEach((key) => {
-        newItems[key] = items[key];
-      });
-      setItems(newItems);
-    }
-  }; */
-
-  /* const loadItems = () => {
-    const CategoryData = realm.objects('TodoDataList');
-    for (let el in Agenda_TEST) {
-      const strTime = Agenda_TEST[el].listDay;
-
-      items[strTime] = [];
-
-      const BookMarkaa = CategoryData.filtered('listDay == $0', strTime);
-      BookMarkaa.map((date) => items[strTime].push({name: date.listContent}));
-    }
-  }; */
-
   const renderItem = (item) => {
     return (
       <TouchableOpacity style={{marginRight: 10, marginTop: 17}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            height: 80,
-            borderRadius: 10,
-            paddingLeft: 20,
-          }}>
-          <Text>{item.name}</Text>
-        </View>
+        <Render_View style={(styles.container, {borderTopColor: item.colors})}>
+          <List_View>
+            <Render_Text>{item.name}</Render_Text>
+            <Text>Hello!</Text>
+          </List_View>
+          <Time_Text>오전 09:20</Time_Text>
+        </Render_View>
       </TouchableOpacity>
     );
   };
 
-  const _rowHasChanged = (r1, r2) => {
-    return r1.name !== r2.name;
-  };
-
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Agenda
         items={Agenda_DATA}
-        /*     loadItemsForMonth={loadItems} */
         renderItem={renderItem}
-        rowHasChanged={_rowHasChanged}
-        renderEmptyData={() => {
-          return (
-            <View>
-              <Text>apple</Text>
-            </View>
-          );
-        }}
+        renderEmptyData={Render_Empty}
       />
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 1.22,
+
+    elevation: 3,
+  },
+});
 
 export default Schedule;

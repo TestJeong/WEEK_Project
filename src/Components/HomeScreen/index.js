@@ -36,7 +36,7 @@ const PlusText = styled.Text`
 
 const FlatListView = styled.FlatList`
   background-color: #bdbfa3;
-  border-radius: 15px;
+  border-radius: 10px;
   padding: 0px 0px 0px 20px;
 `;
 
@@ -54,7 +54,7 @@ const Column_View = styled.View`
 
 const Column_Btn = styled.TouchableOpacity`
   width: 45%;
-  border-radius: 15px;
+  border-radius: 10px;
 `;
 
 const Plus_Category_Btn = styled.TouchableOpacity`
