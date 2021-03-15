@@ -88,18 +88,18 @@ const HomeScreen = () => {
       <Main_Container>
         <TitleText>안녕하세요 미리알림</TitleText>
         <Column_View>
-          <Column_Btn style={{backgroundColor: 'red'}}>
+          <Column_Btn style={{backgroundColor: '#FDE5E6'}}>
             <Text>11</Text>
           </Column_Btn>
-          <Column_Btn style={{backgroundColor: 'blue'}}>
+          <Column_Btn style={{backgroundColor: '#F1F3FF'}}>
             <Text>22</Text>
           </Column_Btn>
         </Column_View>
         <Column_View>
-          <Column_Btn style={{backgroundColor: 'green'}}>
+          <Column_Btn style={{backgroundColor: '#D7EFE7'}}>
             <Text>33</Text>
           </Column_Btn>
-          <Column_Btn style={{backgroundColor: 'yellow'}}>
+          <Column_Btn style={{backgroundColor: '#F0DFCC'}}>
             <Text>44</Text>
           </Column_Btn>
         </Column_View>

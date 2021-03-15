@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -37,15 +37,43 @@ const Time_Text = styled.Text`
 
 const List_View = styled.View``;
 
+const timeToString = (time) => {
+  const date = new Date(time);
+  return date.toISOString().split('T')[0];
+};
+
 const Schedule = ({navigation}) => {
   const dispatch = useDispatch();
   const {Agenda_DATA} = useSelector((state) => state.Catagory);
+  const [items, setItems] = useState({});
+  const [testt, setTestt] = useState({});
 
   useEffect(() => {
     navigation.addListener('focus', () => {
       dispatch({type: AGENDA_DATA_REQUEST});
     });
   }, [Agenda_DATA]);
+
+  const loadItems = (day) => {
+    console.log('Aa', new Date());
+
+    /* let day_Date = {};
+
+    for (let i = -15; i < 85; i++) {
+      const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+      const strTime = timeToString(time);
+
+      if (Agenda_DATA[strTime] === undefined) {
+        day_Date[strTime] = [];
+        console.log(' null 입니다', strTime);
+      } else {
+        day_Date[strTime] = [];
+        day_Date[strTime].push(Agenda_DATA[strTime]);
+      }
+    }
+
+    setItems(day_Date); */
+  };
 
   const renderItem = (item) => {
     return (
@@ -61,12 +89,21 @@ const Schedule = ({navigation}) => {
     );
   };
 
+  const render_ = () => {
+    return (
+      <View style={{backgroundColor: 'red'}}>
+        <Text> Ejj</Text>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Agenda
         items={Agenda_DATA}
         renderItem={renderItem}
-        renderEmptyData={Render_Empty}
+        /* loadItemsForMonth={loadItems} */
+        renderEmptyDat={render_}
       />
     </SafeAreaView>
   );
