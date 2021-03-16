@@ -41,95 +41,32 @@ export const Agenda_Call_Data = () => {
 
   let items = {};
 
-  for (let i = -15; i < 85; i++) {
+  for (let i = -15; i < 30; i++) {
     const time = new Date().getTime() + i * 24 * 60 * 60 * 1000;
     const strTime = timeToString(time);
 
-    for (let el in AgendaData) {
-      const Agenda_listDay = AgendaData[el].listDay;
+    const TodoData_Day = AgendaData.filtered('listDay == $0', strTime);
 
-      console.log('1', strTime);
-      console.log('2', Agenda_listDay);
-
-      if (strTime === Agenda_listDay) {
-        /*   const TodoData_Day = AgendaData.filtered('listDay == $0', strTime);
-        items[strTime] = [];
-        TodoData_Day.map((date) => {
-          const Category = CategoryData.filtered(
-            'title == $0',
-            date.categoryTitle,
-          );
-          items[strTime].push({
-            name: date.listContent,
-            colors: Category[0].color,
-          });
-        }); */
-        /* items[strTime] = [{name: '있음'}]; */
-      } else {
-        /* items[strTime] = [{name: '없음'}]; */
-      }
+    if (TodoData_Day.length === 0) {
+      items[strTime] = [];
+    } else {
+      items[strTime] = [];
+      TodoData_Day.map((date) => {
+        const Category = CategoryData.filtered(
+          'title == $0',
+          date.categoryTitle,
+        );
+        items[strTime].push({
+          name: date.listContent,
+          title: date.categoryTitle,
+          time: date.listTime,
+          colors: Category[0].color,
+        });
+      });
     }
   }
 
-  console.log('?', items);
-
   return items;
-
-  /* let items = {};
-
-  for (let el in AgendaData) {
-    const strTime = AgendaData[el].listDay;
-
-    items[strTime] = [];
-    const TodoData_Day = AgendaData.filtered('listDay == $0', strTime);
-
-    TodoData_Day.map((date) => {
-      const Category = CategoryData.filtered('title == $0', date.categoryTitle);
-      items[strTime].push({name: date.listContent, colors: Category[0].color});
-    });
-  } */
-};
-
-export const All_Date = async () => {
-  const APPLE = await Agenda_Call_Data();
-
-  let day_Date = {};
-
-  /* for (let i = -15; i < 85; i++) {
-    const time = new Date().getTime() + i * 24 * 60 * 60 * 1000;
-    const strTime = timeToString(time);
-
-    if (APPLE[strTime] === undefined) {
-      day_Date[strTime] = [];
-    } else {
-      day_Date[strTime] = [];
-      day_Date[strTime].push(APPLE[strTime]);
-    }
-  } */
-
-  /* for (let i = -15; i < 85; i++) {
-    const time = new Date().getTime() + i * 24 * 60 * 60 * 1000;
-    const strTime = timeToString(time);
-
-    for(let el in AgendaData){
-      const strTimes = AgendaData[el].listDay;
-
-      if(strTime === strTimes) {
-        console.log("일치 한느 것을 찾음")
-      } else {
-        console.log("못찾음.")
-      }
-    }
-
-    if (APPLE[strTime] === undefined) {
-      day_Date[strTime] = [];
-    } else {
-      day_Date[strTime] = [];
-      day_Date[strTime].push(APPLE[strTime]);
-    }
-  } */
-
-  return day_Date;
 };
 
 /* export const book_Delete = (term) => {

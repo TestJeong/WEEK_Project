@@ -14,6 +14,7 @@ import styled from 'styled-components/native';
 import realm from '../../db';
 import {Day} from '../Day';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
+import Category_Palette from './Category_Palette';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -25,7 +26,7 @@ const Modal_Container = styled(Modal)`
 const ModalView = styled.View`
   /* 모달창 크기 조절 */
   width: 100%;
-  height: 90%;
+  height: 93%;
   align-items: center;
   border-radius: 10px;
   background-color: white;
@@ -38,7 +39,7 @@ const Text_Input_Container = styled.TextInput`
   width: 90%;
   margin-top: 15px;
   border-radius: 8px;
-  background-color: #b4baba;
+  background-color: #cad0d4;
 `;
 
 const Button_View = styled.View`
@@ -108,6 +109,7 @@ const Category_Modal_View = ({isOpen, close}) => {
           onChangeText={setcategoryTitle}
           placeholder="카테고리 제목을 입력하세요"
         />
+        <Category_Palette />
       </ModalView>
     </Modal_Container>
   );

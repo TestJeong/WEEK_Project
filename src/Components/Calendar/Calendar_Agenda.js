@@ -37,16 +37,9 @@ const Time_Text = styled.Text`
 
 const List_View = styled.View``;
 
-const timeToString = (time) => {
-  const date = new Date(time);
-  return date.toISOString().split('T')[0];
-};
-
 const Schedule = ({navigation}) => {
   const dispatch = useDispatch();
   const {Agenda_DATA} = useSelector((state) => state.Catagory);
-  const [items, setItems] = useState({});
-  const [testt, setTestt] = useState({});
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -54,47 +47,22 @@ const Schedule = ({navigation}) => {
     });
   }, [Agenda_DATA]);
 
-  const loadItems = (day) => {
-    console.log('Aa', new Date());
-
-    /* let day_Date = {};
-
-    for (let i = -15; i < 85; i++) {
-      const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-      const strTime = timeToString(time);
-
-      if (Agenda_DATA[strTime] === undefined) {
-        day_Date[strTime] = [];
-        console.log(' null 입니다', strTime);
-      } else {
-        day_Date[strTime] = [];
-        day_Date[strTime].push(Agenda_DATA[strTime]);
-      }
-    }
-
-    setItems(day_Date); */
-  };
-
   const renderItem = (item) => {
     return (
       <TouchableOpacity style={{marginRight: 10, marginTop: 17}}>
         <Render_View style={(styles.container, {borderTopColor: item.colors})}>
           <List_View>
             <Render_Text>{item.name}</Render_Text>
-            <Text>Hello!</Text>
+            <Text>{item.title}</Text>
           </List_View>
-          <Time_Text>오전 09:20</Time_Text>
+          <Time_Text>{item.time}</Time_Text>
         </Render_View>
       </TouchableOpacity>
     );
   };
 
   const render_ = () => {
-    return (
-      <View style={{backgroundColor: 'red'}}>
-        <Text> Ejj</Text>
-      </View>
-    );
+    return <View style={styles.emptyDate} />;
   };
 
   return (
@@ -102,8 +70,7 @@ const Schedule = ({navigation}) => {
       <Agenda
         items={Agenda_DATA}
         renderItem={renderItem}
-        /* loadItemsForMonth={loadItems} */
-        renderEmptyDat={render_}
+        renderEmptyDate={render_}
       />
     </SafeAreaView>
   );
@@ -120,6 +87,13 @@ const styles = StyleSheet.create({
     shadowRadius: 1.22,
 
     elevation: 3,
+  },
+  emptyDate: {
+    height: 15,
+    flex: 1,
+    paddingTop: 30,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#cad0d4',
   },
 });
 

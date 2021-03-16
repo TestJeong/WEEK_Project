@@ -85,6 +85,7 @@ const CalendarModal = ({openModal, closeModal}) => {
   const handleConfirm = (date) => {
     const DATE_TIME = date.toLocaleTimeString();
     const IOS_HOURS = (date.getHours() + 24) % 12 || 12;
+
     const IOS_TIMESHEET =
       IOS_HOURS < 10
         ? date.toLocaleTimeString().substring(0, 7)
@@ -94,6 +95,7 @@ const CalendarModal = ({openModal, closeModal}) => {
     const ANDROID_MINUNTES = date.getMinutes();
     const ANDROID_DAY =
       date.getHours() < 12 && date.getHours() >= 0 ? '오전' : '오후';
+
     const ANDROID_TIMESHEET =
       ANDROID_DAY +
       ' ' +
@@ -103,7 +105,7 @@ const CalendarModal = ({openModal, closeModal}) => {
 
     dispatch({
       type: CLICK_TIME,
-      data: DATE_TIME,
+      data: Platform.OS === 'ios' ? IOS_TIMESHEET : ANDROID_TIMESHEET,
     });
     setClickTime(Platform.OS === 'ios' ? IOS_TIMESHEET : ANDROID_TIMESHEET);
     hideDatePicker();

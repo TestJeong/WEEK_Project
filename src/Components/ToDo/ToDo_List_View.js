@@ -54,7 +54,7 @@ const ToDo_List_View = ({data}) => {
   useEffect(() => {
     if (data.item.listDay) {
       const ListDay_Month =
-        data.item.listDay.substring(5, 7) > 10
+        data.item.listDay.substring(5, 7) >= 10
           ? data.item.listDay.substring(5, 7)
           : data.item.listDay.substring(6, 7);
       const ListDay_Day = data.item.listDay.substring(8, 10);
@@ -158,12 +158,13 @@ const ToDo_List_View = ({data}) => {
 
               <List_Title_Content>
                 <List_Text numberOfLines={1}>{data.item.listContent}</List_Text>
-                {data.item.listDay ? (
-                  <List_Clock_Text>
-                    {ListDay}
+
+                <List_Clock_Text>
+                  {ListDay}
+                  {data.item.listTime ? (
                     <Icon name="bells" size={12} color={'orange'} />
-                  </List_Clock_Text>
-                ) : null}
+                  ) : null}
+                </List_Clock_Text>
               </List_Title_Content>
             </List_Title_View>
 

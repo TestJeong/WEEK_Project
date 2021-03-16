@@ -86,26 +86,26 @@ const HomeScreen = () => {
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
 
       <Main_Container>
-        <TitleText>안녕하세요 미리알림</TitleText>
+        <TitleText>MY SCHEDULE My Schedule</TitleText>
         <Column_View>
           <Column_Btn style={{backgroundColor: '#FDE5E6'}}>
-            <Text>11</Text>
+            <Text>오늘</Text>
           </Column_Btn>
           <Column_Btn style={{backgroundColor: '#F1F3FF'}}>
-            <Text>22</Text>
+            <Text>예정</Text>
           </Column_Btn>
         </Column_View>
         <Column_View>
           <Column_Btn style={{backgroundColor: '#D7EFE7'}}>
-            <Text>33</Text>
+            <Text>중요</Text>
           </Column_Btn>
           <Column_Btn style={{backgroundColor: '#F0DFCC'}}>
-            <Text>44</Text>
+            <Text>전체</Text>
           </Column_Btn>
         </Column_View>
       </Main_Container>
       <View style={styles.container}>
-        <CategoryTitleText>CATEGORY</CategoryTitleText>
+        <CategoryTitleText>CATEGORY Category</CategoryTitleText>
         <FlatListView
           keyExtractor={(item, index) => '#' + index}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
