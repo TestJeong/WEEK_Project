@@ -24,6 +24,8 @@ const Colors = styled.View`
 
 const Items = styled.TouchableOpacity`
   border-radius: 10px;
+  border-color: blue;
+
   margin: 10px;
   width: 35px;
   height: 35px;
@@ -44,7 +46,6 @@ const colors = [
 ];
 
 const PaletteItem = ({color, active, onClick}) => {
-  console.log('it', color);
   return <Items style={{backgroundColor: color.item}} onPress={onClick} />;
 };
 
@@ -56,10 +57,13 @@ const Category_Palette = ({selected, onSelect}) => {
     <Palettes>
       <Colors>
         <FlatList
+          keyboardShouldPersistTaps="handled"
           keyExtractor={(item, index) => '#' + index}
           numColumns={numColumn}
           data={colors}
-          renderItem={(item) => <PaletteItem color={item} />}
+          renderItem={(item) => (
+            <PaletteItem onClick={() => onSelect(item)} color={item} />
+          )}
         />
       </Colors>
     </Palettes>

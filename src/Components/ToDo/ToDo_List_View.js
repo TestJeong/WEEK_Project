@@ -49,10 +49,14 @@ const ToDo_List_View = ({data}) => {
   const swiper = useRef();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   const [ListDay, setListDay] = useState(null);
+  const [onToggle, setOnToggle] = useState(false);
 
   useEffect(() => {
-    if (data.item.listDay) {
+    if (data.item.listDay === null) {
+      setListDay(null);
+    } else {
       const ListDay_Month =
         data.item.listDay.substring(5, 7) >= 10
           ? data.item.listDay.substring(5, 7)
@@ -142,6 +146,10 @@ const ToDo_List_View = ({data}) => {
     navigation.navigate('ToDoList', {categoryName: data.item.title});
   };
 
+  const Toggle = () => {
+    setOnToggle(!onToggle);
+  };
+
   return (
     <View style={styles.container}>
       <Swipeable
@@ -152,19 +160,28 @@ const ToDo_List_View = ({data}) => {
         <TouchableOpacity onPress={goToList}>
           <List_Item>
             <List_Title_View>
-              <TouchableOpacity>
-                <Icon name="checkcircleo" size={30} />
+              <TouchableOpacity onPress={Toggle}>
+                {onToggle ? (
+                  <Icon name="checkcircleo" size={30} color="#bbb" />
+                ) : (
+                  <Icon name="checkcircleo" size={30} />
+                )}
               </TouchableOpacity>
 
               <List_Title_Content>
-                <List_Text numberOfLines={1}>{data.item.listContent}</List_Text>
-
-                <List_Clock_Text>
-                  {ListDay}
-                  {data.item.listTime ? (
-                    <Icon name="bells" size={12} color={'orange'} />
-                  ) : null}
-                </List_Clock_Text>
+                <List_Text
+                  style={onToggle ? styles.strikeText : null}
+                  numberOfLines={1}>
+                  {data.item.listContent}
+                </List_Text>
+                {ListDay ? (
+                  <List_Clock_Text style={onToggle ? styles.strikeText : null}>
+                    {ListDay}
+                    {data.item.listTime ? (
+                      <Icon name="bells" size={12} color={'orange'} />
+                    ) : null}
+                  </List_Clock_Text>
+                ) : null}
               </List_Title_Content>
             </List_Title_View>
 
@@ -180,6 +197,10 @@ const ToDo_List_View = ({data}) => {
 };
 
 const styles = StyleSheet.create({
+  strikeText: {
+    color: '#bbb',
+    textDecorationLine: 'line-through',
+  },
   item: {marginBottom: 10},
   leftAction: {
     borderTopRightRadius: 10,

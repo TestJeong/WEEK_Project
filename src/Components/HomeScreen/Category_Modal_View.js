@@ -38,6 +38,7 @@ const Text_Input_Container = styled.TextInput`
   height: 50px;
   width: 90%;
   margin-top: 15px;
+  margin-bottom: 35px;
   border-radius: 8px;
   background-color: #cad0d4;
 `;
@@ -60,10 +61,23 @@ const Modal_Title = styled.Text`
   font-weight: 800;
 `;
 
+const Hoper = styled.View`
+  margin: 20px 0px;
+  height: 80px;
+  width: 80px;
+
+  border-radius: 50px;
+`;
+
 const Category_Modal_View = ({isOpen, close}) => {
   const [categoryTitle, setcategoryTitle] = useState('');
+  const [paletteColor, setPaletteColor] = useState('#c2c8c5');
 
   const dispatch = useDispatch();
+
+  const handleSelect = (color) => {
+    setPaletteColor(color.item);
+  };
 
   const SaveButton = () => {
     if (categoryTitle !== '') {
@@ -73,6 +87,7 @@ const Category_Modal_View = ({isOpen, close}) => {
           {
             createTime: Day(),
             title: categoryTitle,
+            color: paletteColor.item,
           },
           true,
         );
@@ -84,7 +99,13 @@ const Category_Modal_View = ({isOpen, close}) => {
       setcategoryTitle('');
     } else {
       close();
+      setPaletteColor('#c2c8c5');
     }
+  };
+
+  const CloseButton = () => {
+    close();
+    setPaletteColor('#c2c8c5');
   };
 
   return (
@@ -92,7 +113,7 @@ const Category_Modal_View = ({isOpen, close}) => {
       <ModalView>
         <Button_View>
           <TouchableOpacity
-            onPress={close}
+            onPress={CloseButton}
             hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
@@ -104,12 +125,14 @@ const Category_Modal_View = ({isOpen, close}) => {
           </TouchableOpacity>
         </Button_View>
 
+        <Hoper style={{backgroundColor: paletteColor}} />
+
         <Text_Input_Container
           value={categoryTitle}
           onChangeText={setcategoryTitle}
           placeholder="카테고리 제목을 입력하세요"
         />
-        <Category_Palette />
+        <Category_Palette onSelect={handleSelect} />
       </ModalView>
     </Modal_Container>
   );

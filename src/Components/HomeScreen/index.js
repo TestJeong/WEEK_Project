@@ -86,7 +86,7 @@ const HomeScreen = () => {
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
 
       <Main_Container>
-        <TitleText>MY SCHEDULE My Schedule</TitleText>
+        <TitleText>My Schedule</TitleText>
         <Column_View>
           <Column_Btn style={{backgroundColor: '#FDE5E6'}}>
             <Text>오늘</Text>
@@ -105,7 +105,7 @@ const HomeScreen = () => {
         </Column_View>
       </Main_Container>
       <View style={styles.container}>
-        <CategoryTitleText>CATEGORY Category</CategoryTitleText>
+        <CategoryTitleText>Category</CategoryTitleText>
         <FlatListView
           keyExtractor={(item, index) => '#' + index}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
