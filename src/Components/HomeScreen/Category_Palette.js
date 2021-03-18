@@ -43,6 +43,51 @@ const colors = [
   'red',
   'green',
   'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
+  'red',
+  'green',
+  'blue',
 ];
 
 const PaletteItem = ({color, active, onClick}) => {
@@ -57,6 +102,7 @@ const Category_Palette = ({selected, onSelect}) => {
     <Palettes>
       <Colors>
         <FlatList
+          style={{height: '100%'}}
           keyboardShouldPersistTaps="handled"
           keyExtractor={(item, index) => '#' + index}
           numColumns={numColumn}

@@ -7,7 +7,10 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {TODO_LIST_DATA_REQUEST} from '../../reducers/Catagory';
+import {
+  TODO_LIST_DATA_REQUEST,
+  CLICK_TODO_LIST_DATA,
+} from '../../reducers/Catagory';
 import {useState} from 'react/cjs/react.development';
 
 const List_Item = styled.View`
@@ -143,7 +146,8 @@ const ToDo_List_View = ({data}) => {
   };
 
   const goToList = () => {
-    navigation.navigate('ToDoList', {categoryName: data.item.title});
+    navigation.navigate('ToDoListDetail');
+    dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
   };
 
   const Toggle = () => {

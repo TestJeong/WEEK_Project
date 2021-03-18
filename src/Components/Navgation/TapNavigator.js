@@ -6,8 +6,10 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import realm from '../../db';
 import HomeScreen from '../HomeScreen';
 import {MY_CATEGORY_DATA, AGENDA_TEST} from '../../reducers/Catagory';
-import {ToDoStackNavigator} from '../../Components/Navgation/StackNavigator';
-import Calendar_Agenda from '../Calendar/Calendar_Agenda';
+import {
+  ToDoStackNavigator,
+  CalendarStackNavigator,
+} from '../../Components/Navgation/StackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +39,7 @@ const TapNavigator = () => {
       />
       <Tab.Screen
         name="CALENDAR"
-        component={Calendar_Agenda}
+        component={CalendarStackNavigator}
         options={{
           tabBarIcon: ({color, size}) => (
             <Icon name="calendar" size={size} color={color} />

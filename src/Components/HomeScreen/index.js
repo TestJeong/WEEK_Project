@@ -35,7 +35,7 @@ const PlusText = styled.Text`
 `;
 
 const FlatListView = styled.FlatList`
-  background-color: #bdbfa3;
+  background-color: #ffdd94;
   border-radius: 10px;
   padding: 0px 0px 0px 20px;
 `;
@@ -53,6 +53,9 @@ const Column_View = styled.View`
 `;
 
 const Column_Btn = styled.TouchableOpacity`
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
   width: 45%;
   border-radius: 10px;
 `;
@@ -61,6 +64,26 @@ const Plus_Category_Btn = styled.TouchableOpacity`
   margin-top: 20px;
   flex-direction: row;
   align-items: center;
+`;
+
+const Main_Title_Number = styled.View`
+  justify-content: center;
+`;
+
+const Main_Title_Number_Text = styled.Text`
+  font-size: 30px;
+  font-weight: 500;
+`;
+
+const Main_Title_View = styled.View`
+  align-items: center;
+`;
+
+const Main_Title_Text = styled.Text`
+  text-align: left;
+  font-size: 20px;
+  font-weight: 700;
+  padding-bottom: 10px;
 `;
 
 const HomeScreen = () => {
@@ -86,21 +109,45 @@ const HomeScreen = () => {
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
 
       <Main_Container>
-        <TitleText>My Schedule</TitleText>
+        <TitleText>WEEK</TitleText>
         <Column_View>
-          <Column_Btn style={{backgroundColor: '#FDE5E6'}}>
-            <Text>오늘</Text>
+          <Column_Btn style={{backgroundColor: '#fa897b'}}>
+            <Main_Title_View>
+              <Main_Title_Text>오늘</Main_Title_Text>
+              <Main_Title_Text>⏰</Main_Title_Text>
+            </Main_Title_View>
+            <Main_Title_Number>
+              <Main_Title_Number_Text>10</Main_Title_Number_Text>
+            </Main_Title_Number>
           </Column_Btn>
-          <Column_Btn style={{backgroundColor: '#F1F3FF'}}>
-            <Text>예정</Text>
+          <Column_Btn style={{backgroundColor: '#ccabd8'}}>
+            <Main_Title_View>
+              <Main_Title_Text>예정</Main_Title_Text>
+              <Main_Title_Text>🛎</Main_Title_Text>
+            </Main_Title_View>
+            <Main_Title_Number>
+              <Main_Title_Number_Text>3</Main_Title_Number_Text>
+            </Main_Title_Number>
           </Column_Btn>
         </Column_View>
         <Column_View>
-          <Column_Btn style={{backgroundColor: '#D7EFE7'}}>
-            <Text>중요</Text>
+          <Column_Btn style={{backgroundColor: '#d0e6a5'}}>
+            <Main_Title_View>
+              <Main_Title_Text>중요</Main_Title_Text>
+              <Main_Title_Text>💡</Main_Title_Text>
+            </Main_Title_View>
+            <Main_Title_Number>
+              <Main_Title_Number_Text>8</Main_Title_Number_Text>
+            </Main_Title_Number>
           </Column_Btn>
-          <Column_Btn style={{backgroundColor: '#F0DFCC'}}>
-            <Text>전체</Text>
+          <Column_Btn style={{backgroundColor: '#86e3ce'}}>
+            <Main_Title_View>
+              <Main_Title_Text>전체</Main_Title_Text>
+              <Main_Title_Text>📅</Main_Title_Text>
+            </Main_Title_View>
+            <Main_Title_Number>
+              <Main_Title_Number_Text>19</Main_Title_Number_Text>
+            </Main_Title_Number>
           </Column_Btn>
         </Column_View>
       </Main_Container>
@@ -126,7 +173,7 @@ const styles = StyleSheet.create({
     height: '50%',
   },
   separator: {
-    backgroundColor: 'rgb(200, 199, 204)',
+    backgroundColor: 'white',
     height: 1,
   },
 });

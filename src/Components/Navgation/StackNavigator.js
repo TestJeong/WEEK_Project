@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import ToDo_List from '../ToDo/ToDo_List';
 import Home from '../HomeScreen';
+import ToDoList_Detail from '../ToDo/ToDoList_Detail';
+import Calendar_Agenda from '../Calendar/Calendar_Agenda';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +39,48 @@ const ToDoStackNavigator = ({navigation}) => {
           ),
         }}
       />
+      <Stack.Screen
+        name="ToDoListDetail"
+        component={ToDoList_Detail}
+        options={{
+          headerTitle: '상세정보',
+          headerLeftContainerStyle: {marginLeft: 20},
+          headerLeft: () => (
+            <Icon
+              onPress={() => navigation.navigate('ToDoList')}
+              name="left"
+              size={20}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const CalendarStackNavigator = ({navigation}) => {
+  return (
+    <Stack.Navigator screenOptions={screenOptionStyle}>
+      <Stack.Screen
+        name="Agenda"
+        component={Calendar_Agenda}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ToDoListDetail"
+        component={ToDoList_Detail}
+        options={{
+          headerTitle: '상세정보',
+          headerLeftContainerStyle: {marginLeft: 20},
+          headerLeft: () => (
+            <Icon
+              onPress={() => navigation.navigate('Agenda')}
+              name="left"
+              size={20}
+            />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -53,4 +97,4 @@ const ModalView = () => {
     </Stack.Navigator>
   );
 };
-export {ToDoStackNavigator, ModalView};
+export {ToDoStackNavigator, CalendarStackNavigator, ModalView};

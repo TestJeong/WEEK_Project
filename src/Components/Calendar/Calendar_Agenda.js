@@ -10,7 +10,10 @@ import {Agenda} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 
-import {AGENDA_DATA_REQUEST} from '../../reducers/Catagory';
+import {
+  AGENDA_DATA_REQUEST,
+  CLICK_TODO_LIST_DATA,
+} from '../../reducers/Catagory';
 import Render_Empty from './Render_Empty';
 
 const Render_View = styled.View`
@@ -48,14 +51,20 @@ const Schedule = ({navigation}) => {
   }, [Agenda_DATA]);
 
   const renderItem = (item) => {
+    const goToList = () => {
+      navigation.navigate('ToDoListDetail');
+      dispatch({type: CLICK_TODO_LIST_DATA, data: item});
+    };
     return (
-      <TouchableOpacity style={{marginRight: 10, marginTop: 17}}>
+      <TouchableOpacity
+        onPress={goToList}
+        style={{marginRight: 10, marginTop: 17}}>
         <Render_View style={(styles.container, {borderTopColor: item.colors})}>
           <List_View>
-            <Render_Text>{item.name}</Render_Text>
-            <Text>{item.title}</Text>
+            <Render_Text>{item.listContent}</Render_Text>
+            <Text>{item.categoryTitle}</Text>
           </List_View>
-          <Time_Text>{item.time}</Time_Text>
+          <Time_Text>{item.listTime}</Time_Text>
         </Render_View>
       </TouchableOpacity>
     );

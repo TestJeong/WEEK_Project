@@ -57,9 +57,10 @@ export const Agenda_Call_Data = () => {
           date.categoryTitle,
         );
         items[strTime].push({
-          name: date.listContent,
-          title: date.categoryTitle,
-          time: date.listTime,
+          listContent: date.listContent,
+          categoryTitle: date.categoryTitle,
+          listTime: date.listTime,
+          listDay: date.listDay,
           colors: Category[0].color,
         });
       });

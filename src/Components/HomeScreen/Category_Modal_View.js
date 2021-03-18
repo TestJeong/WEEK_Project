@@ -87,7 +87,7 @@ const Category_Modal_View = ({isOpen, close}) => {
           {
             createTime: Day(),
             title: categoryTitle,
-            color: paletteColor.item,
+            color: paletteColor,
           },
           true,
         );

@@ -11,6 +11,8 @@ export const init = {
 
   onClickTime: null,
 
+  onClickToDoList: null,
+
   todo_List_data_loading: false,
   todo_List_data_done: false,
   todo_List_data_error: null,
@@ -29,6 +31,8 @@ export const MY_CATEGORY_DATA = 'MY_CATEGORY_DATA';
 
 export const CLICK_CATEGORY = 'CLICK_CATEGORY';
 export const CLICK_CATEGORY_RESET = 'CLICK_CATEGORY_RESET';
+
+export const CLICK_TODO_LIST_DATA = 'CLICK_TODO_LIST_DATA';
 
 export const CLICK_DAY = 'CLICK_DAY';
 export const CLICK_TIME = 'CLICK_TIME';
@@ -52,6 +56,10 @@ const reducer = (state = init, action) => {
         draft.categoryList = action.data;
         draft.onClickTime = null;
         draft.onClickDay = null;
+        break;
+
+      case CLICK_TODO_LIST_DATA:
+        draft.onClickToDoList = action.data;
         break;
 
       case CLICK_CATEGORY:
