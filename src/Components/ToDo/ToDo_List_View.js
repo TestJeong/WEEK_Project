@@ -1,17 +1,19 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useState, useLayoutEffect} from 'react';
 import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {useSelector, useDispatch} from 'react-redux';
+import realm from '../../db';
+
 import {
   TODO_LIST_DATA_REQUEST,
   CLICK_TODO_LIST_DATA,
+  CLICK_CATEGORY,
 } from '../../reducers/Catagory';
-import {useState} from 'react/cjs/react.development';
 
 const List_Item = styled.View`
   height: 40px;
@@ -37,7 +39,6 @@ const List_Clock_Text = styled.Text`
 const List_Title_View = styled.View`
   flex-direction: row;
   align-items: center;
-
   width: 95%;
 `;
 
@@ -46,15 +47,26 @@ const List_Title_Content = styled.View`
   width: 100%;
 `;
 
-const List_Icon_View = styled.View``;
-
 const ToDo_List_View = ({data}) => {
   const swiper = useRef();
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const TodoList_View = realm.objects('TodoDataList');
+  const TodoList_View_Data = TodoList_View.filtered(
+    'createTime == $0',
+    data.item.createTime,
+  );
+
   const [ListDay, setListDay] = useState(null);
-  const [onToggle, setOnToggle] = useState(false);
+  const [onToggle_List, setOnToggle_List] = useState(
+    TodoList_View_Data[0].listClear,
+  );
+  const {clickCategory} = useSelector((state) => state.Catagory);
+
+  useLayoutEffect(() => {
+    setOnToggle_List(data.item.listClear);
+  }, [data.item.listClear]);
 
   useEffect(() => {
     if (data.item.listDay === null) {
@@ -68,7 +80,7 @@ const ToDo_List_View = ({data}) => {
       const ListDay_Total = ListDay_Month + '월' + ListDay_Day + '일 ';
       setListDay(ListDay_Total);
     }
-  }, [data.item.listDay]);
+  }, [data.item]);
 
   const MoveTo_List_Action = (text, color, x, progress) => {
     const trans = progress.interpolate({
@@ -151,7 +163,18 @@ const ToDo_List_View = ({data}) => {
   };
 
   const Toggle = () => {
-    setOnToggle(!onToggle);
+    setOnToggle_List(!onToggle_List);
+    realm.write(() => {
+      realm.create(
+        'TodoDataList',
+        {
+          createTime: data.item.createTime,
+          listClear: !onToggle_List,
+        },
+        true,
+      );
+    });
+    dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
   };
 
   return (
@@ -165,7 +188,7 @@ const ToDo_List_View = ({data}) => {
           <List_Item>
             <List_Title_View>
               <TouchableOpacity onPress={Toggle}>
-                {onToggle ? (
+                {onToggle_List ? (
                   <Icon name="checkcircleo" size={30} color="#bbb" />
                 ) : (
                   <Icon name="checkcircleo" size={30} />
@@ -174,12 +197,13 @@ const ToDo_List_View = ({data}) => {
 
               <List_Title_Content>
                 <List_Text
-                  style={onToggle ? styles.strikeText : null}
+                  style={onToggle_List ? styles.strikeText : null}
                   numberOfLines={1}>
                   {data.item.listContent}
                 </List_Text>
                 {ListDay ? (
-                  <List_Clock_Text style={onToggle ? styles.strikeText : null}>
+                  <List_Clock_Text
+                    style={onToggle_List ? styles.strikeText : null}>
                     {ListDay}
                     {data.item.listTime ? (
                       <Icon name="bells" size={12} color={'orange'} />
@@ -189,10 +213,53 @@ const ToDo_List_View = ({data}) => {
               </List_Title_Content>
             </List_Title_View>
 
-            <List_Icon_View>
-              <Icon name="star" size={12} color={'pink'} />
-              <Icon name="star" size={12} color={'pink'} />
-            </List_Icon_View>
+            {(function () {
+              if (data.item.listPriority === 1)
+                return (
+                  <View>
+                    <Icon
+                      name="star"
+                      size={12}
+                      color={onToggle_List ? '#bbb' : 'pink'}
+                    />
+                  </View>
+                );
+              if (data.item.listPriority === 2)
+                return (
+                  <View>
+                    <Icon
+                      name="star"
+                      size={12}
+                      color={onToggle_List ? '#bbb' : 'pink'}
+                    />
+                    <Icon
+                      name="star"
+                      size={12}
+                      color={onToggle_List ? '#bbb' : 'pink'}
+                    />
+                  </View>
+                );
+              if (data.item.listPriority === 3)
+                return (
+                  <View>
+                    <Icon
+                      name="star"
+                      size={12}
+                      color={onToggle_List ? '#bbb' : 'pink'}
+                    />
+                    <Icon
+                      name="star"
+                      size={12}
+                      color={onToggle_List ? '#bbb' : 'pink'}
+                    />
+                    <Icon
+                      name="star"
+                      size={12}
+                      color={onToggle_List ? '#bbb' : 'pink'}
+                    />
+                  </View>
+                );
+            })()}
           </List_Item>
         </TouchableOpacity>
       </Swipeable>
@@ -205,13 +272,14 @@ const styles = StyleSheet.create({
     color: '#bbb',
     textDecorationLine: 'line-through',
   },
-  item: {marginBottom: 10},
+
   leftAction: {
     borderTopRightRadius: 10,
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
   },
+
   actionText: {
     color: 'white',
     fontSize: 16,

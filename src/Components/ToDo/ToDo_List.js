@@ -35,6 +35,9 @@ const ToDoList = ({route}) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => <Text>{categoryName}</Text>,
+      headerStyle: {
+        backgroundColor: clickCategory.color,
+      },
     });
   }, [categoryName]);
 
@@ -59,24 +62,18 @@ const ToDoList = ({route}) => {
         <FlatListView
           keyExtractor={(item, index) => '#' + index}
           data={clickCategory.todoData}
-          renderItem={(item) => <ToDo_List_View data={item} />}
+          renderItem={(item) => (
+            <ToDo_List_View data={item} hoho={item.listClear} />
+          )}
         />
       </View>
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={opneModal}
-        style={styles.touchableOpacityStyle}>
-        {/*    <Image
-          // FAB using TouchableOpacity with an image
-          // For online image
-          source={{
-            uri:
-              'https://raw.githubusercontent.com/AboutReact/sampleresource/master/plus_icon.png',
-          }}
-          // For local image
-          //source={require('./images/float-add-icon.png')}
-          style={styles.floatingButtonStyle}
-        /> */}
+        style={[
+          styles.touchableOpacityStyle,
+          {backgroundColor: clickCategory.color},
+        ]}>
         <Icon name="plus" color={'white'} size={30} />
       </TouchableOpacity>
     </>
@@ -92,7 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: 30,
     bottom: 30,
-    backgroundColor: 'green',
+
     borderRadius: 100,
   },
 });

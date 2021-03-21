@@ -1,21 +1,14 @@
 import React, {useState} from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-  Button,
-  Platform,
-} from 'react-native';
+import {TextInput, View, Text, TouchableOpacity, Platform} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import {CLICK_DAY, CLICK_TIME} from '../../reducers/Catagory';
+import DateTime_Picke from './DateTime_Picke';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -28,17 +21,17 @@ const ModalView = styled.View`
 
   /* 모달창 크기 조절 */
   width: 330px;
-  height: 550px;
+  height: 430px;
   border-radius: 10px;
   background-color: white;
-  padding: 10px 5px;
+  padding: 5px 5px;
 `;
 
 const Time_Input_Container = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 40px 10px;
+  padding: 20px 10px;
 `;
 
 const Time_Icon_Container = styled.View`
@@ -65,7 +58,6 @@ const CalendarModal = ({openModal, closeModal}) => {
   const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
 
   const [clickDay, setClickDay] = useState(null);
-  const [clickTime, setClickTime] = useState(null);
 
   const SaveCalendar = () => {
     dispatch({type: CLICK_DAY, data: clickDay});
@@ -80,35 +72,6 @@ const CalendarModal = ({openModal, closeModal}) => {
 
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (date) => {
-    const DATE_TIME = date.toLocaleTimeString();
-    const IOS_HOURS = (date.getHours() + 24) % 12 || 12;
-
-    const IOS_TIMESHEET =
-      IOS_HOURS < 10
-        ? date.toLocaleTimeString().substring(0, 7)
-        : date.toLocaleTimeString().substring(0, 8);
-
-    const ANDROID_HOURS = ((date.getHours() + 11) % 12) + 1;
-    const ANDROID_MINUNTES = date.getMinutes();
-    const ANDROID_DAY =
-      date.getHours() < 12 && date.getHours() >= 0 ? '오전' : '오후';
-
-    const ANDROID_TIMESHEET =
-      ANDROID_DAY +
-      ' ' +
-      ANDROID_HOURS +
-      ':' +
-      (ANDROID_MINUNTES > 10 ? ANDROID_MINUNTES : '0' + ANDROID_MINUNTES);
-
-    dispatch({
-      type: CLICK_TIME,
-      data: Platform.OS === 'ios' ? IOS_TIMESHEET : ANDROID_TIMESHEET,
-    });
-    setClickTime(Platform.OS === 'ios' ? IOS_TIMESHEET : ANDROID_TIMESHEET);
-    hideDatePicker();
   };
 
   const Calendar_Mark = () => {
@@ -129,15 +92,9 @@ const CalendarModal = ({openModal, closeModal}) => {
       isVisible={openModal}
       onBackdropPress={closeModal}
       backdropOpacity={0.2}>
-      <DateTimePickerModal
-        locale="ko_KR"
-        isVisible={isDatePickerVisible}
-        mode="time"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-        headerTextIOS="시간"
-        confirmTextIOS="확인"
-        cancelTextIOS="취소"
+      <DateTime_Picke
+        hideDatePicker={hideDatePicker}
+        isDatePickerVisible={isDatePickerVisible}
       />
       <ModalView>
         <Calendar
@@ -192,7 +149,7 @@ const CalendarModal = ({openModal, closeModal}) => {
             <Text style={{marginLeft: 15, fontSize: 16}}>시간</Text>
           </Time_Icon_Container>
           <Text style={{fontSize: 16}}>
-            {onClickTime ? clickTime : '없음'}&nbsp; &nbsp;
+            {onClickTime ? onClickTime : '없음'}&nbsp; &nbsp;
             <Icon name="right" size={15} />
           </Text>
         </Time_Input_Container>

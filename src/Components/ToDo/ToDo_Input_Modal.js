@@ -6,12 +6,6 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  Button,
-  Keyboard,
-  StyleSheet,
-  ImageBackground,
-  ScrollView,
-  addons,
 } from 'react-native';
 
 import Modal from 'react-native-modal';
@@ -24,7 +18,7 @@ import realm from '../../db';
 import CalendarModal from '../../Components/ToDo/CalendarModal';
 import Priority_Modal from './ Priority';
 import {Day} from '../Day';
-import {MY_CATEGORY_DATA, TEST_TT} from '../../reducers/Catagory';
+import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -71,7 +65,9 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   const inputRef = useRef();
 
-  const {onClickDay, onClickTime} = useSelector((state) => state.Catagory);
+  const {onClickDay, onClickTime, onClickPriority} = useSelector(
+    (state) => state.Catagory,
+  );
   const dispatch = useDispatch();
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
@@ -115,7 +111,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
           listContent: todoContents,
           listDay: onClickDay ? onClickDay : null,
           listTime: onClickTime ? onClickTime : null,
-          listPriority: null,
+          listPriority: onClickPriority ? onClickPriority : null,
         },
         true,
       );

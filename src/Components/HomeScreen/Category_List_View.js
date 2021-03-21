@@ -5,6 +5,8 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
+import Icon from 'react-native-vector-icons/AntDesign';
+
 import {
   CATEGORY_LIST_DATA_REQUEST,
   CLICK_CATEGORY,
@@ -14,6 +16,7 @@ const List_Item = styled.View`
   margin: 15px 35px 15px 5px;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const List_Text = styled.Text`
@@ -104,6 +107,7 @@ const Category_View = ({data}) => {
       <TouchableOpacity onPress={goToList}>
         <List_Item>
           <List_Text>{data.item.title}</List_Text>
+          <Icon name="right" size={15} />
         </List_Item>
       </TouchableOpacity>
     </Swipeable>

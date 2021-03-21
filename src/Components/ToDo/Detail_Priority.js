@@ -14,106 +14,94 @@ import {CLICK_PRIORITY} from '../../reducers/Catagory';
 
 const Container = styled.View`
   border-radius: 10px;
+  padding: 30px 10px;
   display: flex;
-  position: absolute;
-  bottom: 135px;
+  bottom: 0px;
   background-color: white;
-  height: 180px;
-  width: 150px;
+  height: 300px;
+  width: 100%;
   align-items: center;
   justify-content: space-around;
 `;
 
 const Priority_Btn = styled.TouchableOpacity`
+  border: 1px solid #cad0d4;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 0px 15px;
+  padding: 10px;
+  border-radius: 10px;
 `;
 
 const Icon_View = styled.View`
   flex-direction: row;
-
   justify-content: center;
-  width: 35%;
+
+  width: 25%;
 `;
 
 const Priority_Text = styled.Text`
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 500;
 `;
 
-const Priority_Modal = ({closeModal}) => {
+const Detail_Priorty = ({hideActionSheet}) => {
   const dispatch = useDispatch();
 
   const Highest_Priority = () => {
     dispatch({type: CLICK_PRIORITY, data: 3});
-    closeModal();
+    hideActionSheet();
   };
 
   const Medium_Priority = () => {
     dispatch({type: CLICK_PRIORITY, data: 2});
-    closeModal();
+    hideActionSheet();
   };
 
   const Low_Priority = () => {
     dispatch({type: CLICK_PRIORITY, data: 1});
-    closeModal();
+    hideActionSheet();
   };
 
   const Never_Priority = () => {
     dispatch({type: CLICK_PRIORITY, data: 0});
-    closeModal();
+    hideActionSheet();
   };
 
   return (
-    <Container style={styles.container}>
+    <Container>
       <Priority_Btn onPress={Never_Priority}>
-        <Icon_View></Icon_View>
-
-        <Priority_Text>우선도 없음</Priority_Text>
+        <Icon name="staro" size={20} color={'pink'} />
+        {/* <Priority_Text>우선도 없음</Priority_Text> */}
       </Priority_Btn>
 
       <Priority_Btn onPress={Low_Priority}>
         <Icon_View>
-          <Icon name="star" size={12} color={'pink'} />
+          <Icon name="star" size={20} color={'pink'} />
         </Icon_View>
 
-        <Priority_Text>낮은 우선도</Priority_Text>
+        {/* <Priority_Text>낮은 우선도</Priority_Text> */}
       </Priority_Btn>
 
       <Priority_Btn onPress={Medium_Priority}>
         <Icon_View>
-          <Icon name="star" size={12} color={'pink'} />
-          <Icon name="star" size={12} color={'pink'} />
+          <Icon name="star" size={20} color={'pink'} />
+          <Icon name="star" size={20} color={'pink'} />
         </Icon_View>
-        <Priority_Text>중간 우선도</Priority_Text>
+        {/* <Priority_Text>중간 우선도</Priority_Text> */}
       </Priority_Btn>
 
       <Priority_Btn onPress={Highest_Priority}>
         <Icon_View>
-          <Icon name="star" size={12} color={'pink'} />
-          <Icon name="star" size={12} color={'pink'} />
-          <Icon name="star" size={12} color={'pink'} />
+          <Icon name="star" size={20} color={'pink'} />
+          <Icon name="star" size={20} color={'pink'} />
+          <Icon name="star" size={20} color={'pink'} />
         </Icon_View>
-        <Priority_Text>높은 우선도</Priority_Text>
+        {/*  <Priority_Text>높은 우선도</Priority_Text> */}
       </Priority_Btn>
     </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.46,
-    shadowRadius: 1.14,
-    elevation: 16,
-  },
-});
-
-export default Priority_Modal;
+export default Detail_Priorty;

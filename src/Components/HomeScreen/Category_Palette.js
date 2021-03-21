@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacitym,
-  Dimensions,
-  FlatList,
-} from 'react-native';
+import {TextInput, View, Text, Dimensions, FlatList} from 'react-native';
 import styled from 'styled-components/native';
 
 const Palettes = styled.View`
@@ -102,6 +95,9 @@ const Category_Palette = ({selected, onSelect}) => {
     <Palettes>
       <Colors>
         <FlatList
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
           style={{height: '100%'}}
           keyboardShouldPersistTaps="handled"
           keyExtractor={(item, index) => '#' + index}

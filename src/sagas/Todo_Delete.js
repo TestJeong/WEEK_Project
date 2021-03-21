@@ -57,10 +57,14 @@ export const Agenda_Call_Data = () => {
           date.categoryTitle,
         );
         items[strTime].push({
+          createTime: date.createTime,
           listContent: date.listContent,
           categoryTitle: date.categoryTitle,
           listTime: date.listTime,
           listDay: date.listDay,
+          listPriority: date.listPriority,
+          listMemo: date.listMemo,
+          listClear: date.listClear,
           colors: Category[0].color,
         });
       });

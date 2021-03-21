@@ -10,35 +10,8 @@ import {Agenda} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 
-import {
-  AGENDA_DATA_REQUEST,
-  CLICK_TODO_LIST_DATA,
-} from '../../reducers/Catagory';
-import Render_Empty from './Render_Empty';
-
-const Render_View = styled.View`
-  flex-direction: row;
-  background-color: white;
-  height: 90px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-  padding: 15px;
-  border-top-color: red;
-  border-top-width: 7px;
-`;
-
-const Render_Text = styled.Text`
-  font-size: 16px;
-  margin-bottom: 15px;
-`;
-
-const Time_Text = styled.Text`
-  font-size: 13px;
-  color: #adb5bd;
-`;
-
-const List_View = styled.View``;
+import {AGENDA_DATA_REQUEST} from '../../reducers/Catagory';
+import Agenda_List from './Agenda_List';
 
 const Schedule = ({navigation}) => {
   const dispatch = useDispatch();
@@ -51,23 +24,7 @@ const Schedule = ({navigation}) => {
   }, [Agenda_DATA]);
 
   const renderItem = (item) => {
-    const goToList = () => {
-      navigation.navigate('ToDoListDetail');
-      dispatch({type: CLICK_TODO_LIST_DATA, data: item});
-    };
-    return (
-      <TouchableOpacity
-        onPress={goToList}
-        style={{marginRight: 10, marginTop: 17}}>
-        <Render_View style={(styles.container, {borderTopColor: item.colors})}>
-          <List_View>
-            <Render_Text>{item.listContent}</Render_Text>
-            <Text>{item.categoryTitle}</Text>
-          </List_View>
-          <Time_Text>{item.listTime}</Time_Text>
-        </Render_View>
-      </TouchableOpacity>
-    );
+    return <Agenda_List item={item} />;
   };
 
   const render_ = () => {
