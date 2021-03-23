@@ -69,9 +69,11 @@ const Hoper = styled.View`
   border-radius: 50px;
 `;
 
-const Category_Modal_View = ({isOpen, close}) => {
-  const [categoryTitle, setcategoryTitle] = useState('');
-  const [paletteColor, setPaletteColor] = useState('#c2c8c5');
+const Category_Modal_View = ({isOpen, close, data}) => {
+  const [categoryTitle, setcategoryTitle] = useState(data ? data.title : '');
+  const [paletteColor, setPaletteColor] = useState(
+    data ? data.color : '#c2c8c5',
+  );
 
   const dispatch = useDispatch();
 
@@ -85,7 +87,7 @@ const Category_Modal_View = ({isOpen, close}) => {
         realm.create(
           'CategoryList',
           {
-            createTime: Day(),
+            createTime: data ? data.createTime : Day(),
             title: categoryTitle,
             color: paletteColor,
           },
@@ -96,16 +98,19 @@ const Category_Modal_View = ({isOpen, close}) => {
       const SortCategoryDate = CategoryData.sorted('createTime');
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       close();
-      setcategoryTitle('');
+      {
+        data ? null : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
+      }
     } else {
       close();
-      setPaletteColor('#c2c8c5');
     }
   };
 
   const CloseButton = () => {
     close();
-    setPaletteColor('#c2c8c5');
+    {
+      data ? null : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
+    }
   };
 
   return (

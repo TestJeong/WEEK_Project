@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -6,13 +6,16 @@ import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
+import E_Icon from 'react-native-vector-icons/Feather';
 
 import {
   CATEGORY_LIST_DATA_REQUEST,
   CLICK_CATEGORY,
 } from '../../reducers/Catagory';
+import Category_Modal_View from './Category_Modal_View';
 
 const List_Item = styled.View`
+  width: 83%;
   margin: 15px 35px 15px 5px;
   flex-direction: row;
   justify-content: space-between;
@@ -28,6 +31,11 @@ const Category_View = ({data}) => {
   const swiper = useRef();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   const MoveTo_List_Action = (text, color, x, progress) => {
     const trans = progress.interpolate({
@@ -37,7 +45,7 @@ const Category_View = ({data}) => {
     });
 
     const MoveToList = () => {
-      dispatch({type: MOVE_TO_BASKET_REQUEST, data: bookData});
+      setModalVisible(!isModalVisible);
       close();
     };
 
@@ -78,11 +86,21 @@ const Category_View = ({data}) => {
   const renderRightActions = (progress) => (
     <View
       style={{
-        width: 133,
+        width: 120,
         flexDirection: 'row',
       }}>
-      {MoveTo_List_Action(<Text>세부사항</Text>, '#2fc4b2', 192, progress)}
-      {Delete_List_Action(<Text>삭제</Text>, '#dd2c00', 128, progress)}
+      {MoveTo_List_Action(
+        <Icon name="edit" size={20} />,
+        '#34558b',
+        192,
+        progress,
+      )}
+      {Delete_List_Action(
+        <E_Icon name="trash-2" size={20} />,
+        '#dd2c00',
+        128,
+        progress,
+      )}
     </View>
   );
 
@@ -104,7 +122,22 @@ const Category_View = ({data}) => {
       friction={2}
       rightThreshold={40}
       renderRightActions={renderRightActions}>
-      <TouchableOpacity onPress={goToList}>
+      <Category_Modal_View
+        isOpen={isModalVisible}
+        close={closeModal}
+        data={data.item}
+      />
+      <TouchableOpacity
+        style={{flexDirection: 'row', alignItems: 'center'}}
+        onPress={goToList}>
+        <View
+          style={{
+            height: 20,
+            width: 20,
+            borderRadius: 20,
+            backgroundColor: data.item.color,
+            marginRight: 15,
+          }}></View>
         <List_Item>
           <List_Text>{data.item.title}</List_Text>
           <Icon name="right" size={15} />

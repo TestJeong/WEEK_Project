@@ -9,6 +9,7 @@ import ToDo_List from '../ToDo/ToDo_List';
 import Home from '../HomeScreen';
 import ToDoList_Detail from '../ToDo/ToDoList_Detail';
 import Calendar_Agenda from '../Calendar/Calendar_Agenda';
+import Category_ToDo_List from '../HomeScreen/Category_ToDo_List';
 
 const Stack = createStackNavigator();
 
@@ -25,9 +26,25 @@ const ToDoStackNavigator = ({navigation}) => {
         component={Home}
         options={{headerShown: false}}
       />
+
       <Stack.Screen
         name="ToDoList"
         component={ToDo_List}
+        options={{
+          headerLeftContainerStyle: {marginLeft: 20},
+          headerLeft: () => (
+            <Icon
+              onPress={() => navigation.navigate('Home')}
+              name="left"
+              size={20}
+              color={'white'}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Category_ToDoList"
+        component={Category_ToDo_List}
         options={{
           headerLeftContainerStyle: {marginLeft: 20},
           headerLeft: () => (
@@ -39,19 +56,13 @@ const ToDoStackNavigator = ({navigation}) => {
           ),
         }}
       />
+
       <Stack.Screen
         name="ToDoListDetail"
         component={ToDoList_Detail}
         options={{
           headerTitle: '상세정보',
           headerLeftContainerStyle: {marginLeft: 20},
-          headerLeft: () => (
-            <Icon
-              onPress={() => navigation.navigate('ToDoList')}
-              name="left"
-              size={20}
-            />
-          ),
         }}
       />
     </Stack.Navigator>

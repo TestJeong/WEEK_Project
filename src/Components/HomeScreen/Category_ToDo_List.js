@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import styled from 'styled-components/native';
 
-import ToDo_List_View from './ToDo_List_View';
+import ToDo_List_View from '../ToDo/ToDo_List_View';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 
 const FlatListView = styled.FlatList`
@@ -24,26 +24,22 @@ const FlatListView = styled.FlatList`
   height: 100%;
 `;
 
-const ToDoList = ({route}) => {
-  const {categoryName, categoryTime} = route.params;
+const Category_ToDo_List = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const {header_Name} = route.params;
+
   const [isModalVisible, setModalVisible] = useState(false);
-  const {clickCategory} = useSelector((state) => state.Catagory);
+  const {Click_Category_ToDo} = useSelector((state) => state.Catagory);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text style={{color: 'white', fontWeight: '800', fontSize: 17}}>
-          {categoryName}
-        </Text>
+        <Text style={{fontWeight: '800', fontSize: 17}}>{header_Name}</Text>
       ),
-      headerStyle: {
-        backgroundColor: clickCategory.color,
-      },
     });
-  }, [categoryName]);
+  }, []);
 
   const opneModal = () => {
     setModalVisible(!isModalVisible);
@@ -56,20 +52,20 @@ const ToDoList = ({route}) => {
 
   return (
     <>
-      <ToDoInputModal
+      {/*      <ToDoInputModal
         isOpen={isModalVisible}
         close={closeModal}
         categoryName={categoryName}
         categoryTime={categoryTime}
-      />
+      /> */}
       <View>
         <FlatListView
           keyExtractor={(item, index) => '#' + index}
-          data={clickCategory.todoData}
-          renderItem={(item) => <ToDo_List_View data={item} ListName={false} />}
+          data={Click_Category_ToDo}
+          renderItem={(item) => <ToDo_List_View data={item} ListName={true} />}
         />
       </View>
-      <TouchableOpacity
+      {/*  <TouchableOpacity
         activeOpacity={0.5}
         onPress={opneModal}
         style={[
@@ -77,7 +73,7 @@ const ToDoList = ({route}) => {
           {backgroundColor: clickCategory.color},
         ]}>
         <Icon name="plus" color={'white'} size={30} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </>
   );
 };
@@ -96,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ToDoList;
+export default Category_ToDo_List;

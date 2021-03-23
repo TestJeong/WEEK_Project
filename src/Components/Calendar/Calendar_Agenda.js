@@ -16,6 +16,7 @@ import Agenda_List from './Agenda_List';
 const Schedule = ({navigation}) => {
   const dispatch = useDispatch();
   const {Agenda_DATA} = useSelector((state) => state.Catagory);
+  const [clickDay, setClickDay] = useState(null);
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -31,12 +32,38 @@ const Schedule = ({navigation}) => {
     return <View style={styles.emptyDate} />;
   };
 
+  const Calendar_Mark = () => {
+    const Mark = {
+      [clickDay]: {
+        selected: true,
+        marked: false,
+        selectedColor: '#2ad4af',
+      },
+    };
+
+    return Mark;
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Agenda
+        onDayPress={(day) => {
+          setClickDay(day.dateString);
+        }}
         items={Agenda_DATA}
         renderItem={renderItem}
         renderEmptyDate={render_}
+        theme={{
+          selectedDayBackgroundColor: '#347ee7',
+          todayTextColor: '#347ee7',
+
+          textDayFontWeight: '600',
+          textMonthFontWeight: '700',
+          textDayHeaderFontWeight: '700', //header 요일
+
+          agendaTodayColor: '#347ee7',
+          agendaKnobColor: '#3c4a6b',
+        }}
       />
     </SafeAreaView>
   );

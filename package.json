@@ -19,6 +19,7 @@
     "immer": "^8.0.1",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-actions-sheet": "^0.4.2",
     "react-native-calendars": "^1.1249.0",
     "react-native-gesture-handler": "^1.10.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",

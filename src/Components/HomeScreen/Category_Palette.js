@@ -4,20 +4,16 @@ import styled from 'styled-components/native';
 
 const Palettes = styled.View`
   width: 100%;
-
-  align-items: center;
-  justify-content: center;
 `;
 
 const Colors = styled.View`
   width: 100%;
-  padding: 0px 0px;
+  padding: 0px 0px 300px 0px;
   align-items: center;
 `;
 
 const Items = styled.TouchableOpacity`
   border-radius: 10px;
-  border-color: blue;
 
   margin: 10px;
   width: 35px;
@@ -32,55 +28,23 @@ const colors = [
   '#1e94be',
   '#5e869c',
   '#b191bd',
-  '#8d8c88',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
-  'red',
-  'green',
-  'blue',
+  '#0077ff',
+  '#688f4e',
+  '#fe8078',
+  '#2c373d',
+  '#3e54d3',
+  '#4f80e2',
+  '#15cdca',
+  '#7339ab',
+  '#a0586b',
+  '#e84575',
+  '#f76cae',
+  '#4f766f',
+  '#7dabd0',
+  '#7cb3ac',
+  '#264d59',
+  '#cbe54e',
+  '#E5d817',
 ];
 
 const PaletteItem = ({color, active, onClick}) => {
@@ -95,6 +59,7 @@ const Category_Palette = ({selected, onSelect}) => {
     <Palettes>
       <Colors>
         <FlatList
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             flexGrow: 1,
           }}

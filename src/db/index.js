@@ -28,7 +28,7 @@ TodoData.schema = {
     createTime: 'string',
     categoryTitle: 'string',
     listContent: 'string',
-    listDay: 'string?',
+    listDay: 'int?',
     listTime: 'string?',
     listPriority: 'int?',
     listMemo: 'string?',
@@ -38,7 +38,7 @@ TodoData.schema = {
 
 let realm = new Realm({
   schema: [Category, TodoData],
-  schemaVersion: 5,
+  schemaVersion: 8,
   migration: (oldRealm, newRealm) => {
     // only apply this change if upgrading to schemaVersion 1
     if (oldRealm.schemaVersion < 1) {

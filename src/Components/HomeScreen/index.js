@@ -9,12 +9,15 @@ import {
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-import Realm from 'realm';
-import {useSelector} from 'react-redux';
+import Realms from 'realm';
+import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 
+import realm from '../../db';
 import Category_List_View from './Category_List_View';
 import Category_Modal_View from './Category_Modal_View';
+import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 
 const TitleText = styled.Text`
   font-size: 20px;
@@ -35,7 +38,7 @@ const PlusText = styled.Text`
 `;
 
 const FlatListView = styled.FlatList`
-  background-color: #ffdd94;
+  background-color: #f8e6cb;
   border-radius: 10px;
   padding: 0px 0px 0px 20px;
 `;
@@ -87,14 +90,56 @@ const Main_Title_Text = styled.Text`
 `;
 
 const HomeScreen = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [today_ToDo, setToday_ToDo] = useState(0);
+  const [will_ToDo, setWill_ToDo] = useState(0);
+  const [priority_ToDo, setPriority_ToDo] = useState(0);
+  const [all_ToDo, setAll_ToDo] = useState(0);
+  const {categoryList} = useSelector((state) => state.Catagory);
+
+  const Local_Time = new Date();
+  const string_Local_Time = Local_Time.toISOString().substring(0, 10);
+  const int_Local_Time = Number(string_Local_Time.replace(/-/g, ''));
+
+  const TodoList_View = realm.objects('TodoDataList');
+
   useEffect(() => {
-    Realm.open({}).then((realm) => {
+    Realms.open({}).then((realm) => {
       console.log('Realm is located at: ' + realm.path.toString());
     });
-  }, []);
 
-  const [isModalVisible, setModalVisible] = useState(false);
-  const {categoryList} = useSelector((state) => state.Catagory);
+    const Today_List_View_Data = TodoList_View.filtered(
+      'listDay == $0 AND listClear == $1',
+      int_Local_Time,
+      false,
+    );
+
+    const Will_List_View_Data = TodoList_View.filtered(
+      'listDay > $0 AND listClear == $1',
+      int_Local_Time,
+      false,
+    );
+
+    const Priority_List_View_Data = TodoList_View.filtered(
+      'listPriority != $0 AND listClear == $1',
+      null,
+      false,
+    );
+
+    const All_List_View_Data = TodoList_View.filtered(
+      'listClear == $0',
+
+      false,
+    );
+
+    setToday_ToDo(Today_List_View_Data.length);
+    setWill_ToDo(Will_List_View_Data.length);
+    setPriority_ToDo(Priority_List_View_Data.length);
+    setAll_ToDo(All_List_View_Data.length);
+  }, [TodoList_View]);
+
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const opneModal = () => {
     setModalVisible(!isModalVisible);
@@ -104,49 +149,99 @@ const HomeScreen = () => {
     setModalVisible(false);
   };
 
+  const Today_ToDo_Data = () => {
+    const TodoList_View_Data = TodoList_View.filtered(
+      'listDay == $0',
+      int_Local_Time,
+    );
+
+    navigation.navigate('Category_ToDoList', {header_Name: '오늘의 일정'});
+    dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
+  };
+
+  const will_ToDo_Data = () => {
+    const TodoList_View_Data = TodoList_View.filtered(
+      'listDay >  $0',
+      int_Local_Time,
+    );
+
+    const Sort_TodoList_View = TodoList_View_Data.sorted('listDay');
+
+    navigation.navigate('Category_ToDoList', {header_Name: '예정된 일정'});
+    dispatch({type: CLICK_CATEGORY_TODO, data: Sort_TodoList_View});
+  };
+
+  const Priority_ToDo_Data = () => {
+    const TodoList_View_Data = TodoList_View.filtered(
+      'listPriority != $0',
+      null,
+    );
+
+    navigation.navigate('Category_ToDoList', {header_Name: '중요한 일정'});
+    dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
+  };
+
+  const All_ToDo_Data = () => {
+    const All_TodoList_View = realm.objects('TodoDataList');
+    const Sort_All_TodoList_View = All_TodoList_View.sorted('listDay');
+
+    navigation.navigate('Category_ToDoList', {
+      header_Name: '전체 일정',
+    });
+    dispatch({type: CLICK_CATEGORY_TODO, data: Sort_All_TodoList_View});
+  };
+
   return (
     <SafeAreaView style={{flex: 1, margin: 10}}>
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
 
       <Main_Container>
-        <TitleText>WEEK</TitleText>
+        <TitleText>My WEEK</TitleText>
         <Column_View>
-          <Column_Btn style={{backgroundColor: '#fa897b'}}>
+          <Column_Btn
+            onPress={Today_ToDo_Data}
+            style={{backgroundColor: '#fa897b'}}>
             <Main_Title_View>
               <Main_Title_Text>오늘</Main_Title_Text>
               <Main_Title_Text>⏰</Main_Title_Text>
             </Main_Title_View>
             <Main_Title_Number>
-              <Main_Title_Number_Text>10</Main_Title_Number_Text>
+              <Main_Title_Number_Text>{today_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
-          <Column_Btn style={{backgroundColor: '#ccabd8'}}>
+          <Column_Btn
+            onPress={will_ToDo_Data}
+            style={{backgroundColor: '#ccabd8'}}>
             <Main_Title_View>
               <Main_Title_Text>예정</Main_Title_Text>
               <Main_Title_Text>🛎</Main_Title_Text>
             </Main_Title_View>
             <Main_Title_Number>
-              <Main_Title_Number_Text>3</Main_Title_Number_Text>
+              <Main_Title_Number_Text>{will_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
         </Column_View>
         <Column_View>
-          <Column_Btn style={{backgroundColor: '#d0e6a5'}}>
+          <Column_Btn
+            onPress={Priority_ToDo_Data}
+            style={{backgroundColor: '#d0e6a5'}}>
             <Main_Title_View>
               <Main_Title_Text>중요</Main_Title_Text>
               <Main_Title_Text>💡</Main_Title_Text>
             </Main_Title_View>
             <Main_Title_Number>
-              <Main_Title_Number_Text>8</Main_Title_Number_Text>
+              <Main_Title_Number_Text>{priority_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
-          <Column_Btn style={{backgroundColor: '#86e3ce'}}>
+          <Column_Btn
+            onPress={All_ToDo_Data}
+            style={{backgroundColor: '#a2b9ee'}}>
             <Main_Title_View>
               <Main_Title_Text>전체</Main_Title_Text>
               <Main_Title_Text>📅</Main_Title_Text>
             </Main_Title_View>
             <Main_Title_Number>
-              <Main_Title_Number_Text>19</Main_Title_Number_Text>
+              <Main_Title_Number_Text>{all_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
         </Column_View>

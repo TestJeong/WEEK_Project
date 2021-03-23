@@ -17,7 +17,12 @@ import ActionSheet from 'react-native-actions-sheet';
 import realm from '../../db';
 import CalendarModal from './CalendarModal';
 import DateTime_Picke from './DateTime_Picke';
-import {CLICK_DAY, CLICK_PRIORITY, CLICK_TIME} from '../../reducers/Catagory';
+import {
+  CLICK_DAY,
+  CLICK_PRIORITY,
+  CLICK_TIME,
+  CLICK_TODO_LIST_DATA,
+} from '../../reducers/Catagory';
 import Detail_Priorty from './Detail_Priority';
 
 const Time_Input_Container = styled.TouchableOpacity`
@@ -36,9 +41,9 @@ const Time_Icon_Container = styled.View`
 `;
 const actionSheetRef = createRef();
 
-const ToDoList_Detail = ({navigation}) => {
+const ToDoList_Detail = ({route, navigation}) => {
   let actionSheet;
-
+  /*   const {ListName} = route.params; */
   const dispatch = useDispatch();
   const {
     onClickToDoList,
@@ -61,11 +66,18 @@ const ToDoList_Detail = ({navigation}) => {
   };
 
   const SaveBtn = () => {
+    const TodoList_View = realm.objects('TodoDataList');
+    const TodoList_View_Data = TodoList_View.filtered(
+      'createTime == $0',
+      onClickToDoList.createTime,
+    );
+
     realm.write(() => {
       realm.create(
         'TodoDataList',
         {
           createTime: onClickToDoList.createTime,
+          listContent: todoTitle,
           listMemo: todoMemo,
 
           listTime: onClickTime
@@ -89,15 +101,26 @@ const ToDoList_Detail = ({navigation}) => {
         true,
       );
     });
+    dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
     navigation.goBack();
   };
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRightContainerStyle: {marginRight: 20},
+      headerLeft: () => (
+        <Icon
+          onPress={() =>
+            /*  navigation.navigate(ListName ? 'Category_ToDoList' : 'ToDoList') */
+            navigation.goBack()
+          }
+          name="left"
+          size={20}
+        />
+      ),
       headerRight: () => <Icon onPress={SaveBtn} name="save" size={23} />,
     });
-  }, [onClickDay || onClickTime || onClickPriority || todoMemo]);
+  }, [onClickDay, onClickTime, onClickPriority, todoTitle, todoMemo]);
 
   const unsubscribe = () => {
     navigation.addListener('blur', () => {
@@ -157,7 +180,6 @@ const ToDoList_Detail = ({navigation}) => {
               borderBottomColor: '#cad0d4',
               minHeight: 50,
               maxHeight: 150,
-
               fontSize: 20,
             }}
           />
@@ -179,7 +201,7 @@ const ToDoList_Detail = ({navigation}) => {
         <View>
           <Time_Input_Container onPress={openCalendar}>
             <Time_Icon_Container>
-              <Icon name="calendar" size={23} />
+              <Icon name="calendar" size={23} color={'#75bde0'} />
               <Text style={{marginLeft: 15, fontSize: 16}}>날짜</Text>
             </Time_Icon_Container>
             <Text style={{fontSize: 16}}>
@@ -195,7 +217,7 @@ const ToDoList_Detail = ({navigation}) => {
 
           <Time_Input_Container onPress={showDatePicker}>
             <Time_Icon_Container>
-              <Icon name="clockcircleo" size={23} />
+              <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
               <Text style={{marginLeft: 15, fontSize: 16}}>시간</Text>
             </Time_Icon_Container>
             <Text style={{fontSize: 16}}>
@@ -214,7 +236,7 @@ const ToDoList_Detail = ({navigation}) => {
               actionSheetRef.current?.setModalVisible();
             }}>
             <Time_Icon_Container>
-              <Icon name="clockcircleo" size={23} />
+              <Icon name="staro" size={23} color={'#f89b9b'} />
               <Text style={{marginLeft: 15, fontSize: 16}}>우선순위</Text>
             </Time_Icon_Container>
             <Text style={{fontSize: 16}}>

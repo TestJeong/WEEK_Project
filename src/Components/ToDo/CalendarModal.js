@@ -21,7 +21,7 @@ const ModalView = styled.View`
 
   /* 모달창 크기 조절 */
   width: 330px;
-  height: 430px;
+  height: 480px;
   border-radius: 10px;
   background-color: white;
   padding: 5px 5px;
@@ -60,7 +60,7 @@ const CalendarModal = ({openModal, closeModal}) => {
   const [clickDay, setClickDay] = useState(null);
 
   const SaveCalendar = () => {
-    dispatch({type: CLICK_DAY, data: clickDay});
+    dispatch({type: CLICK_DAY, data: Number(clickDay.replace(/-/g, ''))});
     closeModal();
   };
 
@@ -79,7 +79,8 @@ const CalendarModal = ({openModal, closeModal}) => {
       [clickDay]: {
         selected: true,
         marked: false,
-        selectedColor: '#477660',
+        selectedColor: '#2ad4af',
+        disableTouchEvent: true,
       },
     };
 
@@ -141,11 +142,17 @@ const CalendarModal = ({openModal, closeModal}) => {
           /** Replace default month and year title with custom one. the function receive a date as parameter. */
           //renderHeader={(date) => {/*Return JSX*/}}
           markedDates={clickDay ? Calendar_Mark() : null}
+          theme={{
+            todayBackgroundColor: '#347ee7',
+            todayTextColor: 'white',
+            dotColor: '#00adf5',
+            selectedDotColor: 'red',
+          }}
         />
 
         <Time_Input_Container onPress={showDatePicker}>
           <Time_Icon_Container>
-            <Icon name="clockcircleo" size={23} />
+            <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
             <Text style={{marginLeft: 15, fontSize: 16}}>시간</Text>
           </Time_Icon_Container>
           <Text style={{fontSize: 16}}>
@@ -161,7 +168,7 @@ const CalendarModal = ({openModal, closeModal}) => {
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={SaveCalendar}
+            onPress={clickDay ? SaveCalendar : null}
             hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>저장</Text_Close>
           </TouchableOpacity>

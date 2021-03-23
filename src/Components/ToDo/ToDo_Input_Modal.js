@@ -18,7 +18,11 @@ import realm from '../../db';
 import CalendarModal from '../../Components/ToDo/CalendarModal';
 import Priority_Modal from './ Priority';
 import {Day} from '../Day';
-import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
+import {
+  MY_CATEGORY_DATA,
+  CLICK_DAY,
+  CLICK_PRIORITY,
+} from '../../reducers/Catagory';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -96,6 +100,8 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   const ModalClose = () => {
     close();
+    dispatch({type: CLICK_DAY, data: null});
+    dispatch({type: CLICK_PRIORITY, data: null});
     setTestBtn(false);
   };
 
@@ -163,15 +169,19 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
             <Button_View>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity onPress={opneModal} style={{marginRight: 30}}>
-                  <Icon name="calendar" size={23} />
+                  <Icon
+                    name="calendar"
+                    size={23}
+                    color={onClickDay ? '#75bde0' : 'black'}
+                  />
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={likeOpen} style={{marginRight: 30}}>
-                  <Icon name="like2" size={23} />
-                </TouchableOpacity>
-
-                <TouchableOpacity>
-                  <Icon name="tago" size={23} />
+                  <Icon
+                    name="staro"
+                    size={23}
+                    color={onClickPriority ? '#e984a2' : 'black'}
+                  />
                 </TouchableOpacity>
               </View>
               <View>

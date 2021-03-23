@@ -44,8 +44,9 @@ export const Agenda_Call_Data = () => {
   for (let i = -15; i < 30; i++) {
     const time = new Date().getTime() + i * 24 * 60 * 60 * 1000;
     const strTime = timeToString(time);
+    const intTime = Number(strTime.replace(/-/g, ''));
 
-    const TodoData_Day = AgendaData.filtered('listDay == $0', strTime);
+    const TodoData_Day = AgendaData.filtered('listDay == $0', intTime);
 
     if (TodoData_Day.length === 0) {
       items[strTime] = [];

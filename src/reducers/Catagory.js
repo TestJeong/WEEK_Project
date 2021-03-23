@@ -3,9 +3,8 @@ import produce from 'immer';
 export const init = {
   categoryList: [],
 
-  testhoho: false,
-
   clickCategory: null,
+  Click_Category_ToDo: null,
 
   onClickDay: null,
   onClickTime: null,
@@ -31,6 +30,8 @@ export const MY_CATEGORY_DATA = 'MY_CATEGORY_DATA';
 
 export const CLICK_CATEGORY = 'CLICK_CATEGORY';
 export const CLICK_CATEGORY_RESET = 'CLICK_CATEGORY_RESET';
+
+export const CLICK_CATEGORY_TODO = 'CLICK_CATEGORY_TODO';
 
 export const CLICK_TODO_LIST_DATA = 'CLICK_TODO_LIST_DATA';
 
@@ -58,10 +59,15 @@ const reducer = (state = init, action) => {
         draft.categoryList = action.data;
         draft.onClickTime = null;
         draft.onClickDay = null;
+        draft.onClickPriority = null;
         break;
 
       case CLICK_TODO_LIST_DATA:
         draft.onClickToDoList = action.data;
+        break;
+
+      case CLICK_CATEGORY_TODO:
+        draft.Click_Category_ToDo = action.data;
         break;
 
       case CLICK_CATEGORY:
