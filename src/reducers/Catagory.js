@@ -11,6 +11,7 @@ export const init = {
   onClickToDoList: null,
   onClickPriority: null,
   onClickClear: null,
+  onClickCategory: null,
 
   todo_List_data_loading: false,
   todo_List_data_done: false,
@@ -39,6 +40,7 @@ export const CLICK_DAY = 'CLICK_DAY';
 export const CLICK_TIME = 'CLICK_TIME';
 export const CLICK_PRIORITY = 'CLICK_PRIORITY';
 export const CLICK_CLEAR = 'CLICK_CLEAR';
+export const CLICK_CATEGORY_INPUT = 'CLICK_CATEGORY_INPUT';
 
 export const AGENDA_DATA_REQUEST = 'AGENDA_DATA_REQUEST';
 export const AGENDA_DATA_SUCCESS = 'AGENDA_DATA_SUCCESS';
@@ -92,6 +94,10 @@ const reducer = (state = init, action) => {
 
       case CLICK_CLEAR:
         draft.onClickClear = action.data;
+        break;
+
+      case CLICK_CATEGORY_INPUT:
+        draft.onClickCategory = action.data;
         break;
 
       ///////////////////////////////////////////
@@ -153,6 +159,8 @@ const reducer = (state = init, action) => {
         draft.categoryList = state.categoryList;
         draft.clickCategory = null;
         draft.onClickToDoList = null;
+        draft.onClickCategory = null;
+
         break;
       case CATEGORY_LIST_DATA_ERROR:
         draft.category_List_data_loading = false;

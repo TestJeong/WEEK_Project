@@ -22,7 +22,9 @@ import {
   MY_CATEGORY_DATA,
   CLICK_DAY,
   CLICK_PRIORITY,
+  CLICK_CATEGORY_INPUT,
 } from '../../reducers/Catagory';
+import Category_Modal from './Category_Modal';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -69,14 +71,18 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   const inputRef = useRef();
 
-  const {onClickDay, onClickTime, onClickPriority} = useSelector(
-    (state) => state.Catagory,
-  );
+  const {
+    onClickDay,
+    onClickTime,
+    onClickPriority,
+    onClickCategory,
+  } = useSelector((state) => state.Catagory);
   const dispatch = useDispatch();
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
 
   const [testBtn, setTestBtn] = useState(false);
+  const [categoryBtn, setCategoryBtn] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -98,41 +104,54 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
     setTestBtn(!testBtn);
   };
 
+  const CategoryOpen = () => {
+    setCategoryBtn(!categoryBtn);
+  };
+
   const ModalClose = () => {
     close();
     dispatch({type: CLICK_DAY, data: null});
     dispatch({type: CLICK_PRIORITY, data: null});
+    dispatch({type: CLICK_CATEGORY_INPUT, data: null});
     setTestBtn(false);
   };
 
   const ToDoInput_Enter = () => {
     const CategoryData = realm.objects('CategoryList');
     const SortCategoryDate = CategoryData.sorted('createTime');
-    realm.write(() => {
-      let city = realm.create(
-        'TodoDataList',
-        {
-          createTime: Day(),
-          categoryTitle: categoryName,
-          listContent: todoContents,
-          listDay: onClickDay ? onClickDay : null,
-          listTime: onClickTime ? onClickTime : null,
-          listPriority: onClickPriority ? onClickPriority : null,
-        },
-        true,
-      );
-      let user = realm.create(
-        'CategoryList',
-        {
-          createTime: categoryTime,
-        },
-        true,
-      );
-      user.todoData.unshift(city);
-    });
-    dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
+    if (!onClickCategory && !categoryName) {
+      alert('카테고리를 설정 해주세요!');
+    } else {
+      realm.write(() => {
+        let city = realm.create(
+          'TodoDataList',
+          {
+            createTime: Day(),
+            categoryTitle: onClickCategory
+              ? onClickCategory.title
+              : categoryName,
+            listContent: todoContents,
+            listDay: onClickDay ? onClickDay : null,
+            listTime: onClickTime ? onClickTime : null,
+            listPriority: onClickPriority ? onClickPriority : null,
+          },
+          true,
+        );
+        let user = realm.create(
+          'CategoryList',
+          {
+            createTime: onClickCategory
+              ? onClickCategory.createTime
+              : categoryTime,
+          },
+          true,
+        );
+        user.todoData.unshift(city);
+      });
+      dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
 
-    setTodoContents('');
+      setTodoContents('');
+    }
   };
 
   return (
@@ -153,6 +172,10 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
           <Priority_Modal closeModal={() => setTestBtn(false)} />
         )}
 
+        {categoryBtn && Platform.OS === 'android' && (
+          <Category_Modal closeModal={() => setCategoryBtn(false)} />
+        )}
+
         <KeyboardAvoidingView
           style={{width: '100%'}}
           behavior={Platform.OS === 'ios' ? 'padding' : null}>
@@ -166,6 +189,11 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
             {testBtn && Platform.OS === 'ios' && (
               <Priority_Modal closeModal={() => setTestBtn(false)} />
             )}
+
+            {categoryBtn && Platform.OS === 'ios' && (
+              <Category_Modal closeModal={() => setCategoryBtn(false)} />
+            )}
+
             <Button_View>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity onPress={opneModal} style={{marginRight: 30}}>
@@ -182,6 +210,23 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                     size={23}
                     color={onClickPriority ? '#e984a2' : 'black'}
                   />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={CategoryOpen}
+                  style={{
+                    marginRight: 30,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Icon
+                    name="bars"
+                    size={23}
+                    color={onClickPriority ? '#e984a2' : 'black'}
+                  />
+                  <Text style={{marginLeft: 15}}>
+                    {onClickCategory ? onClickCategory.title : categoryName}
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View>

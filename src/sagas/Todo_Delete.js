@@ -31,19 +31,26 @@ export const Category_List_View_Delete = (term) => {
   });
 };
 
-export const Agenda_Call_Data = () => {
+export const Agenda_Call_Data = (term) => {
   const timeToString = (time) => {
     const date = new Date(time);
-    return date.toISOString().split('T')[0];
+
+    const dates = new Date(date - date.getTimezoneOffset() * 60000)
+      .toISOString()
+      .split('T')[0];
+
+    return dates;
   };
   const AgendaData = realm.objects('TodoDataList');
   const CategoryData = realm.objects('CategoryList');
 
   let items = {};
 
-  for (let i = -15; i < 30; i++) {
+  for (let i = -15; i < 85; i++) {
     const time = new Date().getTime() + i * 24 * 60 * 60 * 1000;
-    const strTime = timeToString(time);
+    const strTime = timeToString(
+      term !== undefined ? term.timestamp + i * 24 * 60 * 60 * 1000 : time,
+    );
     const intTime = Number(strTime.replace(/-/g, ''));
 
     const TodoData_Day = AgendaData.filtered('listDay == $0', intTime);

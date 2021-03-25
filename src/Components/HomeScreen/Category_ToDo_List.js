@@ -52,12 +52,7 @@ const Category_ToDo_List = ({route}) => {
 
   return (
     <>
-      {/*      <ToDoInputModal
-        isOpen={isModalVisible}
-        close={closeModal}
-        categoryName={categoryName}
-        categoryTime={categoryTime}
-      /> */}
+      <ToDoInputModal isOpen={isModalVisible} close={closeModal} />
       <View>
         <FlatListView
           keyExtractor={(item, index) => '#' + index}
@@ -65,15 +60,12 @@ const Category_ToDo_List = ({route}) => {
           renderItem={(item) => <ToDo_List_View data={item} ListName={true} />}
         />
       </View>
-      {/*  <TouchableOpacity
+      <TouchableOpacity
         activeOpacity={0.5}
         onPress={opneModal}
-        style={[
-          styles.touchableOpacityStyle,
-          {backgroundColor: clickCategory.color},
-        ]}>
+        style={[styles.touchableOpacityStyle, {backgroundColor: 'blue'}]}>
         <Icon name="plus" color={'white'} size={30} />
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </>
   );
 };

@@ -63,7 +63,7 @@ const ToDo_List_View = ({data, ListName}) => {
   const [onToggle_List, setOnToggle_List] = useState(
     TodoList_View_Data[0].listClear,
   );
-  const {categoryList} = useSelector((state) => state.Catagory);
+  const {categoryList, Agenda_DATA} = useSelector((state) => state.Catagory);
 
   useLayoutEffect(() => {
     setOnToggle_List(data.item.listClear);
@@ -167,19 +167,19 @@ const ToDo_List_View = ({data, ListName}) => {
                 {onToggle_List ? (
                   <Icon name="checkcircleo" size={30} color="#bbb" />
                 ) : (
-                  <Icon name="checkcircleo" size={30} />
+                  <Icon name="checkcircleo" size={30} color="black" />
                 )}
               </TouchableOpacity>
 
               <List_Title_Content>
                 <List_Text
-                  style={onToggle_List ? styles.strikeText : null}
+                  style={onToggle_List ? styles.strikeText : styles.defaultText}
                   numberOfLines={1}>
                   {data.item.listContent}
                 </List_Text>
                 {ListDay ? (
                   <List_Clock_Text
-                    style={onToggle_List ? styles.strikeText : null}>
+                    style={onToggle_List ? styles.strikeText :  styles.defaultText}>
                     {ListDay}
                     {data.item.listTime ? (
                       <Icon name="bells" size={12} color={'orange'} />
@@ -247,6 +247,10 @@ const styles = StyleSheet.create({
   strikeText: {
     color: '#bbb',
     textDecorationLine: 'line-through',
+  },
+
+  defaultText: {
+    color: 'black',
   },
 
   actionText: {

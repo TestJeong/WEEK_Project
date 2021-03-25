@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import realm from '../../db';
 import {CLICK_TODO_LIST_DATA} from '../../reducers/Catagory';
@@ -48,17 +48,11 @@ const Agenda_List = ({item}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const TodoList_View = realm.objects('TodoDataList');
-  const TodoList_View_Data = TodoList_View.filtered(
-    'createTime == $0',
-    item.createTime,
-  );
-
   const [onToggle, setOnToggle] = useState(item.listClear);
 
   useEffect(() => {
     setOnToggle(item.listClear);
-  }, [item.listClear]);
+  }, [item]);
 
   const goToList = () => {
     navigation.navigate('ToDoListDetail');
@@ -93,20 +87,21 @@ const Agenda_List = ({item}) => {
             {onToggle ? (
               <Icon name="checkcircleo" size={30} color="#bbb" />
             ) : (
-              <Icon name="checkcircleo" size={30} />
+              <Icon name="checkcircleo" size={30} color="black" />
             )}
           </TouchableOpacity>
           <ListText_View>
-            <Render_Text style={onToggle ? styles.strikeText : null}>
+            <Render_Text
+              style={onToggle ? styles.strikeText : styles.defaultText}>
               {item.listContent}
             </Render_Text>
-            <Text style={onToggle ? styles.strikeText : null}>
+            <Text style={onToggle ? styles.strikeText : styles.defaultText}>
               {item.categoryTitle}
             </Text>
           </ListText_View>
         </List_View>
 
-        <Time_Text style={onToggle ? styles.strikeText : null}>
+        <Time_Text style={onToggle ? styles.strikeText : styles.defaultText}>
           {item.listTime}
         </Time_Text>
       </Render_View>
@@ -125,6 +120,10 @@ const styles = StyleSheet.create({
     shadowRadius: 1.22,
 
     elevation: 3,
+  },
+
+  defaultText: {
+    color: 'black',
   },
 
   strikeText: {

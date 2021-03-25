@@ -51,9 +51,9 @@ function* Category_Delete(action) {
   }
 }
 
-function* Agenda_DATA_ToDo() {
+function* Agenda_DATA_ToDo(action) {
   try {
-    const result = yield call(Agenda_Call_Data);
+    const result = yield call(Agenda_Call_Data, action.data);
 
     yield put({
       type: AGENDA_DATA_SUCCESS,

@@ -97,8 +97,10 @@ const HomeScreen = () => {
   const [all_ToDo, setAll_ToDo] = useState(0);
   const {categoryList} = useSelector((state) => state.Catagory);
 
-  const Local_Time = new Date();
-  const string_Local_Time = Local_Time.toISOString().substring(0, 10);
+  const timezoneOffset = new Date().getTimezoneOffset() * 60000;
+  const timezoneDate = new Date(Date.now() - timezoneOffset);
+
+  const string_Local_Time = timezoneDate.toISOString().substring(0, 10);
   const int_Local_Time = Number(string_Local_Time.replace(/-/g, ''));
 
   const TodoList_View = realm.objects('TodoDataList');

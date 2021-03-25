@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import realm from '../../db';
 import HomeScreen from '../HomeScreen';
-import {MY_CATEGORY_DATA, AGENDA_TEST} from '../../reducers/Catagory';
+import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import {
   ToDoStackNavigator,
   CalendarStackNavigator,
@@ -21,9 +21,6 @@ const TapNavigator = () => {
     const SortCategoryDate = CategoryData.sorted('createTime');
 
     dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
-    /* 
-    const AgendaData = realm.objects('TodoDataList');
-    dispatch({type: AGENDA_TEST, data: AgendaData}); */
   }, []);
 
   return (

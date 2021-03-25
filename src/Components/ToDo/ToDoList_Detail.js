@@ -18,12 +18,15 @@ import realm from '../../db';
 import CalendarModal from './CalendarModal';
 import DateTime_Picke from './DateTime_Picke';
 import {
+  CLICK_CATEGORY_INPUT,
   CLICK_DAY,
   CLICK_PRIORITY,
   CLICK_TIME,
   CLICK_TODO_LIST_DATA,
+  MY_CATEGORY_DATA,
 } from '../../reducers/Catagory';
 import Detail_Priorty from './Detail_Priority';
+import Detail_Category from './Detail_Category';
 
 const Time_Input_Container = styled.TouchableOpacity`
   flex-direction: row;
@@ -40,16 +43,19 @@ const Time_Icon_Container = styled.View`
   align-items: center;
 `;
 const actionSheetRef = createRef();
+const Category_actionSheetRef = createRef();
 
-const ToDoList_Detail = ({route, navigation}) => {
+const ToDoList_Detail = ({navigation}) => {
   let actionSheet;
-  /*   const {ListName} = route.params; */
+
   const dispatch = useDispatch();
   const {
     onClickToDoList,
     onClickTime,
     onClickDay,
     onClickPriority,
+    clickCategory,
+    onClickCategory,
   } = useSelector((state) => state.Catagory);
   const [todoTitle, setToDoTitle] = useState(onClickToDoList.listContent);
   const [todoMemo, setToDoMemo] = useState(onClickToDoList.listMemo);
@@ -66,6 +72,9 @@ const ToDoList_Detail = ({route, navigation}) => {
   };
 
   const SaveBtn = () => {
+    const CategoryData = realm.objects('CategoryList');
+    const SortCategoryDate = CategoryData.sorted('createTime');
+
     const TodoList_View = realm.objects('TodoDataList');
     const TodoList_View_Data = TodoList_View.filtered(
       'createTime == $0',
@@ -77,6 +86,11 @@ const ToDoList_Detail = ({route, navigation}) => {
         'TodoDataList',
         {
           createTime: onClickToDoList.createTime,
+
+          categoryTitle: onClickCategory
+            ? onClickCategory.title
+            : onClickToDoList.categoryTitle,
+
           listContent: todoTitle,
           listMemo: todoMemo,
 
@@ -100,8 +114,21 @@ const ToDoList_Detail = ({route, navigation}) => {
         },
         true,
       );
+      /*   let user = realm.create(
+        'CategoryList',
+        {
+          createTime: onClickCategory
+            ? onClickCategory.createTime
+            : clickCategory.createTime,
+        },
+        true,
+      );
+      user.todoData.unshift(city); */
     });
+    /* 
+    dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate}); */
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
+
     navigation.goBack();
   };
 
@@ -120,7 +147,14 @@ const ToDoList_Detail = ({route, navigation}) => {
       ),
       headerRight: () => <Icon onPress={SaveBtn} name="save" size={23} />,
     });
-  }, [onClickDay, onClickTime, onClickPriority, todoTitle, todoMemo]);
+  }, [
+    onClickDay,
+    onClickTime,
+    onClickPriority,
+    todoTitle,
+    todoMemo,
+    onClickCategory,
+  ]);
 
   const unsubscribe = () => {
     navigation.addListener('blur', () => {
@@ -146,6 +180,10 @@ const ToDoList_Detail = ({route, navigation}) => {
     actionSheetRef.current.hide();
   };
 
+  const Category_hide_Action = () => {
+    Category_actionSheetRef.current.hide();
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <ScrollView
@@ -155,6 +193,11 @@ const ToDoList_Detail = ({route, navigation}) => {
         <ActionSheet ref={actionSheetRef}>
           <Detail_Priorty hideActionSheet={hideActionSheet} />
         </ActionSheet>
+
+        <ActionSheet ref={Category_actionSheetRef}>
+          <Detail_Category hideActionSheet={Category_hide_Action} />
+        </ActionSheet>
+
         <DateTime_Picke
           hideDatePicker={hideDatePicker}
           isDatePickerVisible={isDatePickerVisible}
@@ -199,6 +242,24 @@ const ToDoList_Detail = ({route, navigation}) => {
           />
         </View>
         <View>
+          <Time_Input_Container
+            onPress={() => {
+              Category_actionSheetRef.current?.setModalVisible();
+            }}>
+            <Time_Icon_Container>
+              <Icon name="bars" size={23} color={'#be8bdc'} />
+              <Text style={{marginLeft: 15, fontSize: 16}}>카테고리</Text>
+            </Time_Icon_Container>
+
+            <Text style={{fontSize: 16}}>
+              {onClickCategory
+                ? onClickCategory.title
+                : onClickToDoList.categoryTitle}
+              &nbsp; &nbsp;
+              <Icon name="right" size={15} />
+            </Text>
+          </Time_Input_Container>
+
           <Time_Input_Container onPress={openCalendar}>
             <Time_Icon_Container>
               <Icon name="calendar" size={23} color={'#75bde0'} />
