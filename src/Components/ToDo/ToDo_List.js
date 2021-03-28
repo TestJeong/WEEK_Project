@@ -43,7 +43,7 @@ const ToDoList = ({route}) => {
         backgroundColor: clickCategory.color,
       },
     });
-  }, [categoryName]);
+  }, [categoryName, clickCategory]);
 
   const opneModal = () => {
     setModalVisible(!isModalVisible);

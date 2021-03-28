@@ -27,6 +27,7 @@ import {
 } from '../../reducers/Catagory';
 import Detail_Priorty from './Detail_Priority';
 import Detail_Category from './Detail_Category';
+import {ToDo_Notification} from './ToDo_Notification';
 
 const Time_Input_Container = styled.TouchableOpacity`
   flex-direction: row;
@@ -82,7 +83,7 @@ const ToDoList_Detail = ({navigation}) => {
     );
 
     realm.write(() => {
-      realm.create(
+      let city = realm.create(
         'TodoDataList',
         {
           createTime: onClickToDoList.createTime,
@@ -114,7 +115,7 @@ const ToDoList_Detail = ({navigation}) => {
         },
         true,
       );
-      /*   let user = realm.create(
+      let user = realm.create(
         'CategoryList',
         {
           createTime: onClickCategory
@@ -123,10 +124,27 @@ const ToDoList_Detail = ({navigation}) => {
         },
         true,
       );
-      user.todoData.unshift(city); */
+
+      let categorys = realm.create(
+        'CategoryList',
+        {
+          createTime: clickCategory.createTime,
+        },
+        true,
+      );
+
+      const filterT = categorys.todoData.filter((data) => {
+        return data.createTime !== onClickToDoList.createTime;
+      });
+
+      categorys.todoData = [];
+      filterT.forEach((item) => {
+        categorys.todoData.push(item);
+      });
+
+      user.todoData.unshift(city);
     });
-    /* 
-    dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate}); */
+    ToDo_Notification(todoTitle, onClickTime, onClickDay);
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
 
     navigation.goBack();

@@ -179,7 +179,9 @@ const ToDo_List_View = ({data, ListName}) => {
                 </List_Text>
                 {ListDay ? (
                   <List_Clock_Text
-                    style={onToggle_List ? styles.strikeText :  styles.defaultText}>
+                    style={
+                      onToggle_List ? styles.strikeText : styles.defaultText
+                    }>
                     {ListDay}
                     {data.item.listTime ? (
                       <Icon name="bells" size={12} color={'orange'} />

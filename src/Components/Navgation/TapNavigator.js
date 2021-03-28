@@ -10,6 +10,7 @@ import {
   ToDoStackNavigator,
   CalendarStackNavigator,
 } from '../../Components/Navgation/StackNavigator';
+import {ToDo_Notification} from '../ToDo/ToDo_Notification';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +46,7 @@ const TapNavigator = () => {
       />
       <Tab.Screen
         name="SETTING"
-        component={HomeScreen}
+        component={ToDo_Notification}
         options={{
           tabBarIcon: ({color, size}) => (
             <Icon name="setting" size={size} color={color} />

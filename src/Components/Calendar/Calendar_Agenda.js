@@ -28,11 +28,18 @@ const Schedule = ({navigation}) => {
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Agenda
         items={Agenda_DATA}
+        onDayPress={(day) => {
+          dispatch({type: AGENDA_DATA_REQUEST, data: day});
+        }}
+        /*  onDayChange={(day) => {
+          dispatch({type: AGENDA_DATA_REQUEST, data: day});
+        }} */
+        // Initially selected day
         renderItem={renderItem}
         renderEmptyDate={render_}
-        loadItemsForMonth={(day) =>
+        /*  loadItemsForMonth={(day) =>
           dispatch({type: AGENDA_DATA_REQUEST, data: day})
-        }
+        } */
         theme={{
           selectedDayBackgroundColor: '#347ee7',
           todayTextColor: '#347ee7',

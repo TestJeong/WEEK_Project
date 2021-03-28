@@ -12,7 +12,7 @@ import {
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
-const ToDo_Notification = () => {
+export const ToDo_Notification = () => {
   PushNotification.configure({
     // (optional) Called when Token is generated (iOS and Android)
     onRegister: function (token) {
@@ -79,7 +79,7 @@ const ToDo_Notification = () => {
     PushNotification.localNotification({
       /* Android Only Properties */
       channelId: 'default-channel-id',
-      title: 'My Notification Title', // (optional)
+      title: 'todoTitle', // (optional)
       message: 'My Notification Message', // (required)
     });
   };
@@ -98,19 +98,25 @@ const ToDo_Notification = () => {
         console.log(`createChannel 'default-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
 
+    const h1 = 20210327;
+    const hh1 = String(h1);
+    const years = hh1.substring(0, 4);
+    const month = hh1.substring(4, 6);
+    const day = hh1.substring(6, 8);
+
+    const allDay = years + '-' + month + '-' + day;
+    const h2 = '10:20:00';
+
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
       channelId: 'load-channel-id',
-      message: '테스트 하나둘', // (required)
-      date: new Date(Date.now() + 10 * 1000), // in 60 secs
+      message: 'todoTitle', // (required)
+      date: new Date(allDay + ',' + h2), // in 60 secs
       allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
     });
   };
 
   // 알람 추가 할때.
-  const h1 = '2021-03-21';
-  const h2 = '07:11:22';
-  console.log(new Date(h1 + ',' + h2));
 
   return (
     <SafeAreaView>
@@ -128,6 +134,7 @@ const ToDo_Notification = () => {
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -165,5 +172,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default ToDo_Notification;

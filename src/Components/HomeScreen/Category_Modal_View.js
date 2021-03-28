@@ -93,6 +93,25 @@ const Category_Modal_View = ({isOpen, close, data}) => {
           },
           true,
         );
+        if (data) {
+          let ToDos = realm.create(
+            'CategoryList',
+            {
+              createTime: data.createTime,
+            },
+            true,
+          );
+          ToDos.todoData.forEach((item) => {
+            realm.create(
+              'TodoDataList',
+              {
+                createTime: item.createTime,
+                categoryTitle: categoryTitle,
+              },
+              true,
+            );
+          });
+        }
       });
       const CategoryData = realm.objects('CategoryList');
       const SortCategoryDate = CategoryData.sorted('createTime');

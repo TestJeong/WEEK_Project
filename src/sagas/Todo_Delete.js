@@ -12,6 +12,26 @@ export const ToDoList_View_Delete = (term) => {
   });
 };
 
+/* export const ToDoList_View_Delete = (term) => {
+  realm.write(() => {
+    let koko = realm.create(
+      'CategoryList',
+      {
+        createTime: term.createTime,
+      },
+      true,
+    );
+
+    const filterT = koko.todoData.filter((data) => {
+      return data.createTime !== '2021-3-26-23-15-7';
+    });
+
+    filterT.forEach((data) => {
+      realm.create('TodoDataList', data, true);
+    });
+  });
+}; */
+
 export const Category_List_View_Delete = (term) => {
   const Category_List = realm.objects('CategoryList');
   const Category_List_Data = Category_List.filtered(
