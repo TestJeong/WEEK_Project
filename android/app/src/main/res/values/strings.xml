@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ToDoApp</string>
+    <string moduleConfig='true' name='CodePushDeploymentKey'>IYUZZjNxnTrY_yUvUni2qKEYHPqgUZZakCCoH</string>
 </resources>

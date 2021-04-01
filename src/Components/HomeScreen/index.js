@@ -198,7 +198,7 @@ const HomeScreen = () => {
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
 
       <Main_Container>
-        <TitleText>My WEEK</TitleText>
+        <TitleText>My WEEKs</TitleText>
         <Column_View>
           <Column_Btn
             onPress={Today_ToDo_Data}

@@ -18,6 +18,7 @@
 		3962718FD087D891EF561D33 /* libPods-ToDoApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8858803F206CBC227C637167 /* libPods-ToDoApp-tvOS.a */; };
 		3CB184ABFF2FF69F977D572F /* libPods-ToDoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0761FD401321DD2926ECCA7 /* libPods-ToDoApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		ADC8287D2615EA7B00A81D53 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = ADC8287C2615EA7B00A81D53 /* Property List.plist */; };
 		E43CA9D76A40910894F435A5 /* libPods-ToDoApp-ToDoAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20AAA567B46556721CF6B5D3 /* libPods-ToDoApp-ToDoAppTests.a */; };
 		EF60688D526D558AAA3CBD48 /* libPods-ToDoApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46329A18CFBD0EA4B2D510F5 /* libPods-ToDoApp-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -79,6 +80,7 @@
 		AD087AB225E66A8F00D27F40 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		AD087AB325E66A8F00D27F40 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		AD087AB425E66A8F00D27F40 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		ADC8287C2615EA7B00A81D53 /* Property List.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
 		D7C0EBC4166C5A70C90DA476 /* Pods-ToDoApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp-tvOSTests/Pods-ToDoApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -143,6 +145,7 @@
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				ADC8287C2615EA7B00A81D53 /* Property List.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -380,6 +383,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADC8287D2615EA7B00A81D53 /* Property List.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);

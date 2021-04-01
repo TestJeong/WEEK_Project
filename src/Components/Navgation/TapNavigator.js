@@ -2,15 +2,13 @@ import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
-
 import realm from '../../db';
-import HomeScreen from '../HomeScreen';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import {
   ToDoStackNavigator,
   CalendarStackNavigator,
 } from '../../Components/Navgation/StackNavigator';
-import {ToDo_Notification} from '../ToDo/ToDo_Notification';
+import iap from '../Settings';
 
 const Tab = createBottomTabNavigator();
 
@@ -46,7 +44,7 @@ const TapNavigator = () => {
       />
       <Tab.Screen
         name="SETTING"
-        component={ToDo_Notification}
+        component={iap}
         options={{
           tabBarIcon: ({color, size}) => (
             <Icon name="setting" size={size} color={color} />
