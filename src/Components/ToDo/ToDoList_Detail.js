@@ -18,16 +18,15 @@ import realm from '../../db';
 import CalendarModal from './CalendarModal';
 import DateTime_Picke from './DateTime_Picke';
 import {
-  CLICK_CATEGORY_INPUT,
   CLICK_DAY,
   CLICK_PRIORITY,
   CLICK_TIME,
   CLICK_TODO_LIST_DATA,
-  MY_CATEGORY_DATA,
 } from '../../reducers/Catagory';
 import Detail_Priorty from './Detail_Priority';
 import Detail_Category from './Detail_Category';
-import {ToDo_Notification} from './ToDo_Notification';
+import {Schedule_Notif} from './ToDo_Notification';
+import {Today} from '../Day';
 
 const Time_Input_Container = styled.TouchableOpacity`
   flex-direction: row;
@@ -57,6 +56,7 @@ const ToDoList_Detail = ({navigation}) => {
     onClickPriority,
     clickCategory,
     onClickCategory,
+    timeString,
   } = useSelector((state) => state.Catagory);
   const [todoTitle, setToDoTitle] = useState(onClickToDoList.listContent);
   const [todoMemo, setToDoMemo] = useState(onClickToDoList.listMemo);
@@ -73,9 +73,6 @@ const ToDoList_Detail = ({navigation}) => {
   };
 
   const SaveBtn = () => {
-    const CategoryData = realm.objects('CategoryList');
-    const SortCategoryDate = CategoryData.sorted('createTime');
-
     const TodoList_View = realm.objects('TodoDataList');
     const TodoList_View_Data = TodoList_View.filtered(
       'createTime == $0',
@@ -143,8 +140,17 @@ const ToDoList_Detail = ({navigation}) => {
       });
 
       user.todoData.unshift(city);
+      if (onClickDay || onClickTime || onClickCategory || todoTitle) {
+        Schedule_Notif(
+          onClickDay,
+          timeString,
+          todoTitle,
+          onClickToDoList.id,
+          onClickCategory.title,
+        );
+      }
     });
-    ToDo_Notification(todoTitle, onClickTime, onClickDay);
+
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
 
     navigation.goBack();
@@ -285,9 +291,9 @@ const ToDoList_Detail = ({navigation}) => {
             </Time_Icon_Container>
             <Text style={{fontSize: 16}}>
               {onClickDay
-                ? onClickDay
+                ? Today(onClickDay)
                 : onClickToDoList.listDay
-                ? onClickToDoList.listDay
+                ? Today(onClickToDoList.listDay)
                 : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />

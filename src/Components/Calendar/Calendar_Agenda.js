@@ -4,6 +4,7 @@ import {Agenda} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {AGENDA_DATA_REQUEST} from '../../reducers/Catagory';
+import {Today} from '../Day';
 import Agenda_List from './Agenda_List';
 
 const Schedule = ({navigation}) => {
@@ -31,15 +32,9 @@ const Schedule = ({navigation}) => {
         onDayPress={(day) => {
           dispatch({type: AGENDA_DATA_REQUEST, data: day});
         }}
-        /*  onDayChange={(day) => {
-          dispatch({type: AGENDA_DATA_REQUEST, data: day});
-        }} */
-        // Initially selected day
         renderItem={renderItem}
+        selected={Today}
         renderEmptyDate={render_}
-        /*  loadItemsForMonth={(day) =>
-          dispatch({type: AGENDA_DATA_REQUEST, data: day})
-        } */
         theme={{
           selectedDayBackgroundColor: '#347ee7',
           todayTextColor: '#347ee7',

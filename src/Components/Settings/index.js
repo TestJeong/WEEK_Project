@@ -1,295 +1,193 @@
+import React, {Component} from 'react';
 import {
-  Alert,
-  Platform,
-  ScrollView,
+  TextInput,
   StyleSheet,
   Text,
   View,
-  Button,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
-import RNIap, {
-  InAppPurchase,
-  PurchaseError,
-  SubscriptionPurchase,
-  acknowledgePurchaseAndroid,
-  consumePurchaseAndroid,
-  finishTransaction,
-  finishTransactionIOS,
-  purchaseErrorListener,
-  purchaseUpdatedListener,
-} from 'react-native-iap';
-import React, {Component} from 'react';
+import NotifService from '../../../NotifService';
 
-// App Bundle > com.dooboolab.test
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
 
-const itemSkus = Platform.select({
-  ios: [
-    'com.cooni.point1000',
-    'com.cooni.point5000', // dooboolab
-  ],
-  android: [
-    'android.test.purchased',
-    'android.test.canceled',
-    'android.test.refunded',
-    'android.test.item_unavailable',
-    // 'point_1000', '5000_point', // dooboolab
-  ],
-});
+    this.notif = new NotifService(
+      this.onRegister.bind(this),
+      this.onNotif.bind(this),
+    );
+  }
 
-const itemSubs = Platform.select({
-  ios: [
-    'com.cooni.point1000',
-    'com.cooni.point5000', // dooboolab
-  ],
-  android: [
-    'test.sub1', // subscription
-  ],
-});
+  render() {
+    console.log('asdfff', this.notif);
+    const hell = '2021-04-04T00:18:20';
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          Example app react-native-push-notification
+        </Text>
+        <View style={styles.spacer}></View>
+        <TextInput
+          style={styles.textField}
+          value={this.state.registerToken}
+          placeholder="Register token"
+        />
+        <View style={styles.spacer}></View>
 
-let purchaseUpdateSubscription;
-let purchaseErrorSubscription;
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.localNotif();
+          }}>
+          <Text>Local Notification (now)</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.localNotif('sample.mp3');
+          }}>
+          <Text>Local Notification with sound (now)</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.scheduleNotif(hell);
+          }}>
+          <Text>Schedule Notification in 30s</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.scheduleNotif('sample.mp3');
+          }}>
+          <Text>Schedule Notification with sound in 30s</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.cancelNotif();
+          }}>
+          <Text>Cancel last notification (if any)</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.cancelAll();
+          }}>
+          <Text>Cancel all notifications</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.checkPermission(this.handlePerm.bind(this));
+          }}>
+          <Text>Check Permission</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.requestPermissions();
+          }}>
+          <Text>Request Permissions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.abandonPermissions();
+          }}>
+          <Text>Abandon Permissions</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.getScheduledLocalNotifications((notifs) =>
+              console.log(notifs),
+            );
+          }}>
+          <Text>Console.Log Scheduled Local Notifications</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.getDeliveredNotifications((notifs) =>
+              console.log(notifs),
+            );
+          }}>
+          <Text>Console.Log Delivered Notifications</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.createOrUpdateChannel();
+          }}>
+          <Text>Create or update a channel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.notif.popInitialNotification();
+          }}>
+          <Text>popInitialNotification</Text>
+        </TouchableOpacity>
+
+        <View style={styles.spacer}></View>
+
+        {this.state.fcmRegistered && <Text>FCM Configured !</Text>}
+
+        <View style={styles.spacer}></View>
+      </View>
+    );
+  }
+
+  onRegister(token) {
+    this.setState({registerToken: token.token, fcmRegistered: true});
+  }
+
+  onNotif(notif) {
+    Alert.alert(notif.title, notif.message);
+  }
+
+  handlePerm(perms) {
+    Alert.alert('Permissions', JSON.stringify(perms));
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: Platform.select({
-      ios: 0,
-      android: 24,
-    }),
-    paddingTop: Platform.select({
-      ios: 0,
-      android: 24,
-    }),
-    backgroundColor: 'white',
+    backgroundColor: '#F5FCFF',
   },
-  header: {
-    flex: 20,
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-    justifyContent: 'center',
-    alignItems: 'center',
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
   },
-  headerTxt: {
-    fontSize: 26,
-    color: 'green',
+  button: {
+    borderWidth: 1,
+    borderColor: '#000000',
+    margin: 5,
+    padding: 5,
+    width: '70%',
+    backgroundColor: '#DDDDDD',
+    borderRadius: 5,
   },
-  content: {
-    flex: 80,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignSelf: 'stretch',
-    alignItems: 'center',
+  textField: {
+    borderWidth: 1,
+    borderColor: '#AAAAAA',
+    margin: 5,
+    padding: 5,
+    width: '70%',
+  },
+  spacer: {
+    height: 10,
   },
   title: {
-    fontSize: 24,
     fontWeight: 'bold',
-  },
-  btn: {
-    height: 48,
-    width: 240,
-    alignSelf: 'center',
-    backgroundColor: '#00c40f',
-    borderRadius: 0,
-    borderWidth: 0,
-  },
-  txt: {
-    fontSize: 16,
-    color: 'white',
+    fontSize: 20,
+    textAlign: 'center',
   },
 });
-
-class Page extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      productList: [],
-      receipt: '',
-      availableItemsMessage: '',
-    };
-  }
-
-  async componentDidMount() {
-    try {
-      const result = await RNIap.initConnection();
-      await RNIap.flushFailedPurchasesCachedAsPendingAndroid();
-      console.log('result', result);
-    } catch (err) {
-      console.warn(err.code, err.message);
-    }
-
-    purchaseUpdateSubscription = purchaseUpdatedListener(async () => {
-      const receipt = purchase.transactionReceipt;
-      if (receipt) {
-        try {
-          // if (Platform.OS === 'ios') {
-          //   finishTransactionIOS(purchase.transactionId);
-          // } else if (Platform.OS === 'android') {
-          //   // If consumable (can be purchased again)
-          //   consumePurchaseAndroid(purchase.purchaseToken);
-          //   // If not consumable
-          //   acknowledgePurchaseAndroid(purchase.purchaseToken);
-          // }
-          const ackResult = await finishTransaction(purchase);
-        } catch (ackErr) {
-          console.warn('ackErr', ackErr);
-        }
-
-        this.setState({receipt}, () => this.goNext());
-      }
-    });
-
-    purchaseErrorSubscription = purchaseErrorListener(() => {
-      console.log('purchaseErrorListener', error);
-      Alert.alert('purchase error', JSON.stringify(error));
-    });
-  }
-
-  componentWillUnmount() {
-    if (purchaseUpdateSubscription) {
-      purchaseUpdateSubscription.remove();
-      purchaseUpdateSubscription = null;
-    }
-    if (purchaseErrorSubscription) {
-      purchaseErrorSubscription.remove();
-      purchaseErrorSubscription = null;
-    }
-    RNIap.endConnection();
-  }
-
-  goNext = () => {
-    Alert.alert('Receipt', this.state.receipt);
-  };
-
-  getItems = async () => {
-    try {
-      const products = await RNIap.getProducts(itemSkus);
-      // const products = await RNIap.getSubscriptions(itemSkus);
-      console.log('Products', products);
-      this.setState({productList: products});
-    } catch (err) {
-      console.warn(err.code, err.message);
-    }
-  };
-
-  getSubscriptions = async () => {
-    try {
-      const products = await RNIap.getSubscriptions(itemSubs);
-      console.log('Products', products);
-      this.setState({productList: products});
-    } catch (err) {
-      console.warn(err.code, err.message);
-    }
-  };
-
-  getAvailablePurchases = async () => {
-    try {
-      console.info(
-        'Get available purchases (non-consumable or unconsumed consumable)',
-      );
-      const purchases = await RNIap.getAvailablePurchases();
-      console.info('Available purchases :: ', purchases);
-      if (purchases && purchases.length > 0) {
-        this.setState({
-          availableItemsMessage: `Got ${purchases.length} items.`,
-          receipt: purchases[0].transactionReceipt,
-        });
-      }
-    } catch (err) {
-      console.warn(err.code, err.message);
-      Alert.alert(err.message);
-    }
-  };
-
-  // Version 3 apis
-  requestPurchase = async (sku) => {
-    try {
-      RNIap.requestPurchase(sku);
-    } catch (err) {
-      console.warn(err.code, err.message);
-    }
-  };
-
-  requestSubscription = async (sku) => {
-    try {
-      RNIap.requestSubscription(sku);
-    } catch (err) {
-      Alert.alert(err.message);
-    }
-  };
-
-  render() {
-    const {productList, receipt, availableItemsMessage} = this.state;
-    const receipt100 = receipt.substring(0, 100);
-
-    return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTxt}>react-native-iap V3</Text>
-        </View>
-        <View style={styles.content}>
-          <ScrollView style={{alignSelf: 'stretch'}}>
-            <View style={{height: 50}} />
-            <Button
-              onPress={this.getAvailablePurchases}
-              activeOpacity={0.5}
-              style={styles.btn}
-              textStyle={styles.txt}
-              title="12"
-            />
-
-            <Text style={{margin: 5, fontSize: 15, alignSelf: 'center'}}>
-              {availableItemsMessage}
-            </Text>
-
-            <Text style={{margin: 5, fontSize: 9, alignSelf: 'center'}}>
-              {receipt100}
-            </Text>
-
-            <Button
-              onPress={() => this.getItems()}
-              activeOpacity={0.5}
-              style={styles.btn}
-              textStyle={styles.txt}
-              title="434"
-            />
-            {productList.map((product, i) => {
-              return (
-                <View
-                  key={i}
-                  style={{
-                    flexDirection: 'column',
-                  }}>
-                  <Text
-                    style={{
-                      marginTop: 20,
-                      fontSize: 12,
-                      color: 'black',
-                      minHeight: 100,
-                      alignSelf: 'center',
-                      paddingHorizontal: 20,
-                    }}>
-                    {JSON.stringify(product)}
-                  </Text>
-                  <Button
-                    // onPress={(): void => this.requestPurchase(product.productId)}
-                    onPress={() => this.requestSubscription(product.productId)}
-                    activeOpacity={0.5}
-                    style={styles.btn}
-                    textStyle={styles.txt}
-                    title="Request purchase for above product"
-                  />
-                </View>
-              );
-            })}
-          </ScrollView>
-        </View>
-      </View>
-    );
-  }
-}
-
-export default Page;

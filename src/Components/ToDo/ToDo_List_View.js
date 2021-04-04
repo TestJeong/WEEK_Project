@@ -7,6 +7,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import E_Icon from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
+import PushNotification from 'react-native-push-notification';
 
 import realm from '../../db';
 
@@ -15,6 +16,7 @@ import {
   CLICK_TODO_LIST_DATA,
   CLICK_CATEGORY,
 } from '../../reducers/Catagory';
+import {hos} from './ToDo_Notification';
 
 const List_Item = styled.View`
   height: 40px;
@@ -91,7 +93,10 @@ const ToDo_List_View = ({data, ListName}) => {
       extrapolate: 'clamp',
     });
 
+    const Notif_ID = data.item.id;
+    const Sring_ID = String(Notif_ID);
     const pressHandler = () => {
+      PushNotification.cancelLocalNotifications({id: Sring_ID});
       dispatch({type: TODO_LIST_DATA_REQUEST, data: data});
       close();
     };
@@ -135,6 +140,7 @@ const ToDo_List_View = ({data, ListName}) => {
 
   const goToList = () => {
     navigation.navigate('ToDoListDetail', {ListName: ListName});
+
     dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
   };
 

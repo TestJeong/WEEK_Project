@@ -25,6 +25,7 @@ import {
   CLICK_CATEGORY_INPUT,
 } from '../../reducers/Catagory';
 import Category_Modal from './Category_Modal';
+import {Schedule_Notif, ToDo_Notification} from './ToDo_Notification';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -76,6 +77,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
     onClickTime,
     onClickPriority,
     onClickCategory,
+    timeString,
   } = useSelector((state) => state.Catagory);
   const dispatch = useDispatch();
 
@@ -117,6 +119,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
   };
 
   const ToDoInput_Enter = () => {
+    const NotifID = Math.floor(Math.random() * 100000);
     const CategoryData = realm.objects('CategoryList');
     const SortCategoryDate = CategoryData.sorted('createTime');
     if (!onClickCategory && !categoryName) {
@@ -134,6 +137,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
             listDay: onClickDay ? onClickDay : null,
             listTime: onClickTime ? onClickTime : null,
             listPriority: onClickPriority ? onClickPriority : null,
+            id: NotifID,
           },
           true,
         );
@@ -148,8 +152,19 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
         );
         user.todoData.unshift(city);
       });
+      const categoryTitle = onClickCategory
+        ? onClickCategory.title
+        : categoryName;
+      onClickDay &&
+        onClickTime &&
+        Schedule_Notif(
+          onClickDay,
+          timeString,
+          todoContents,
+          NotifID,
+          categoryTitle,
+        );
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
-
       setTodoContents('');
     }
   };
@@ -222,7 +237,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                   <Icon
                     name="bars"
                     size={23}
-                    color={onClickPriority ? '#e984a2' : 'black'}
+                    color={onClickCategory ? onClickCategory.color : 'black'}
                   />
                   <Text style={{marginLeft: 15}}>
                     {onClickCategory ? onClickCategory.title : categoryName}
@@ -230,11 +245,18 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity
-                  hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
-                  onPress={ToDoInput_Enter}>
-                  <Icon name="enter" size={23} />
-                </TouchableOpacity>
+                {todoContents ? (
+                  <TouchableOpacity
+                    hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+                    onPress={ToDoInput_Enter}>
+                    <Icon name="enter" size={23} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+                    <Icon name="enter" size={23} color="gray" />
+                  </TouchableOpacity>
+                )}
               </View>
             </Button_View>
           </ModalView>

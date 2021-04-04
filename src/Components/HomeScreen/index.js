@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
+  Button,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
@@ -18,6 +19,7 @@ import realm from '../../db';
 import Category_List_View from './Category_List_View';
 import Category_Modal_View from './Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
+import PushNotification from 'react-native-push-notification';
 
 const TitleText = styled.Text`
   font-size: 20px;
@@ -106,6 +108,18 @@ const HomeScreen = () => {
   const TodoList_View = realm.objects('TodoDataList');
 
   useEffect(() => {
+    PushNotification.getScheduledLocalNotifications((Localarray) => {
+      Localarray.title = 'hoho';
+    });
+
+    PushNotification.getApplicationIconBadgeNumber((number) => {
+      console.log('number?', number);
+      if (number > 0) {
+        console.log('number if 함수', number);
+        PushNotification.setApplicationIconBadgeNumber(0);
+      }
+    });
+
     Realms.open({}).then((realm) => {
       console.log('Realm is located at: ' + realm.path.toString());
     });
@@ -198,7 +212,8 @@ const HomeScreen = () => {
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
 
       <Main_Container>
-        <TitleText>My WEEKs</TitleText>
+        <TitleText>MY WEEK</TitleText>
+
         <Column_View>
           <Column_Btn
             onPress={Today_ToDo_Data}

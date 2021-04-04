@@ -10,3 +10,21 @@ export const Day = () => {
 
   return day;
 };
+
+export const Today = ({days}) => {
+  const timezoneOffset = new Date().getTimezoneOffset() * 60000;
+  const timezoneDate = new Date(Date.now() - timezoneOffset);
+
+  const string_Local_Time = timezoneDate.toISOString().substring(0, 10);
+  const int_Local_Time = Number(string_Local_Time.replace(/-/g, ''));
+
+  const int_Time = days ? days : int_Local_Time;
+  const change_string_Local_Time = String(int_Time);
+  const years = change_string_Local_Time.substring(0, 4);
+  const month = change_string_Local_Time.substring(4, 6);
+  const day = change_string_Local_Time.substring(6, 8);
+
+  const Today_Date = years + '-' + month + '-' + day;
+
+  return Today_Date;
+};

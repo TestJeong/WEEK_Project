@@ -7,7 +7,8 @@ const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
   const dispatch = useDispatch();
 
   const handleConfirm = (date) => {
-    const DATE_TIME = date.toLocaleTimeString();
+    const DATE_TIME = date.toTimeString().split(' ')[0];
+
     const IOS_HOURS = (date.getHours() + 24) % 12 || 12;
 
     const IOS_TIMESHEET =
@@ -30,6 +31,7 @@ const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
     dispatch({
       type: CLICK_TIME,
       data: Platform.OS === 'ios' ? IOS_TIMESHEET : ANDROID_TIMESHEET,
+      hoho: DATE_TIME,
     });
 
     hideDatePicker();

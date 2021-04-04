@@ -6,8 +6,10 @@ export const init = {
   clickCategory: null,
   Click_Category_ToDo: null,
 
-  onClickDay: null,
   onClickTime: null,
+  timeString: null,
+
+  onClickDay: null,
   onClickToDoList: null,
   onClickPriority: null,
   onClickClear: null,
@@ -86,6 +88,7 @@ const reducer = (state = init, action) => {
 
       case CLICK_TIME:
         draft.onClickTime = action.data;
+        draft.timeString = action.hoho;
         break;
 
       case CLICK_PRIORITY:
