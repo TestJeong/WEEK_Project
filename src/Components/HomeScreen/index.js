@@ -20,6 +20,7 @@ import Category_List_View from './Category_List_View';
 import Category_Modal_View from './Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
+import {Schedule_Notif} from '../ToDo/ToDo_Notification';
 
 const TitleText = styled.Text`
   font-size: 20px;
@@ -97,7 +98,7 @@ const HomeScreen = () => {
   const [will_ToDo, setWill_ToDo] = useState(0);
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
-  const {categoryList} = useSelector((state) => state.Catagory);
+  const {categoryList, timeString} = useSelector((state) => state.Catagory);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);

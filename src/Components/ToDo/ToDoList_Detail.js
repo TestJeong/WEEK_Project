@@ -79,6 +79,16 @@ const ToDoList_Detail = ({navigation}) => {
       onClickToDoList.createTime,
     );
 
+    const categoryTitle = onClickCategory
+      ? onClickCategory.title
+      : onClickToDoList.categoryTitle;
+
+    const listContent = todoTitle;
+
+    const listTime = timeString ? timeString : onClickToDoList.listTime_Data;
+
+    const listDay = onClickDay ? onClickDay : onClickToDoList.listDay;
+
     realm.write(() => {
       let city = realm.create(
         'TodoDataList',
@@ -108,6 +118,12 @@ const ToDoList_Detail = ({navigation}) => {
             ? onClickPriority
             : onClickToDoList.listPriority
             ? onClickToDoList.listPriority
+            : null,
+
+          listTime_Data: timeString
+            ? timeString
+            : onClickToDoList.listTime_Data
+            ? onClickToDoList.listTime_Data
             : null,
         },
         true,
@@ -140,16 +156,21 @@ const ToDoList_Detail = ({navigation}) => {
       });
 
       user.todoData.unshift(city);
-      if (onClickDay || onClickTime || onClickCategory || todoTitle) {
-        Schedule_Notif(
-          onClickDay,
-          timeString,
-          todoTitle,
-          onClickToDoList.id,
-          onClickCategory.title,
-        );
-      }
     });
+    if (
+      timeString ||
+      onClickDay ||
+      onClickCategory ||
+      todoTitle !== onClickToDoList.listContent
+    ) {
+      Schedule_Notif(
+        listDay,
+        listTime,
+        todoTitle,
+        onClickToDoList.id,
+        categoryTitle,
+      );
+    }
 
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
 

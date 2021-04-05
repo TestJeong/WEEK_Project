@@ -14,9 +14,8 @@ import realm from '../../db';
 import {
   TODO_LIST_DATA_REQUEST,
   CLICK_TODO_LIST_DATA,
-  CLICK_CATEGORY,
 } from '../../reducers/Catagory';
-import {hos} from './ToDo_Notification';
+import {Schedule_Notif} from './ToDo_Notification';
 
 const List_Item = styled.View`
   height: 40px;
@@ -65,7 +64,7 @@ const ToDo_List_View = ({data, ListName}) => {
   const [onToggle_List, setOnToggle_List] = useState(
     TodoList_View_Data[0].listClear,
   );
-  const {categoryList, Agenda_DATA} = useSelector((state) => state.Catagory);
+  const {categoryList} = useSelector((state) => state.Catagory);
 
   useLayoutEffect(() => {
     setOnToggle_List(data.item.listClear);
@@ -145,7 +144,11 @@ const ToDo_List_View = ({data, ListName}) => {
   };
 
   const Toggle = () => {
+    const Notif_ID = data.item.id;
+    const String_ID = String(Notif_ID);
+
     setOnToggle_List(!onToggle_List);
+
     realm.write(() => {
       realm.create(
         'TodoDataList',
@@ -157,6 +160,22 @@ const ToDo_List_View = ({data, ListName}) => {
       );
     });
     dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
+
+    if (
+      data.item.listDay &&
+      data.item.listTime_Data &&
+      onToggle_List === false
+    ) {
+      PushNotification.cancelLocalNotifications({id: String_ID});
+    } else {
+      Schedule_Notif(
+        data.item.listDay,
+        data.item.listTime_Data,
+        data.item.listContent,
+        String_ID,
+        data.item.categoryTitle,
+      );
+    }
   };
 
   return (

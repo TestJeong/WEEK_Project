@@ -11,7 +11,6 @@ import {
 import Modal from 'react-native-modal';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
 import styled from 'styled-components/native';
 
 import realm from '../../db';
@@ -25,7 +24,7 @@ import {
   CLICK_CATEGORY_INPUT,
 } from '../../reducers/Catagory';
 import Category_Modal from './Category_Modal';
-import {Schedule_Notif, ToDo_Notification} from './ToDo_Notification';
+import {Schedule_Notif} from './ToDo_Notification';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -59,12 +58,6 @@ const Button_View = styled.View`
   align-items: center;
   justify-content: space-between;
   padding: 15px 20px;
-`;
-
-const Input_Title = styled.Text`
-  font-size: 16px;
-  margin-right: 20px;
-  font-weight: 600;
 `;
 
 const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
@@ -136,6 +129,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
             listContent: todoContents,
             listDay: onClickDay ? onClickDay : null,
             listTime: onClickTime ? onClickTime : null,
+            listTime_Data: timeString ? timeString : null,
             listPriority: onClickPriority ? onClickPriority : null,
             id: NotifID,
           },

@@ -28,3 +28,31 @@ export const Today = ({days}) => {
 
   return Today_Date;
 };
+
+export const IOS_Notif = (onClickDay, timeString) => {
+  const ClickTime = onClickDay;
+  const Change_String = String(ClickTime);
+  const years = Change_String.substring(0, 4);
+  const month = Change_String.substring(4, 6);
+  const day = Change_String.substring(6, 8);
+
+  const allDay = years + '-' + month + '-' + day;
+  const StringTime = timeString;
+  const Alls = allDay + 'T' + StringTime;
+
+  return Alls;
+};
+
+export const ANDROID_Notif = (onClickDay, timeString) => {
+  const ClickTime = onClickDay;
+  const Change_String = String(ClickTime);
+  const years = Change_String.substring(0, 4);
+  const month = Change_String.substring(4, 6);
+  const day = Change_String.substring(6, 8);
+
+  const allDay = years + '/' + month + '/' + day;
+  const StringTime = timeString;
+  const Alls = allDay + ' ' + StringTime;
+
+  return Alls;
+};

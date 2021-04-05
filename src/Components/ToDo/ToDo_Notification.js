@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
+import {Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {ANDROID_Notif, IOS_Notif} from '../Day';
 
 let lastId = 0;
 
@@ -55,15 +56,10 @@ export const Schedule_Notif = (
       console.log(`createChannel 'default-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
   );
 
-  const ClickTime = onClickDay;
-  const Change_String = String(ClickTime);
-  const years = Change_String.substring(0, 4);
-  const month = Change_String.substring(4, 6);
-  const day = Change_String.substring(6, 8);
-
-  const allDay = years + '-' + month + '-' + day;
-  const StringTime = timeString;
-  const Alls = allDay + 'T' + StringTime;
+  const Platform_Date =
+    Platform === 'ios'
+      ? IOS_Notif(onClickDay, timeString)
+      : ANDROID_Notif(onClickDay, timeString);
 
   const ScheduleNotif = () => {
     lastId++;
@@ -73,7 +69,7 @@ export const Schedule_Notif = (
       id: NotifID,
       title: categoryTitle,
       message: todoContents,
-      date: new Date(Alls),
+      date: new Date(Platform_Date),
       allowWhileIdle: false,
       number: lastId,
     });
