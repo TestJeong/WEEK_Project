@@ -25,6 +25,7 @@ import {
 } from '../../reducers/Catagory';
 import Category_Modal from './Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
+import {ANDROID_Notif, Notif_Day} from '../Day';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -83,7 +84,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
     if (isOpen) {
       Platform.OS === 'ios'
         ? inputRef.current.focus()
-        : setTimeout(() => inputRef.current.focus(), 20);
+        : setTimeout(() => inputRef.current.focus(), 40);
     }
   }, [isOpen]);
 
@@ -151,6 +152,8 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
         : categoryName;
       onClickDay &&
         onClickTime &&
+        new Date(ANDROID_Notif(onClickDay, timeString)) >
+          new Date(Notif_Day()) &&
         Schedule_Notif(
           onClickDay,
           timeString,
@@ -205,7 +208,10 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
             <Button_View>
               <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity onPress={opneModal} style={{marginRight: 30}}>
+                <TouchableOpacity
+                  hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+                  onPress={opneModal}
+                  style={{marginRight: 30}}>
                   <Icon
                     name="calendar"
                     size={23}
@@ -213,7 +219,10 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={likeOpen} style={{marginRight: 30}}>
+                <TouchableOpacity
+                  hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+                  onPress={likeOpen}
+                  style={{marginRight: 30}}>
                   <Icon
                     name="staro"
                     size={23}
@@ -222,6 +231,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                  hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
                   onPress={CategoryOpen}
                   style={{
                     marginRight: 30,
@@ -243,7 +253,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                   <TouchableOpacity
                     hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
                     onPress={ToDoInput_Enter}>
-                    <Icon name="enter" size={23} />
+                    <Icon name="enter" size={23} color={'black'} />
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity

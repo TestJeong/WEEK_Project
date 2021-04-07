@@ -26,7 +26,7 @@ import {
 import Detail_Priorty from './Detail_Priority';
 import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';
-import {Today} from '../Day';
+import {Today, ANDROID_Notif, Notif_Day} from '../Day';
 
 const Time_Input_Container = styled.TouchableOpacity`
   flex-direction: row;
@@ -83,10 +83,8 @@ const ToDoList_Detail = ({navigation}) => {
       ? onClickCategory.title
       : onClickToDoList.categoryTitle;
 
-    const listContent = todoTitle;
-
+    const listContent = TodoList_View_Data[0].listContent;
     const listTime = timeString ? timeString : onClickToDoList.listTime_Data;
-
     const listDay = onClickDay ? onClickDay : onClickToDoList.listDay;
 
     realm.write(() => {
@@ -157,19 +155,23 @@ const ToDoList_Detail = ({navigation}) => {
 
       user.todoData.unshift(city);
     });
+
     if (
       timeString ||
       onClickDay ||
       onClickCategory ||
-      todoTitle !== onClickToDoList.listContent
+      listContent !== todoTitle
     ) {
-      Schedule_Notif(
-        listDay,
-        listTime,
-        todoTitle,
-        onClickToDoList.id,
-        categoryTitle,
-      );
+      onClickToDoList.listDay &&
+        onClickToDoList.listTime_Data &&
+        new Date(ANDROID_Notif(listDay, listTime)) > new Date(Notif_Day()) &&
+        Schedule_Notif(
+          listDay,
+          listTime,
+          todoTitle,
+          onClickToDoList.id,
+          categoryTitle,
+        );
     }
 
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
@@ -181,16 +183,19 @@ const ToDoList_Detail = ({navigation}) => {
     navigation.setOptions({
       headerRightContainerStyle: {marginRight: 20},
       headerLeft: () => (
-        <Icon
-          onPress={() =>
-            /*  navigation.navigate(ListName ? 'Category_ToDoList' : 'ToDoList') */
-            navigation.goBack()
-          }
-          name="left"
-          size={20}
-        />
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <Icon name="left" size={20} />
+        </TouchableOpacity>
       ),
-      headerRight: () => <Icon onPress={SaveBtn} name="save" size={23} />,
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={SaveBtn}
+          hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <Icon name="save" size={23} />
+        </TouchableOpacity>
+      ),
     });
   }, [
     onClickDay,

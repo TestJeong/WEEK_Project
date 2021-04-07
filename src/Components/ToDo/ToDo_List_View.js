@@ -1,5 +1,12 @@
 import React, {useRef, useEffect, useState, useLayoutEffect} from 'react';
-import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Animated,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
@@ -16,6 +23,7 @@ import {
   CLICK_TODO_LIST_DATA,
 } from '../../reducers/Catagory';
 import {Schedule_Notif} from './ToDo_Notification';
+import {ANDROID_Notif, Notif_Day} from '../Day';
 
 const List_Item = styled.View`
   height: 40px;
@@ -168,13 +176,18 @@ const ToDo_List_View = ({data, ListName}) => {
     ) {
       PushNotification.cancelLocalNotifications({id: String_ID});
     } else {
-      Schedule_Notif(
-        data.item.listDay,
-        data.item.listTime_Data,
-        data.item.listContent,
-        String_ID,
-        data.item.categoryTitle,
-      );
+      data.item.listDay &&
+        data.item.listTime_Data &&
+        onToggle_List === true &&
+        new Date(ANDROID_Notif(data.item.listDay, data.item.listTime_Data)) >
+          new Date(Notif_Day()) &&
+        Schedule_Notif(
+          data.item.listDay,
+          data.item.listTime_Data,
+          data.item.listContent,
+          String_ID,
+          data.item.categoryTitle,
+        );
     }
   };
 
@@ -188,7 +201,9 @@ const ToDo_List_View = ({data, ListName}) => {
         <TouchableOpacity onPress={goToList}>
           <List_Item>
             <List_Title_View>
-              <TouchableOpacity onPress={Toggle}>
+              <TouchableOpacity
+                hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+                onPress={Toggle}>
                 {onToggle_List ? (
                   <Icon name="checkcircleo" size={30} color="#bbb" />
                 ) : (

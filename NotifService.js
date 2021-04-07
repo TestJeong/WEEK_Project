@@ -115,7 +115,7 @@ export default class NotifService {
   scheduleNotif(soundName) {
     this.lastId++;
     PushNotification.localNotificationSchedule({
-      date: new Date(Date.now() + 5 * 1000), // in 30 secs
+      date: new Date('2021/04/05 21:00:00'), // in 30 secs
 
       /* Android Only Properties */
       channelId: soundName ? 'sound-channel-id' : 'default-channel-id',

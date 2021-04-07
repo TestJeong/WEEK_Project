@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -33,12 +33,11 @@ const ToDoStackNavigator = ({navigation}) => {
         options={{
           headerLeftContainerStyle: {marginLeft: 20},
           headerLeft: () => (
-            <Icon
+            <TouchableOpacity
               onPress={() => navigation.navigate('Home')}
-              name="left"
-              size={20}
-              color={'white'}
-            />
+              hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+              <Icon name="left" size={20} color={'white'} />
+            </TouchableOpacity>
           ),
         }}
       />
@@ -48,11 +47,11 @@ const ToDoStackNavigator = ({navigation}) => {
         options={{
           headerLeftContainerStyle: {marginLeft: 20},
           headerLeft: () => (
-            <Icon
+            <TouchableOpacity
               onPress={() => navigation.navigate('Home')}
-              name="left"
-              size={20}
-            />
+              hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+              <Icon name="left" size={20} />
+            </TouchableOpacity>
           ),
         }}
       />
@@ -84,11 +83,11 @@ const CalendarStackNavigator = ({navigation}) => {
           headerTitle: '상세정보',
           headerLeftContainerStyle: {marginLeft: 20},
           headerLeft: () => (
-            <Icon
+            <TouchableOpacity
               onPress={() => navigation.navigate('Agenda')}
-              name="left"
-              size={20}
-            />
+              hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+              <Icon name="left" size={20} />
+            </TouchableOpacity>
           ),
         }}
       />
