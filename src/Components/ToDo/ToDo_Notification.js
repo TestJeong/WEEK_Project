@@ -4,7 +4,6 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {ANDROID_Notif, IOS_Notif} from '../Day';
 
 let lastId = 0;
-
 export const Schedule_Notif = (
   onClickDay,
   timeString,
@@ -12,6 +11,12 @@ export const Schedule_Notif = (
   NotifID,
   categoryTitle,
 ) => {
+  PushNotification.getApplicationIconBadgeNumber(function (number) {
+    if (number > 0) {
+      PushNotification.setApplicationIconBadgeNumber(0);
+    }
+  });
+
   PushNotification.configure({
     onRegister: function (token) {
       console.log('TOKEN:', token);
@@ -45,15 +50,15 @@ export const Schedule_Notif = (
 
   PushNotification.createChannel(
     {
-      channelId: 'load-channel-id', // (required)
-      channelName: `Default channel`, // (required)
-      channelDescription: 'A default channel', // (optional) default: undefined.
-      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-      importance: 4, // (optional) default: 4. Int value of the Android notification importance
-      vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+      channelId: 'load-channel-id',
+      channelName: `Default channel`,
+      channelDescription: 'A default channel',
+      soundName: 'default',
+      importance: 4,
+      vibrate: true,
     },
     (created) =>
-      console.log(`createChannel 'default-channel-id' returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+      console.log(`createChannel 'default-channel-id' returned '${created}'`),
   );
 
   const Platform_Date =
@@ -74,6 +79,7 @@ export const Schedule_Notif = (
       number: lastId,
     });
   };
+  console.log('last', lastId);
 
   return ScheduleNotif();
 };

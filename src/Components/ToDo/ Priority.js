@@ -40,8 +40,8 @@ const Icon_View = styled.View`
 `;
 
 const Priority_Text = styled.Text`
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-family: 'NanumSquareB';
 `;
 
 const Priority_Modal = ({closeModal}) => {

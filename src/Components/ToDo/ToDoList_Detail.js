@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
   Button,
+  Platform,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -28,6 +29,34 @@ import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';
 import {Today, ANDROID_Notif, Notif_Day} from '../Day';
 
+const Text_View = styled.View`
+  background-color: white;
+  min-height: 25%;
+  max-height: 70%;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+`;
+
+const Title_Text = styled.TextInput`
+  border-bottom-width: 0.5px;
+  border-bottom-color: #cad0d4;
+  font-family: 'NanumSquareR';
+  min-height: 50px;
+  max-height: 150px;
+  font-size: 20px;
+`;
+
+const Memo_Text = styled.TextInput`
+  font-family: 'NanumSquareL';
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  min-height: 130px;
+  max-height: 200px;
+  font-size: 16px;
+`;
+
 const Time_Input_Container = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
@@ -42,6 +71,18 @@ const Time_Icon_Container = styled.View`
   flex-direction: row;
   align-items: center;
 `;
+
+const List_Text = styled.Text`
+  font-family: 'NanumSquareR';
+  margin-left: 15px;
+  font-size: 16px;
+`;
+
+const List_Text_Value = styled.Text`
+  font-family: 'NanumSquareR';
+  font-size: 16px;
+`;
+
 const actionSheetRef = createRef();
 const Category_actionSheetRef = createRef();
 
@@ -163,15 +204,23 @@ const ToDoList_Detail = ({navigation}) => {
       listContent !== todoTitle
     ) {
       onClickToDoList.listDay &&
-        onClickToDoList.listTime_Data &&
-        new Date(ANDROID_Notif(listDay, listTime)) > new Date(Notif_Day()) &&
-        Schedule_Notif(
-          listDay,
-          listTime,
-          todoTitle,
-          onClickToDoList.id,
-          categoryTitle,
-        );
+      onClickToDoList.listTime_Data &&
+      Platform.OS === 'ios'
+        ? Schedule_Notif(
+            listDay,
+            listTime,
+            todoTitle,
+            onClickToDoList.id,
+            categoryTitle,
+          )
+        : new Date(ANDROID_Notif(listDay, listTime)) > new Date(Notif_Day()) &&
+          Schedule_Notif(
+            listDay,
+            listTime,
+            todoTitle,
+            onClickToDoList.id,
+            categoryTitle,
+          );
     }
 
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
@@ -256,41 +305,16 @@ const ToDoList_Detail = ({navigation}) => {
           openModal={calendarModalVisible}
           closeModal={closeCalendarModal}
         />
-        <View
-          style={{
-            backgroundColor: 'white',
-            minHeight: '25%',
-            maxHeight: '70%',
-            padding: 10,
-            borderRadius: 20,
-            marginBottom: 30,
-          }}>
-          <TextInput
-            value={todoTitle}
-            onChangeText={setToDoTitle}
-            style={{
-              borderBottomWidth: 0.5,
-              borderBottomColor: '#cad0d4',
-              minHeight: 50,
-              maxHeight: 150,
-              fontSize: 20,
-            }}
-          />
-          <TextInput
+        <Text_View>
+          <Title_Text value={todoTitle} onChangeText={setToDoTitle} />
+          <Memo_Text
             value={todoMemo}
             onChangeText={setToDoMemo}
             multiline={true}
             textAlignVertical={'top'}
             placeholder="메모"
-            style={{
-              marginTop: 10,
-              marginBottom: 10,
-              minHeight: 130,
-              maxHeight: 200,
-              fontSize: 16,
-            }}
           />
-        </View>
+        </Text_View>
         <View>
           <Time_Input_Container
             onPress={() => {
@@ -298,24 +322,24 @@ const ToDoList_Detail = ({navigation}) => {
             }}>
             <Time_Icon_Container>
               <Icon name="bars" size={23} color={'#be8bdc'} />
-              <Text style={{marginLeft: 15, fontSize: 16}}>카테고리</Text>
+              <List_Text>카테고리</List_Text>
             </Time_Icon_Container>
 
-            <Text style={{fontSize: 16}}>
+            <List_Text_Value>
               {onClickCategory
                 ? onClickCategory.title
                 : onClickToDoList.categoryTitle}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
-            </Text>
+            </List_Text_Value>
           </Time_Input_Container>
 
           <Time_Input_Container onPress={openCalendar}>
             <Time_Icon_Container>
               <Icon name="calendar" size={23} color={'#75bde0'} />
-              <Text style={{marginLeft: 15, fontSize: 16}}>날짜</Text>
+              <List_Text>날짜</List_Text>
             </Time_Icon_Container>
-            <Text style={{fontSize: 16}}>
+            <List_Text_Value>
               {onClickDay
                 ? Today(onClickDay)
                 : onClickToDoList.listDay
@@ -323,15 +347,15 @@ const ToDoList_Detail = ({navigation}) => {
                 : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
-            </Text>
+            </List_Text_Value>
           </Time_Input_Container>
 
           <Time_Input_Container onPress={showDatePicker}>
             <Time_Icon_Container>
               <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
-              <Text style={{marginLeft: 15, fontSize: 16}}>시간</Text>
+              <List_Text>시간</List_Text>
             </Time_Icon_Container>
-            <Text style={{fontSize: 16}}>
+            <List_Text_Value>
               {onClickTime
                 ? onClickTime
                 : onClickToDoList.listTime
@@ -339,7 +363,7 @@ const ToDoList_Detail = ({navigation}) => {
                 : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
-            </Text>
+            </List_Text_Value>
           </Time_Input_Container>
 
           <Time_Input_Container
@@ -348,9 +372,9 @@ const ToDoList_Detail = ({navigation}) => {
             }}>
             <Time_Icon_Container>
               <Icon name="staro" size={23} color={'#f89b9b'} />
-              <Text style={{marginLeft: 15, fontSize: 16}}>우선순위</Text>
+              <List_Text>우선순위</List_Text>
             </Time_Icon_Container>
-            <Text style={{fontSize: 16}}>
+            <List_Text_Value>
               {onClickPriority
                 ? (function () {
                     if (onClickPriority === 1)
@@ -426,7 +450,7 @@ const ToDoList_Detail = ({navigation}) => {
                 : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
-            </Text>
+            </List_Text_Value>
           </Time_Input_Container>
         </View>
       </ScrollView>

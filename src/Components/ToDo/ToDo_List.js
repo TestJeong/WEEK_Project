@@ -35,7 +35,14 @@ const ToDoList = ({route}) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text style={{color: 'white', fontWeight: '800', fontSize: 17}}>
+        <Text
+          style={{
+            letterSpacing: 1.5,
+            color: 'white',
+            fontSize: 17,
+            fontFamily: 'NanumSquareEB',
+            lineHeight: 20,
+          }}>
           {categoryName}
         </Text>
       ),

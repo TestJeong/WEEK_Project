@@ -26,16 +26,6 @@ const Render_View = styled.View`
   width: 100%;
 `;
 
-const Render_Text = styled.Text`
-  font-size: 16px;
-  margin-bottom: 15px;
-`;
-
-const Time_Text = styled.Text`
-  font-size: 13px;
-  color: #adb5bd;
-`;
-
 const List_View = styled.View`
   flex-direction: row;
   align-items: center;
@@ -91,19 +81,21 @@ const Agenda_List = ({item}) => {
             )}
           </TouchableOpacity>
           <ListText_View>
-            <Render_Text
-              style={onToggle ? styles.strikeText : styles.defaultText}>
+            <Text
+              style={
+                onToggle ? styles.strikeTitleText : styles.defaultTitleText
+              }>
               {item.listContent}
-            </Render_Text>
+            </Text>
             <Text style={onToggle ? styles.strikeText : styles.defaultText}>
               {item.categoryTitle}
             </Text>
           </ListText_View>
         </List_View>
 
-        <Time_Text style={onToggle ? styles.strikeText : styles.defaultText}>
+        <Text style={onToggle ? styles.strikeText : styles.defaultText}>
           {item.listTime}
-        </Time_Text>
+        </Text>
       </Render_View>
     </TouchableOpacity>
   );
@@ -118,15 +110,31 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.32,
     shadowRadius: 1.22,
-
     elevation: 3,
   },
+  strikeTitleText: {
+    fontSize: 16,
+    marginBottom: 15,
+    fontFamily: 'NanumSquareB',
+    color: '#bbb',
+    textDecorationLine: 'line-through',
+  },
 
-  defaultText: {
+  defaultTitleText: {
+    fontSize: 16,
+    marginBottom: 15,
     color: 'black',
+    fontFamily: 'NanumSquareB',
+  },
+  defaultText: {
+    fontSize: 13,
+    color: 'black',
+    fontFamily: 'NanumSquareL',
   },
 
   strikeText: {
+    fontSize: 13,
+    fontFamily: 'NanumSquareL',
     color: '#bbb',
     textDecorationLine: 'line-through',
   },

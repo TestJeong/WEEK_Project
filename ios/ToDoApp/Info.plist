@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CodePushDeploymentKey</key>
-	<string>Pb9f-O5ajC5oRYomYvMSEVPFsQoNs34iLJ3i_</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -24,6 +22,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CodePushDeploymentKey</key>
+	<string>Pb9f-O5ajC5oRYomYvMSEVPFsQoNs34iLJ3i_</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -43,6 +43,10 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>NanumSquareBold.ttf</string>
+		<string>NanumSquareExtraBold.ttf</string>
+		<string>NanumSquareLight.ttf</string>
+		<string>NanumSquareRegular.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>Evillcons.ttf</string>

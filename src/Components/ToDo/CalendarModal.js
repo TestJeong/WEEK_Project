@@ -48,9 +48,20 @@ const Button_View = styled.View`
   margin-bottom: 20px;
 `;
 
+const Time_Text = styled.Text`
+  font-size: 16px;
+  margin-left: 15px;
+  font-family: 'NanumSquareB';
+`;
+
+const Time_Value = styled.Text`
+  font-size: 16px;
+  font-family: 'NanumSquareR';
+`;
+
 const Text_Close = styled.Text`
   font-size: 16px;
-  font-weight: 800;
+  font-family: 'NanumSquareB';
 `;
 
 const CalendarModal = ({openModal, closeModal}) => {
@@ -134,18 +145,21 @@ const CalendarModal = ({openModal, closeModal}) => {
             todayTextColor: 'white',
             dotColor: '#00adf5',
             selectedDotColor: 'red',
+            textDayFontFamily: 'NanumSquareR',
+            textMonthFontFamily: 'NanumSquareB',
+            textDayHeaderFontFamily: 'NanumSquareB',
           }}
         />
 
         <Time_Input_Container onPress={showDatePicker}>
           <Time_Icon_Container>
             <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
-            <Text style={{marginLeft: 15, fontSize: 16}}>시간</Text>
+            <Time_Text>시간</Time_Text>
           </Time_Icon_Container>
-          <Text style={{fontSize: 16}}>
+          <Time_Value>
             {onClickTime ? onClickTime : '없음'}&nbsp; &nbsp;
             <Icon name="right" size={15} />
-          </Text>
+          </Time_Value>
         </Time_Input_Container>
 
         <Button_View>

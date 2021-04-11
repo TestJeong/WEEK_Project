@@ -38,11 +38,11 @@ const Schedule = ({navigation}) => {
         theme={{
           selectedDayBackgroundColor: '#347ee7',
           todayTextColor: '#347ee7',
-          textDayFontWeight: '600',
-          textMonthFontWeight: '700',
-          textDayHeaderFontWeight: '700', //header 요일
           agendaTodayColor: '#347ee7',
           agendaKnobColor: '#3c4a6b',
+          textDayFontFamily: 'NanumSquareB',
+          textMonthFontFamily: 'NanumSquareB',
+          textDayHeaderFontFamily: 'NanumSquareB',
         }}
       />
     </SafeAreaView>

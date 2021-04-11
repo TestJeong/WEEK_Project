@@ -38,12 +38,16 @@ const List_Item = styled.View`
 const List_Text = styled.Text`
   font-size: 16px;
   width: 85%;
+  line-height: 20px;
+  font-family: 'NanumSquareR';
 `;
 
 const List_Clock_Text = styled.Text`
-  font-size: 13px;
+  font-size: 12px;
+
+  line-height: 13px;
+  font-family: 'NanumSquareR';
   padding-top: 7px;
-  color: #adb5bd;
 `;
 
 const List_Title_View = styled.View`
@@ -177,17 +181,25 @@ const ToDo_List_View = ({data, ListName}) => {
       PushNotification.cancelLocalNotifications({id: String_ID});
     } else {
       data.item.listDay &&
-        data.item.listTime_Data &&
-        onToggle_List === true &&
-        new Date(ANDROID_Notif(data.item.listDay, data.item.listTime_Data)) >
-          new Date(Notif_Day()) &&
-        Schedule_Notif(
-          data.item.listDay,
-          data.item.listTime_Data,
-          data.item.listContent,
-          String_ID,
-          data.item.categoryTitle,
-        );
+      data.item.listTime_Data &&
+      onToggle_List === true &&
+      Platform.OS === 'ios'
+        ? Schedule_Notif(
+            data.item.listDay,
+            data.item.listTime_Data,
+            data.item.listContent,
+            String_ID,
+            data.item.categoryTitle,
+          )
+        : new Date(ANDROID_Notif(data.item.listDay, data.item.listTime_Data)) >
+            new Date(Notif_Day()) &&
+          Schedule_Notif(
+            data.item.listDay,
+            data.item.listTime_Data,
+            data.item.listContent,
+            String_ID,
+            data.item.categoryTitle,
+          );
     }
   };
 
@@ -220,7 +232,7 @@ const ToDo_List_View = ({data, ListName}) => {
                 {ListDay ? (
                   <List_Clock_Text
                     style={
-                      onToggle_List ? styles.strikeText : styles.defaultText
+                      onToggle_List ? styles.strikeText : styles.defaultDayText
                     }>
                     {ListDay}
                     {data.item.listTime ? (
@@ -293,6 +305,10 @@ const styles = StyleSheet.create({
 
   defaultText: {
     color: 'black',
+  },
+
+  defaultDayText: {
+    color: '#adb5bd',
   },
 
   actionText: {

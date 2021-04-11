@@ -28,8 +28,8 @@ const List_Item = styled.View`
 `;
 
 const List_Text = styled.Text`
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 15px;
+  font-family: 'NanumSquareR';
 `;
 
 const Category_Modal = ({closeModal}) => {

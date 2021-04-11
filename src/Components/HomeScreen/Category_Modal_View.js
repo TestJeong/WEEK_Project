@@ -15,6 +15,7 @@ import realm from '../../db';
 import {Day} from '../Day';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import Category_Palette from './Category_Palette';
+import {Category_Notif} from './Category_Notif';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -28,7 +29,8 @@ const ModalView = styled.View`
   width: 100%;
   height: 93%;
   align-items: center;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   background-color: white;
 `;
 
@@ -40,6 +42,8 @@ const Text_Input_Container = styled.TextInput`
   margin-top: 15px;
   margin-bottom: 35px;
   border-radius: 8px;
+
+  font-family: 'NanumSquareR';
   background-color: #cad0d4;
 `;
 
@@ -53,12 +57,14 @@ const Button_View = styled.View`
 
 const Text_Close = styled.Text`
   font-size: 16px;
-  font-weight: 600;
+  line-height: 20px;
+  font-family: 'NanumSquareEB';
 `;
 
 const Modal_Title = styled.Text`
   font-size: 17px;
-  font-weight: 800;
+  line-height: 20px;
+  font-family: 'NanumSquareB';
 `;
 
 const Hoper = styled.View`
@@ -102,6 +108,13 @@ const Category_Modal_View = ({isOpen, close, data}) => {
             true,
           );
           ToDos.todoData.forEach((item) => {
+            if (
+              item.categoryTitle !== categoryTitle &&
+              item.listDay &&
+              item.listTime_Data
+            ) {
+              Category_Notif(item, categoryTitle);
+            }
             realm.create(
               'TodoDataList',
               {
@@ -113,6 +126,7 @@ const Category_Modal_View = ({isOpen, close, data}) => {
           });
         }
       });
+
       const CategoryData = realm.objects('CategoryList');
       const SortCategoryDate = CategoryData.sorted('createTime');
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
@@ -141,7 +155,7 @@ const Category_Modal_View = ({isOpen, close, data}) => {
             hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
-          <Modal_Title>카테고리 추가</Modal_Title>
+          <Modal_Title>MY CATEGORY</Modal_Title>
           <TouchableOpacity
             onPress={SaveButton}
             hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>

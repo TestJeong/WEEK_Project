@@ -41,11 +41,6 @@ const Icon_View = styled.View`
   width: 25%;
 `;
 
-const Priority_Text = styled.Text`
-  font-size: 20px;
-  font-weight: 500;
-`;
-
 const Detail_Priorty = ({hideActionSheet}) => {
   const dispatch = useDispatch();
 

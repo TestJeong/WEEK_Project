@@ -20,23 +20,23 @@ import Category_List_View from './Category_List_View';
 import Category_Modal_View from './Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
-import {Schedule_Notif} from '../ToDo/ToDo_Notification';
 
 const TitleText = styled.Text`
+  font-family: 'NanumSquareEB';
   font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 30px;
+
+  margin-bottom: 25px;
 `;
 
 const CategoryTitleText = styled.Text`
   font-size: 20px;
-  font-weight: 800;
+  font-family: 'NanumSquareEB';
   margin-bottom: 15px;
 `;
 
 const PlusText = styled.Text`
   font-size: 15px;
-  font-weight: 600;
+  font-family: 'NanumSquareB';
   margin-left: 10px;
 `;
 
@@ -78,7 +78,8 @@ const Main_Title_Number = styled.View`
 
 const Main_Title_Number_Text = styled.Text`
   font-size: 30px;
-  font-weight: 500;
+
+  font-family: 'NanumSquareEB';
 `;
 
 const Main_Title_View = styled.View`
@@ -88,7 +89,7 @@ const Main_Title_View = styled.View`
 const Main_Title_Text = styled.Text`
   text-align: left;
   font-size: 20px;
-  font-weight: 700;
+  font-family: 'NanumSquareEB';
   padding-bottom: 10px;
 `;
 
@@ -109,12 +110,6 @@ const HomeScreen = () => {
   const TodoList_View = realm.objects('TodoDataList');
 
   useEffect(() => {
-    PushNotification.getApplicationIconBadgeNumber((number) => {
-      if (number > 0) {
-        PushNotification.setApplicationIconBadgeNumber(0);
-      }
-    });
-
     Realms.open({}).then((realm) => {
       console.log('Realm is located at: ' + realm.path.toString());
     });
@@ -259,7 +254,7 @@ const HomeScreen = () => {
         </Column_View>
       </Main_Container>
       <View style={styles.container}>
-        <CategoryTitleText>Category</CategoryTitleText>
+        <CategoryTitleText>CATEGORY</CategoryTitleText>
         <FlatListView
           keyExtractor={(item, index) => '#' + index}
           ItemSeparatorComponent={() => <View style={styles.separator} />}

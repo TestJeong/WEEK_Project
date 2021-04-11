@@ -67,5 +67,5 @@ export const Notif_Day = () => {
   let day =
     year + '/' + month + '/' + date + '/' + ' ' + hours + ':' + min + ':' + sec;
 
-  return Notif_Day;
+  return day;
 };

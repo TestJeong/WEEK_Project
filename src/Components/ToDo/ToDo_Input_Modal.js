@@ -45,6 +45,7 @@ const ModalView = styled.View`
 `;
 
 const Text_Input_Container = styled.TextInput`
+  font-family: 'NanumSquareR';
   font-size: 17px;
   margin-top: 5px;
   height: 50px;
@@ -59,6 +60,11 @@ const Button_View = styled.View`
   align-items: center;
   justify-content: space-between;
   padding: 15px 20px;
+`;
+
+const Category_Title = styled.Text`
+  font-family: 'NanumSquareR';
+  margin-left: 15px;
 `;
 
 const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
@@ -150,17 +156,23 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
       const categoryTitle = onClickCategory
         ? onClickCategory.title
         : categoryName;
-      onClickDay &&
-        onClickTime &&
-        new Date(ANDROID_Notif(onClickDay, timeString)) >
-          new Date(Notif_Day()) &&
-        Schedule_Notif(
-          onClickDay,
-          timeString,
-          todoContents,
-          NotifID,
-          categoryTitle,
-        );
+      onClickDay && onClickTime && Platform.OS === 'ios'
+        ? Schedule_Notif(
+            onClickDay,
+            timeString,
+            todoContents,
+            NotifID,
+            categoryTitle,
+          )
+        : new Date(ANDROID_Notif(onClickDay, timeString)) >
+            new Date(Notif_Day()) &&
+          Schedule_Notif(
+            onClickDay,
+            timeString,
+            todoContents,
+            NotifID,
+            categoryTitle,
+          );
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       setTodoContents('');
     }
@@ -209,7 +221,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
             <Button_View>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity
-                  hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+                  hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
                   onPress={opneModal}
                   style={{marginRight: 30}}>
                   <Icon
@@ -220,7 +232,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+                  hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
                   onPress={likeOpen}
                   style={{marginRight: 30}}>
                   <Icon
@@ -231,7 +243,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+                  hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
                   onPress={CategoryOpen}
                   style={{
                     marginRight: 30,
@@ -243,21 +255,21 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                     size={23}
                     color={onClickCategory ? onClickCategory.color : 'black'}
                   />
-                  <Text style={{marginLeft: 15}}>
+                  <Category_Title>
                     {onClickCategory ? onClickCategory.title : categoryName}
-                  </Text>
+                  </Category_Title>
                 </TouchableOpacity>
               </View>
               <View>
                 {todoContents ? (
                   <TouchableOpacity
-                    hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+                    hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
                     onPress={ToDoInput_Enter}>
                     <Icon name="enter" size={23} color={'black'} />
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity
-                    hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+                    hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
                     <Icon name="enter" size={23} color="gray" />
                   </TouchableOpacity>
                 )}

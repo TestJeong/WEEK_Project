@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Text} from 'react-native';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -60,7 +60,18 @@ const ToDoStackNavigator = ({navigation}) => {
         name="ToDoListDetail"
         component={ToDoList_Detail}
         options={{
-          headerTitle: '상세정보',
+          headerTitle: (
+            <Text
+              style={{
+                letterSpacing: 0.5,
+                color: 'black',
+                fontSize: 17,
+                fontFamily: 'NanumSquareEB',
+                lineHeight: 20,
+              }}>
+              상세정보
+            </Text>
+          ),
           headerLeftContainerStyle: {marginLeft: 20},
         }}
       />
