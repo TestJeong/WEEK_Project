@@ -179,27 +179,35 @@ const ToDo_List_View = ({data, ListName}) => {
       onToggle_List === false
     ) {
       PushNotification.cancelLocalNotifications({id: String_ID});
-    } else {
+    } else if (
       data.item.listDay &&
       data.item.listTime_Data &&
       onToggle_List === true &&
       Platform.OS === 'ios'
-        ? Schedule_Notif(
-            data.item.listDay,
-            data.item.listTime_Data,
-            data.item.listContent,
-            String_ID,
-            data.item.categoryTitle,
-          )
-        : new Date(ANDROID_Notif(data.item.listDay, data.item.listTime_Data)) >
-            new Date(Notif_Day()) &&
-          Schedule_Notif(
-            data.item.listDay,
-            data.item.listTime_Data,
-            data.item.listContent,
-            String_ID,
-            data.item.categoryTitle,
-          );
+    ) {
+      Schedule_Notif(
+        data.item.listDay,
+        data.item.listTime_Data,
+        data.item.listContent,
+        String_ID,
+        data.item.categoryTitle,
+      );
+    } else if (
+      data.item.listDay &&
+      data.item.listTime_Data &&
+      onToggle_List === true &&
+      Platform.OS === 'android' &&
+      new Date(
+        ANDROID_Notif(data.item.listDay, data.item.listTime_Data),
+      ).toLocaleString() > new Date(Notif_Day()).toLocaleString()
+    ) {
+      Schedule_Notif(
+        data.item.listDay,
+        data.item.listTime_Data,
+        data.item.listContent,
+        String_ID,
+        data.item.categoryTitle,
+      );
     }
   };
 

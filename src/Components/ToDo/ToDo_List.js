@@ -77,7 +77,7 @@ const ToDoList = ({route}) => {
         />
       </View>
       <TouchableOpacity
-        hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}
+        hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
         activeOpacity={0.5}
         onPress={opneModal}
         style={[

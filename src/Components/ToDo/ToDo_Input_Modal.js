@@ -22,6 +22,7 @@ import {
   CLICK_DAY,
   CLICK_PRIORITY,
   CLICK_CATEGORY_INPUT,
+  CLICK_TIME,
 } from '../../reducers/Catagory';
 import Category_Modal from './Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
@@ -112,6 +113,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   const ModalClose = () => {
     close();
+    dispatch({type: CLICK_TIME, data: null});
     dispatch({type: CLICK_DAY, data: null});
     dispatch({type: CLICK_PRIORITY, data: null});
     dispatch({type: CLICK_CATEGORY_INPUT, data: null});
@@ -156,23 +158,30 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
       const categoryTitle = onClickCategory
         ? onClickCategory.title
         : categoryName;
-      onClickDay && onClickTime && Platform.OS === 'ios'
-        ? Schedule_Notif(
-            onClickDay,
-            timeString,
-            todoContents,
-            NotifID,
-            categoryTitle,
-          )
-        : new Date(ANDROID_Notif(onClickDay, timeString)) >
-            new Date(Notif_Day()) &&
-          Schedule_Notif(
-            onClickDay,
-            timeString,
-            todoContents,
-            NotifID,
-            categoryTitle,
-          );
+      if (onClickDay && onClickTime && Platform.OS === 'ios') {
+        Schedule_Notif(
+          onClickDay,
+          timeString,
+          todoContents,
+          NotifID,
+          categoryTitle,
+        );
+      } else if (
+        onClickDay &&
+        onClickTime &&
+        Platform.OS === 'android' &&
+        new Date(ANDROID_Notif(onClickDay, timeString)).toLocaleString() >
+          new Date(Notif_Day()).toLocaleString()
+      ) {
+        Schedule_Notif(
+          onClickDay,
+          timeString,
+          todoContents,
+          NotifID,
+          categoryTitle,
+        );
+      }
+
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       setTodoContents('');
     }

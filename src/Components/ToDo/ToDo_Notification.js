@@ -11,26 +11,20 @@ export const Schedule_Notif = (
   NotifID,
   categoryTitle,
 ) => {
-  PushNotification.getApplicationIconBadgeNumber(function (number) {
-    if (number > 0) {
-      PushNotification.setApplicationIconBadgeNumber(0);
-    }
-  });
-
   PushNotification.configure({
     onRegister: function (token) {
       console.log('TOKEN:', token);
     },
 
     onNotification: function (notification) {
-      console.log('NOTIFICATION:', notification);
+      console.log('NOTIFICATION1:', notification);
 
       notification.finish(PushNotificationIOS.FetchResult.NoData);
     },
 
     onAction: function (notification) {
       console.log('ACTION:', notification.action);
-      console.log('NOTIFICATION:', notification);
+      console.log('NOTIFICATION2:', notification);
     },
 
     onRegistrationError: function (err) {
@@ -67,6 +61,8 @@ export const Schedule_Notif = (
       : ANDROID_Notif(onClickDay, timeString);
 
   const ScheduleNotif = () => {
+    PushNotification.getScheduledLocalNotifications((notif) => {});
+
     lastId++;
 
     PushNotification.localNotificationSchedule({
@@ -76,12 +72,10 @@ export const Schedule_Notif = (
       message: todoContents,
       date: new Date(Platform_Date),
       allowWhileIdle: false,
-      number: lastId,
+      number: 1,
     });
   };
   console.log('last', lastId);
 
   return ScheduleNotif();
 };
-
-// 알람 추가 할때.

@@ -65,7 +65,7 @@ export const Notif_Day = () => {
   var min = new Date().getMinutes(); //Current Minutes
   var sec = new Date().getSeconds(); //Current Seconds
   let day =
-    year + '/' + month + '/' + date + '/' + ' ' + hours + ':' + min + ':' + sec;
+    year + '/' + month + '/' + date + ' ' + hours + ':' + min + ':' + sec;
 
   return day;
 };

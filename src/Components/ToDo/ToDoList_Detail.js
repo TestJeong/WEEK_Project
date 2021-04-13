@@ -203,24 +203,33 @@ const ToDoList_Detail = ({navigation}) => {
       onClickCategory ||
       listContent !== todoTitle
     ) {
-      onClickToDoList.listDay &&
-      onClickToDoList.listTime_Data &&
-      Platform.OS === 'ios'
-        ? Schedule_Notif(
-            listDay,
-            listTime,
-            todoTitle,
-            onClickToDoList.id,
-            categoryTitle,
-          )
-        : new Date(ANDROID_Notif(listDay, listTime)) > new Date(Notif_Day()) &&
-          Schedule_Notif(
-            listDay,
-            listTime,
-            todoTitle,
-            onClickToDoList.id,
-            categoryTitle,
-          );
+      if (
+        onClickToDoList.listDay &&
+        onClickToDoList.listTime_Data &&
+        Platform.OS === 'ios'
+      ) {
+        Schedule_Notif(
+          listDay,
+          listTime,
+          todoTitle,
+          onClickToDoList.id,
+          categoryTitle,
+        );
+      } else if (
+        onClickToDoList.listDay &&
+        onClickToDoList.listTime_Data &&
+        Platform.OS === 'android' &&
+        new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() >
+          new Date(Notif_Day()).toLocaleString()
+      ) {
+        Schedule_Notif(
+          listDay,
+          listTime,
+          todoTitle,
+          onClickToDoList.id,
+          categoryTitle,
+        );
+      }
     }
 
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});

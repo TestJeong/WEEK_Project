@@ -20,6 +20,8 @@ import Category_List_View from './Category_List_View';
 import Category_Modal_View from './Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
+import {Schedule_Notif} from '../ToDo/ToDo_Notification';
+import {Notif_Day, ANDROID_Notif} from '../Day';
 
 const TitleText = styled.Text`
   font-family: 'NanumSquareEB';
@@ -110,6 +112,10 @@ const HomeScreen = () => {
   const TodoList_View = realm.objects('TodoDataList');
 
   useEffect(() => {
+    PushNotification.getScheduledLocalNotifications((notif) => {
+      console.log('?', notif);
+    });
+
     Realms.open({}).then((realm) => {
       console.log('Realm is located at: ' + realm.path.toString());
     });
