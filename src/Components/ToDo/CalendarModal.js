@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {TextInput, View, Text, TouchableOpacity, Platform} from 'react-native';
+import {
+  TextInput,
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
+  Switch,
+} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 
 import Modal from 'react-native-modal';
@@ -31,7 +38,7 @@ const Time_Input_Container = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 10px;
+  padding: 10px 10px;
 `;
 
 const Time_Icon_Container = styled.View`
@@ -69,6 +76,8 @@ const CalendarModal = ({openModal, closeModal}) => {
   const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
 
   const [clickDay, setClickDay] = useState(null);
+  const [isEnabled, setIsEnabled] = useState(true);
+  const toggleSwitch = () => setIsEnabled(!isEnabled);
 
   const SaveCalendar = () => {
     dispatch({type: CLICK_DAY, data: Number(clickDay.replace(/-/g, ''))});
@@ -159,6 +168,16 @@ const CalendarModal = ({openModal, closeModal}) => {
           <Time_Value>
             {onClickTime ? onClickTime : '없음'}&nbsp; &nbsp;
             <Icon name="right" size={15} />
+          </Time_Value>
+        </Time_Input_Container>
+
+        <Time_Input_Container onPress={showDatePicker}>
+          <Time_Icon_Container>
+            <Icon name="bells" size={23} color={'#b9cc95'} />
+            <Time_Text>알람 설정</Time_Text>
+          </Time_Icon_Container>
+          <Time_Value>
+            <Switch onValueChange={toggleSwitch} value={isEnabled} />
           </Time_Value>
         </Time_Input_Container>
 

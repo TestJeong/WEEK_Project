@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {AGENDA_DATA_REQUEST} from '../../reducers/Catagory';
-import {Today} from '../Day';
+
 import Agenda_List from './Agenda_List';
 
 const Schedule = ({navigation}) => {
@@ -33,7 +33,7 @@ const Schedule = ({navigation}) => {
           dispatch({type: AGENDA_DATA_REQUEST, data: day});
         }}
         renderItem={renderItem}
-        selected={Today}
+        selected={Date()}
         renderEmptyDate={render_}
         theme={{
           selectedDayBackgroundColor: '#347ee7',

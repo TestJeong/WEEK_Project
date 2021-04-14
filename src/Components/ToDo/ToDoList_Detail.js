@@ -19,6 +19,7 @@ import realm from '../../db';
 import CalendarModal from './CalendarModal';
 import DateTime_Picke from './DateTime_Picke';
 import {
+  CLICK_CATEGORY_INPUT,
   CLICK_DAY,
   CLICK_PRIORITY,
   CLICK_TIME,
@@ -167,34 +168,36 @@ const ToDoList_Detail = ({navigation}) => {
         },
         true,
       );
-      let user = realm.create(
-        'CategoryList',
-        {
-          createTime: onClickCategory
-            ? onClickCategory.createTime
-            : clickCategory.createTime,
-        },
-        true,
-      );
+      if (onClickCategory) {
+        let user = realm.create(
+          'CategoryList',
+          {
+            createTime: onClickCategory
+              ? onClickCategory.createTime
+              : clickCategory.createTime,
+          },
+          true,
+        );
 
-      let categorys = realm.create(
-        'CategoryList',
-        {
-          createTime: clickCategory.createTime,
-        },
-        true,
-      );
+        let categorys = realm.create(
+          'CategoryList',
+          {
+            createTime: clickCategory.createTime,
+          },
+          true,
+        );
 
-      const filterT = categorys.todoData.filter((data) => {
-        return data.createTime !== onClickToDoList.createTime;
-      });
+        const filterT = categorys.todoData.filter((data) => {
+          return data.createTime !== onClickToDoList.createTime;
+        });
 
-      categorys.todoData = [];
-      filterT.forEach((item) => {
-        categorys.todoData.push(item);
-      });
-
-      user.todoData.unshift(city);
+        categorys.todoData = [];
+        filterT.forEach((item) => {
+          categorys.todoData.push(item);
+        });
+        console.log('todo', (categorys.todoData = [...categorys.todoData]));
+        user.todoData.unshift(city);
+      }
     });
 
     if (
@@ -233,6 +236,7 @@ const ToDoList_Detail = ({navigation}) => {
     }
 
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
+    dispatch({type: CLICK_CATEGORY_INPUT, data: null});
 
     navigation.goBack();
   };

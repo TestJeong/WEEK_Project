@@ -54,12 +54,13 @@ export const Agenda_Call_Data = (term) => {
     const intTime = Number(strTime.replace(/-/g, ''));
 
     const TodoData_Day = AgendaData.filtered('listDay == $0', intTime);
+    const TodoData_Day_Sort = TodoData_Day.sorted('createTime');
 
-    if (TodoData_Day.length === 0) {
+    if (TodoData_Day_Sort.length === 0) {
       items[strTime] = [];
     } else {
       items[strTime] = [];
-      TodoData_Day.map((date) => {
+      TodoData_Day_Sort.map((date) => {
         const Category = CategoryData.filtered(
           'title == $0',
           date.categoryTitle,

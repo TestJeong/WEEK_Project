@@ -112,6 +112,12 @@ const HomeScreen = () => {
   const TodoList_View = realm.objects('TodoDataList');
 
   useEffect(() => {
+    PushNotification.getApplicationIconBadgeNumber(function (number) {
+      if (number > 0) {
+        PushNotification.setApplicationIconBadgeNumber(0);
+      }
+    });
+
     PushNotification.getScheduledLocalNotifications((notif) => {
       console.log('?', notif);
     });
