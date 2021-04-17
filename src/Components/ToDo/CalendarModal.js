@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   TextInput,
   View,
@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import {CLICK_DAY, CLICK_TIME} from '../../reducers/Catagory';
+import {CLICK_DAY, CLICK_ENABLED, CLICK_TIME} from '../../reducers/Catagory';
 import DateTime_Picke from './DateTime_Picke';
 
 const Modal_Container = styled(Modal)`
@@ -76,11 +76,11 @@ const CalendarModal = ({openModal, closeModal}) => {
   const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
 
   const [clickDay, setClickDay] = useState(null);
-  const [isEnabled, setIsEnabled] = useState(true);
-  const toggleSwitch = () => setIsEnabled(!isEnabled);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   const SaveCalendar = () => {
     dispatch({type: CLICK_DAY, data: Number(clickDay.replace(/-/g, ''))});
+    dispatch({type: CLICK_ENABLED, data: isEnabled});
     closeModal();
   };
 
@@ -177,7 +177,7 @@ const CalendarModal = ({openModal, closeModal}) => {
             <Time_Text>알람 설정</Time_Text>
           </Time_Icon_Container>
           <Time_Value>
-            <Switch onValueChange={toggleSwitch} value={isEnabled} />
+            <Switch onValueChange={setIsEnabled} value={isEnabled} />
           </Time_Value>
         </Time_Input_Container>
 

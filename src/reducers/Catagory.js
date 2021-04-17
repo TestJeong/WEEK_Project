@@ -14,6 +14,7 @@ export const init = {
   onClickPriority: null,
   onClickClear: null,
   onClickCategory: null,
+  onClickNotif_Enabled: false,
 
   todo_List_data_loading: false,
   todo_List_data_done: false,
@@ -27,6 +28,7 @@ export const init = {
   Agenda_DATA_loading: false,
   Agenda_DATA_done: false,
   Agenda_DATA_error: null,
+  Agenda_DATA_timestamp: null,
 };
 
 export const MY_CATEGORY_DATA = 'MY_CATEGORY_DATA';
@@ -38,6 +40,7 @@ export const CLICK_CATEGORY_TODO = 'CLICK_CATEGORY_TODO';
 
 export const CLICK_TODO_LIST_DATA = 'CLICK_TODO_LIST_DATA';
 
+export const CLICK_ENABLED = 'CLICK_ENABLED';
 export const CLICK_DAY = 'CLICK_DAY';
 export const CLICK_TIME = 'CLICK_TIME';
 export const CLICK_PRIORITY = 'CLICK_PRIORITY';
@@ -82,6 +85,10 @@ const reducer = (state = init, action) => {
         draft.clickCategory = [];
         break;
 
+      case CLICK_ENABLED:
+        draft.onClickNotif_Enabled = action.data;
+        break;
+
       case CLICK_DAY:
         draft.onClickDay = action.data;
         break;
@@ -110,6 +117,7 @@ const reducer = (state = init, action) => {
         draft.Agenda_DATA_loading = true;
         draft.Agenda_DATA_done = false;
         draft.Agenda_DATA_error = null;
+        draft.Agenda_DATA_timestamp = action.day;
 
         break;
       case AGENDA_DATA_SUCCESS:
@@ -117,6 +125,7 @@ const reducer = (state = init, action) => {
         draft.Agenda_DATA_loading = false;
         draft.Agenda_DATA_done = true;
         draft.Agenda_DATA_error = null;
+        draft.Agenda_DATA_timestamp = action.day;
 
         break;
       case AGENDA_DATA_ERROR:

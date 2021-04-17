@@ -79,6 +79,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
     onClickPriority,
     onClickCategory,
     timeString,
+    onClickNotif_Enabled,
   } = useSelector((state) => state.Catagory);
   const dispatch = useDispatch();
 
@@ -119,6 +120,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
     dispatch({type: CLICK_CATEGORY_INPUT, data: null});
     setTestBtn(false);
   };
+  console.log('new', new Date('2021/04/21'));
 
   const ToDoInput_Enter = () => {
     const NotifID = Math.floor(Math.random() * 100000);
@@ -141,6 +143,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
             listTime_Data: timeString ? timeString : null,
             listPriority: onClickPriority ? onClickPriority : null,
             id: NotifID,
+            listEnabled: onClickNotif_Enabled,
           },
           true,
         );
@@ -158,21 +161,12 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
       const categoryTitle = onClickCategory
         ? onClickCategory.title
         : categoryName;
-      if (onClickDay && onClickTime && Platform.OS === 'ios') {
-        Schedule_Notif(
-          onClickDay,
-          timeString,
-          todoContents,
-          NotifID,
-          categoryTitle,
-        );
-      } else if (
-        onClickDay &&
+
+      onClickDay &&
         onClickTime &&
-        Platform.OS === 'android' &&
         new Date(ANDROID_Notif(onClickDay, timeString)).toLocaleString() >
-          new Date(Notif_Day()).toLocaleString()
-      ) {
+          new Date(Notif_Day()).toLocaleString() &&
+        onClickNotif_Enabled &&
         Schedule_Notif(
           onClickDay,
           timeString,
@@ -180,7 +174,6 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
           NotifID,
           categoryTitle,
         );
-      }
 
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       setTodoContents('');

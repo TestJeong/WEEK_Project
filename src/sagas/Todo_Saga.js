@@ -58,6 +58,7 @@ function* Agenda_DATA_ToDo(action) {
     yield put({
       type: AGENDA_DATA_SUCCESS,
       data: result,
+      day: action.data,
     });
   } catch (e) {
     console.error(e);

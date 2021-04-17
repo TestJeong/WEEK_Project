@@ -49,7 +49,7 @@ export const Agenda_Call_Data = (term) => {
   for (let i = -15; i < 85; i++) {
     const time = new Date().getTime() + i * 24 * 60 * 60 * 1000;
     const strTime = timeToString(
-      term !== undefined ? term.timestamp + i * 24 * 60 * 60 * 1000 : time,
+      term !== null ? term + i * 24 * 60 * 60 * 1000 : time,
     );
     const intTime = Number(strTime.replace(/-/g, ''));
 

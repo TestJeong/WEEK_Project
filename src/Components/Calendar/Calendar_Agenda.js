@@ -1,21 +1,25 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {AGENDA_DATA_REQUEST} from '../../reducers/Catagory';
+import {Today} from '../Day';
 
 import Agenda_List from './Agenda_List';
 
 const Schedule = ({navigation}) => {
   const dispatch = useDispatch();
-  const {Agenda_DATA} = useSelector((state) => state.Catagory);
+  const {Agenda_DATA, Agenda_DATA_timestamp} = useSelector(
+    (state) => state.Catagory,
+  );
 
   useEffect(() => {
+    console.log(Today());
     navigation.addListener('focus', () => {
-      dispatch({type: AGENDA_DATA_REQUEST});
+      dispatch({type: AGENDA_DATA_REQUEST, data: Agenda_DATA_timestamp});
     });
-  }, [Agenda_DATA]);
+  }, []);
 
   const renderItem = (item) => {
     return <Agenda_List item={item} />;
@@ -25,15 +29,17 @@ const Schedule = ({navigation}) => {
     return <View style={styles.emptyDate} />;
   };
 
+  const default_Day = Today();
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Agenda
         items={Agenda_DATA}
         onDayPress={(day) => {
-          dispatch({type: AGENDA_DATA_REQUEST, data: day});
+          dispatch({type: AGENDA_DATA_REQUEST, data: day.timestamp});
         }}
         renderItem={renderItem}
-        selected={Date()}
+        selected={default_Day}
         renderEmptyDate={render_}
         theme={{
           selectedDayBackgroundColor: '#347ee7',

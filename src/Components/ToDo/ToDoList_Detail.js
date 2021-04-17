@@ -9,6 +9,7 @@ import {
   ScrollView,
   Button,
   Platform,
+  Switch,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -29,6 +30,7 @@ import Detail_Priorty from './Detail_Priority';
 import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';
 import {Today, ANDROID_Notif, Notif_Day} from '../Day';
+import PushNotification from 'react-native-push-notification';
 
 const Text_View = styled.View`
   background-color: white;
@@ -102,6 +104,7 @@ const ToDoList_Detail = ({navigation}) => {
   } = useSelector((state) => state.Catagory);
   const [todoTitle, setToDoTitle] = useState(onClickToDoList.listContent);
   const [todoMemo, setToDoMemo] = useState(onClickToDoList.listMemo);
+  const [isEnableds, setIsEnableds] = useState(onClickToDoList.listEnabled);
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -141,6 +144,7 @@ const ToDoList_Detail = ({navigation}) => {
 
           listContent: todoTitle,
           listMemo: todoMemo,
+          listEnabled: isEnableds,
 
           listTime: onClickTime
             ? onClickTime
@@ -204,27 +208,14 @@ const ToDoList_Detail = ({navigation}) => {
       timeString ||
       onClickDay ||
       onClickCategory ||
-      listContent !== todoTitle
+      listContent !== todoTitle ||
+      isEnableds
     ) {
-      if (
-        onClickToDoList.listDay &&
+      onClickToDoList.listDay &&
         onClickToDoList.listTime_Data &&
-        Platform.OS === 'ios'
-      ) {
-        Schedule_Notif(
-          listDay,
-          listTime,
-          todoTitle,
-          onClickToDoList.id,
-          categoryTitle,
-        );
-      } else if (
-        onClickToDoList.listDay &&
-        onClickToDoList.listTime_Data &&
-        Platform.OS === 'android' &&
         new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() >
-          new Date(Notif_Day()).toLocaleString()
-      ) {
+          new Date(Notif_Day()).toLocaleString() &&
+        isEnableds &&
         Schedule_Notif(
           listDay,
           listTime,
@@ -232,7 +223,11 @@ const ToDoList_Detail = ({navigation}) => {
           onClickToDoList.id,
           categoryTitle,
         );
-      }
+    }
+    const Notif_ID = onClickToDoList.id;
+    const String_ID = String(Notif_ID);
+    if (isEnableds === false) {
+      PushNotification.cancelLocalNotifications({id: String_ID});
     }
 
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
@@ -266,6 +261,7 @@ const ToDoList_Detail = ({navigation}) => {
     todoTitle,
     todoMemo,
     onClickCategory,
+    isEnableds,
   ]);
 
   const unsubscribe = () => {
@@ -463,6 +459,16 @@ const ToDoList_Detail = ({navigation}) => {
                 : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
+            </List_Text_Value>
+          </Time_Input_Container>
+
+          <Time_Input_Container>
+            <Time_Icon_Container>
+              <Icon name="notification" size={23} color={'#ffa646'} />
+              <List_Text>알람허용</List_Text>
+            </Time_Icon_Container>
+            <List_Text_Value>
+              <Switch onValueChange={setIsEnableds} value={isEnableds} />
             </List_Text_Value>
           </Time_Input_Container>
         </View>
