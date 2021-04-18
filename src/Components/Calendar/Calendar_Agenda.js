@@ -1,25 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import {useIsFocused} from '@react-navigation/native';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AGENDA_DATA_REQUEST} from '../../reducers/Catagory';
+import {
+  AGENDA_DATA_REQUEST,
+  AGENDA_DATA_TIMESTAMP,
+} from '../../reducers/Catagory';
 import {Today} from '../Day';
-
 import Agenda_List from './Agenda_List';
 
-const Schedule = ({navigation}) => {
+const Schedule = () => {
   const dispatch = useDispatch();
   const {Agenda_DATA, Agenda_DATA_timestamp} = useSelector(
     (state) => state.Catagory,
   );
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    console.log(Today());
-    navigation.addListener('focus', () => {
+    if (isFocused) {
       dispatch({type: AGENDA_DATA_REQUEST, data: Agenda_DATA_timestamp});
-    });
-  }, []);
+    }
+  }, [isFocused]);
 
   const renderItem = (item) => {
     return <Agenda_List item={item} />;
@@ -37,6 +41,7 @@ const Schedule = ({navigation}) => {
         items={Agenda_DATA}
         onDayPress={(day) => {
           dispatch({type: AGENDA_DATA_REQUEST, data: day.timestamp});
+          dispatch({type: AGENDA_DATA_TIMESTAMP, data: day.timestamp});
         }}
         renderItem={renderItem}
         selected={default_Day}

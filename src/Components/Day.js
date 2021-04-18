@@ -43,6 +43,19 @@ export const IOS_Notif = (onClickDay, timeString) => {
   return Alls;
 };
 
+export const IOS_today = () => {
+  var date = new Date().getDate(); //Current Date
+  var month = new Date().getMonth() + 1; //Current Month
+  var year = new Date().getFullYear(); //Current Year
+  var hours = new Date().getHours(); //Current Hours
+  var min = new Date().getMinutes(); //Current Minutes
+  var sec = new Date().getSeconds(); //Current Seconds
+  let day =
+    year + '-' + month + '-' + date + 'T' + hours + ':' + min + ':' + sec;
+
+  return day;
+};
+
 export const ANDROID_Notif = (onClickDay, timeString) => {
   const ClickTime = onClickDay;
   const Change_String = String(ClickTime);

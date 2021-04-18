@@ -75,7 +75,6 @@ export const Schedule_Notif = (
       number: 1,
     });
   };
-  console.log('last', lastId);
 
   return ScheduleNotif();
 };

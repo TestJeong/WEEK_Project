@@ -119,7 +119,16 @@ const HomeScreen = () => {
     });
 
     PushNotification.getScheduledLocalNotifications((notif) => {
-      console.log('?', notif);
+      let lastID = 1;
+      const Schedule_sort = notif.sort((a, b) => {
+        return a.date - b.date;
+      });
+
+      for (let data of Schedule_sort) {
+        data.number = lastID++;
+      }
+      console.log('예약 알림', notif);
+      console.log('test', Schedule_sort);
     });
 
     Realms.open({}).then((realm) => {

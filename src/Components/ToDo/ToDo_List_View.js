@@ -23,7 +23,7 @@ import {
   CLICK_TODO_LIST_DATA,
 } from '../../reducers/Catagory';
 import {Schedule_Notif} from './ToDo_Notification';
-import {ANDROID_Notif, Notif_Day} from '../Day';
+import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../Day';
 
 const List_Item = styled.View`
   height: 40px;
@@ -183,7 +183,11 @@ const ToDo_List_View = ({data, ListName}) => {
       data.item.listDay &&
       data.item.listTime_Data &&
       onToggle_List === true &&
-      Platform.OS === 'ios'
+      Platform.OS === 'ios' &&
+      new Date(
+        IOS_Notif(data.item.listDay, data.item.listTime_Data),
+      ).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
+      data.item.listEnabled
     ) {
       Schedule_Notif(
         data.item.listDay,
@@ -199,7 +203,8 @@ const ToDo_List_View = ({data, ListName}) => {
       Platform.OS === 'android' &&
       new Date(
         ANDROID_Notif(data.item.listDay, data.item.listTime_Data),
-      ).toLocaleString() > new Date(Notif_Day()).toLocaleString()
+      ).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
+      data.item.listEnabled
     ) {
       Schedule_Notif(
         data.item.listDay,

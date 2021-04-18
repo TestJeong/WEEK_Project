@@ -47,6 +47,7 @@ export const CLICK_PRIORITY = 'CLICK_PRIORITY';
 export const CLICK_CLEAR = 'CLICK_CLEAR';
 export const CLICK_CATEGORY_INPUT = 'CLICK_CATEGORY_INPUT';
 
+export const AGENDA_DATA_TIMESTAMP = 'AGENDA_DATA_TIMESTAMP';
 export const AGENDA_DATA_REQUEST = 'AGENDA_DATA_REQUEST';
 export const AGENDA_DATA_SUCCESS = 'AGENDA_DATA_SUCCESS';
 export const AGENDA_DATA_ERROR = 'AGENDA_DATA_ERROR';
@@ -112,20 +113,22 @@ const reducer = (state = init, action) => {
 
       ///////////////////////////////////////////
 
+      case AGENDA_DATA_TIMESTAMP:
+        draft.Agenda_DATA_timestamp = action.data;
+        break;
+
       case AGENDA_DATA_REQUEST:
         draft.Agenda_DATA = null;
         draft.Agenda_DATA_loading = true;
         draft.Agenda_DATA_done = false;
         draft.Agenda_DATA_error = null;
-        draft.Agenda_DATA_timestamp = action.day;
-
         break;
+
       case AGENDA_DATA_SUCCESS:
         draft.Agenda_DATA = action.data;
         draft.Agenda_DATA_loading = false;
         draft.Agenda_DATA_done = true;
         draft.Agenda_DATA_error = null;
-        draft.Agenda_DATA_timestamp = action.day;
 
         break;
       case AGENDA_DATA_ERROR:

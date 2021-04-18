@@ -29,7 +29,7 @@ import {
 import Detail_Priorty from './Detail_Priority';
 import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';
-import {Today, ANDROID_Notif, Notif_Day} from '../Day';
+import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../Day';
 import PushNotification from 'react-native-push-notification';
 
 const Text_View = styled.View`
@@ -204,7 +204,7 @@ const ToDoList_Detail = ({navigation}) => {
       }
     });
 
-    if (
+    /*  if (
       timeString ||
       onClickDay ||
       onClickCategory ||
@@ -215,7 +215,31 @@ const ToDoList_Detail = ({navigation}) => {
         onClickToDoList.listTime_Data &&
         new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() >
           new Date(Notif_Day()).toLocaleString() &&
-        isEnableds &&
+        console.log('맞음..');
+      Schedule_Notif(
+        listDay,
+        listTime,
+        todoTitle,
+        onClickToDoList.id,
+        categoryTitle,
+      );
+    } */
+
+    if (
+      timeString ||
+      onClickDay ||
+      onClickCategory ||
+      listContent !== todoTitle ||
+      isEnableds
+    ) {
+      if (
+        onClickToDoList.listDay &&
+        onClickToDoList.listTime_Data &&
+        Platform.OS === 'ios' &&
+        new Date(IOS_Notif(listDay, listTime)).toLocaleString() >
+          new Date(Notif_Day()).toLocaleString() &&
+        isEnableds
+      ) {
         Schedule_Notif(
           listDay,
           listTime,
@@ -223,7 +247,24 @@ const ToDoList_Detail = ({navigation}) => {
           onClickToDoList.id,
           categoryTitle,
         );
+      } else if (
+        onClickToDoList.listDay &&
+        onClickToDoList.listTime_Data &&
+        Platform.OS === 'android' &&
+        new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() >
+          new Date(Notif_Day()).toLocaleString() &&
+        isEnableds
+      ) {
+        Schedule_Notif(
+          listDay,
+          listTime,
+          todoTitle,
+          onClickToDoList.id,
+          categoryTitle,
+        );
+      }
     }
+
     const Notif_ID = onClickToDoList.id;
     const String_ID = String(Notif_ID);
     if (isEnableds === false) {

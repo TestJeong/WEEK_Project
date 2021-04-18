@@ -3,6 +3,7 @@ import {
   AGENDA_DATA_ERROR,
   AGENDA_DATA_REQUEST,
   AGENDA_DATA_SUCCESS,
+  AGENDA_DATA_TIMESTAMP,
   CATEGORY_LIST_DATA_ERROR,
   CATEGORY_LIST_DATA_REQUEST,
   CATEGORY_LIST_DATA_SUCCESS,
@@ -58,7 +59,6 @@ function* Agenda_DATA_ToDo(action) {
     yield put({
       type: AGENDA_DATA_SUCCESS,
       data: result,
-      day: action.data,
     });
   } catch (e) {
     console.error(e);

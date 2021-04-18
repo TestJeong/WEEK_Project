@@ -16,7 +16,7 @@ import styled from 'styled-components/native';
 import realm from '../../db';
 import CalendarModal from '../../Components/ToDo/CalendarModal';
 import Priority_Modal from './ Priority';
-import {Day} from '../Day';
+import {Day, IOS_Notif} from '../Day';
 import {
   MY_CATEGORY_DATA,
   CLICK_DAY,
@@ -26,7 +26,7 @@ import {
 } from '../../reducers/Catagory';
 import Category_Modal from './Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
-import {ANDROID_Notif, Notif_Day} from '../Day';
+import {ANDROID_Notif, Notif_Day, IOS_today} from '../Day';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -120,7 +120,6 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
     dispatch({type: CLICK_CATEGORY_INPUT, data: null});
     setTestBtn(false);
   };
-  console.log('new', new Date('2021/04/21'));
 
   const ToDoInput_Enter = () => {
     const NotifID = Math.floor(Math.random() * 100000);
@@ -162,11 +161,25 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
         ? onClickCategory.title
         : categoryName;
 
-      onClickDay &&
+      /*  onClickDay &&
         onClickTime &&
         new Date(ANDROID_Notif(onClickDay, timeString)).toLocaleString() >
           new Date(Notif_Day()).toLocaleString() &&
-        onClickNotif_Enabled &&
+        Schedule_Notif(
+          onClickDay,
+          timeString,
+          todoContents,
+          NotifID,
+          categoryTitle,
+        ); */
+
+      if (
+        onClickDay &&
+        onClickTime &&
+        Platform.OS === 'ios' &&
+        new Date(IOS_Notif(onClickDay, timeString)) > new Date(Notif_Day()) &&
+        onClickNotif_Enabled
+      ) {
         Schedule_Notif(
           onClickDay,
           timeString,
@@ -174,6 +187,22 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
           NotifID,
           categoryTitle,
         );
+      } else if (
+        onClickDay &&
+        onClickTime &&
+        Platform.OS === 'android' &&
+        new Date(ANDROID_Notif(onClickDay, timeString)).toLocaleString() >
+          new Date(Notif_Day()).toLocaleString() &&
+        onClickNotif_Enabled
+      ) {
+        Schedule_Notif(
+          onClickDay,
+          timeString,
+          todoContents,
+          NotifID,
+          categoryTitle,
+        );
+      }
 
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       setTodoContents('');
