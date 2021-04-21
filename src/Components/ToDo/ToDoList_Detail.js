@@ -51,7 +51,7 @@ const Title_Text = styled.TextInput`
 `;
 
 const Memo_Text = styled.TextInput`
-  font-family: 'NanumSquareL';
+  font-family: 'NotoSansKR-Medium';
 
   margin-top: 10px;
   margin-bottom: 10px;
@@ -82,7 +82,7 @@ const List_Text = styled.Text`
 `;
 
 const List_Text_Value = styled.Text`
-  font-family: 'NanumSquareR';
+  font-family: 'NotoSansKR-Medium';
   font-size: 16px;
 `;
 
@@ -108,6 +108,9 @@ const ToDoList_Detail = ({navigation}) => {
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [counter, setCounter] = useState(1);
+
+  //조건식 추가 Notif 배열에 값이 있을 경우에만 실행
 
   const openCalendar = () => {
     setcalendarModalVisible(!calendarModalVisible);
@@ -116,6 +119,15 @@ const ToDoList_Detail = ({navigation}) => {
   const closeCalendarModal = () => {
     setcalendarModalVisible(false);
   };
+
+  useEffect(() => {
+    PushNotification.getScheduledLocalNotifications((notif) => {
+      const noData = notif.filter((data) => {
+        return data.id === String(onClickToDoList.id);
+      });
+      return setCounter(noData[0].number);
+    });
+  }, []);
 
   const SaveBtn = () => {
     const TodoList_View = realm.objects('TodoDataList');
@@ -199,31 +211,10 @@ const ToDoList_Detail = ({navigation}) => {
         filterT.forEach((item) => {
           categorys.todoData.push(item);
         });
-        console.log('todo', (categorys.todoData = [...categorys.todoData]));
+
         user.todoData.unshift(city);
       }
     });
-
-    /*  if (
-      timeString ||
-      onClickDay ||
-      onClickCategory ||
-      listContent !== todoTitle ||
-      isEnableds
-    ) {
-      onClickToDoList.listDay &&
-        onClickToDoList.listTime_Data &&
-        new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() >
-          new Date(Notif_Day()).toLocaleString() &&
-        console.log('맞음..');
-      Schedule_Notif(
-        listDay,
-        listTime,
-        todoTitle,
-        onClickToDoList.id,
-        categoryTitle,
-      );
-    } */
 
     if (
       timeString ||
@@ -236,8 +227,7 @@ const ToDoList_Detail = ({navigation}) => {
         onClickToDoList.listDay &&
         onClickToDoList.listTime_Data &&
         Platform.OS === 'ios' &&
-        new Date(IOS_Notif(listDay, listTime)).toLocaleString() >
-          new Date(Notif_Day()).toLocaleString() &&
+        new Date(IOS_Notif(listDay, listTime)) > new Date(Notif_Day()) &&
         isEnableds
       ) {
         Schedule_Notif(
@@ -246,6 +236,7 @@ const ToDoList_Detail = ({navigation}) => {
           todoTitle,
           onClickToDoList.id,
           categoryTitle,
+          counter,
         );
       } else if (
         onClickToDoList.listDay &&
@@ -261,6 +252,7 @@ const ToDoList_Detail = ({navigation}) => {
           todoTitle,
           onClickToDoList.id,
           categoryTitle,
+          counter,
         );
       }
     }

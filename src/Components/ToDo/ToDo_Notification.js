@@ -10,6 +10,7 @@ export const Schedule_Notif = (
   todoContents,
   NotifID,
   categoryTitle,
+  num,
 ) => {
   PushNotification.configure({
     onRegister: function (token) {
@@ -61,10 +62,6 @@ export const Schedule_Notif = (
       : ANDROID_Notif(onClickDay, timeString);
 
   const ScheduleNotif = () => {
-    PushNotification.getScheduledLocalNotifications((notif) => {});
-
-    lastId++;
-
     PushNotification.localNotificationSchedule({
       channelId: 'load-channel-id',
       id: NotifID,
@@ -72,7 +69,7 @@ export const Schedule_Notif = (
       message: todoContents,
       date: new Date(Platform_Date),
       allowWhileIdle: false,
-      number: 1,
+      number: num ? num : 1,
     });
   };
 

@@ -125,8 +125,18 @@ const HomeScreen = () => {
       });
 
       for (let data of Schedule_sort) {
-        data.number = lastID++;
+        let tests = lastID++;
+        PushNotification.localNotificationSchedule({
+          channelId: 'load-channel-id',
+          id: data.id,
+          title: data.title,
+          message: data.message,
+          date: new Date(data.date),
+          allowWhileIdle: false,
+          number: tests,
+        });
       }
+
       console.log('예약 알림', notif);
       console.log('test', Schedule_sort);
     });

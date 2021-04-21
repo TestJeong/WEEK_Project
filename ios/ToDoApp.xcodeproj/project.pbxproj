@@ -22,6 +22,7 @@
 		AD135BA22622BBB8004CD413 /* NanumSquareRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD135B9E2622BBB8004CD413 /* NanumSquareRegular.ttf */; };
 		AD135BA32622BBB8004CD413 /* NanumSquareExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD135B9F2622BBB8004CD413 /* NanumSquareExtraBold.ttf */; };
 		AD135BA42622BBB8004CD413 /* NanumSquareBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD135BA02622BBB8004CD413 /* NanumSquareBold.ttf */; };
+		AD6889F5262C7732006BF41B /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD6889F4262C7732006BF41B /* NotoSansKR-Medium.otf */; };
 		ADC8287D2615EA7B00A81D53 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = ADC8287C2615EA7B00A81D53 /* Property List.plist */; };
 		E43CA9D76A40910894F435A5 /* libPods-ToDoApp-ToDoAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20AAA567B46556721CF6B5D3 /* libPods-ToDoApp-ToDoAppTests.a */; };
 		EF60688D526D558AAA3CBD48 /* libPods-ToDoApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46329A18CFBD0EA4B2D510F5 /* libPods-ToDoApp-tvOSTests.a */; };
@@ -72,6 +73,7 @@
 		AD135B9E2622BBB8004CD413 /* NanumSquareRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRegular.ttf; sourceTree = "<group>"; };
 		AD135B9F2622BBB8004CD413 /* NanumSquareExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareExtraBold.ttf; sourceTree = "<group>"; };
 		AD135BA02622BBB8004CD413 /* NanumSquareBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareBold.ttf; sourceTree = "<group>"; };
+		AD6889F4262C7732006BF41B /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		ADC8287C2615EA7B00A81D53 /* Property List.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
 		ADE8A2A12621FBC300816B2D /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		ADE8A2A22621FBC300816B2D /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 		ADE8A29C2621FAEC00816B2D /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				AD6889F4262C7732006BF41B /* NotoSansKR-Medium.otf */,
 				AD135BA02622BBB8004CD413 /* NanumSquareBold.ttf */,
 				AD135B9F2622BBB8004CD413 /* NanumSquareExtraBold.ttf */,
 				AD135B9D2622BBB8004CD413 /* NanumSquareLight.ttf */,
@@ -397,6 +400,7 @@
 				AD135BA22622BBB8004CD413 /* NanumSquareRegular.ttf in Resources */,
 				AD135BA32622BBB8004CD413 /* NanumSquareExtraBold.ttf in Resources */,
 				AD135BA12622BBB8004CD413 /* NanumSquareLight.ttf in Resources */,
+				AD6889F5262C7732006BF41B /* NotoSansKR-Medium.otf in Resources */,
 				ADC8287D2615EA7B00A81D53 /* Property List.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
