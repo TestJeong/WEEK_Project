@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import {CLICK_DAY, CLICK_ENABLED, CLICK_TIME} from '../../reducers/Catagory';
+import {CLICK_DAY, CLICK_ENABLED} from '../../reducers/Catagory';
 import DateTime_Picke from './DateTime_Picke';
 
 const Modal_Container = styled(Modal)`
@@ -28,7 +28,7 @@ const ModalView = styled.View`
 
   /* 모달창 크기 조절 */
   width: 330px;
-  height: 480px;
+
   border-radius: 10px;
   background-color: white;
   padding: 5px 5px;
@@ -47,12 +47,11 @@ const Time_Icon_Container = styled.View`
 `;
 
 const Button_View = styled.View`
-  flex: 1;
   width: 100%;
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-around;
-  margin-bottom: 20px;
+  margin: 10px 0px 20px 0px;
 `;
 
 const Time_Text = styled.Text`
@@ -71,7 +70,7 @@ const Text_Close = styled.Text`
   font-family: 'NanumSquareB';
 `;
 
-const CalendarModal = ({openModal, closeModal}) => {
+const CalendarModal = ({openModal, closeModal, InputData}) => {
   const dispatch = useDispatch();
   const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
 
@@ -117,19 +116,13 @@ const CalendarModal = ({openModal, closeModal}) => {
         hideDatePicker={hideDatePicker}
         isDatePickerVisible={isDatePickerVisible}
       />
-      <ModalView>
+      <ModalView style={{height: InputData ? 'auto' : 'auto'}}>
         <Calendar
           current={Date()}
           onDayPress={(day) => {
             setClickDay(day.dateString);
           }}
-          onDayLongPress={(day) => {
-            console.log('selected day', day);
-          }}
           monthFormat={'yyyy MM'}
-          onMonthChange={(month) => {
-            console.log('month changed', month);
-          }}
           hideArrows={false}
           renderArrow={(direction) =>
             direction === 'left' ? (
@@ -159,27 +152,29 @@ const CalendarModal = ({openModal, closeModal}) => {
             textDayHeaderFontFamily: 'NanumSquareB',
           }}
         />
-
-        <Time_Input_Container onPress={showDatePicker}>
-          <Time_Icon_Container>
-            <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
-            <Time_Text>시간</Time_Text>
-          </Time_Icon_Container>
-          <Time_Value>
-            {onClickTime ? onClickTime : '없음'}&nbsp; &nbsp;
-            <Icon name="right" size={15} />
-          </Time_Value>
-        </Time_Input_Container>
-
-        <Time_Input_Container onPress={showDatePicker}>
-          <Time_Icon_Container>
-            <Icon name="bells" size={23} color={'#b9cc95'} />
-            <Time_Text>알람 설정</Time_Text>
-          </Time_Icon_Container>
-          <Time_Value>
-            <Switch onValueChange={setIsEnabled} value={isEnabled} />
-          </Time_Value>
-        </Time_Input_Container>
+        {InputData ? (
+          <Time_Input_Container onPress={showDatePicker}>
+            <Time_Icon_Container>
+              <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
+              <Time_Text>시간</Time_Text>
+            </Time_Icon_Container>
+            <Time_Value>
+              {onClickTime ? onClickTime : '없음'}&nbsp; &nbsp;
+              <Icon name="right" size={15} />
+            </Time_Value>
+          </Time_Input_Container>
+        ) : null}
+        {InputData ? (
+          <Time_Input_Container onPress={showDatePicker}>
+            <Time_Icon_Container>
+              <Icon name="bells" size={23} color={'#b9cc95'} />
+              <Time_Text>알람 설정</Time_Text>
+            </Time_Icon_Container>
+            <Time_Value>
+              <Switch onValueChange={setIsEnabled} value={isEnabled} />
+            </Time_Value>
+          </Time_Input_Container>
+        ) : null}
 
         <Button_View>
           <TouchableOpacity

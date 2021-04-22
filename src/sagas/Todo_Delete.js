@@ -1,4 +1,5 @@
 import realm from '../db';
+import PushNotification from 'react-native-push-notification';
 
 export const ToDoList_View_Delete = (term) => {
   const BookMarkD = realm.objects('TodoDataList');
@@ -11,8 +12,26 @@ export const ToDoList_View_Delete = (term) => {
     realm.delete(BookMarkaa);
   });
 };
+/* 
+export const Category_Notif_Remove = (term) => {
+  PushNotification.getScheduledLocalNotifications((notif) => {
+    const notifData = notif.filter((i) => {
+      return i.title === term.item.title;
+    });
+
+    for (let j of notifData) {
+      PushNotification.cancelLocalNotifications({id: j.id});
+    }
+  });
+}; */
 
 export const Category_List_View_Delete = (term) => {
+  /* PushNotification.getScheduledLocalNotifications((notif) => {
+    const notifData = notif.filter((i) => {
+      return i.title === term.item.title;
+    });
+    console.log('nodo', notifData);
+  }); */
   const Category_List = realm.objects('CategoryList');
   const Category_List_Data = Category_List.filtered(
     'title == $0',

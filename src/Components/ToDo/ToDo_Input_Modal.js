@@ -161,18 +161,6 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
         ? onClickCategory.title
         : categoryName;
 
-      /*  onClickDay &&
-        onClickTime &&
-        new Date(ANDROID_Notif(onClickDay, timeString)).toLocaleString() >
-          new Date(Notif_Day()).toLocaleString() &&
-        Schedule_Notif(
-          onClickDay,
-          timeString,
-          todoContents,
-          NotifID,
-          categoryTitle,
-        ); */
-
       if (
         onClickDay &&
         onClickTime &&
@@ -222,6 +210,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
         <CalendarModal
           openModal={calendarModalVisible}
           closeModal={closeCalendarModal}
+          InputData
         />
         {testBtn && Platform.OS === 'android' && (
           <Priority_Modal closeModal={() => setTestBtn(false)} />

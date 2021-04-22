@@ -18,6 +18,7 @@ import styled from 'styled-components/native';
 
 import ToDo_List_View from './ToDo_List_View';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
+import {Edit_Schedule_Notif} from './ToDo_Notification';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -27,10 +28,15 @@ const FlatListView = styled.FlatList`
 const ToDoList = ({route}) => {
   const {categoryName, categoryTime} = route.params;
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const {clickCategory} = useSelector((state) => state.Catagory);
+  const {clickCategory, onClickToDoList} = useSelector(
+    (state) => state.Catagory,
+  );
+
+  useEffect(() => {
+    Edit_Schedule_Notif();
+  }, [onClickToDoList]);
 
   useLayoutEffect(() => {
     navigation.setOptions({

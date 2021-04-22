@@ -20,7 +20,7 @@ import Category_List_View from './Category_List_View';
 import Category_Modal_View from './Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
-import {Schedule_Notif} from '../ToDo/ToDo_Notification';
+import {Edit_Schedule_Notif, Schedule_Notif} from '../ToDo/ToDo_Notification';
 import {Notif_Day, ANDROID_Notif} from '../Day';
 
 const TitleText = styled.Text`
@@ -119,27 +119,10 @@ const HomeScreen = () => {
     });
 
     PushNotification.getScheduledLocalNotifications((notif) => {
-      let lastID = 1;
-      const Schedule_sort = notif.sort((a, b) => {
-        return a.date - b.date;
-      });
-
-      for (let data of Schedule_sort) {
-        let tests = lastID++;
-        PushNotification.localNotificationSchedule({
-          channelId: 'load-channel-id',
-          id: data.id,
-          title: data.title,
-          message: data.message,
-          date: new Date(data.date),
-          allowWhileIdle: false,
-          number: tests,
-        });
-      }
-
       console.log('예약 알림', notif);
-      console.log('test', Schedule_sort);
     });
+
+    Edit_Schedule_Notif();
 
     Realms.open({}).then((realm) => {
       console.log('Realm is located at: ' + realm.path.toString());

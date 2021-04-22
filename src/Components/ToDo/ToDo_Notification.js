@@ -75,3 +75,71 @@ export const Schedule_Notif = (
 
   return ScheduleNotif();
 };
+
+///////////////////////////////////////////////////////////////////////////
+
+export const Edit_Schedule_Notif = () => {
+  PushNotification.configure({
+    onRegister: function (token) {
+      console.log('TOKEN:', token);
+    },
+
+    onNotification: function (notification) {
+      console.log('NOTIFICATION1:', notification);
+
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
+    },
+
+    onAction: function (notification) {
+      console.log('ACTION:', notification.action);
+      console.log('NOTIFICATION2:', notification);
+    },
+
+    onRegistrationError: function (err) {
+      console.error(err.message, err);
+    },
+
+    permissions: {
+      alert: true,
+      badge: true,
+      sound: true,
+    },
+
+    popInitialNotification: true,
+
+    requestPermissions: Platform.OS === 'ios',
+  });
+
+  PushNotification.createChannel(
+    {
+      channelId: 'load-channel-id',
+      channelName: `Default channel`,
+      channelDescription: 'A default channel',
+      soundName: 'default',
+      importance: 4,
+      vibrate: true,
+    },
+    (created) =>
+      console.log(`createChannel 'default-channel-id' returned '${created}'`),
+  );
+
+  PushNotification.getScheduledLocalNotifications((notif) => {
+    let Edit_lastID = 1;
+    const Schedule_sort = notif.sort((a, b) => {
+      return a.date - b.date;
+    });
+
+    for (let data of Schedule_sort) {
+      let tests = Edit_lastID++;
+      PushNotification.localNotificationSchedule({
+        channelId: 'load-channel-id',
+        id: data.id,
+        title: data.title,
+        message: data.message,
+        date: new Date(data.date),
+        allowWhileIdle: false,
+        number: tests,
+      });
+    }
+  });
+};

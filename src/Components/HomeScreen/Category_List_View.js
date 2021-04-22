@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -7,6 +7,7 @@ import styled from 'styled-components/native';
 import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import E_Icon from 'react-native-vector-icons/Feather';
+import PushNotification from 'react-native-push-notification';
 
 import {
   CATEGORY_LIST_DATA_REQUEST,
@@ -32,6 +33,17 @@ const Category_View = ({data}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isModalVisible, setModalVisible] = useState(false);
+  const [filterData, setFilterData] = useState([]);
+
+  useEffect(() => {
+    PushNotification.getScheduledLocalNotifications((notif) => {
+      const notifData = notif.filter((i) => {
+        return i.title === data.item.title;
+      });
+
+      return setFilterData(notifData);
+    });
+  }, []);
 
   const closeModal = () => {
     setModalVisible(false);
@@ -67,7 +79,13 @@ const Category_View = ({data}) => {
       extrapolate: 'clamp',
     });
 
+    const ho1 = filterData;
+    console.log('aa', ho1);
+
     const pressHandler = () => {
+      for (let j of ho1) {
+        PushNotification.cancelLocalNotifications({id: j.id});
+      }
       dispatch({type: CATEGORY_LIST_DATA_REQUEST, data: data});
       close();
     };

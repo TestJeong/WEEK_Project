@@ -110,8 +110,6 @@ const ToDoList_Detail = ({navigation}) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [counter, setCounter] = useState(1);
 
-  //조건식 추가 Notif 배열에 값이 있을 경우에만 실행
-
   const openCalendar = () => {
     setcalendarModalVisible(!calendarModalVisible);
   };
@@ -122,10 +120,10 @@ const ToDoList_Detail = ({navigation}) => {
 
   useEffect(() => {
     PushNotification.getScheduledLocalNotifications((notif) => {
-      const noData = notif.filter((data) => {
+      const notifData = notif.filter((data) => {
         return data.id === String(onClickToDoList.id);
       });
-      return setCounter(noData[0].number);
+      notifData[0] && setCounter(notifData[0].number);
     });
   }, []);
 
@@ -346,6 +344,7 @@ const ToDoList_Detail = ({navigation}) => {
         <CalendarModal
           openModal={calendarModalVisible}
           closeModal={closeCalendarModal}
+          InputData={false}
         />
         <Text_View>
           <Title_Text value={todoTitle} onChangeText={setToDoTitle} />

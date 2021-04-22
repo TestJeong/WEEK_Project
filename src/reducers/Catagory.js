@@ -171,7 +171,7 @@ const reducer = (state = init, action) => {
         draft.category_List_data_loading = false;
         draft.category_List_data_done = true;
         draft.category_List_data_error = null;
-        draft.categoryList = state.categoryList;
+
         draft.clickCategory = null;
         draft.onClickToDoList = null;
         draft.onClickCategory = null;
