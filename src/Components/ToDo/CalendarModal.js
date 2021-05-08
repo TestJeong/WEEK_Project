@@ -57,17 +57,17 @@ const Button_View = styled.View`
 const Time_Text = styled.Text`
   font-size: 16px;
   margin-left: 15px;
-  font-family: 'NanumSquareB';
+  font-family: 'NanumGothic';
 `;
 
 const Time_Value = styled.Text`
   font-size: 16px;
-  font-family: 'NanumSquareR';
+  font-family: 'NanumGothic';
 `;
 
 const Text_Close = styled.Text`
   font-size: 16px;
-  font-family: 'NanumSquareB';
+  font-family: 'NanumGothicBold';
 `;
 
 const CalendarModal = ({openModal, closeModal, InputData}) => {
@@ -147,9 +147,9 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
             todayTextColor: 'white',
             dotColor: '#00adf5',
             selectedDotColor: 'red',
-            textDayFontFamily: 'NanumSquareR',
-            textMonthFontFamily: 'NanumSquareB',
-            textDayHeaderFontFamily: 'NanumSquareB',
+            textDayFontFamily: 'NanumGothic',
+            textMonthFontFamily: 'NanumGothicBold',
+            textDayHeaderFontFamily: 'NanumGothicBold',
           }}
         />
         {InputData ? (

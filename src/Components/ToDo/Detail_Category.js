@@ -34,7 +34,7 @@ const List_Item = styled.View`
 
 const List_Text = styled.Text`
   font-size: 17px;
-  font-family: 'NanumSquareB';
+  font-family: 'NanumGothicBold';
 `;
 
 const List_Btn = styled.TouchableOpacity`

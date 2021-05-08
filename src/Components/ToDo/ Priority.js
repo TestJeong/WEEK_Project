@@ -41,7 +41,7 @@ const Icon_View = styled.View`
 
 const Priority_Text = styled.Text`
   font-size: 14px;
-  font-family: 'NanumSquareB';
+  font-family: 'NanumGothicBold';
 `;
 
 const Priority_Modal = ({closeModal}) => {
@@ -63,7 +63,7 @@ const Priority_Modal = ({closeModal}) => {
   };
 
   const Never_Priority = () => {
-    dispatch({type: CLICK_PRIORITY, data: 0});
+    dispatch({type: CLICK_PRIORITY, data: 4});
     closeModal();
   };
 

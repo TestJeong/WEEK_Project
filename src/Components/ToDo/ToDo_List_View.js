@@ -39,14 +39,14 @@ const List_Text = styled.Text`
   font-size: 16px;
   width: 85%;
   line-height: 20px;
-  font-family: 'NanumSquareR';
+  font-family: 'NanumGothic';
 `;
 
 const List_Clock_Text = styled.Text`
   font-size: 12px;
 
   line-height: 13px;
-  font-family: 'NanumSquareR';
+  font-family: 'NanumGothic';
   padding-top: 7px;
 `;
 

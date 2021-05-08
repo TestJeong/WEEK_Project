@@ -60,7 +60,7 @@ const Detail_Priorty = ({hideActionSheet}) => {
   };
 
   const Never_Priority = () => {
-    dispatch({type: CLICK_PRIORITY, data: 0});
+    dispatch({type: CLICK_PRIORITY, data: 4});
     hideActionSheet();
   };
 

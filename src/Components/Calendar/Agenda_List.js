@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   strikeTitleText: {
     fontSize: 16,
     marginBottom: 15,
-    fontFamily: 'NanumSquareB',
+    fontFamily: 'NanumGothicBold',
     color: '#bbb',
     textDecorationLine: 'line-through',
   },
@@ -124,17 +124,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15,
     color: 'black',
-    fontFamily: 'NanumSquareB',
+    fontFamily: 'NanumGothicBold',
   },
   defaultText: {
     fontSize: 13,
     color: 'black',
-    fontFamily: 'NanumSquareL',
+    fontFamily: 'NanumGothic',
   },
 
   strikeText: {
     fontSize: 13,
-    fontFamily: 'NanumSquareL',
+    fontFamily: 'NanumGothic',
     color: '#bbb',
     textDecorationLine: 'line-through',
   },

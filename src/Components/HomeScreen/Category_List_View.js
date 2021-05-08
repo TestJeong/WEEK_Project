@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import E_Icon from 'react-native-vector-icons/Feather';
 import PushNotification from 'react-native-push-notification';
@@ -16,7 +16,6 @@ import {
 import Category_Modal_View from './Category_Modal_View';
 
 const List_Item = styled.View`
-  width: 83%;
   margin: 15px 35px 15px 5px;
   flex-direction: row;
   justify-content: space-between;
@@ -25,13 +24,16 @@ const List_Item = styled.View`
 
 const List_Text = styled.Text`
   font-size: 17px;
-  font-family: 'NanumSquareB';
+  font-family: 'NanumGothic';
 `;
 
 const Category_View = ({data}) => {
   const swiper = useRef();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const {categoryList} = useSelector((state) => state.Catagory);
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [filterData, setFilterData] = useState([]);
 
@@ -41,9 +43,9 @@ const Category_View = ({data}) => {
         return i.title === data.item.title;
       });
 
-      return setFilterData(notifData);
+      setFilterData(notifData);
     });
-  }, []);
+  }, [categoryList]);
 
   const closeModal = () => {
     setModalVisible(false);
@@ -79,11 +81,8 @@ const Category_View = ({data}) => {
       extrapolate: 'clamp',
     });
 
-    const ho1 = filterData;
-    console.log('aa', ho1);
-
     const pressHandler = () => {
-      for (let j of ho1) {
+      for (let j of filterData) {
         PushNotification.cancelLocalNotifications({id: j.id});
       }
       dispatch({type: CATEGORY_LIST_DATA_REQUEST, data: data});
@@ -146,20 +145,26 @@ const Category_View = ({data}) => {
         data={data.item}
       />
       <TouchableOpacity
-        style={{flexDirection: 'row', alignItems: 'center'}}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
         onPress={goToList}>
-        <View
-          style={{
-            height: 20,
-            width: 20,
-            borderRadius: 20,
-            backgroundColor: data.item.color,
-            marginRight: 15,
-          }}></View>
         <List_Item>
+          <View
+            style={{
+              height: 20,
+              width: 20,
+              borderRadius: 20,
+              backgroundColor: data.item.color,
+              marginRight: 15,
+            }}
+          />
           <List_Text>{data.item.title}</List_Text>
-          <Icon name="right" size={15} />
         </List_Item>
+
+        <Icon name="right" size={15} style={{marginRight: 15}} />
       </TouchableOpacity>
     </Swipeable>
   );

@@ -66,7 +66,7 @@ const ToDoStackNavigator = ({navigation}) => {
                 letterSpacing: 0.5,
                 color: 'black',
                 fontSize: 17,
-                fontFamily: 'NanumSquareEB',
+                fontFamily: 'NanumGothicExtraBold',
                 lineHeight: 20,
               }}>
               상세정보

@@ -18,11 +18,13 @@
 		3962718FD087D891EF561D33 /* libPods-ToDoApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8858803F206CBC227C637167 /* libPods-ToDoApp-tvOS.a */; };
 		3CB184ABFF2FF69F977D572F /* libPods-ToDoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0761FD401321DD2926ECCA7 /* libPods-ToDoApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		AD0CEAA02646367D002184CD /* NanumGothicRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD0CEA9F2646367D002184CD /* NanumGothicRegular.ttf */; };
+		AD0CEB272646393B002184CD /* NanumGothicBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD0CEB252646393B002184CD /* NanumGothicBold.ttf */; };
+		AD0CEB282646393B002184CD /* NanumGothicExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD0CEB262646393B002184CD /* NanumGothicExtraBold.ttf */; };
 		AD135BA12622BBB8004CD413 /* NanumSquareLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD135B9D2622BBB8004CD413 /* NanumSquareLight.ttf */; };
 		AD135BA22622BBB8004CD413 /* NanumSquareRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD135B9E2622BBB8004CD413 /* NanumSquareRegular.ttf */; };
 		AD135BA32622BBB8004CD413 /* NanumSquareExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD135B9F2622BBB8004CD413 /* NanumSquareExtraBold.ttf */; };
 		AD135BA42622BBB8004CD413 /* NanumSquareBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD135BA02622BBB8004CD413 /* NanumSquareBold.ttf */; };
-		AD6889F5262C7732006BF41B /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = AD6889F4262C7732006BF41B /* NotoSansKR-Medium.otf */; };
 		ADC8287D2615EA7B00A81D53 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = ADC8287C2615EA7B00A81D53 /* Property List.plist */; };
 		E43CA9D76A40910894F435A5 /* libPods-ToDoApp-ToDoAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20AAA567B46556721CF6B5D3 /* libPods-ToDoApp-ToDoAppTests.a */; };
 		EF60688D526D558AAA3CBD48 /* libPods-ToDoApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46329A18CFBD0EA4B2D510F5 /* libPods-ToDoApp-tvOSTests.a */; };
@@ -69,11 +71,13 @@
 		86277E1F377235D5C80144EC /* Pods-ToDoApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp-tvOS/Pods-ToDoApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		8858803F206CBC227C637167 /* libPods-ToDoApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ToDoApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FDDFC6CB322B42B7E970E45 /* Pods-ToDoApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ToDoApp-tvOSTests/Pods-ToDoApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AD0CEA9F2646367D002184CD /* NanumGothicRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothicRegular.ttf; sourceTree = "<group>"; };
+		AD0CEB252646393B002184CD /* NanumGothicBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothicBold.ttf; sourceTree = "<group>"; };
+		AD0CEB262646393B002184CD /* NanumGothicExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothicExtraBold.ttf; sourceTree = "<group>"; };
 		AD135B9D2622BBB8004CD413 /* NanumSquareLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareLight.ttf; sourceTree = "<group>"; };
 		AD135B9E2622BBB8004CD413 /* NanumSquareRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareRegular.ttf; sourceTree = "<group>"; };
 		AD135B9F2622BBB8004CD413 /* NanumSquareExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareExtraBold.ttf; sourceTree = "<group>"; };
 		AD135BA02622BBB8004CD413 /* NanumSquareBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareBold.ttf; sourceTree = "<group>"; };
-		AD6889F4262C7732006BF41B /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		ADC8287C2615EA7B00A81D53 /* Property List.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
 		ADE8A2A12621FBC300816B2D /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		ADE8A2A22621FBC300816B2D /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -214,7 +218,9 @@
 		ADE8A29C2621FAEC00816B2D /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				AD6889F4262C7732006BF41B /* NotoSansKR-Medium.otf */,
+				AD0CEB252646393B002184CD /* NanumGothicBold.ttf */,
+				AD0CEB262646393B002184CD /* NanumGothicExtraBold.ttf */,
+				AD0CEA9F2646367D002184CD /* NanumGothicRegular.ttf */,
 				AD135BA02622BBB8004CD413 /* NanumSquareBold.ttf */,
 				AD135B9F2622BBB8004CD413 /* NanumSquareExtraBold.ttf */,
 				AD135B9D2622BBB8004CD413 /* NanumSquareLight.ttf */,
@@ -400,9 +406,11 @@
 				AD135BA22622BBB8004CD413 /* NanumSquareRegular.ttf in Resources */,
 				AD135BA32622BBB8004CD413 /* NanumSquareExtraBold.ttf in Resources */,
 				AD135BA12622BBB8004CD413 /* NanumSquareLight.ttf in Resources */,
-				AD6889F5262C7732006BF41B /* NotoSansKR-Medium.otf in Resources */,
+				AD0CEAA02646367D002184CD /* NanumGothicRegular.ttf in Resources */,
 				ADC8287D2615EA7B00A81D53 /* Property List.plist in Resources */,
+				AD0CEB272646393B002184CD /* NanumGothicBold.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				AD0CEB282646393B002184CD /* NanumGothicExtraBold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

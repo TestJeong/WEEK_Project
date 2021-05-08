@@ -29,7 +29,7 @@ const List_Item = styled.View`
 
 const List_Text = styled.Text`
   font-size: 15px;
-  font-family: 'NanumSquareR';
+  font-family: 'NanumGothic';
 `;
 
 const Category_Modal = ({closeModal}) => {

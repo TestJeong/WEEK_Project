@@ -38,7 +38,7 @@ const Modal_Container = styled(Modal)`
 const ModalView = styled.View`
   /* 모달창 크기 조절 */
   width: 100%;
-  height: 130px;
+  height: 105px;
   align-items: center;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -46,11 +46,12 @@ const ModalView = styled.View`
 `;
 
 const Text_Input_Container = styled.TextInput`
-  font-family: 'NanumSquareR';
+  font-family: 'NanumGothic';
   font-size: 17px;
-  margin-top: 5px;
+  margin-top: 2px;
   height: 50px;
-  width: 90%;
+  width: 100%;
+  padding: 0px 20px;
 
   border-radius: 8px;
 `;
@@ -60,11 +61,11 @@ const Button_View = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 20px;
+  padding: 8px 20px;
 `;
 
 const Category_Title = styled.Text`
-  font-family: 'NanumSquareR';
+  font-family: 'NanumGothic';
   margin-left: 15px;
 `;
 
@@ -106,10 +107,12 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   const likeOpen = () => {
     setTestBtn(!testBtn);
+    setCategoryBtn(false);
   };
 
   const CategoryOpen = () => {
     setCategoryBtn(!categoryBtn);
+    setTestBtn(false);
   };
 
   const ModalClose = () => {
@@ -119,6 +122,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
     dispatch({type: CLICK_PRIORITY, data: null});
     dispatch({type: CLICK_CATEGORY_INPUT, data: null});
     setTestBtn(false);
+    setCategoryBtn(false);
   };
 
   const ToDoInput_Enter = () => {
@@ -140,7 +144,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
             listDay: onClickDay ? onClickDay : null,
             listTime: onClickTime ? onClickTime : null,
             listTime_Data: timeString ? timeString : null,
-            listPriority: onClickPriority ? onClickPriority : null,
+            listPriority: onClickPriority ? onClickPriority : 4,
             id: NotifID,
             listEnabled: onClickNotif_Enabled,
           },

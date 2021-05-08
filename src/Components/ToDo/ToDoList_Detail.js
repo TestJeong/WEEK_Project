@@ -44,15 +44,14 @@ const Text_View = styled.View`
 const Title_Text = styled.TextInput`
   border-bottom-width: 0.5px;
   border-bottom-color: #cad0d4;
-  font-family: 'NanumSquareR';
+  font-family: 'NanumGothic';
   min-height: 50px;
   max-height: 150px;
   font-size: 20px;
 `;
 
 const Memo_Text = styled.TextInput`
-  font-family: 'NotoSansKR-Medium';
-
+  font-family: 'NanumGothic';
   margin-top: 10px;
   margin-bottom: 10px;
   min-height: 130px;
@@ -76,13 +75,13 @@ const Time_Icon_Container = styled.View`
 `;
 
 const List_Text = styled.Text`
-  font-family: 'NanumSquareR';
+  font-family: 'NanumGothic';
   margin-left: 15px;
   font-size: 16px;
 `;
 
 const List_Text_Value = styled.Text`
-  font-family: 'NotoSansKR-Medium';
+  font-family: 'NanumGothic';
   font-size: 16px;
 `;
 
@@ -451,6 +450,16 @@ const ToDoList_Detail = ({navigation}) => {
                           <Icon name="star" size={12} color={'pink'} />
                         </View>
                       );
+                    if (onClickPriority === 4)
+                      return (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <List_Text_Value>없음</List_Text_Value>
+                        </View>
+                      );
                   })()
                 : onClickToDoList.listPriority
                 ? (function () {
@@ -485,6 +494,16 @@ const ToDoList_Detail = ({navigation}) => {
                           <Icon name="star" size={12} color={'pink'} />
                           <Icon name="star" size={12} color={'pink'} />
                           <Icon name="star" size={12} color={'pink'} />
+                        </View>
+                      );
+                    if (onClickToDoList.listPriority === 4)
+                      return (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <List_Text_Value>없음</List_Text_Value>
                         </View>
                       );
                   })()

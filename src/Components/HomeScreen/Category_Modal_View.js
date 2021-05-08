@@ -21,7 +21,8 @@ const Modal_Container = styled(Modal)`
   flex: 1;
   justify-content: flex-end;
   align-items: center;
-  margin: 0;
+
+  margin: 0px;
 `;
 
 const ModalView = styled.View`
@@ -42,8 +43,7 @@ const Text_Input_Container = styled.TextInput`
   margin-top: 15px;
   margin-bottom: 35px;
   border-radius: 8px;
-
-  font-family: 'NanumSquareR';
+  font-family: 'NanumGothic';
   background-color: #cad0d4;
 `;
 
@@ -58,13 +58,13 @@ const Button_View = styled.View`
 const Text_Close = styled.Text`
   font-size: 16px;
   line-height: 20px;
-  font-family: 'NanumSquareEB';
+  font-family: 'NanumGothicExtraBold';
 `;
 
 const Modal_Title = styled.Text`
   font-size: 17px;
   line-height: 20px;
-  font-family: 'NanumSquareB';
+  font-family: 'NanumGothicBold';
 `;
 
 const Hoper = styled.View`
@@ -170,6 +170,7 @@ const Category_Modal_View = ({isOpen, close, data}) => {
           onChangeText={setcategoryTitle}
           placeholder="카테고리 제목을 입력하세요"
         />
+
         <Category_Palette onSelect={handleSelect} />
       </ModalView>
     </Modal_Container>

@@ -30,13 +30,11 @@ const ToDoList = ({route}) => {
   const navigation = useNavigation();
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const {clickCategory, onClickToDoList} = useSelector(
-    (state) => state.Catagory,
-  );
+  const {clickCategory, categoryList} = useSelector((state) => state.Catagory);
 
   useEffect(() => {
     Edit_Schedule_Notif();
-  }, [onClickToDoList]);
+  }, [categoryList]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -46,7 +44,7 @@ const ToDoList = ({route}) => {
             letterSpacing: 1.5,
             color: 'white',
             fontSize: 17,
-            fontFamily: 'NanumSquareEB',
+            fontFamily: 'NanumGothicExtraBold',
             lineHeight: 20,
           }}>
           {categoryName}

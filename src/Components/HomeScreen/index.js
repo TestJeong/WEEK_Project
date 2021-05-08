@@ -24,7 +24,7 @@ import {Edit_Schedule_Notif, Schedule_Notif} from '../ToDo/ToDo_Notification';
 import {Notif_Day, ANDROID_Notif} from '../Day';
 
 const TitleText = styled.Text`
-  font-family: 'NanumSquareEB';
+  font-family: 'NanumGothicExtraBold';
   font-size: 20px;
 
   margin-bottom: 25px;
@@ -32,13 +32,13 @@ const TitleText = styled.Text`
 
 const CategoryTitleText = styled.Text`
   font-size: 20px;
-  font-family: 'NanumSquareEB';
+  font-family: 'NanumGothicExtraBold';
   margin-bottom: 15px;
 `;
 
 const PlusText = styled.Text`
   font-size: 15px;
-  font-family: 'NanumSquareB';
+  font-family: 'NanumGothicBold';
   margin-left: 10px;
 `;
 
@@ -81,7 +81,7 @@ const Main_Title_Number = styled.View`
 const Main_Title_Number_Text = styled.Text`
   font-size: 30px;
 
-  font-family: 'NanumSquareEB';
+  font-family: 'NanumGothicBold';
 `;
 
 const Main_Title_View = styled.View`
@@ -91,7 +91,7 @@ const Main_Title_View = styled.View`
 const Main_Title_Text = styled.Text`
   text-align: left;
   font-size: 20px;
-  font-family: 'NanumSquareEB';
+  font-family: 'NanumGothicBold';
   padding-bottom: 10px;
 `;
 
@@ -101,7 +101,7 @@ const HomeScreen = () => {
   const [will_ToDo, setWill_ToDo] = useState(0);
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
-  const {categoryList, timeString} = useSelector((state) => state.Catagory);
+  const {categoryList} = useSelector((state) => state.Catagory);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
@@ -142,7 +142,7 @@ const HomeScreen = () => {
 
     const Priority_List_View_Data = TodoList_View.filtered(
       'listPriority != $0 AND listClear == $1',
-      null,
+      4,
       false,
     );
 
@@ -156,7 +156,7 @@ const HomeScreen = () => {
     setWill_ToDo(Will_List_View_Data.length);
     setPriority_ToDo(Priority_List_View_Data.length);
     setAll_ToDo(All_List_View_Data.length);
-  }, [TodoList_View]);
+  }, [TodoList_View, categoryList]);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -192,10 +192,7 @@ const HomeScreen = () => {
   };
 
   const Priority_ToDo_Data = () => {
-    const TodoList_View_Data = TodoList_View.filtered(
-      'listPriority != $0',
-      null,
-    );
+    const TodoList_View_Data = TodoList_View.filtered('listPriority != $0', 4);
 
     navigation.navigate('Category_ToDoList', {header_Name: '중요한 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});

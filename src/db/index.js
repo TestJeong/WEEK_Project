@@ -41,7 +41,7 @@ TodoData.schema = {
 
 let realm = new Realm({
   schema: [Category, TodoData],
-  schemaVersion: 11,
+  schemaVersion: 13,
   migration: (oldRealm, newRealm) => {
     // only apply this change if upgrading to schemaVersion 1
     if (oldRealm.schemaVersion < 1) {
