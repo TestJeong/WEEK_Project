@@ -1,15 +1,13 @@
-import React, {useLayoutEffect, useState, useEffect} from 'react';
+import React from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   TouchableOpacity,
   Image,
   SafeAreaView,
   Keyboard,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
+
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import {CLICK_CATEGORY_INPUT} from '../../reducers/Catagory';
@@ -90,19 +88,5 @@ const Detail_Category = ({hideActionSheet}) => {
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  touchableOpacityStyle: {
-    position: 'absolute',
-    width: 50,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    right: 30,
-    bottom: 30,
-
-    borderRadius: 100,
-  },
-});
 
 export default Detail_Category;

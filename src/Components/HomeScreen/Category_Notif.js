@@ -1,4 +1,3 @@
-import {Platform} from 'react-native';
 import {ANDROID_Notif, Notif_Day} from '../Day';
 import {Schedule_Notif} from '../ToDo/ToDo_Notification';
 

@@ -11,13 +11,12 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
 import {FlatList} from 'react-native-gesture-handler';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import styled from 'styled-components/native';
 
 import ToDo_List_View from './ToDo_List_View';
-import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import {Edit_Schedule_Notif} from './ToDo_Notification';
 
 const FlatListView = styled.FlatList`

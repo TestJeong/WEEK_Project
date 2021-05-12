@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, View, Text, Dimensions, FlatList} from 'react-native';
+import {View, Dimensions, FlatList} from 'react-native';
 import styled from 'styled-components/native';
 
 const Palettes = styled.View`

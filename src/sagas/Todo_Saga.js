@@ -3,7 +3,6 @@ import {
   AGENDA_DATA_ERROR,
   AGENDA_DATA_REQUEST,
   AGENDA_DATA_SUCCESS,
-  AGENDA_DATA_TIMESTAMP,
   CATEGORY_LIST_DATA_ERROR,
   CATEGORY_LIST_DATA_REQUEST,
   CATEGORY_LIST_DATA_SUCCESS,
@@ -13,12 +12,9 @@ import {
 } from '../reducers/Catagory';
 import {
   ToDoList_View_Delete,
-  All_Date,
   Agenda_Call_Data,
   Category_List_View_Delete,
-  Category_Notif_Remove,
 } from './Todo_Delete';
-import PushNotification from 'react-native-push-notification';
 
 function* ToDoList_Delete(action) {
   try {

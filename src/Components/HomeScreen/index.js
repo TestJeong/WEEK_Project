@@ -20,8 +20,7 @@ import Category_List_View from './Category_List_View';
 import Category_Modal_View from './Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
-import {Edit_Schedule_Notif, Schedule_Notif} from '../ToDo/ToDo_Notification';
-import {Notif_Day, ANDROID_Notif} from '../Day';
+import {Edit_Schedule_Notif} from '../ToDo/ToDo_Notification';
 
 const TitleText = styled.Text`
   font-family: 'NanumGothicExtraBold';

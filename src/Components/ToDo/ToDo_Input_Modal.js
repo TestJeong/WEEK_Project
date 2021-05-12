@@ -26,7 +26,7 @@ import {
 } from '../../reducers/Catagory';
 import Category_Modal from './Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
-import {ANDROID_Notif, Notif_Day, IOS_today} from '../Day';
+import {ANDROID_Notif, Notif_Day} from '../Day';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
