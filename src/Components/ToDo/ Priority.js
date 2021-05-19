@@ -1,12 +1,5 @@
-import React from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  StyleSheet,
-} from 'react-native';
+import React, {useCallback} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
@@ -47,25 +40,25 @@ const Priority_Text = styled.Text`
 const Priority_Modal = ({closeModal}) => {
   const dispatch = useDispatch();
 
-  const Highest_Priority = () => {
+  const Highest_Priority = useCallback(() => {
     dispatch({type: CLICK_PRIORITY, data: 3});
     closeModal();
-  };
+  });
 
-  const Medium_Priority = () => {
+  const Medium_Priority = useCallback(() => {
     dispatch({type: CLICK_PRIORITY, data: 2});
     closeModal();
-  };
+  });
 
-  const Low_Priority = () => {
+  const Low_Priority = useCallback(() => {
     dispatch({type: CLICK_PRIORITY, data: 1});
     closeModal();
-  };
+  });
 
-  const Never_Priority = () => {
+  const Never_Priority = useCallback(() => {
     dispatch({type: CLICK_PRIORITY, data: 4});
     closeModal();
-  };
+  });
 
   return (
     <Container style={styles.container}>

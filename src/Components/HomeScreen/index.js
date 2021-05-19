@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -14,6 +14,7 @@ import Realms from 'realm';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import SplashScreen from 'react-native-splash-screen';
 
 import realm from '../../db';
 import Category_List_View from './Category_List_View';
@@ -111,21 +112,27 @@ const HomeScreen = () => {
   const TodoList_View = realm.objects('TodoDataList');
 
   useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 100);
+  }, []);
+
+  useEffect(() => {
     PushNotification.getApplicationIconBadgeNumber(function (number) {
       if (number > 0) {
         PushNotification.setApplicationIconBadgeNumber(0);
       }
     });
 
-    PushNotification.getScheduledLocalNotifications((notif) => {
+    /* PushNotification.getScheduledLocalNotifications((notif) => {
       console.log('예약 알림', notif);
-    });
+    }); */
 
     Edit_Schedule_Notif();
 
-    Realms.open({}).then((realm) => {
+    /*  Realms.open({}).then((realm) => {
       console.log('Realm is located at: ' + realm.path.toString());
-    });
+    }); */
 
     const Today_List_View_Data = TodoList_View.filtered(
       'listDay == $0 AND listClear == $1',
@@ -168,7 +175,7 @@ const HomeScreen = () => {
     setModalVisible(false);
   };
 
-  const Today_ToDo_Data = () => {
+  const Today_ToDo_Data = useCallback(() => {
     const TodoList_View_Data = TodoList_View.filtered(
       'listDay == $0',
       int_Local_Time,
@@ -176,9 +183,9 @@ const HomeScreen = () => {
 
     navigation.navigate('Category_ToDoList', {header_Name: '오늘의 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
-  };
+  });
 
-  const will_ToDo_Data = () => {
+  const will_ToDo_Data = useCallback(() => {
     const TodoList_View_Data = TodoList_View.filtered(
       'listDay >  $0',
       int_Local_Time,
@@ -188,16 +195,16 @@ const HomeScreen = () => {
 
     navigation.navigate('Category_ToDoList', {header_Name: '예정된 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: Sort_TodoList_View});
-  };
+  });
 
-  const Priority_ToDo_Data = () => {
+  const Priority_ToDo_Data = useCallback(() => {
     const TodoList_View_Data = TodoList_View.filtered('listPriority != $0', 4);
 
     navigation.navigate('Category_ToDoList', {header_Name: '중요한 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
-  };
+  });
 
-  const All_ToDo_Data = () => {
+  const All_ToDo_Data = useCallback(() => {
     const All_TodoList_View = realm.objects('TodoDataList');
     const Sort_All_TodoList_View = All_TodoList_View.sorted('listDay');
 
@@ -205,7 +212,7 @@ const HomeScreen = () => {
       header_Name: '전체 일정',
     });
     dispatch({type: CLICK_CATEGORY_TODO, data: Sort_All_TodoList_View});
-  };
+  });
 
   return (
     <SafeAreaView style={{flex: 1, margin: 10}}>

@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState, useEffect} from 'react';
+import React, {useLayoutEffect, useState, useCallback} from 'react';
 import {
   Text,
   View,
@@ -11,7 +11,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
 import {FlatList} from 'react-native-gesture-handler';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import styled from 'styled-components/native';
@@ -25,7 +25,6 @@ const FlatListView = styled.FlatList`
 
 const Category_ToDo_List = ({route}) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const {header_Name} = route.params;
 
@@ -35,19 +34,26 @@ const Category_ToDo_List = ({route}) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
-        <Text style={{fontWeight: '800', fontSize: 17}}>{header_Name}</Text>
+        <Text
+          style={{
+            fontWeight: '800',
+            fontFamily: 'NanumGothicBold',
+            fontSize: 17,
+          }}>
+          {header_Name}
+        </Text>
       ),
     });
   }, []);
 
-  const opneModal = () => {
+  const opneModal = useCallback(() => {
     setModalVisible(!isModalVisible);
-  };
+  });
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModalVisible(false);
     Keyboard.dismiss();
-  };
+  });
 
   return (
     <>

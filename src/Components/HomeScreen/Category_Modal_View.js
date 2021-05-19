@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   TextInput,
   View,
@@ -139,12 +139,14 @@ const Category_Modal_View = ({isOpen, close, data}) => {
     }
   };
 
-  const CloseButton = () => {
+  const CloseButton = useCallback(() => {
     close();
     {
-      data ? null : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
+      data
+        ? (setPaletteColor(data.color), setcategoryTitle(data.title))
+        : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
     }
-  };
+  });
 
   return (
     <Modal_Container isVisible={isOpen} onBackdropPress={close}>
