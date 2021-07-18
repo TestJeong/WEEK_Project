@@ -2,9 +2,11 @@
 
 TODO 와 Schedule 관리를 함께 할 수 있는 생산성 애플리케이션 입니다. React-Native를 사용하여 Android, ios 모두 구현했으며 Local DB로 Realm을 사용하였고 React-navigation을 사용하였습니다.
 
-시간 순서, 업무의 중요도에 따라 일정을 분류할 수 있으며, 캘린더를 적용하여 효율적으로 TODO를 관리할 수 있고 빠르고 정확하게 TODO를 작성 하며 간단하게 편집도 할 수 있습니다. 
+시간 순서, 업무의 중요도에 따라 일정을 분류할 수 있으며, 캘린더를 적용하여 효율적으로 TODO를 관리할 수 있고 빠르고 정확하게 TODO를 작성 하며 간단하게 편집도 할 수 있습니다.
 
-※ 현재 기능개발이 완료된 상태이며 막바지 작업인 디자인 수정과 버그 수정을 한 후 4월 중으로 앱스토어, 플레이스토어에 출시 예정입니다.
+[AppStore에서 어플을 확인 해보세요!](https://apps.apple.com/kr/app/week/id1568287922)
+
+[PlayStore에서 어플을 확인 해보세요!](https://play.google.com/store/apps/details?id=com.week.todocalendar.app)
 
 
 ***

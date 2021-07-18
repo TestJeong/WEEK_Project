@@ -9,6 +9,7 @@ const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
   const handleConfirm = (date) => {
     const DATE_TIME = date.toTimeString().split(' ')[0];
 
+    //24시간 -> 12시간 변환
     const IOS_HOURS = (date.getHours() + 24) % 12 || 12;
 
     const IOS_TIMESHEET =
@@ -16,6 +17,7 @@ const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
         ? date.toLocaleTimeString().substring(0, 7)
         : date.toLocaleTimeString().substring(0, 8);
 
+    // 24시간 -> 12시간 변환
     const ANDROID_HOURS = ((date.getHours() + 11) % 12) + 1;
     const ANDROID_MINUNTES = date.getMinutes();
     const ANDROID_DAY =
@@ -30,8 +32,8 @@ const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
 
     dispatch({
       type: CLICK_TIME,
-      data: Platform.OS === 'ios' ? IOS_TIMESHEET : ANDROID_TIMESHEET,
-      hoho: DATE_TIME,
+      data: Platform.OS === 'ios' ? IOS_TIMESHEET : ANDROID_TIMESHEET, // 오전 1 : 00 = 형식
+      hoho: DATE_TIME, // 24시간 형식
     });
 
     hideDatePicker();

@@ -17,6 +17,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* ToDoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ToDoAppTests.m */; };
 		3962718FD087D891EF561D33 /* libPods-ToDoApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8858803F206CBC227C637167 /* libPods-ToDoApp-tvOS.a */; };
 		3CB184ABFF2FF69F977D572F /* libPods-ToDoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0761FD401321DD2926ECCA7 /* libPods-ToDoApp.a */; };
+		AD025F3D26566866002F5A7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD025F3C26566866002F5A7E /* LaunchScreen.storyboard */; };
 		AD0CEAA02646367D002184CD /* NanumGothicRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD0CEA9F2646367D002184CD /* NanumGothicRegular.ttf */; };
 		AD0CEB272646393B002184CD /* NanumGothicBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD0CEB252646393B002184CD /* NanumGothicBold.ttf */; };
 		AD0CEB282646393B002184CD /* NanumGothicExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD0CEB262646393B002184CD /* NanumGothicExtraBold.ttf */; };
@@ -25,7 +26,6 @@
 		AD135BA32622BBB8004CD413 /* NanumSquareExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD135B9F2622BBB8004CD413 /* NanumSquareExtraBold.ttf */; };
 		AD135BA42622BBB8004CD413 /* NanumSquareBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD135BA02622BBB8004CD413 /* NanumSquareBold.ttf */; };
 		ADC8287D2615EA7B00A81D53 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = ADC8287C2615EA7B00A81D53 /* Property List.plist */; };
-		ADF3DEF72651585B009FBEBA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADF3DEF62651585B009FBEBA /* LaunchScreen.storyboard */; };
 		E43CA9D76A40910894F435A5 /* libPods-ToDoApp-ToDoAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20AAA567B46556721CF6B5D3 /* libPods-ToDoApp-ToDoAppTests.a */; };
 		EF60688D526D558AAA3CBD48 /* libPods-ToDoApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46329A18CFBD0EA4B2D510F5 /* libPods-ToDoApp-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -70,6 +70,7 @@
 		86277E1F377235D5C80144EC /* Pods-ToDoApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp-tvOS/Pods-ToDoApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		8858803F206CBC227C637167 /* libPods-ToDoApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ToDoApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FDDFC6CB322B42B7E970E45 /* Pods-ToDoApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ToDoApp-tvOSTests/Pods-ToDoApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AD025F3C26566866002F5A7E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD0CEA9F2646367D002184CD /* NanumGothicRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothicRegular.ttf; sourceTree = "<group>"; };
 		AD0CEB252646393B002184CD /* NanumGothicBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothicBold.ttf; sourceTree = "<group>"; };
 		AD0CEB262646393B002184CD /* NanumGothicExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothicExtraBold.ttf; sourceTree = "<group>"; };
@@ -93,7 +94,6 @@
 		ADE8A2AE2621FBC400816B2D /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		ADE8A2AF2621FBC400816B2D /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		ADE8A2B02621FBC400816B2D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		ADF3DEF62651585B009FBEBA /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D7C0EBC4166C5A70C90DA476 /* Pods-ToDoApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp-tvOSTests/Pods-ToDoApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -161,9 +161,9 @@
 				ADC8287C2615EA7B00A81D53 /* Property List.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				AD025F3C26566866002F5A7E /* LaunchScreen.storyboard */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				ADF3DEF62651585B009FBEBA /* LaunchScreen.storyboard */,
 			);
 			name = ToDoApp;
 			sourceTree = "<group>";
@@ -357,6 +357,7 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 5393UWDC43;
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -410,7 +411,7 @@
 				ADC8287D2615EA7B00A81D53 /* Property List.plist in Resources */,
 				AD0CEB272646393B002184CD /* NanumGothicBold.ttf in Resources */,
 				AD0CEB282646393B002184CD /* NanumGothicExtraBold.ttf in Resources */,
-				ADF3DEF72651585B009FBEBA /* LaunchScreen.storyboard in Resources */,
+				AD025F3D26566866002F5A7E /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -790,11 +791,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5393UWDC43;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ToDoApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -802,6 +806,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yunapp;
 				PRODUCT_NAME = ToDoApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -817,10 +822,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 5393UWDC43;
 				INFOPLIST_FILE = ToDoApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
