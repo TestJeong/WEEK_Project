@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
 import ToDo_List_View from '../ToDo/ToDo_List_View';
-import {increment, loginAction} from '../../reducers/toolkit';
+import {increment, testcode, loginAction} from '../../reducers/toolkit';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -31,11 +31,12 @@ const Category_ToDo_List = ({route}) => {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const {Click_Category_ToDo} = useSelector((state) => state.Catagory);
-  const {count} = useSelector((state) => state.toolkit);
+  useSelector((store) => console.log(store.counter));
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(increment(0));
+    dispatch(testcode(10));
   }, []);
 
   useLayoutEffect(() => {

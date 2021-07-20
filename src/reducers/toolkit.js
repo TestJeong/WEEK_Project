@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, configureStore} from '@reduxjs/toolkit';
 
 /* const userSlice = createSlice({
   name: 'user',
@@ -33,5 +33,26 @@ const counterSlice = createSlice({
   },
 });
 
+const test = createSlice({
+  name: 'num',
+  initialState: {
+    nums: 10,
+  },
+  reducers: {
+    testcode: (state) => {
+      state.nums += 5;
+    },
+  },
+});
+
 export const {increment, decrement, incrementByAmount} = counterSlice.actions;
-export default counterSlice.reducer;
+
+export const {testcode} = test.actions;
+
+export const h1 = counterSlice.reducer;
+/* const store = configureStore({
+  reducer: {
+    counter: counterSlice.reducer,
+    numtest: test.reducer,
+  },
+}); */

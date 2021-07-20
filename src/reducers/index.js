@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
 import Catagory from './Catagory';
-import toolkit from './toolkit';
+import {h1} from './toolkit';
 
 const rootReducer = combineReducers({
   Catagory,
-  toolkit,
+  counter: h1,
 });
 export default rootReducer;
