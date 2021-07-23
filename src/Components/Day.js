@@ -26,8 +26,10 @@ export const Today = (days) => {
 
   const Today_Date = years + '-' + month + '-' + day;
 
-  return Today_Date;
+  return {Today_Date, int_Local_Time};
 };
+
+export const sns = new Today();
 
 export const IOS_Notif = (onClickDay, timeString) => {
   const ClickTime = onClickDay;

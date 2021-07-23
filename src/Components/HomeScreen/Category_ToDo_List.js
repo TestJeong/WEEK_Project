@@ -31,7 +31,7 @@ const Category_ToDo_List = ({route}) => {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const {Click_Category_ToDo} = useSelector((state) => state.Catagory);
-  useSelector((store) => console.log(store.counter));
+  /*  useSelector((store) => console.log(store.counter)); */
 
   const dispatch = useDispatch();
 

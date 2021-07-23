@@ -50,9 +50,4 @@ export const {increment, decrement, incrementByAmount} = counterSlice.actions;
 export const {testcode} = test.actions;
 
 export const h1 = counterSlice.reducer;
-/* const store = configureStore({
-  reducer: {
-    counter: counterSlice.reducer,
-    numtest: test.reducer,
-  },
-}); */
+

@@ -22,11 +22,12 @@ import Category_Modal_View from './Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from '../ToDo/ToDo_Notification';
+import {sns} from '../../Components/Day';
+import MainView from './MainView';
 
 const TitleText = styled.Text`
   font-family: 'NanumGothicExtraBold';
   font-size: 20px;
-
   margin-bottom: 25px;
 `;
 
@@ -53,46 +54,10 @@ const Main_Container = styled.View`
   justify-content: flex-end;
 `;
 
-const Column_View = styled.View`
-  flex-direction: row;
-  height: 30%;
-  justify-content: space-between;
-  margin-bottom: 35px;
-`;
-
-const Column_Btn = styled.TouchableOpacity`
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 20px;
-  width: 45%;
-  border-radius: 10px;
-`;
-
 const Plus_Category_Btn = styled.TouchableOpacity`
   margin-top: 20px;
   flex-direction: row;
   align-items: center;
-`;
-
-const Main_Title_Number = styled.View`
-  justify-content: center;
-`;
-
-const Main_Title_Number_Text = styled.Text`
-  font-size: 30px;
-
-  font-family: 'NanumGothicBold';
-`;
-
-const Main_Title_View = styled.View`
-  align-items: center;
-`;
-
-const Main_Title_Text = styled.Text`
-  text-align: left;
-  font-size: 20px;
-  font-family: 'NanumGothicBold';
-  padding-bottom: 10px;
 `;
 
 const HomeScreen = () => {
@@ -101,7 +66,7 @@ const HomeScreen = () => {
   const [will_ToDo, setWill_ToDo] = useState(0);
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
-  const {categoryList} = useSelector((state) => state.Catagory);
+  const {categoryList} = useSelector((state: any) => state.Catagory);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
@@ -112,6 +77,7 @@ const HomeScreen = () => {
   const TodoList_View = realm.objects('TodoDataList');
 
   useEffect(() => {
+    console.log('???Aa', sns.int_Local_Time);
     setTimeout(() => {
       SplashScreen.hide();
     }, 100);
@@ -130,9 +96,9 @@ const HomeScreen = () => {
 
     Edit_Schedule_Notif();
 
-    /*  Realms.open({}).then((realm) => {
+    Realms.open({}).then((realm) => {
       console.log('Realm is located at: ' + realm.path.toString());
-    }); */
+    });
 
     const Today_List_View_Data = TodoList_View.filtered(
       'listDay == $0 AND listClear == $1',
@@ -162,7 +128,7 @@ const HomeScreen = () => {
     setWill_ToDo(Will_List_View_Data.length);
     setPriority_ToDo(Priority_List_View_Data.length);
     setAll_ToDo(All_List_View_Data.length);
-  }, [TodoList_View, categoryList]);
+  }, []);
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -182,8 +148,11 @@ const HomeScreen = () => {
     );
 
     navigation.navigate('Category_ToDoList', {header_Name: '오늘의 일정'});
-    dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
-  });
+    dispatch({
+      type: CLICK_CATEGORY_TODO,
+      data: TodoList_View_Data,
+    });
+  }, []);
 
   const will_ToDo_Data = useCallback(() => {
     const TodoList_View_Data = TodoList_View.filtered(
@@ -192,17 +161,18 @@ const HomeScreen = () => {
     );
 
     const Sort_TodoList_View = TodoList_View_Data.sorted('listDay');
+    console.log('test', Sort_TodoList_View);
 
     navigation.navigate('Category_ToDoList', {header_Name: '예정된 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: Sort_TodoList_View});
-  });
+  }, []);
 
   const Priority_ToDo_Data = useCallback(() => {
     const TodoList_View_Data = TodoList_View.filtered('listPriority != $0', 4);
 
     navigation.navigate('Category_ToDoList', {header_Name: '중요한 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
-  });
+  }, []);
 
   const All_ToDo_Data = useCallback(() => {
     const All_TodoList_View = realm.objects('TodoDataList');
@@ -212,63 +182,43 @@ const HomeScreen = () => {
       header_Name: '전체 일정',
     });
     dispatch({type: CLICK_CATEGORY_TODO, data: Sort_All_TodoList_View});
-  });
+  }, []);
 
   return (
     <SafeAreaView style={{flex: 1, margin: 10}}>
-      <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
+      <Category_Modal_View
+        isOpen={isModalVisible}
+        close={closeModal}
+        data={null}
+      />
 
       <Main_Container>
         <TitleText>MY WEEK</TitleText>
 
-        <Column_View>
-          <Column_Btn
-            onPress={Today_ToDo_Data}
-            style={{backgroundColor: '#fa897b'}}>
-            <Main_Title_View>
-              <Main_Title_Text>오늘</Main_Title_Text>
-              <Main_Title_Text>⏰</Main_Title_Text>
-            </Main_Title_View>
-            <Main_Title_Number>
-              <Main_Title_Number_Text>{today_ToDo}</Main_Title_Number_Text>
-            </Main_Title_Number>
-          </Column_Btn>
-          <Column_Btn
-            onPress={will_ToDo_Data}
-            style={{backgroundColor: '#ccabd8'}}>
-            <Main_Title_View>
-              <Main_Title_Text>예정</Main_Title_Text>
-              <Main_Title_Text>🛎</Main_Title_Text>
-            </Main_Title_View>
-            <Main_Title_Number>
-              <Main_Title_Number_Text>{will_ToDo}</Main_Title_Number_Text>
-            </Main_Title_Number>
-          </Column_Btn>
-        </Column_View>
-        <Column_View>
-          <Column_Btn
-            onPress={Priority_ToDo_Data}
-            style={{backgroundColor: '#d0e6a5'}}>
-            <Main_Title_View>
-              <Main_Title_Text>중요</Main_Title_Text>
-              <Main_Title_Text>💡</Main_Title_Text>
-            </Main_Title_View>
-            <Main_Title_Number>
-              <Main_Title_Number_Text>{priority_ToDo}</Main_Title_Number_Text>
-            </Main_Title_Number>
-          </Column_Btn>
-          <Column_Btn
-            onPress={All_ToDo_Data}
-            style={{backgroundColor: '#a2b9ee'}}>
-            <Main_Title_View>
-              <Main_Title_Text>전체</Main_Title_Text>
-              <Main_Title_Text>📅</Main_Title_Text>
-            </Main_Title_View>
-            <Main_Title_Number>
-              <Main_Title_Number_Text>{all_ToDo}</Main_Title_Number_Text>
-            </Main_Title_Number>
-          </Column_Btn>
-        </Column_View>
+        <MainView
+          name1={'오늘'}
+          name2={'예정'}
+          icons1={'⏰'}
+          icons2={'🛎'}
+          firstToDoData={Today_ToDo_Data}
+          secondToDoData={will_ToDo_Data}
+          todoCount1={today_ToDo}
+          todoCount2={will_ToDo}
+          color1={'#fa897b'}
+          color2={'#ccabd8'}
+        />
+        <MainView
+          name1={'중요'}
+          name2={'전체'}
+          icons1={'💡'}
+          icons2={'📅'}
+          firstToDoData={Priority_ToDo_Data}
+          secondToDoData={All_ToDo_Data}
+          todoCount1={priority_ToDo}
+          todoCount2={all_ToDo}
+          color1={'#d0e6a5'}
+          color2={'#a2b9ee'}
+        />
       </Main_Container>
       <View style={styles.container}>
         <CategoryTitleText>CATEGORY</CategoryTitleText>
