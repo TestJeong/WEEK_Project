@@ -62,7 +62,7 @@ const Plus_Category_Btn = styled.TouchableOpacity`
 
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [today_ToDo, setToday_ToDo] = useState(0);
+  const [today_ToDo, setToday_ToDo] = useState<number>(0);
   const [will_ToDo, setWill_ToDo] = useState(0);
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);

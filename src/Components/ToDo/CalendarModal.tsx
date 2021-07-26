@@ -7,7 +7,7 @@ import {
   Platform,
   Switch,
 } from 'react-native';
-import {Calendar} from 'react-native-calendars';
+import {Calendar, CalendarTheme} from 'react-native-calendars';
 
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
@@ -70,11 +70,21 @@ const Text_Close = styled.Text`
   font-family: 'NanumGothicBold';
 `;
 
+const calendarTheme: CalendarTheme = {
+  todayTextColor: 'white',
+  dotColor: '#00adf5',
+  selectedDotColor: 'red',
+  textDayFontFamily: 'NanumGothic',
+  textMonthFontFamily: 'NanumGothicBold',
+  textDayHeaderFontFamily: 'NanumGothicBold',
+  /* todayBackgroundColor: '#347ee7', */ // 이부분이 에러남
+};
+
 const CalendarModal = ({openModal, closeModal, InputData}) => {
   const dispatch = useDispatch();
   const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
 
-  const [clickDay, setClickDay] = useState(null);
+  const [clickDay, setClickDay] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState(false);
 
   const SaveCalendar = () => {
@@ -89,7 +99,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
     setDatePickerVisibility(true);
   };
 
-  const hideDatePicker = () => {
+  const hideDatePicker = () /* : void */ => {
     setDatePickerVisibility(false);
   };
 
@@ -141,9 +151,8 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
           disableArrowLeft={false}
           disableArrowRight={false}
           disableAllTouchEventsForDisabledDays={true}
-          markedDates={clickDay ? Calendar_Mark() : null}
+          markedDates={clickDay ? Calendar_Mark() : undefined}
           theme={{
-            todayBackgroundColor: '#347ee7',
             todayTextColor: 'white',
             dotColor: '#00adf5',
             selectedDotColor: 'red',

@@ -2,11 +2,20 @@ import React from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useDispatch} from 'react-redux';
 import {CLICK_TIME} from '../../reducers/Catagory';
+import {Platform} from 'react-native';
 
-const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
+type DateTimeProps = {
+  hideDatePicker(): void;
+  isDatePickerVisible: boolean;
+};
+
+const DateTime_Picke = ({
+  hideDatePicker,
+  isDatePickerVisible,
+}: DateTimeProps) => {
   const dispatch = useDispatch();
 
-  const handleConfirm = (date) => {
+  const handleConfirm = (date: Date) => {
     const DATE_TIME = date.toTimeString().split(' ')[0];
 
     //24시간 -> 12시간 변환
