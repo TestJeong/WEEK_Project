@@ -1,4 +1,4 @@
-import {createSlice, configureStore} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 /* const userSlice = createSlice({
   name: 'user',
@@ -33,10 +33,10 @@ const counterSlice = createSlice({
   },
 });
 
-const test = createSlice({
-  name: 'num',
+const myList = createSlice({
+  name: 'CategoryList',
   initialState: {
-    nums: 10,
+    mainList: [],
   },
   reducers: {
     testcode: (state) => {
@@ -45,9 +45,28 @@ const test = createSlice({
   },
 });
 
+export const inputToDoData = createSlice({
+  name: 'InputData',
+  initialState: {
+    onClickTime: null,
+    timeString: null,
+
+    onCalendar_Day_Number: 0,
+    onClickPriority: null,
+    onClickNotif_Enabled: false,
+  },
+  reducers: {
+    getClickDay_Calendar: (state, action: PayloadAction<number>) => {
+      state.onCalendar_Day_Number = action.payload;
+    },
+  },
+});
+
 export const {increment, decrement, incrementByAmount} = counterSlice.actions;
 
-export const {testcode} = test.actions;
+export const {getClickDay_Calendar} = inputToDoData.actions;
+export const myInputData = inputToDoData.reducer;
+
+/* export const {testcode} = test.actions; */
 
 export const h1 = counterSlice.reducer;
-

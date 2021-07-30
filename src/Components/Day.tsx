@@ -1,4 +1,5 @@
-export const Day = () => {
+//createTime
+export const CurrentNow = (): string => {
   var date = new Date().getDate(); //Current Date
   var month = new Date().getMonth() + 1; //Current Month
   var year = new Date().getFullYear(); //Current Year
@@ -11,7 +12,8 @@ export const Day = () => {
   return day;
 };
 
-export const Today = (days) => {
+//Agenda, Detail 선택 날짜 0000년 00월 00일 형식
+export const Today = (days?: number): string => {
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
 
@@ -26,10 +28,8 @@ export const Today = (days) => {
 
   const Today_Date = years + '-' + month + '-' + day;
 
-  return {Today_Date, int_Local_Time};
+  return Today_Date;
 };
-
-export const sns = new Today();
 
 export const IOS_Notif = (onClickDay, timeString) => {
   const ClickTime = onClickDay;

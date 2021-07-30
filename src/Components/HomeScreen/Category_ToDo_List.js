@@ -31,12 +31,13 @@ const Category_ToDo_List = ({route}) => {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const {Click_Category_ToDo} = useSelector((state) => state.Catagory);
-  /*  useSelector((store) => console.log(store.counter)); */
+  const {count} = useSelector((state) => state.counter);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(testcode(10));
+    console.log(count);
+    dispatch(increment(10));
   }, []);
 
   useLayoutEffect(() => {

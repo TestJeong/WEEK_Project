@@ -16,8 +16,9 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import {CLICK_DAY, CLICK_ENABLED} from '../../reducers/Catagory';
 import DateTime_Picke from './DateTime_Picke';
+import {getClickDay_Calendar} from '../../reducers/toolkit';
 
-const Modal_Container = styled(Modal)`
+const Modal_Container = styled<any>(Modal)`
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -80,15 +81,29 @@ const calendarTheme: CalendarTheme = {
   /* todayBackgroundColor: '#347ee7', */ // 이부분이 에러남
 };
 
-const CalendarModal = ({openModal, closeModal, InputData}) => {
-  const dispatch = useDispatch();
-  const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
+type CalendarModalProps = {
+  openModal(): boolean;
+  closeModal(): boolean;
+  InputData: any;
+};
 
-  const [clickDay, setClickDay] = useState<string>('');
+const CalendarModal = ({
+  openModal,
+  closeModal,
+  InputData,
+}: CalendarModalProps) => {
+  const dispatch = useDispatch();
+  const {onClickTime, onClickDay} = useSelector((state: any) => state.Catagory);
+
+  const [calendar_String, setCalendar_String] = useState<any>(null);
   const [isEnabled, setIsEnabled] = useState(false);
 
-  const SaveCalendar = () => {
-    dispatch({type: CLICK_DAY, data: Number(clickDay.replace(/-/g, ''))});
+  const SaveCalendar = (): void => {
+    dispatch(getClickDay_Calendar(Number(calendar_String.replace(/-/g, ''))));
+    dispatch({
+      type: CLICK_DAY,
+      data: Number(calendar_String.replace(/-/g, '')),
+    });
     dispatch({type: CLICK_ENABLED, data: isEnabled});
     closeModal();
   };
@@ -105,11 +120,16 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
 
   const Calendar_Mark = () => {
     const Mark = {
-      [clickDay]: {
-        selected: true,
-        marked: false,
-        selectedColor: '#2ad4af',
-        disableTouchEvent: true,
+      [calendar_String]: {
+        customStyles: {
+          container: {
+            backgroundColor: 'green',
+          },
+          text: {
+            color: 'black',
+            fontWeight: 'bold',
+          },
+        },
       },
     };
 
@@ -130,7 +150,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
         <Calendar
           current={Date()}
           onDayPress={(day) => {
-            setClickDay(day.dateString);
+            setCalendar_String(day.dateString);
           }}
           monthFormat={'yyyy MM'}
           hideArrows={false}
@@ -150,12 +170,11 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
           onPressArrowRight={(addMonth) => addMonth()}
           disableArrowLeft={false}
           disableArrowRight={false}
-          disableAllTouchEventsForDisabledDays={true}
-          markedDates={clickDay ? Calendar_Mark() : undefined}
           theme={{
             todayTextColor: 'white',
             dotColor: '#00adf5',
             selectedDotColor: 'red',
+
             textDayFontFamily: 'NanumGothic',
             textMonthFontFamily: 'NanumGothicBold',
             textDayHeaderFontFamily: 'NanumGothicBold',
@@ -192,7 +211,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={clickDay ? SaveCalendar : null}
+            onPress={calendar_String ? SaveCalendar : undefined}
             hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>저장</Text_Close>
           </TouchableOpacity>

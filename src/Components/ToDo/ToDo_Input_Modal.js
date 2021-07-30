@@ -16,7 +16,7 @@ import styled from 'styled-components/native';
 import realm from '../../db';
 import CalendarModal from '../../Components/ToDo/CalendarModal';
 import Priority_Modal from './ Priority';
-import {Day, IOS_Notif} from '../Day';
+import {CurrentNow, IOS_Notif} from '../Day';
 import {
   MY_CATEGORY_DATA,
   CLICK_DAY,
@@ -136,7 +136,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
         let city = realm.create(
           'TodoDataList',
           {
-            createTime: Day(),
+            createTime: CurrentNow(),
             categoryTitle: onClickCategory
               ? onClickCategory.title
               : categoryName,

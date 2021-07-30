@@ -22,7 +22,7 @@ import Category_Modal_View from './Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from '../ToDo/ToDo_Notification';
-import {sns} from '../../Components/Day';
+import {currentNow} from '../../Components/Day';
 import MainView from './MainView';
 
 const TitleText = styled.Text`
@@ -77,7 +77,7 @@ const HomeScreen = () => {
   const TodoList_View = realm.objects('TodoDataList');
 
   useEffect(() => {
-    console.log('???Aa', sns.int_Local_Time);
+    /*     console.log('???Aa', currentNow.int_Local_Time); */
     setTimeout(() => {
       SplashScreen.hide();
     }, 100);
