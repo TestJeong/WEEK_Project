@@ -33,7 +33,7 @@ const counterSlice = createSlice({
   },
 });
 
-const myList = createSlice({
+/* const myList = createSlice({
   name: 'CategoryList',
   initialState: {
     mainList: [],
@@ -43,7 +43,12 @@ const myList = createSlice({
       state.nums += 5;
     },
   },
-});
+}); */
+
+type getNull_Props = {
+  onCalendar_Day_Number: number;
+  notice_IsEnabled: boolean;
+};
 
 export const inputToDoData = createSlice({
   name: 'InputData',
@@ -51,20 +56,30 @@ export const inputToDoData = createSlice({
     onClickTime: null,
     timeString: null,
 
-    onCalendar_Day_Number: 0,
+    onCalendar_Day_Number: 0, //CalendarModal.tsx
     onClickPriority: null,
-    onClickNotif_Enabled: false,
+    notice_IsEnabled: false, //CalendarModal.tsx
   },
   reducers: {
     getClickDay_Calendar: (state, action: PayloadAction<number>) => {
       state.onCalendar_Day_Number = action.payload;
+    },
+    getNotice_IsEnabled: (state, action: PayloadAction<boolean>) => {
+      state.notice_IsEnabled = action.payload;
+    },
+    getNull: (state, action: PayloadAction<getNull_Props>) => {
+      (state.onCalendar_Day_Number = 0), (state.notice_IsEnabled = false);
     },
   },
 });
 
 export const {increment, decrement, incrementByAmount} = counterSlice.actions;
 
-export const {getClickDay_Calendar} = inputToDoData.actions;
+export const {
+  getNull,
+  getClickDay_Calendar,
+  getNotice_IsEnabled,
+} = inputToDoData.actions;
 export const myInputData = inputToDoData.reducer;
 
 /* export const {testcode} = test.actions; */

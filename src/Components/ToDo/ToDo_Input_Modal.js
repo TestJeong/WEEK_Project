@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
 import realm from '../../db';
-import CalendarModal from '../../Components/ToDo/CalendarModal';
+import CalendarModal from './CalendarModal';
 import Priority_Modal from './ Priority';
 import {CurrentNow, IOS_Notif} from '../Day';
 import {
@@ -27,6 +27,8 @@ import {
 import Category_Modal from './Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
 import {ANDROID_Notif, Notif_Day} from '../Day';
+import {getNull} from '../../reducers/toolkit';
+import {RootState} from '../../reducers';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -75,13 +77,17 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
   const inputRef = useRef();
 
   const {
-    onClickDay,
     onClickTime,
     onClickPriority,
     onClickCategory,
     timeString,
     onClickNotif_Enabled,
   } = useSelector((state) => state.Catagory);
+
+  //타스 버전
+  /* const { onCalendar_Day_Number } = useSelector((state: RootState) => state.myInputData); */
+
+  const {onCalendar_Day_Number} = useSelector((state) => state.myInputData);
   const dispatch = useDispatch();
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
@@ -118,8 +124,8 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
   const ModalClose = () => {
     close();
     dispatch({type: CLICK_TIME, data: null});
-    dispatch({type: CLICK_DAY, data: null});
-    dispatch({type: CLICK_PRIORITY, data: null});
+
+    dispatch(getNull());
     dispatch({type: CLICK_CATEGORY_INPUT, data: null});
     setTestBtn(false);
     setCategoryBtn(false);
@@ -141,7 +147,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
               ? onClickCategory.title
               : categoryName,
             listContent: todoContents,
-            listDay: onClickDay ? onClickDay : null,
+            listDay: onCalendar_Day_Number ? onCalendar_Day_Number : null,
             listTime: onClickTime ? onClickTime : null,
             listTime_Data: timeString ? timeString : null,
             listPriority: onClickPriority ? onClickPriority : 4,
@@ -166,29 +172,31 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
         : categoryName;
 
       if (
-        onClickDay &&
+        onCalendar_Day_Number &&
         onClickTime &&
         Platform.OS === 'ios' &&
-        new Date(IOS_Notif(onClickDay, timeString)) > new Date(Notif_Day()) &&
+        new Date(IOS_Notif(onCalendar_Day_Number, timeString)) >
+          new Date(Notif_Day()) &&
         onClickNotif_Enabled
       ) {
         Schedule_Notif(
-          onClickDay,
+          onCalendar_Day_Number,
           timeString,
           todoContents,
           NotifID,
           categoryTitle,
         );
       } else if (
-        onClickDay &&
+        onCalendar_Day_Number &&
         onClickTime &&
         Platform.OS === 'android' &&
-        new Date(ANDROID_Notif(onClickDay, timeString)).toLocaleString() >
-          new Date(Notif_Day()).toLocaleString() &&
+        new Date(
+          ANDROID_Notif(onCalendar_Day_Number, timeString),
+        ).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
         onClickNotif_Enabled
       ) {
         Schedule_Notif(
-          onClickDay,
+          onCalendar_Day_Number,
           timeString,
           todoContents,
           NotifID,
@@ -251,7 +259,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                   <Icon
                     name="calendar"
                     size={23}
-                    color={onClickDay ? '#75bde0' : 'black'}
+                    color={onCalendar_Day_Number ? '#75bde0' : 'black'}
                   />
                 </TouchableOpacity>
 

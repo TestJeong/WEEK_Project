@@ -22,7 +22,7 @@ import Category_Modal_View from './Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from '../ToDo/ToDo_Notification';
-import {currentNow} from '../../Components/Day';
+
 import MainView from './MainView';
 
 const TitleText = styled.Text`

@@ -8,3 +8,4 @@ const rootReducer = combineReducers({
   myInputData,
 });
 export default rootReducer;
+export type RootState = ReturnType<typeof rootReducer>;
