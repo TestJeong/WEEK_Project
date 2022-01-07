@@ -34,7 +34,6 @@ const Category_ToDo_List = ({route}) => {
   /*  const {count} = useSelector((state) => state.counter); */ const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(count);
     dispatch(increment(10));
   }, []);
 
