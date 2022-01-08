@@ -101,7 +101,7 @@ const HomeScreen = () => {
   const [will_ToDo, setWill_ToDo] = useState(0);
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
-  const {categoryList} = useSelector((state) => state.Catagory);
+  const {categoryList} = useSelector((state: any) => state.Catagory); // 수정 필요
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
@@ -183,7 +183,7 @@ const HomeScreen = () => {
 
     navigation.navigate('Category_ToDoList', {header_Name: '오늘의 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
-  });
+  }, []);
 
   const will_ToDo_Data = useCallback(() => {
     const TodoList_View_Data = TodoList_View.filtered(
@@ -195,14 +195,14 @@ const HomeScreen = () => {
 
     navigation.navigate('Category_ToDoList', {header_Name: '예정된 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: Sort_TodoList_View});
-  });
+  }, []);
 
   const Priority_ToDo_Data = useCallback(() => {
     const TodoList_View_Data = TodoList_View.filtered('listPriority != $0', 4);
 
     navigation.navigate('Category_ToDoList', {header_Name: '중요한 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
-  });
+  }, []);
 
   const All_ToDo_Data = useCallback(() => {
     const All_TodoList_View = realm.objects('TodoDataList');
@@ -212,11 +212,15 @@ const HomeScreen = () => {
       header_Name: '전체 일정',
     });
     dispatch({type: CLICK_CATEGORY_TODO, data: Sort_All_TodoList_View});
-  });
+  }, []);
 
   return (
     <SafeAreaView style={{flex: 1, margin: 10}}>
-      <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
+      <Category_Modal_View
+        isOpen={isModalVisible}
+        close={closeModal}
+        data={null}
+      />
 
       <Main_Container>
         <TitleText>MY WEEK</TitleText>
