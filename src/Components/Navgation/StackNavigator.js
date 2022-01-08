@@ -2,11 +2,7 @@ import React from 'react';
 
 import {TouchableOpacity, Text} from 'react-native';
 
-import {
-  createStackNavigator,
-  StackNavigationOptions,
-} from '@react-navigation/stack';
-import {useNavigation} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import ToDo_List from '../ToDo/ToDo_List';
@@ -15,23 +11,14 @@ import ToDoList_Detail from '../ToDo/ToDoList_Detail';
 import Calendar_Agenda from '../Calendar/Calendar_Agenda';
 import Category_ToDo_List from '../HomeScreen/Category_ToDo_List';
 
-type RootStackParamList = {
-  Home: undefined;
-  ToDoList: undefined;
-  Category_ToDoList: undefined;
-  ToDoListDetail: undefined;
-  Agenda: undefined;
-};
+const Stack = createStackNavigator();
 
-const Stack = createStackNavigator<RootStackParamList>();
-
-const screenOptionStyle: StackNavigationOptions = {
+const screenOptionStyle = {
   headerTitleAlign: 'center',
   /*   headerTitleStyle: {fontWeight: 400}, */
 };
 
-const ToDoStackNavigator = () => {
-  const navigation = useNavigation();
+const ToDoStackNavigator = ({navigation}) => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen
@@ -73,14 +60,18 @@ const ToDoStackNavigator = () => {
         name="ToDoListDetail"
         component={ToDoList_Detail}
         options={{
-          headerTitle: '상세정보',
-          headerTitleStyle: {
-            letterSpacing: 0.5,
-            color: 'black',
-            fontSize: 17,
-            lineHeight: 20,
-            fontFamily: 'NanumGothicExtraBold',
-          },
+          headerTitle: (
+            <Text
+              style={{
+                letterSpacing: 0.5,
+                color: 'black',
+                fontSize: 17,
+                fontFamily: 'NanumGothicExtraBold',
+                lineHeight: 20,
+              }}>
+              상세정보
+            </Text>
+          ),
           headerLeftContainerStyle: {marginLeft: 20},
         }}
       />
@@ -88,8 +79,7 @@ const ToDoStackNavigator = () => {
   );
 };
 
-const CalendarStackNavigator = () => {
-  const navigation = useNavigation();
+const CalendarStackNavigator = ({navigation}) => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen

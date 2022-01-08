@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState, useEffect, useCallback} from 'react';
+import React, {useLayoutEffect, useState, useCallback} from 'react';
 import {
   Text,
   View,
@@ -9,15 +9,14 @@ import {
   Keyboard,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import ToDoInputModal from '../ToDo/ToDo_Input_Modal.js';
+import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
 import {FlatList} from 'react-native-gesture-handler';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import styled from 'styled-components/native';
 
 import ToDo_List_View from '../ToDo/ToDo_List_View';
-import {increment, testcode, loginAction} from '../../reducers/toolkit';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -30,12 +29,7 @@ const Category_ToDo_List = ({route}) => {
   const {header_Name} = route.params;
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const {Click_Category_ToDo} = useSelector((state) => state.Catagory); //툴킷 예시
-  /*  const {count} = useSelector((state) => state.counter); */ const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(increment(10));
-  }, []);
+  const {Click_Category_ToDo} = useSelector((state) => state.Catagory);
 
   useLayoutEffect(() => {
     navigation.setOptions({

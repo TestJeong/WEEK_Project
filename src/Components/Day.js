@@ -1,5 +1,4 @@
-//createTime
-export const CurrentNow = (): string => {
+export const Day = () => {
   var date = new Date().getDate(); //Current Date
   var month = new Date().getMonth() + 1; //Current Month
   var year = new Date().getFullYear(); //Current Year
@@ -12,8 +11,7 @@ export const CurrentNow = (): string => {
   return day;
 };
 
-//Agenda, Detail 선택 날짜 0000년 00월 00일 형식
-export const Today = (days?: number): string => {
+export const Today = (days) => {
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
 

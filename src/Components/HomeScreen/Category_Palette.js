@@ -14,6 +14,7 @@ const Colors = styled.View`
 
 const Items = styled.TouchableOpacity`
   border-radius: 10px;
+
   margin: 10px;
   width: 35px;
   height: 35px;

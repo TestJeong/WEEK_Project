@@ -7,7 +7,7 @@ import {
   Platform,
   Switch,
 } from 'react-native';
-import {Calendar, CalendarTheme} from 'react-native-calendars';
+import {Calendar} from 'react-native-calendars';
 
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
@@ -16,12 +16,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import {CLICK_DAY, CLICK_ENABLED} from '../../reducers/Catagory';
 import DateTime_Picke from './DateTime_Picke';
-import {
-  getClickDay_Calendar,
-  getNotice_IsEnabled,
-} from '../../reducers/toolkit';
 
-const Modal_Container = styled<any>(Modal)`
+const Modal_Container = styled(Modal)`
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -74,44 +70,16 @@ const Text_Close = styled.Text`
   font-family: 'NanumGothicBold';
 `;
 
-const calendarTheme: CalendarTheme = {
-  todayTextColor: 'white',
-  dotColor: '#00adf5',
-  selectedDotColor: 'red',
-  textDayFontFamily: 'NanumGothic',
-  textMonthFontFamily: 'NanumGothicBold',
-  textDayHeaderFontFamily: 'NanumGothicBold',
-  /* todayBackgroundColor: '#347ee7', */ // 이부분이 에러남
-};
-
-type CalendarModalProps = {
-  openModal(): boolean;
-  closeModal(): boolean;
-  InputData: any;
-};
-
-const CalendarModal = ({
-  openModal,
-  closeModal,
-  InputData,
-}: CalendarModalProps) => {
+const CalendarModal = ({openModal, closeModal, InputData}) => {
   const dispatch = useDispatch();
-  const {onClickTime} = useSelector((state: any) => state.Catagory);
+  const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
 
-  const [clickCalendar_String, setClickCalendar_String] = useState<any>(null); // 캘린더 클릭시 받아오늘 일자
-  const [notice_IsEnabled, setNotice_IsEnabled] = useState(false); // 알림 선택여부
+  const [clickDay, setClickDay] = useState(null);
+  const [isEnabled, setIsEnabled] = useState(false);
 
-  const SaveCalendar = (): void => {
-    dispatch(
-      getClickDay_Calendar(Number(clickCalendar_String.replace(/-/g, ''))),
-    );
-    dispatch(getNotice_IsEnabled(notice_IsEnabled));
-
-    dispatch({
-      type: CLICK_DAY,
-      data: Number(clickCalendar_String.replace(/-/g, '')),
-    });
-    dispatch({type: CLICK_ENABLED, data: notice_IsEnabled});
+  const SaveCalendar = () => {
+    dispatch({type: CLICK_DAY, data: Number(clickDay.replace(/-/g, ''))});
+    dispatch({type: CLICK_ENABLED, data: isEnabled});
     closeModal();
   };
 
@@ -121,22 +89,17 @@ const CalendarModal = ({
     setDatePickerVisibility(true);
   };
 
-  const hideDatePicker = () /* : void */ => {
+  const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
 
   const Calendar_Mark = () => {
     const Mark = {
-      [clickCalendar_String]: {
-        customStyles: {
-          container: {
-            backgroundColor: 'green',
-          },
-          text: {
-            color: 'black',
-            fontWeight: 'bold',
-          },
-        },
+      [clickDay]: {
+        selected: true,
+        marked: false,
+        selectedColor: '#2ad4af',
+        disableTouchEvent: true,
       },
     };
 
@@ -157,7 +120,7 @@ const CalendarModal = ({
         <Calendar
           current={Date()}
           onDayPress={(day) => {
-            setClickCalendar_String(day.dateString);
+            setClickDay(day.dateString);
           }}
           monthFormat={'yyyy MM'}
           hideArrows={false}
@@ -177,11 +140,13 @@ const CalendarModal = ({
           onPressArrowRight={(addMonth) => addMonth()}
           disableArrowLeft={false}
           disableArrowRight={false}
+          disableAllTouchEventsForDisabledDays={true}
+          markedDates={clickDay ? Calendar_Mark() : null}
           theme={{
+            todayBackgroundColor: '#347ee7',
             todayTextColor: 'white',
             dotColor: '#00adf5',
             selectedDotColor: 'red',
-
             textDayFontFamily: 'NanumGothic',
             textMonthFontFamily: 'NanumGothicBold',
             textDayHeaderFontFamily: 'NanumGothicBold',
@@ -206,10 +171,7 @@ const CalendarModal = ({
               <Time_Text>알람 설정</Time_Text>
             </Time_Icon_Container>
             <Time_Value>
-              <Switch
-                onValueChange={setNotice_IsEnabled}
-                value={notice_IsEnabled}
-              />
+              <Switch onValueChange={setIsEnabled} value={isEnabled} />
             </Time_Value>
           </Time_Input_Container>
         ) : null}
@@ -221,7 +183,7 @@ const CalendarModal = ({
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={clickCalendar_String ? SaveCalendar : undefined}
+            onPress={clickDay ? SaveCalendar : null}
             hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>저장</Text_Close>
           </TouchableOpacity>

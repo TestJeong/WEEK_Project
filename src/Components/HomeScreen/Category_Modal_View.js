@@ -12,7 +12,7 @@ import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 
 import realm from '../../db';
-import {CurrentNow} from '../Day';
+import {Day} from '../Day';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import Category_Palette from './Category_Palette';
 import {Category_Notif} from './Category_Notif';
@@ -93,7 +93,7 @@ const Category_Modal_View = ({isOpen, close, data}) => {
         realm.create(
           'CategoryList',
           {
-            createTime: data ? data.createTime : CurrentNow(),
+            createTime: data ? data.createTime : Day(),
             title: categoryTitle,
             color: paletteColor,
           },
