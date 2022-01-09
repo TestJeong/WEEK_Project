@@ -26,17 +26,15 @@
 	<string>Pb9f-O5ajC5oRYomYvMSEVPFsQoNs34iLJ3i_</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	
 	<key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-        <key>NSAllowsArbitraryLoadsInWebContent</key>
-        <true/>
-        <key>NSAllowsLocalNetworking</key>
-        <true/>
-    </dict>
-
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NanumGothicRegular.ttf</string>

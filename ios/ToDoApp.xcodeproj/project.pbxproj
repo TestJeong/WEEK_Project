@@ -12,6 +12,13 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1F71F4008AF47580B28752D8 /* libPods-ToDoApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE52543D40477D8A6F27026 /* libPods-ToDoApp-tvOS.a */; };
+		224A6CDB278B27630044A918 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22FC3BB7278AB0230044DDFD /* WidgetKit.framework */; };
+		224A6CDC278B27630044A918 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22FC3BB9278AB0230044DDFD /* SwiftUI.framework */; };
+		224A6CDF278B27630044A918 /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A6CDE278B27630044A918 /* Host.swift */; };
+		224A6CE2278B27640044A918 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 224A6CE1278B27640044A918 /* Assets.xcassets */; };
+		224A6CE4278B27640044A918 /* Host.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 224A6CE0278B27630044A918 /* Host.intentdefinition */; };
+		224A6CE5278B27640044A918 /* Host.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 224A6CE0278B27630044A918 /* Host.intentdefinition */; };
+		224A6CE8278B27640044A918 /* HostExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 224A6CDA278B27630044A918 /* HostExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -38,6 +45,13 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = ToDoApp;
 		};
+		224A6CE6278B27640044A918 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 224A6CD9278B27630044A918;
+			remoteInfo = HostExtension;
+		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -46,6 +60,20 @@
 			remoteInfo = "ToDoApp-tvOS";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		22FC3BC7278AB0230044DDFD /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				224A6CE8278B27640044A918 /* HostExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -59,6 +87,13 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ToDoApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ToDoApp/main.m; sourceTree = "<group>"; };
 		1EE52543D40477D8A6F27026 /* libPods-ToDoApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ToDoApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		224A6CDA278B27630044A918 /* HostExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HostExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		224A6CDE278B27630044A918 /* Host.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
+		224A6CE0278B27630044A918 /* Host.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Host.intentdefinition; sourceTree = "<group>"; };
+		224A6CE1278B27640044A918 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		224A6CE3278B27640044A918 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22FC3BB7278AB0230044DDFD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		22FC3BB9278AB0230044DDFD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		2D02E47B1E0B4A5D006451C7 /* ToDoApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDoApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* ToDoApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ToDoApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FE71986A972D58905E11512 /* libPods-ToDoApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ToDoApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +152,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		224A6CD7278B27630044A918 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				224A6CDC278B27630044A918 /* SwiftUI.framework in Frameworks */,
+				224A6CDB278B27630044A918 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D02E4781E0B4A5D006451C7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -168,6 +212,17 @@
 			name = ToDoApp;
 			sourceTree = "<group>";
 		};
+		224A6CDD278B27630044A918 /* Host */ = {
+			isa = PBXGroup;
+			children = (
+				224A6CDE278B27630044A918 /* Host.swift */,
+				224A6CE0278B27630044A918 /* Host.intentdefinition */,
+				224A6CE1278B27640044A918 /* Assets.xcassets */,
+				224A6CE3278B27640044A918 /* Info.plist */,
+			);
+			path = Host;
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +232,8 @@
 				851B435EDFC1DDC6F5EBFE58 /* libPods-ToDoApp-ToDoAppTests.a */,
 				1EE52543D40477D8A6F27026 /* libPods-ToDoApp-tvOS.a */,
 				4FE71986A972D58905E11512 /* libPods-ToDoApp-tvOSTests.a */,
+				22FC3BB7278AB0230044DDFD /* WidgetKit.framework */,
+				22FC3BB9278AB0230044DDFD /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -195,6 +252,7 @@
 				13B07FAE1A68108700A75B9A /* ToDoApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ToDoAppTests */,
+				224A6CDD278B27630044A918 /* Host */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D01FEF8889456CDE54BC41D5 /* Pods */,
@@ -211,6 +269,7 @@
 				00E356EE1AD99517003FC87E /* ToDoAppTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* ToDoApp-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* ToDoApp-tvOSTests.xctest */,
+				224A6CDA278B27630044A918 /* HostExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -295,15 +354,34 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				5DE51E0B5F59767B40463A70 /* [CP] Embed Pods Frameworks */,
 				5029BCCAE79FE47943295F43 /* [CP] Copy Pods Resources */,
+				22FC3BC7278AB0230044DDFD /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				224A6CE7278B27640044A918 /* PBXTargetDependency */,
 			);
 			name = ToDoApp;
 			productName = ToDoApp;
 			productReference = 13B07F961A680F5B00A75B9A /* ToDoApp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		224A6CD9278B27630044A918 /* HostExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 224A6CE9278B27640044A918 /* Build configuration list for PBXNativeTarget "HostExtension" */;
+			buildPhases = (
+				224A6CD6278B27630044A918 /* Sources */,
+				224A6CD7278B27630044A918 /* Frameworks */,
+				224A6CD8278B27630044A918 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HostExtension;
+			productName = HostExtension;
+			productReference = 224A6CDA278B27630044A918 /* HostExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		2D02E47A1E0B4A5D006451C7 /* ToDoApp-tvOS */ = {
 			isa = PBXNativeTarget;
@@ -350,6 +428,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -358,7 +437,13 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 5393UWDC43;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1310;
+						ProvisioningStyle = Automatic;
+					};
+					224A6CD9278B27630044A918 = {
+						CreatedOnToolsVersion = 13.1;
+						DevelopmentTeam = 5393UWDC43;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -388,6 +473,7 @@
 				00E356ED1AD99517003FC87E /* ToDoAppTests */,
 				2D02E47A1E0B4A5D006451C7 /* ToDoApp-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* ToDoApp-tvOSTests */,
+				224A6CD9278B27630044A918 /* HostExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -414,6 +500,14 @@
 				AD0CEB282646393B002184CD /* NanumGothicExtraBold.ttf in Resources */,
 				ADF3DEF72651585B009FBEBA /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		224A6CD8278B27630044A918 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				224A6CE2278B27640044A918 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,7 +541,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		12458308A191A2DB9F343D9F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -746,6 +840,16 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				224A6CE5278B27640044A918 /* Host.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		224A6CD6278B27630044A918 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				224A6CE4278B27640044A918 /* Host.intentdefinition in Sources */,
+				224A6CDF278B27630044A918 /* Host.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,6 +877,11 @@
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* ToDoApp */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+		224A6CE7278B27640044A918 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 224A6CD9278B27630044A918 /* HostExtension */;
+			targetProxy = 224A6CE6278B27640044A918 /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -829,14 +938,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 64D2F1BDD71EA85CFE26F1CF /* Pods-ToDoApp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5393UWDC43;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = ToDoApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -845,6 +958,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yunapp;
 				PRODUCT_NAME = ToDoApp;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ToDoApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -855,15 +970,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A1B024D06A67D91DA138AEC5 /* Pods-ToDoApp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5393UWDC43;
+				DEVELOPMENT_TEAM = "";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = ToDoApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -872,9 +989,85 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yunapp;
 				PRODUCT_NAME = ToDoApp;
-				PROVISIONING_PROFILE_SPECIFIER = "WEEK Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ToDoApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		224A6CEA278B27640044A918 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5393UWDC43;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Host/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Host;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yunapp.Host;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		224A6CEB278B27640044A918 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5393UWDC43;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Host/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Host;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yunapp.Host;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1035,11 +1228,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.2/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1088,11 +1281,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.2/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1118,6 +1311,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		224A6CE9278B27640044A918 /* Build configuration list for PBXNativeTarget "HostExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				224A6CEA278B27640044A918 /* Debug */,
+				224A6CEB278B27640044A918 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

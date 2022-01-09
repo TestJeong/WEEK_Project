@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Button,
+  NativeModules,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
@@ -15,6 +16,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
+import SharedGroupPreferences from 'react-native-shared-group-preferences';
 
 import realm from '../../db';
 import Category_List_View from './Category_List_View';
@@ -95,6 +97,9 @@ const Main_Title_Text = styled.Text`
   padding-bottom: 10px;
 `;
 
+const group = 'group.com.week.ReactNativeWidget';
+const SharedStorage = NativeModules.SharedStorage;
+
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [today_ToDo, setToday_ToDo] = useState(0);
@@ -110,6 +115,17 @@ const HomeScreen = () => {
   const int_Local_Time = Number(string_Local_Time.replace(/-/g, ''));
 
   const TodoList_View = realm.objects('TodoDataList');
+
+  const handleSubmit = async () => {
+    try {
+      // iOS
+      await SharedGroupPreferences.setItem('widgetKey', 'widgetData', group);
+    } catch (error) {
+      console.log({error});
+    }
+    // Android
+    SharedStorage.set(JSON.stringify('Asdf'));
+  };
 
   useEffect(() => {
     setTimeout(() => {

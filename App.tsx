@@ -5,6 +5,8 @@ import TapNavigator from './src/Components/Navgation/TapNavigator';
 import {Provider} from 'react-redux';
 import store from './src/store/configureStore';
 
+
+
 const App = () => {
   return (
     <Provider store={store}>

@@ -13,6 +13,7 @@ interface CategoryNotificationType {
     listPriority: Number;
     listMemo: string;
     listClear: boolean;
+    listEnabled: boolean;
   };
   categoryTitle: string;
 }
