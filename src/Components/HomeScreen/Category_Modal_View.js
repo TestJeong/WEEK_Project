@@ -1,12 +1,5 @@
 import React, {useState, useCallback} from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from 'react-native';
-
+import {TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';

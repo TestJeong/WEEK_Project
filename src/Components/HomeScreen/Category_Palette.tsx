@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Dimensions, FlatList} from 'react-native';
+import {View, Dimensions, FlatList, ListRenderItemInfo} from 'react-native';
 import styled from 'styled-components/native';
 
 const Palettes = styled.View`
@@ -20,7 +20,7 @@ const Items = styled.TouchableOpacity`
   height: 35px;
 `;
 
-const colors = [
+const colors: string[] = [
   '#c84557',
   '#ff953f',
   '#ffc325',
@@ -47,11 +47,20 @@ const colors = [
   '#E5d817',
 ];
 
-const PaletteItem = ({color, active, onClick}) => {
+interface Itype {
+  color: {item: string};
+  onClick: () => void;
+}
+
+interface PaletteType {
+  onSelect: (item: ListRenderItemInfo<string>) => void;
+}
+
+const PaletteItem = ({color, onClick}: Itype) => {
   return <Items style={{backgroundColor: color.item}} onPress={onClick} />;
 };
 
-const Category_Palette = ({selected, onSelect}) => {
+const Category_Palette = ({onSelect}: PaletteType) => {
   const ITEM_WIDTH = Math.floor(Dimensions.get('window').width);
   const numColumn = Math.floor(ITEM_WIDTH / 60);
 

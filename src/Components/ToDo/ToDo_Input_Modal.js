@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
 import realm from '../../db';
-import CalendarModal from '../../Components/ToDo/CalendarModal';
+import CalendarModal from './CalendarModal';
 import Priority_Modal from './ Priority';
 import {Day, IOS_Notif} from '../Day';
 import {

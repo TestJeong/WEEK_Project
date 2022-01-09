@@ -12,10 +12,10 @@ import Calendar_Agenda from '../Calendar/Calendar_Agenda';
 import Category_ToDo_List from '../HomeScreen/Category_ToDo_List';
 import {useNavigation} from '@react-navigation/native';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Home: undefined;
   ToDoList: undefined;
-  Category_ToDoList: undefined;
+  Category_ToDoList: {header_Name: string};
   ToDoListDetail: undefined;
   Agenda: undefined;
 };
