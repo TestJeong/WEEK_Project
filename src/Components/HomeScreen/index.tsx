@@ -9,7 +9,7 @@ import {
   Button,
   NativeModules,
 } from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, TextInput} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import Realms from 'realm';
 import {useSelector, useDispatch} from 'react-redux';
@@ -100,6 +100,31 @@ const Main_Title_Text = styled.Text`
 const group = 'group.com.week.ReactNativeWidget';
 const SharedStorage = NativeModules.SharedStorage;
 
+const {WeekWidgetModule} = NativeModules;
+
+const data = {
+  '101': {
+    providerId: 101,
+    providerName: 'Open Weather Map',
+    values: {
+      humidity: '86',
+    },
+    units: {
+      humidity: '%',
+    },
+  },
+  '102': {
+    providerId: 102,
+    providerName: 'Weather API',
+    values: {
+      humidity: '86.02',
+    },
+    units: {
+      humidity: '%',
+    },
+  },
+};
+
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [today_ToDo, setToday_ToDo] = useState(0);
@@ -107,6 +132,7 @@ const HomeScreen = () => {
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
   const {categoryList} = useSelector((state: any) => state.Catagory); // 수정 필요
+  const [text, setText] = useState('');
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
@@ -116,10 +142,14 @@ const HomeScreen = () => {
 
   const TodoList_View = realm.objects('TodoDataList');
 
+  const widgetData = {
+    text,
+  };
+
   const handleSubmit = async () => {
     try {
       // iOS
-      await SharedGroupPreferences.setItem('widgetKey', 'widgetData', group);
+      await SharedGroupPreferences.setItem('widgetKey', widgetData, group);
     } catch (error) {
       console.log({error});
     }
@@ -128,6 +158,7 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
+    WeekWidgetModule.getWidgeData('data');
     setTimeout(() => {
       SplashScreen.hide();
     }, 100);
@@ -237,7 +268,15 @@ const HomeScreen = () => {
         close={closeModal}
         data={null}
       />
-
+      <View style={styles.container}>
+        <TextInput
+          onChangeText={(newText) => setText(newText)}
+          value={text}
+          returnKeyType="send"
+          onEndEditing={handleSubmit}
+          placeholder="Enter the text to display..."
+        />
+      </View>
       <Main_Container>
         <TitleText>MY WEEK</TitleText>
 
