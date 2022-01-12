@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import WidgetKit
+
 @objc(WeekWidgetModule)
 class WeekWidgetModule: NSObject {
   static let GroupId = "group.com.week.ReactNativeWidget"
@@ -24,7 +26,11 @@ class WeekWidgetModule: NSObject {
      }
    }
    
-  @objc func getWidgetData(test: String) -> Void {
-    print("AAAAA \(test)")
+  @objc(refreshAllWidgets)
+   func refreshAllWidgets() {
+     if #available(iOS 14.0, *) {
+       WidgetCenter.shared.reloadAllTimelines()
+     }
    }
  }
+

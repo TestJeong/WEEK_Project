@@ -23,6 +23,7 @@
 		22CCD439278F07720055BC1D /* WeekWidgeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CCD437278F07720055BC1D /* WeekWidgeModule.swift */; };
 		22CCD43C278F0FEB0055BC1D /* WeekModuleBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CCD43B278F0FEB0055BC1D /* WeekModuleBridge.m */; };
 		22CCD43D278F0FEB0055BC1D /* WeekModuleBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CCD43B278F0FEB0055BC1D /* WeekModuleBridge.m */; };
+		22CCD441278F1BEF0055BC1D /* ToDoApp.xcodeproj in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CCD43E278F124A0055BC1D /* ToDoApp.xcodeproj */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -159,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22CCD441278F1BEF0055BC1D /* ToDoApp.xcodeproj in Frameworks */,
 				78A76664211A45A0F4596209 /* libPods-ToDoApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1036,6 +1038,7 @@
 		};
 		224A6CEA278B27640044A918 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 64D2F1BDD71EA85CFE26F1CF /* Pods-ToDoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1078,6 +1081,7 @@
 		};
 		224A6CEB278B27640044A918 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1B024D06A67D91DA138AEC5 /* Pods-ToDoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;

@@ -150,6 +150,7 @@ const HomeScreen = () => {
     try {
       // iOS
       await SharedGroupPreferences.setItem('widgetKey', widgetData, group);
+      WeekWidgetModule.refreshAllWidgets();
     } catch (error) {
       console.log({error});
     }
@@ -158,7 +159,6 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    WeekWidgetModule.getWidgeData('data');
     setTimeout(() => {
       SplashScreen.hide();
     }, 100);
