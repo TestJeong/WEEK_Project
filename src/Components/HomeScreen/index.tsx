@@ -171,15 +171,15 @@ const HomeScreen = () => {
       }
     });
 
-    /* PushNotification.getScheduledLocalNotifications((notif) => {
+    PushNotification.getScheduledLocalNotifications((notif) => {
       console.log('예약 알림', notif);
-    }); */
+    });
 
     Edit_Schedule_Notif();
 
-    /*  Realms.open({}).then((realm) => {
+    Realms.open({}).then((realm) => {
       console.log('Realm is located at: ' + realm.path.toString());
-    }); */
+    });
 
     const Today_List_View_Data = TodoList_View.filtered(
       'listDay == $0 AND listClear == $1',
@@ -211,7 +211,7 @@ const HomeScreen = () => {
     setAll_ToDo(All_List_View_Data.length);
   }, [TodoList_View, categoryList]);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
   const opneModal = () => {
@@ -268,7 +268,7 @@ const HomeScreen = () => {
         close={closeModal}
         data={null}
       />
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <TextInput
           onChangeText={(newText) => setText(newText)}
           value={text}
@@ -276,7 +276,7 @@ const HomeScreen = () => {
           onEndEditing={handleSubmit}
           placeholder="Enter the text to display..."
         />
-      </View>
+      </View> */}
       <Main_Container>
         <TitleText>MY WEEK</TitleText>
 

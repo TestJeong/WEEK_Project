@@ -129,27 +129,22 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
     const NotifID = Math.floor(Math.random() * 100000);
     const CategoryData = realm.objects('CategoryList');
     const SortCategoryDate = CategoryData.sorted('createTime');
+    
     if (!onClickCategory && !categoryName) {
       alert('카테고리를 설정 해주세요!');
     } else {
       realm.write(() => {
-        let city = realm.create(
-          'TodoDataList',
-          {
-            createTime: Day(),
-            categoryTitle: onClickCategory
-              ? onClickCategory.title
-              : categoryName,
-            listContent: todoContents,
-            listDay: onClickDay ? onClickDay : null,
-            listTime: onClickTime ? onClickTime : null,
-            listTime_Data: timeString ? timeString : null,
-            listPriority: onClickPriority ? onClickPriority : 4,
-            id: NotifID,
-            listEnabled: onClickNotif_Enabled,
-          },
-          true,
-        );
+        let city = realm.create('TodoDataList', {
+          createTime: Day(),
+          categoryTitle: onClickCategory ? onClickCategory.title : categoryName,
+          listContent: todoContents,
+          listDay: onClickDay ? onClickDay : null,
+          listTime: onClickTime ? onClickTime : null,
+          listTime_Data: timeString ? timeString : null,
+          listPriority: onClickPriority ? onClickPriority : 4,
+          id: NotifID,
+          listEnabled: onClickNotif_Enabled,
+        });
         let user = realm.create(
           'CategoryList',
           {
@@ -157,7 +152,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
               ? onClickCategory.createTime
               : categoryTime,
           },
-          true,
+          'modified',
         );
         user.todoData.unshift(city);
       });

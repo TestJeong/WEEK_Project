@@ -123,6 +123,7 @@ const ToDoList_Detail = ({navigation}) => {
         return data.id === String(onClickToDoList.id);
       });
       notifData[0] && setCounter(notifData[0].number);
+      console.log('DD', notifData);
     });
   }, []);
 
@@ -220,13 +221,24 @@ const ToDoList_Detail = ({navigation}) => {
       listContent !== todoTitle ||
       isEnableds
     ) {
+      console.log('첫번쨰 조건문 통과');
+
+      let hey = new Date(IOS_Notif(listDay, listTime)) > new Date();
+      console.log('ADSF', IOS_Notif(listDay, listTime));
       if (
         onClickToDoList.listDay &&
         onClickToDoList.listTime_Data &&
         Platform.OS === 'ios' &&
-        new Date(IOS_Notif(listDay, listTime)) > new Date(Notif_Day()) &&
+        hey &&
         isEnableds
       ) {
+        console.log(
+          '???ASFDSADFADSF',
+          listDay,
+          listTime,
+          counter,
+          onClickToDoList.id,
+        );
         Schedule_Notif(
           listDay,
           listTime,
@@ -243,6 +255,7 @@ const ToDoList_Detail = ({navigation}) => {
           new Date(Notif_Day()).toLocaleString() &&
         isEnableds
       ) {
+        console.log('???else if');
         Schedule_Notif(
           listDay,
           listTime,
@@ -251,6 +264,8 @@ const ToDoList_Detail = ({navigation}) => {
           categoryTitle,
           counter,
         );
+      } else {
+        console.log(' 왜 안돼?');
       }
     }
 
@@ -328,13 +343,13 @@ const ToDoList_Detail = ({navigation}) => {
         style={{
           padding: 15,
         }}>
-        <ActionSheet ref={actionSheetRef}>
+        {/* <ActionSheet ref={actionSheetRef}>
           <Detail_Priorty hideActionSheet={hideActionSheet} />
         </ActionSheet>
 
         <ActionSheet ref={Category_actionSheetRef}>
           <Detail_Category hideActionSheet={Category_hide_Action} />
-        </ActionSheet>
+        </ActionSheet> */}
 
         <DateTime_Picke
           hideDatePicker={hideDatePicker}

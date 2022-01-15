@@ -28,7 +28,7 @@ const screenOptionStyle: StackNavigationOptions = {
 };
 
 const ToDoStackNavigator = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen
@@ -86,7 +86,7 @@ const ToDoStackNavigator = () => {
 };
 
 const CalendarStackNavigator = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
       <Stack.Screen

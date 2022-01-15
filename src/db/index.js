@@ -12,16 +12,11 @@ Category.schema = {
       type: 'string',
       default: '#c2c8c5',
     },
-    todoData: {
-      type: 'list',
-      objectType: 'TodoDataList',
-    },
+    todoData: 'TodoDataList[]',
   },
 };
 
-class TodoData {}
-
-TodoData.schema = {
+const TodoData = {
   name: 'TodoDataList',
   primaryKey: 'createTime',
   properties: {

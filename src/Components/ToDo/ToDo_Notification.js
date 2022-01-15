@@ -12,6 +12,15 @@ export const Schedule_Notif = (
   categoryTitle,
   num,
 ) => {
+  console.log(
+    '알람 테스트',
+    onClickDay,
+    timeString,
+    todoContents,
+    NotifID,
+    categoryTitle,
+    num,
+  );
   PushNotification.configure({
     onRegister: function (token) {
       console.log('TOKEN:', token);
@@ -61,13 +70,16 @@ export const Schedule_Notif = (
       ? IOS_Notif(onClickDay, timeString)
       : ANDROID_Notif(onClickDay, timeString);
 
+  console.log('A', IOS_Notif(onClickDay, timeString));
+  console.log('날짜 테스트', new Date(Platform_Date));
+
   const ScheduleNotif = () => {
     PushNotification.localNotificationSchedule({
       channelId: 'load-channel-id',
       id: NotifID,
       title: categoryTitle,
       message: todoContents,
-      date: new Date(Platform_Date),
+      date: new Date(Date.now() + 60 * 1000),
       allowWhileIdle: false,
       number: num ? num : 1,
     });
