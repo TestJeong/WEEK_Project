@@ -4,23 +4,8 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {ANDROID_Notif, IOS_Notif} from '../Day';
 
 let lastId = 0;
-export const Schedule_Notif = (
-  onClickDay,
-  timeString,
-  todoContents,
-  NotifID,
-  categoryTitle,
-  num,
-) => {
-  console.log(
-    '알람 테스트',
-    onClickDay,
-    timeString,
-    todoContents,
-    NotifID,
-    categoryTitle,
-    num,
-  );
+export const Schedule_Notif = (onClickDay, timeString, todoContents, NotifID, categoryTitle, num) => {
+  console.log('알람 테스트', onClickDay, timeString, todoContents, NotifID, categoryTitle, num);
   PushNotification.configure({
     onRegister: function (token) {
       console.log('TOKEN:', token);
@@ -61,17 +46,10 @@ export const Schedule_Notif = (
       importance: 4,
       vibrate: true,
     },
-    (created) =>
-      console.log(`createChannel 'default-channel-id' returned '${created}'`),
+    (created) => console.log(`createChannel 'default-channel-id' returned '${created}'`),
   );
 
-  const Platform_Date =
-    Platform === 'ios'
-      ? IOS_Notif(onClickDay, timeString)
-      : ANDROID_Notif(onClickDay, timeString);
-
-  console.log('A', IOS_Notif(onClickDay, timeString));
-  console.log('날짜 테스트', new Date(Platform_Date));
+  const Platform_Date = Platform.OS === 'ios' ? IOS_Notif(onClickDay, timeString) : ANDROID_Notif(onClickDay, timeString);
 
   const ScheduleNotif = () => {
     PushNotification.localNotificationSchedule({
@@ -79,7 +57,7 @@ export const Schedule_Notif = (
       id: NotifID,
       title: categoryTitle,
       message: todoContents,
-      date: new Date(Date.now() + 60 * 1000),
+      date: new Date(Platform_Date),
       allowWhileIdle: false,
       number: num ? num : 1,
     });
@@ -131,8 +109,7 @@ export const Edit_Schedule_Notif = () => {
       importance: 4,
       vibrate: true,
     },
-    (created) =>
-      console.log(`createChannel 'default-channel-id' returned '${created}'`),
+    (created) => console.log(`createChannel 'default-channel-id' returned '${created}'`),
   );
 
   PushNotification.getScheduledLocalNotifications((notif) => {

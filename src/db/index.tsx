@@ -1,8 +1,27 @@
 import Realm from 'realm';
 
-class Category {}
+export interface CategoryType {
+  createTime: string;
+  title: string;
+  color: string;
+  todoData: ToDoType[];
+}
 
-Category.schema = {
+export interface ToDoType {
+  createTime: string;
+  categoryTitle: string;
+  id: number;
+  listContent: string;
+  listDay?: number;
+  listTime?: string;
+  listTime_Data?: string;
+  listPriority?: number;
+  listMemo?: string;
+  listClear: boolean;
+  listEnabled: boolean;
+}
+
+const Category: Realm.ObjectSchema = {
   name: 'CategoryList',
   primaryKey: 'createTime',
   properties: {
@@ -16,7 +35,7 @@ Category.schema = {
   },
 };
 
-const TodoData = {
+const TodoData: Realm.ObjectSchema = {
   name: 'TodoDataList',
   primaryKey: 'createTime',
   properties: {
@@ -41,7 +60,7 @@ let realm = new Realm({
     // only apply this change if upgrading to schemaVersion 1
     if (oldRealm.schemaVersion < 1) {
       const oldObjects = oldRealm.objects('schema');
-      const newObjects = newRealm.objects('schema');
+      const newObjects: any = newRealm.objects('schema');
 
       // loop through all objects and set the name property in the new schema
       for (let i = 0; i < oldObjects.length; i++) {

@@ -1,16 +1,5 @@
 import React, {useState, useLayoutEffect, useEffect, createRef} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Keyboard,
-  TextInput,
-  TouchableWithoutFeedback,
-  ScrollView,
-  Button,
-  Platform,
-  Switch,
-} from 'react-native';
+import {Text, View, TouchableOpacity, Keyboard, TextInput, TouchableWithoutFeedback, ScrollView, Button, Platform, Switch} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
@@ -19,13 +8,7 @@ import ActionSheet from 'react-native-actions-sheet';
 import realm from '../../db';
 import CalendarModal from './CalendarModal';
 import DateTime_Picke from './DateTime_Picke';
-import {
-  CLICK_CATEGORY_INPUT,
-  CLICK_DAY,
-  CLICK_PRIORITY,
-  CLICK_TIME,
-  CLICK_TODO_LIST_DATA,
-} from '../../reducers/Catagory';
+import {CLICK_CATEGORY_INPUT, CLICK_DAY, CLICK_PRIORITY, CLICK_TIME, CLICK_TODO_LIST_DATA} from '../../reducers/Catagory';
 import Detail_Priorty from './Detail_Priority';
 import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';
@@ -49,7 +32,6 @@ const Title_Text = styled.TextInput`
   max-height: 150px;
   font-size: 20px;
 `;
-
 const Memo_Text = styled.TextInput`
   font-family: 'NanumGothic';
   margin-top: 10px;
@@ -92,15 +74,7 @@ const ToDoList_Detail = ({navigation}) => {
   let actionSheet;
 
   const dispatch = useDispatch();
-  const {
-    onClickToDoList,
-    onClickTime,
-    onClickDay,
-    onClickPriority,
-    clickCategory,
-    onClickCategory,
-    timeString,
-  } = useSelector((state) => state.Catagory);
+  const {onClickToDoList, onClickTime, onClickDay, onClickPriority, clickCategory, onClickCategory, timeString} = useSelector((state) => state.Catagory);
   const [todoTitle, setToDoTitle] = useState(onClickToDoList.listContent);
   const [todoMemo, setToDoMemo] = useState(onClickToDoList.listMemo);
   const [isEnableds, setIsEnableds] = useState(onClickToDoList.listEnabled);
@@ -123,20 +97,14 @@ const ToDoList_Detail = ({navigation}) => {
         return data.id === String(onClickToDoList.id);
       });
       notifData[0] && setCounter(notifData[0].number);
-      console.log('DD', notifData);
     });
   }, []);
 
   const SaveBtn = () => {
     const TodoList_View = realm.objects('TodoDataList');
-    const TodoList_View_Data = TodoList_View.filtered(
-      'createTime == $0',
-      onClickToDoList.createTime,
-    );
+    const TodoList_View_Data = TodoList_View.filtered('createTime == $0', onClickToDoList.createTime);
 
-    const categoryTitle = onClickCategory
-      ? onClickCategory.title
-      : onClickToDoList.categoryTitle;
+    const categoryTitle = onClickCategory ? onClickCategory.title : onClickToDoList.categoryTitle;
 
     const listContent = TodoList_View_Data[0].listContent;
     const listTime = timeString ? timeString : onClickToDoList.listTime_Data;
@@ -148,58 +116,26 @@ const ToDoList_Detail = ({navigation}) => {
         {
           createTime: onClickToDoList.createTime,
 
-          categoryTitle: onClickCategory
-            ? onClickCategory.title
-            : onClickToDoList.categoryTitle,
+          categoryTitle: onClickCategory ? onClickCategory.title : onClickToDoList.categoryTitle,
 
           listContent: todoTitle,
           listMemo: todoMemo,
           listEnabled: isEnableds,
 
-          listTime: onClickTime
-            ? onClickTime
-            : onClickToDoList.listTime
-            ? onClickToDoList.listTime
-            : null,
+          listTime: onClickTime ? onClickTime : onClickToDoList.listTime ? onClickToDoList.listTime : null,
 
-          listDay: onClickDay
-            ? onClickDay
-            : onClickToDoList.listDay
-            ? onClickToDoList.listDay
-            : null,
+          listDay: onClickDay ? onClickDay : onClickToDoList.listDay ? onClickToDoList.listDay : null,
 
-          listPriority: onClickPriority
-            ? onClickPriority
-            : onClickToDoList.listPriority
-            ? onClickToDoList.listPriority
-            : null,
+          listPriority: onClickPriority ? onClickPriority : onClickToDoList.listPriority ? onClickToDoList.listPriority : null,
 
-          listTime_Data: timeString
-            ? timeString
-            : onClickToDoList.listTime_Data
-            ? onClickToDoList.listTime_Data
-            : null,
+          listTime_Data: timeString ? timeString : onClickToDoList.listTime_Data ? onClickToDoList.listTime_Data : null,
         },
         true,
       );
       if (onClickCategory) {
-        let user = realm.create(
-          'CategoryList',
-          {
-            createTime: onClickCategory
-              ? onClickCategory.createTime
-              : clickCategory.createTime,
-          },
-          true,
-        );
+        let user = realm.create('CategoryList', {createTime: onClickCategory ? onClickCategory.createTime : clickCategory.createTime}, true);
 
-        let categorys = realm.create(
-          'CategoryList',
-          {
-            createTime: clickCategory.createTime,
-          },
-          true,
-        );
+        let categorys = realm.create('CategoryList', {createTime: clickCategory.createTime}, true);
 
         const filterT = categorys.todoData.filter((data) => {
           return data.createTime !== onClickToDoList.createTime;
@@ -214,56 +150,19 @@ const ToDoList_Detail = ({navigation}) => {
       }
     });
 
-    if (
-      timeString ||
-      onClickDay ||
-      onClickCategory ||
-      listContent !== todoTitle ||
-      isEnableds
-    ) {
-      console.log('첫번쨰 조건문 통과');
-
+    if (timeString || onClickDay || onClickCategory || listContent !== todoTitle || isEnableds) {
       let hey = new Date(IOS_Notif(listDay, listTime)) > new Date();
-      console.log('ADSF', IOS_Notif(listDay, listTime));
-      if (
-        onClickToDoList.listDay &&
-        onClickToDoList.listTime_Data &&
-        Platform.OS === 'ios' &&
-        hey &&
-        isEnableds
-      ) {
-        console.log(
-          '???ASFDSADFADSF',
-          listDay,
-          listTime,
-          counter,
-          onClickToDoList.id,
-        );
-        Schedule_Notif(
-          listDay,
-          listTime,
-          todoTitle,
-          onClickToDoList.id,
-          categoryTitle,
-          counter,
-        );
+
+      if (onClickToDoList.listDay && onClickToDoList.listTime_Data && Platform.OS === 'ios' && hey && isEnableds) {
+        Schedule_Notif(listDay, listTime, todoTitle, onClickToDoList.id, categoryTitle, counter);
       } else if (
         onClickToDoList.listDay &&
         onClickToDoList.listTime_Data &&
         Platform.OS === 'android' &&
-        new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() >
-          new Date(Notif_Day()).toLocaleString() &&
+        new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
         isEnableds
       ) {
-        console.log('???else if');
-        Schedule_Notif(
-          listDay,
-          listTime,
-          todoTitle,
-          onClickToDoList.id,
-          categoryTitle,
-          counter,
-        );
+        Schedule_Notif(listDay, listTime, todoTitle, onClickToDoList.id, categoryTitle, counter);
       } else {
         console.log(' 왜 안돼?');
       }
@@ -272,7 +171,7 @@ const ToDoList_Detail = ({navigation}) => {
     const Notif_ID = onClickToDoList.id;
     const String_ID = String(Notif_ID);
     if (isEnableds === false) {
-      PushNotification.cancelLocalNotifications({id: String_ID});
+      PushNotification.cancelLocalNotification({id: String_ID});
     }
 
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
@@ -285,29 +184,17 @@ const ToDoList_Detail = ({navigation}) => {
     navigation.setOptions({
       headerRightContainerStyle: {marginRight: 20},
       headerLeft: () => (
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+        <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
           <Icon name="left" size={20} />
         </TouchableOpacity>
       ),
       headerRight: () => (
-        <TouchableOpacity
-          onPress={SaveBtn}
-          hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+        <TouchableOpacity onPress={SaveBtn} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
           <Icon name="save" size={23} />
         </TouchableOpacity>
       ),
     });
-  }, [
-    onClickDay,
-    onClickTime,
-    onClickPriority,
-    todoTitle,
-    todoMemo,
-    onClickCategory,
-    isEnableds,
-  ]);
+  }, [onClickDay, onClickTime, onClickPriority, todoTitle, todoMemo, onClickCategory, isEnableds]);
 
   const unsubscribe = () => {
     navigation.addListener('blur', () => {
@@ -351,24 +238,11 @@ const ToDoList_Detail = ({navigation}) => {
           <Detail_Category hideActionSheet={Category_hide_Action} />
         </ActionSheet> */}
 
-        <DateTime_Picke
-          hideDatePicker={hideDatePicker}
-          isDatePickerVisible={isDatePickerVisible}
-        />
-        <CalendarModal
-          openModal={calendarModalVisible}
-          closeModal={closeCalendarModal}
-          InputData={false}
-        />
+        <DateTime_Picke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
+        <CalendarModal openModal={calendarModalVisible} closeModal={closeCalendarModal} InputData={false} />
         <Text_View>
           <Title_Text value={todoTitle} onChangeText={setToDoTitle} />
-          <Memo_Text
-            value={todoMemo}
-            onChangeText={setToDoMemo}
-            multiline={true}
-            textAlignVertical={'top'}
-            placeholder="메모"
-          />
+          <Memo_Text value={todoMemo} onChangeText={setToDoMemo} multiline={true} textAlignVertical={'top'} placeholder="메모" />
         </Text_View>
         <View>
           <Time_Input_Container
@@ -381,9 +255,7 @@ const ToDoList_Detail = ({navigation}) => {
             </Time_Icon_Container>
 
             <List_Text_Value>
-              {onClickCategory
-                ? onClickCategory.title
-                : onClickToDoList.categoryTitle}
+              {onClickCategory ? onClickCategory.title : onClickToDoList.categoryTitle}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
             </List_Text_Value>
@@ -395,11 +267,7 @@ const ToDoList_Detail = ({navigation}) => {
               <List_Text>날짜</List_Text>
             </Time_Icon_Container>
             <List_Text_Value>
-              {onClickDay
-                ? Today(onClickDay)
-                : onClickToDoList.listDay
-                ? Today(onClickToDoList.listDay)
-                : '없음'}
+              {onClickDay ? Today(onClickDay) : onClickToDoList.listDay ? Today(onClickToDoList.listDay) : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
             </List_Text_Value>
@@ -411,11 +279,7 @@ const ToDoList_Detail = ({navigation}) => {
               <List_Text>시간</List_Text>
             </Time_Icon_Container>
             <List_Text_Value>
-              {onClickTime
-                ? onClickTime
-                : onClickToDoList.listTime
-                ? onClickToDoList.listTime
-                : '없음'}
+              {onClickTime ? onClickTime : onClickToDoList.listTime ? onClickToDoList.listTime : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
             </List_Text_Value>
@@ -434,32 +298,20 @@ const ToDoList_Detail = ({navigation}) => {
                 ? (function () {
                     if (onClickPriority === 1)
                       return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon name="star" size={12} color={'pink'} />
                         </View>
                       );
                     if (onClickPriority === 2)
                       return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon name="star" size={12} color={'pink'} />
                           <Icon name="star" size={12} color={'pink'} />
                         </View>
                       );
                     if (onClickPriority === 3)
                       return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon name="star" size={12} color={'pink'} />
                           <Icon name="star" size={12} color={'pink'} />
                           <Icon name="star" size={12} color={'pink'} />
@@ -467,11 +319,7 @@ const ToDoList_Detail = ({navigation}) => {
                       );
                     if (onClickPriority === 4)
                       return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <List_Text_Value>없음</List_Text_Value>
                         </View>
                       );
@@ -480,32 +328,20 @@ const ToDoList_Detail = ({navigation}) => {
                 ? (function () {
                     if (onClickToDoList.listPriority === 1)
                       return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon name="star" size={12} color={'pink'} />
                         </View>
                       );
                     if (onClickToDoList.listPriority === 2)
                       return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon name="star" size={12} color={'pink'} />
                           <Icon name="star" size={12} color={'pink'} />
                         </View>
                       );
                     if (onClickToDoList.listPriority === 3)
                       return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon name="star" size={12} color={'pink'} />
                           <Icon name="star" size={12} color={'pink'} />
                           <Icon name="star" size={12} color={'pink'} />
@@ -513,11 +349,7 @@ const ToDoList_Detail = ({navigation}) => {
                       );
                     if (onClickToDoList.listPriority === 4)
                       return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <List_Text_Value>없음</List_Text_Value>
                         </View>
                       );

@@ -1,22 +1,15 @@
 import React, {useState, useCallback} from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 
-import realm from '../../db';
+import realm, {CategoryType, ToDoType} from '../../db';
 import {Day} from '../Day';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import Category_Palette from './Category_Palette';
 import {Category_Notif} from './Category_Notif';
-
-const Modal_Container = styled(Modal)`
-  flex: 1;
-  justify-content: flex-end;
-  align-items: center;
-
-  margin: 0px;
-`;
+import {UpdateMode} from 'realm';
 
 const ModalView = styled.View`
   /* 모달창 크기 조절 */
@@ -64,58 +57,36 @@ const Hoper = styled.View`
   margin: 20px 0px;
   height: 80px;
   width: 80px;
-
   border-radius: 50px;
 `;
 
-const Category_Modal_View = ({isOpen, close, data}) => {
+interface CModalType {
+  isOpen: boolean;
+  close(): void;
+  data: any;
+}
+
+const Category_Modal_View = ({isOpen, close, data}: CModalType) => {
   const [categoryTitle, setcategoryTitle] = useState(data ? data.title : '');
-  const [paletteColor, setPaletteColor] = useState(
-    data ? data.color : '#c2c8c5',
-  );
+  const [paletteColor, setPaletteColor] = useState(data ? data.color : '#c2c8c5');
 
   const dispatch = useDispatch();
 
-  const handleSelect = (color) => {
+  const handleSelect = (color: any) => {
     setPaletteColor(color.item);
   };
 
-  const SaveButton = () => {
+  const SaveButton: any = () => {
     if (categoryTitle !== '') {
       realm.write(() => {
-        realm.create(
-          'CategoryList',
-          {
-            createTime: data ? data.createTime : Day(),
-            title: categoryTitle,
-            color: paletteColor,
-          },
-          true,
-        );
+        realm.create<CategoryType>('CategoryList', {createTime: data ? data.createTime : Day(), title: categoryTitle, color: paletteColor}, UpdateMode.Modified);
         if (data) {
-          let ToDos = realm.create(
-            'CategoryList',
-            {
-              createTime: data.createTime,
-            },
-            true,
-          );
-          ToDos.todoData.forEach((item) => {
-            if (
-              item.categoryTitle !== categoryTitle &&
-              item.listDay &&
-              item.listTime_Data
-            ) {
-              Category_Notif(item, categoryTitle);
+          let ToDos: CategoryType = realm.create<CategoryType>('CategoryList', {createTime: data.createTime}, UpdateMode.Modified);
+          ToDos.todoData.forEach((item: ToDoType) => {
+            if (item.categoryTitle !== categoryTitle && item.listDay && item.listTime_Data) {
+              Category_Notif({item, categoryTitle});
             }
-            realm.create(
-              'TodoDataList',
-              {
-                createTime: item.createTime,
-                categoryTitle: categoryTitle,
-              },
-              true,
-            );
+            realm.create<ToDoType>('TodoDataList', {createTime: item.createTime, categoryTitle: categoryTitle}, UpdateMode.Modified);
           });
         }
       });
@@ -135,41 +106,40 @@ const Category_Modal_View = ({isOpen, close, data}) => {
   const CloseButton = useCallback(() => {
     close();
     {
-      data
-        ? (setPaletteColor(data.color), setcategoryTitle(data.title))
-        : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
+      data ? (setPaletteColor(data.color), setcategoryTitle(data.title)) : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
     }
-  });
+  }, []);
 
   return (
-    <Modal_Container isVisible={isOpen} onBackdropPress={close}>
+    <Modal style={styles.modalContainer} isVisible={isOpen} onBackdropPress={close}>
       <ModalView>
         <Button_View>
-          <TouchableOpacity
-            onPress={CloseButton}
-            hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <TouchableOpacity onPress={CloseButton} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
           <Modal_Title>MY CATEGORY</Modal_Title>
-          <TouchableOpacity
-            onPress={SaveButton}
-            hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <TouchableOpacity onPress={SaveButton} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>완료</Text_Close>
           </TouchableOpacity>
         </Button_View>
 
         <Hoper style={{backgroundColor: paletteColor}} />
 
-        <Text_Input_Container
-          value={categoryTitle}
-          onChangeText={setcategoryTitle}
-          placeholder="카테고리 제목을 입력하세요"
-        />
+        <Text_Input_Container value={categoryTitle} onChangeText={setcategoryTitle} placeholder="카테고리 제목을 입력하세요" />
 
         <Category_Palette onSelect={handleSelect} />
       </ModalView>
-    </Modal_Container>
+    </Modal>
   );
 };
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    margin: 0,
+  },
+});
 
 export default Category_Modal_View;

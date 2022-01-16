@@ -1,9 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
-import {
-  createStackNavigator,
-  StackNavigationOptions,
-} from '@react-navigation/stack';
+import {createStackNavigator, StackNavigationOptions} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ToDo_List from '../ToDo/ToDo_List';
 import Home from '../HomeScreen';
@@ -31,11 +28,7 @@ const ToDoStackNavigator = () => {
   const navigation = useNavigation<any>();
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
 
       <Stack.Screen
         name="ToDoList"
@@ -43,9 +36,7 @@ const ToDoStackNavigator = () => {
         options={{
           headerLeftContainerStyle: {marginLeft: 20},
           headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Home')}
-              hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
               <Icon name="left" size={20} color={'white'} />
             </TouchableOpacity>
           ),
@@ -57,9 +48,7 @@ const ToDoStackNavigator = () => {
         options={{
           headerLeftContainerStyle: {marginLeft: 20},
           headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Home')}
-              hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
               <Icon name="left" size={20} />
             </TouchableOpacity>
           ),
@@ -89,11 +78,7 @@ const CalendarStackNavigator = () => {
   const navigation = useNavigation<any>();
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen
-        name="Agenda"
-        component={Calendar_Agenda}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name="Agenda" component={Calendar_Agenda} options={{headerShown: false}} />
       <Stack.Screen
         name="ToDoListDetail"
         component={ToDoList_Detail}
@@ -101,9 +86,7 @@ const CalendarStackNavigator = () => {
           headerTitle: '상세정보',
           headerLeftContainerStyle: {marginLeft: 20},
           headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Agenda')}
-              hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+            <TouchableOpacity onPress={() => navigation.navigate('Agenda')} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
               <Icon name="left" size={20} />
             </TouchableOpacity>
           ),
@@ -116,11 +99,7 @@ const CalendarStackNavigator = () => {
 const ModalView = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
       <Stack.Screen name="ToDoList" component={ToDo_List} />
     </Stack.Navigator>
   );

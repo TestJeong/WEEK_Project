@@ -9,10 +9,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import E_Icon from 'react-native-vector-icons/Feather';
 import PushNotification from 'react-native-push-notification';
 
-import {
-  CATEGORY_LIST_DATA_REQUEST,
-  CLICK_CATEGORY,
-} from '../../reducers/Catagory';
+import {CATEGORY_LIST_DATA_REQUEST, CLICK_CATEGORY} from '../../reducers/Catagory';
 import Category_Modal_View from './Category_Modal_View';
 
 const List_Item = styled.View`
@@ -65,9 +62,7 @@ const Category_View = ({data}) => {
 
     return (
       <Animated.View style={{flex: 1, transform: [{translateX: trans}]}}>
-        <RectButton
-          onPress={MoveToList}
-          style={[styles.rightAction, {backgroundColor: color}]}>
+        <RectButton onPress={MoveToList} style={[styles.rightAction, {backgroundColor: color}]}>
           <Text style={styles.actionText}>{text}</Text>
         </RectButton>
       </Animated.View>
@@ -83,7 +78,7 @@ const Category_View = ({data}) => {
 
     const pressHandler = () => {
       for (let j of filterData) {
-        PushNotification.cancelLocalNotifications({id: j.id});
+        PushNotification.cancelLocalNotification({id: j.id});
       }
       dispatch({type: CATEGORY_LIST_DATA_REQUEST, data: data});
       close();
@@ -91,9 +86,7 @@ const Category_View = ({data}) => {
 
     return (
       <Animated.View style={{flex: 1, transform: [{translateX: trans}]}}>
-        <RectButton
-          onPress={pressHandler}
-          style={[styles.rightAction, {backgroundColor: color}]}>
+        <RectButton onPress={pressHandler} style={[styles.rightAction, {backgroundColor: color}]}>
           <Text style={styles.actionText}>{text}</Text>
         </RectButton>
       </Animated.View>
@@ -106,18 +99,8 @@ const Category_View = ({data}) => {
         width: 120,
         flexDirection: 'row',
       }}>
-      {MoveTo_List_Action(
-        <Icon name="edit" size={20} />,
-        '#34558b',
-        192,
-        progress,
-      )}
-      {Delete_List_Action(
-        <E_Icon name="trash-2" size={20} />,
-        '#dd2c00',
-        128,
-        progress,
-      )}
+      {MoveTo_List_Action(<Icon name="edit" size={20} />, '#34558b', 192, progress)}
+      {Delete_List_Action(<E_Icon name="trash-2" size={20} />, '#dd2c00', 128, progress)}
     </View>
   );
 
@@ -134,16 +117,8 @@ const Category_View = ({data}) => {
   };
 
   return (
-    <Swipeable
-      ref={swiper}
-      friction={2}
-      rightThreshold={40}
-      renderRightActions={renderRightActions}>
-      <Category_Modal_View
-        isOpen={isModalVisible}
-        close={closeModal}
-        data={data.item}
-      />
+    <Swipeable ref={swiper} friction={2} rightThreshold={40} renderRightActions={renderRightActions}>
+      <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={data.item} />
       <TouchableOpacity
         style={{
           flexDirection: 'row',
