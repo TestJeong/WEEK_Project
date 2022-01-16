@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Swipeable, {SwipeableProps} from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -11,6 +11,7 @@ import PushNotification from 'react-native-push-notification';
 
 import {CATEGORY_LIST_DATA_REQUEST, CLICK_CATEGORY} from '../../reducers/Catagory';
 import Category_Modal_View from './Category_Modal_View';
+import {RootStackParamList} from '../Navgation/StackNavigator';
 
 const List_Item = styled.View`
   margin: 15px 35px 15px 5px;
@@ -23,16 +24,16 @@ const List_Text = styled.Text`
   font-size: 17px;
   font-family: 'NanumGothic';
 `;
-
+//IntrinsicClassAttributes
 const Category_View = ({data}) => {
-  const swiper = useRef();
-  const navigation = useNavigation();
+  const swiper = useRef<any>();
+  const navigation = useNavigation<RootStackParamList, 'ToDoList'>();
   const dispatch = useDispatch();
 
-  const {categoryList} = useSelector((state) => state.Catagory);
+  const {categoryList} = useSelector((state: any) => state.Catagory);
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const [filterData, setFilterData] = useState([]);
+  const [filterData, setFilterData] = useState<any>([]);
 
   useEffect(() => {
     PushNotification.getScheduledLocalNotifications((notif) => {
@@ -48,7 +49,7 @@ const Category_View = ({data}) => {
     setModalVisible(false);
   };
 
-  const MoveTo_List_Action = (text, color, x, progress) => {
+  const MoveTo_List_Action = (text: React.ReactNode, color: string, x: number, progress: any) => {
     const trans = progress.interpolate({
       inputRange: [0, 1],
       outputRange: [x, 0],
@@ -69,7 +70,7 @@ const Category_View = ({data}) => {
     );
   };
 
-  const Delete_List_Action = (text, color, x, progress) => {
+  const Delete_List_Action = (text: React.ReactNode, color: string, x: number, progress: any) => {
     const trans = progress.interpolate({
       inputRange: [0, 1],
       outputRange: [x, 0],
@@ -78,7 +79,8 @@ const Category_View = ({data}) => {
 
     const pressHandler = () => {
       for (let j of filterData) {
-        PushNotification.cancelLocalNotification({id: j.id});
+        console.log('AAA?SDFASDF?ASD', j);
+        PushNotification.cancelLocalNotification(j.id);
       }
       dispatch({type: CATEGORY_LIST_DATA_REQUEST, data: data});
       close();
@@ -93,7 +95,7 @@ const Category_View = ({data}) => {
     );
   };
 
-  const renderRightActions = (progress) => (
+  const renderRightActions = (progress: any) => (
     <View
       style={{
         width: 120,

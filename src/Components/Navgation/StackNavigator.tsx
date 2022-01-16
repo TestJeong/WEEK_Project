@@ -11,7 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 
 export type RootStackParamList = {
   Home: undefined;
-  ToDoList: undefined;
+  ToDoList: {categoryName: string; categoryTime: string};
   Category_ToDoList: {header_Name: string};
   ToDoListDetail: undefined;
   Agenda: undefined;
