@@ -9,11 +9,11 @@ import E_Icon from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
 import PushNotification from 'react-native-push-notification';
 
-import realm from '../../db';
+import realm from '../../../db';
 
-import {TODO_LIST_DATA_REQUEST, CLICK_TODO_LIST_DATA} from '../../reducers/Catagory';
+import {TODO_LIST_DATA_REQUEST, CLICK_TODO_LIST_DATA} from '../../../reducers/Catagory';
 import {Schedule_Notif} from './ToDo_Notification';
-import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../Day';
+import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../../../Utils/Day';
 
 const List_Item = styled.View`
   height: 40px;

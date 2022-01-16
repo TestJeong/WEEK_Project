@@ -5,14 +5,14 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 import ActionSheet from 'react-native-actions-sheet';
 
-import realm from '../../db';
-import CalendarModal from './CalendarModal';
+import realm from '../../../db';
+import CalendarModal from '../../CalendarScreen/CalendarModal';
 import DateTime_Picke from './DateTime_Picke';
-import {CLICK_CATEGORY_INPUT, CLICK_DAY, CLICK_PRIORITY, CLICK_TIME, CLICK_TODO_LIST_DATA} from '../../reducers/Catagory';
+import {CLICK_CATEGORY_INPUT, CLICK_DAY, CLICK_PRIORITY, CLICK_TIME, CLICK_TODO_LIST_DATA} from '../../../reducers/Catagory';
 import Detail_Priorty from './Detail_Priority';
 import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';
-import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../Day';
+import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../../../Utils/Day';
 import PushNotification from 'react-native-push-notification';
 
 const Text_View = styled.View`

@@ -4,18 +4,13 @@ import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {
-  AGENDA_DATA_REQUEST,
-  AGENDA_DATA_TIMESTAMP,
-} from '../../reducers/Catagory';
-import {Today} from '../Day';
+import {AGENDA_DATA_REQUEST, AGENDA_DATA_TIMESTAMP} from '../../reducers/Catagory';
+import {Today} from '../../Utils/Day';
 import Agenda_List from './Agenda_List';
 
 const Schedule = () => {
   const dispatch = useDispatch();
-  const {Agenda_DATA, Agenda_DATA_timestamp} = useSelector(
-    (state) => state.Catagory,
-  );
+  const {Agenda_DATA, Agenda_DATA_timestamp} = useSelector((state) => state.Catagory);
 
   const isFocused = useIsFocused();
 

@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  SafeAreaView,
-  Keyboard,
-} from 'react-native';
+import {Text, View, TouchableOpacity, Image, SafeAreaView, Keyboard} from 'react-native';
 
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
-import {CLICK_CATEGORY_INPUT} from '../../reducers/Catagory';
+import {CLICK_CATEGORY_INPUT} from '../../../reducers/Catagory';
 
 import styled from 'styled-components/native';
 

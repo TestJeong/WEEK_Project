@@ -1,22 +1,13 @@
 import React, {useLayoutEffect, useState, useEffect} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  SafeAreaView,
-  Keyboard,
-} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Image, SafeAreaView, Keyboard} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
-import {FlatList} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import styled from 'styled-components/native';
 
-import ToDo_List_View from './ToDo_List_View';
+import ToDo_List_View from '../ToDo/ToDo_List_View';
 import {Edit_Schedule_Notif} from './ToDo_Notification';
 
 const FlatListView = styled.FlatList`
@@ -66,27 +57,11 @@ const ToDoList = ({route}) => {
 
   return (
     <>
-      <ToDoInputModal
-        isOpen={isModalVisible}
-        close={closeModal}
-        categoryName={categoryName}
-        categoryTime={categoryTime}
-      />
+      <ToDoInputModal isOpen={isModalVisible} close={closeModal} categoryName={categoryName} categoryTime={categoryTime} />
       <View>
-        <FlatListView
-          keyExtractor={(item, index) => '#' + index}
-          data={clickCategory.todoData}
-          renderItem={(item) => <ToDo_List_View data={item} ListName={false} />}
-        />
+        <FlatListView keyExtractor={(item, index) => '#' + index} data={clickCategory.todoData} renderItem={(item) => <ToDo_List_View data={item} ListName={false} />} />
       </View>
-      <TouchableOpacity
-        hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-        activeOpacity={0.5}
-        onPress={opneModal}
-        style={[
-          styles.touchableOpacityStyle,
-          {backgroundColor: clickCategory.color},
-        ]}>
+      <TouchableOpacity hitSlop={{top: 5, bottom: 5, left: 5, right: 5}} activeOpacity={0.5} onPress={opneModal} style={[styles.touchableOpacityStyle, {backgroundColor: clickCategory.color}]}>
         <Icon name="plus" color={'white'} size={30} />
       </TouchableOpacity>
     </>

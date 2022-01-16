@@ -1,14 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-  Button,
-  NativeModules,
-} from 'react-native';
+import {StyleSheet, ScrollView, View, Text, TouchableOpacity, SafeAreaView, Button, NativeModules} from 'react-native';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import Realms from 'realm';
@@ -19,11 +10,11 @@ import SplashScreen from 'react-native-splash-screen';
 import SharedGroupPreferences from 'react-native-shared-group-preferences';
 
 import realm from '../../db';
-import Category_List_View from './Category_List_View';
-import Category_Modal_View from './Category_Modal_View';
+import Category_List_View from './Category/Category_List_View';
+import Category_Modal_View from './Category/Category_Modal_View';
 import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
-import {Edit_Schedule_Notif} from '../ToDo/ToDo_Notification';
+import {Edit_Schedule_Notif} from './ToDo/ToDo_Notification';
 
 const TitleText = styled.Text`
   font-family: 'NanumGothicExtraBold';
@@ -181,23 +172,11 @@ const HomeScreen = () => {
       console.log('Realm is located at: ' + realm.path.toString());
     });
 
-    const Today_List_View_Data = TodoList_View.filtered(
-      'listDay == $0 AND listClear == $1',
-      int_Local_Time,
-      false,
-    );
+    const Today_List_View_Data = TodoList_View.filtered('listDay == $0 AND listClear == $1', int_Local_Time, false);
 
-    const Will_List_View_Data = TodoList_View.filtered(
-      'listDay > $0 AND listClear == $1',
-      int_Local_Time,
-      false,
-    );
+    const Will_List_View_Data = TodoList_View.filtered('listDay > $0 AND listClear == $1', int_Local_Time, false);
 
-    const Priority_List_View_Data = TodoList_View.filtered(
-      'listPriority != $0 AND listClear == $1',
-      4,
-      false,
-    );
+    const Priority_List_View_Data = TodoList_View.filtered('listPriority != $0 AND listClear == $1', 4, false);
 
     const All_List_View_Data = TodoList_View.filtered(
       'listClear == $0',
@@ -223,20 +202,14 @@ const HomeScreen = () => {
   };
 
   const Today_ToDo_Data = useCallback(() => {
-    const TodoList_View_Data = TodoList_View.filtered(
-      'listDay == $0',
-      int_Local_Time,
-    );
+    const TodoList_View_Data = TodoList_View.filtered('listDay == $0', int_Local_Time);
 
     navigation.navigate('Category_ToDoList', {header_Name: '오늘의 일정'});
     dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
   }, []);
 
   const will_ToDo_Data = useCallback(() => {
-    const TodoList_View_Data = TodoList_View.filtered(
-      'listDay >  $0',
-      int_Local_Time,
-    );
+    const TodoList_View_Data = TodoList_View.filtered('listDay >  $0', int_Local_Time);
 
     const Sort_TodoList_View = TodoList_View_Data.sorted('listDay');
 
@@ -263,11 +236,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{flex: 1, margin: 10}}>
-      <Category_Modal_View
-        isOpen={isModalVisible}
-        close={closeModal}
-        data={null}
-      />
+      <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={null} />
       {/* <View style={styles.container}>
         <TextInput
           onChangeText={(newText) => setText(newText)}
@@ -281,9 +250,7 @@ const HomeScreen = () => {
         <TitleText>MY WEEK</TitleText>
 
         <Column_View>
-          <Column_Btn
-            onPress={Today_ToDo_Data}
-            style={{backgroundColor: '#fa897b'}}>
+          <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>
             <Main_Title_View>
               <Main_Title_Text>오늘</Main_Title_Text>
               <Main_Title_Text>⏰</Main_Title_Text>
@@ -292,9 +259,7 @@ const HomeScreen = () => {
               <Main_Title_Number_Text>{today_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
-          <Column_Btn
-            onPress={will_ToDo_Data}
-            style={{backgroundColor: '#ccabd8'}}>
+          <Column_Btn onPress={will_ToDo_Data} style={{backgroundColor: '#ccabd8'}}>
             <Main_Title_View>
               <Main_Title_Text>예정</Main_Title_Text>
               <Main_Title_Text>🛎</Main_Title_Text>
@@ -305,9 +270,7 @@ const HomeScreen = () => {
           </Column_Btn>
         </Column_View>
         <Column_View>
-          <Column_Btn
-            onPress={Priority_ToDo_Data}
-            style={{backgroundColor: '#d0e6a5'}}>
+          <Column_Btn onPress={Priority_ToDo_Data} style={{backgroundColor: '#d0e6a5'}}>
             <Main_Title_View>
               <Main_Title_Text>중요</Main_Title_Text>
               <Main_Title_Text>💡</Main_Title_Text>
@@ -316,9 +279,7 @@ const HomeScreen = () => {
               <Main_Title_Number_Text>{priority_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
-          <Column_Btn
-            onPress={All_ToDo_Data}
-            style={{backgroundColor: '#a2b9ee'}}>
+          <Column_Btn onPress={All_ToDo_Data} style={{backgroundColor: '#a2b9ee'}}>
             <Main_Title_View>
               <Main_Title_Text>전체</Main_Title_Text>
               <Main_Title_Text>📅</Main_Title_Text>

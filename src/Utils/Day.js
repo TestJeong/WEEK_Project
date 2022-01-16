@@ -5,8 +5,7 @@ export const Day = () => {
   var hours = new Date().getHours(); //Current Hours
   var min = new Date().getMinutes(); //Current Minutes
   var sec = new Date().getSeconds(); //Current Seconds
-  let day =
-    year + '-' + month + '-' + date + '-' + hours + '-' + min + '-' + sec;
+  let day = year + '-' + month + '-' + date + '-' + hours + '-' + min + '-' + sec;
 
   return day;
 };
@@ -50,8 +49,7 @@ export const IOS_today = () => {
   var hours = new Date().getHours(); //Current Hours
   var min = new Date().getMinutes(); //Current Minutes
   var sec = new Date().getSeconds(); //Current Seconds
-  let day =
-    year + '-' + month + '-' + date + 'T' + hours + ':' + min + ':' + sec;
+  let day = year + '-' + month + '-' + date + 'T' + hours + ':' + min + ':' + sec;
 
   return day;
 };
@@ -77,8 +75,7 @@ export const Notif_Day = () => {
   var hours = new Date().getHours(); //Current Hours
   var min = new Date().getMinutes(); //Current Minutes
   var sec = new Date().getSeconds(); //Current Seconds
-  let day =
-    year + '/' + month + '/' + date + ' ' + hours + ':' + min + ':' + sec;
+  let day = year + '/' + month + '/' + date + ' ' + hours + ':' + min + ':' + sec;
 
   return day;
 };

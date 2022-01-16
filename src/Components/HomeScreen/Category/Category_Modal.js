@@ -1,15 +1,8 @@
 import React from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-} from 'react-native';
+import {TextInput, View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {CLICK_CATEGORY_INPUT} from '../../reducers/Catagory';
+import {CLICK_CATEGORY_INPUT} from '../../../reducers/Catagory';
 
 const Container = styled.View`
   border-radius: 10px;
@@ -44,9 +37,7 @@ const Category_Modal = ({closeModal}) => {
     };
 
     return (
-      <TouchableOpacity
-        onPress={Category_Select}
-        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
+      <TouchableOpacity onPress={Category_Select} style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
         <View
           style={{
             height: 20,

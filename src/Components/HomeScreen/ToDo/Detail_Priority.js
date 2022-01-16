@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  StyleSheet,
-} from 'react-native';
+import {TextInput, View, Text, TouchableOpacity, KeyboardAvoidingView, StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
-import {CLICK_PRIORITY} from '../../reducers/Catagory';
+import {CLICK_PRIORITY} from '../../../reducers/Catagory';
 
 const Container = styled.View`
   border-radius: 10px;

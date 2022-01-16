@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  TouchableOpacity,
-  Platform,
-  Switch,
-} from 'react-native';
+import {TextInput, View, Text, TouchableOpacity, Platform, Switch} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 
 import Modal from 'react-native-modal';
@@ -15,7 +8,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import {CLICK_DAY, CLICK_ENABLED} from '../../reducers/Catagory';
-import DateTime_Picke from './DateTime_Picke';
+import DateTime_Picke from '../HomeScreen/ToDo/DateTime_Picke';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -107,15 +100,8 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
   };
 
   return (
-    <Modal_Container
-      useNativeDriverForBackdrop={true}
-      isVisible={openModal}
-      onBackdropPress={closeModal}
-      backdropOpacity={0.2}>
-      <DateTime_Picke
-        hideDatePicker={hideDatePicker}
-        isDatePickerVisible={isDatePickerVisible}
-      />
+    <Modal_Container useNativeDriverForBackdrop={true} isVisible={openModal} onBackdropPress={closeModal} backdropOpacity={0.2}>
+      <DateTime_Picke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
       <ModalView style={{height: InputData ? 'auto' : 'auto'}}>
         <Calendar
           current={Date()}
@@ -124,13 +110,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
           }}
           monthFormat={'yyyy MM'}
           hideArrows={false}
-          renderArrow={(direction) =>
-            direction === 'left' ? (
-              <Icon name="arrowleft" size={25} color="#4F8EF7" />
-            ) : (
-              <Icon name="arrowright" size={25} color="#4F8EF7" />
-            )
-          }
+          renderArrow={(direction) => (direction === 'left' ? <Icon name="arrowleft" size={25} color="#4F8EF7" /> : <Icon name="arrowright" size={25} color="#4F8EF7" />)}
           hideExtraDays={true}
           disableMonthChange={true}
           firstDay={7}
@@ -177,14 +157,10 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
         ) : null}
 
         <Button_View>
-          <TouchableOpacity
-            onPress={closeModal}
-            hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <TouchableOpacity onPress={closeModal} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={clickDay ? SaveCalendar : null}
-            hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <TouchableOpacity onPress={clickDay ? SaveCalendar : null} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>저장</Text_Close>
           </TouchableOpacity>
         </Button_View>

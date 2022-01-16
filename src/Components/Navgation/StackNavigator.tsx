@@ -2,11 +2,11 @@ import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
 import {createStackNavigator, StackNavigationOptions} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/AntDesign';
-import ToDo_List from '../ToDo/ToDo_List';
+import ToDo_List from '../HomeScreen/ToDo/ToDo_List';
 import Home from '../HomeScreen';
-import ToDoList_Detail from '../ToDo/ToDoList_Detail';
-import Calendar_Agenda from '../Calendar/Calendar_Agenda';
-import Category_ToDo_List from '../HomeScreen/Category_ToDo_List';
+import ToDoList_Detail from '../HomeScreen/ToDo/ToDoList_Detail';
+import Calendar_Agenda from '../CalendarScreen/Calendar_Agenda';
+import Category_ToDo_List from '../HomeScreen/Category/Category_ToDo_List';
 import {useNavigation} from '@react-navigation/native';
 
 export type RootStackParamList = {

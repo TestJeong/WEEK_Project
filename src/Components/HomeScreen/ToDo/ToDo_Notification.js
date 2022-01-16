@@ -1,7 +1,7 @@
 import {Platform} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {ANDROID_Notif, IOS_Notif} from '../Day';
+import {ANDROID_Notif, IOS_Notif} from '../../../Utils/Day';
 
 let lastId = 0;
 export const Schedule_Notif = (onClickDay, timeString, todoContents, NotifID, categoryTitle, num) => {

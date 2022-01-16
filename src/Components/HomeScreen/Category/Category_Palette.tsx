@@ -77,9 +77,7 @@ const Category_Palette = ({onSelect}: PaletteType) => {
           keyExtractor={(item, index) => '#' + index}
           numColumns={numColumn}
           data={colors}
-          renderItem={(item) => (
-            <PaletteItem onClick={() => onSelect(item)} color={item} />
-          )}
+          renderItem={(item) => <PaletteItem onClick={() => onSelect(item)} color={item} />}
         />
       </Colors>
     </Palettes>

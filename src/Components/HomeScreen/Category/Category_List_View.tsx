@@ -9,9 +9,10 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import E_Icon from 'react-native-vector-icons/Feather';
 import PushNotification from 'react-native-push-notification';
 
-import {CATEGORY_LIST_DATA_REQUEST, CLICK_CATEGORY} from '../../reducers/Catagory';
+import {CATEGORY_LIST_DATA_REQUEST, CLICK_CATEGORY} from '../../../reducers/Catagory';
 import Category_Modal_View from './Category_Modal_View';
-import {RootStackParamList} from '../Navgation/StackNavigator';
+import {RootStackParamList} from '../../Navgation/StackNavigator';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 const List_Item = styled.View`
   margin: 15px 35px 15px 5px;
@@ -24,10 +25,12 @@ const List_Text = styled.Text`
   font-size: 17px;
   font-family: 'NanumGothic';
 `;
-//IntrinsicClassAttributes
+
+type homeScreenProp = StackNavigationProp<RootStackParamList, 'ToDoList'>;
+
 const Category_View = ({data}) => {
   const swiper = useRef<any>();
-  const navigation = useNavigation<RootStackParamList, 'ToDoList'>();
+  const navigation = useNavigation<homeScreenProp>();
   const dispatch = useDispatch();
 
   const {categoryList} = useSelector((state: any) => state.Catagory);
