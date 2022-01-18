@@ -123,7 +123,6 @@ const HomeScreen = () => {
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
   const {categoryList} = useSelector((state: any) => state.Catagory); // 수정 필요
-  const [text, setText] = useState('');
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
@@ -134,7 +133,10 @@ const HomeScreen = () => {
   const TodoList_View = realm.objects('TodoDataList');
 
   const widgetData = {
-    text,
+    today: today_ToDo,
+    willToDo: will_ToDo,
+    priorityToDo: priority_ToDo,
+    allToDo: all_ToDo,
   };
 
   const handleSubmit = async () => {
@@ -183,7 +185,7 @@ const HomeScreen = () => {
 
       false,
     );
-
+    handleSubmit();
     setToday_ToDo(Today_List_View_Data.length);
     setWill_ToDo(Will_List_View_Data.length);
     setPriority_ToDo(Priority_List_View_Data.length);
