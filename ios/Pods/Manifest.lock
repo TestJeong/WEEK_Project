@@ -373,7 +373,7 @@ PODS:
     - React
   - RNCPushNotificationIOS (1.8.0):
     - React-Core
-  - RNDateTimePicker (3.4.7):
+  - RNDateTimePicker (5.1.0):
     - React-Core
   - RNGestureHandler (2.1.1):
     - React-Core
@@ -608,7 +608,7 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   CodePush: cc2e048ced009c11ca79983c4c38781bf7a2da2c
-  DoubleConversion: cde416483dac037923206447da6e1454df403714
+  DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: 57a8b34460679fb69e1ce7d625b04dbd1596b1f1
   FBReactNativeSpec: 18438b1c04ce502ed681cd19db3f4508964c082a
   Flipper: 1bd2db48dcc31e4b167b9a33ec1df01c2ded4893
@@ -621,7 +621,7 @@ SPEC CHECKSUMS:
   Flipper-RSocket: 127954abe8b162fcaf68d2134d34dc2bd7076154
   FlipperKit: 651f50a42eb95c01b3e89a60996dd6aded529eeb
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
+  glog: 5337263514dd6f09803962437687240c5dc39aa4
   hermes-engine: bf7577d12ac6ccf53ab8b5af3c6ccf0dd8458c5c
   JWT: ef71dfb03e1f842081e64dc42eef0e164f35d251
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
@@ -656,7 +656,7 @@ SPEC CHECKSUMS:
   RealmJS: 6e47a0a9619d19dd238ef635abee5724cb677247
   RNCMaskedView: f127cd9652acfa31b91dcff613e07ba18b774db6
   RNCPushNotificationIOS: 5b1cf9ad2aaa107ecb92d5d2d7005ba521b2b97a
-  RNDateTimePicker: 624e46df09f3f8bb38aea717cd364dc6d2605737
+  RNDateTimePicker: cad741dac386f8178bf76e86f0a3c4b22173e0e4
   RNGestureHandler: e1ad51d31a580755079d5124d3ab66f0fcaa8311
   RNIap: 09b4b8f994fdf7ac96def503ee144b28adca8018
   RNReactNativeSharedGroupPreferences: bd6c52319a9f76bde33103cc3bc4f16ecc650653

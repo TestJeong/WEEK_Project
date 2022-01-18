@@ -17,16 +17,19 @@ var zeroSeconds: Date? {
 }}
 
 struct WidgetData: Decodable {
-   var text: String
+  let today: Int
+  let willToDo: Int
+  let priorityToDo: Int
+  let allToDo: Int
 }
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(),text: "Placeholder")
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(),today: 1, willToDo: 2, priorityToDo: 3, allToDo: 4)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration,text: "Data goes here")
+        let entry = SimpleEntry(date: Date(), configuration: configuration,today: 1, willToDo: 2, priorityToDo: 3, allToDo: 4)
         completion(entry)
     }
 
@@ -43,9 +46,9 @@ struct Provider: IntentTimelineProvider {
           
           if let parsedData = try? decoder.decode(WidgetData.self, from: data!) {
             
-          for interval in 0 ..< 50 {
+          for interval in 0 ..< 1 {
                       let nextRefresh = Calendar.current.date(byAdding: .second , value: interval, to: date)!
-                      let entry = SimpleEntry(date: nextRefresh, configuration: configuration, text: parsedData.text)
+            let entry = SimpleEntry(date: nextRefresh, configuration: configuration, today: parsedData.today, willToDo: parsedData.willToDo, priorityToDo: parsedData.priorityToDo, allToDo: parsedData.allToDo)
                       entries.append(entry)
                     }
               
@@ -59,11 +62,9 @@ struct Provider: IntentTimelineProvider {
           
         } else {
             let nextRefresh = Calendar.current.date(byAdding: .second, value: 5, to: date)!
-            let entry = SimpleEntry(date: nextRefresh, configuration: configuration, text: "No data set")
-            let timeline = Timeline(entries: [entry], policy: .atEnd)
-          
-            WidgetCenter.shared.reloadAllTimelines()
-            completion(timeline)
+             let entry = SimpleEntry(date: nextRefresh, configuration: configuration, today: 1, willToDo: 2, priorityToDo: 3, allToDo: 4)
+             let timeline = Timeline(entries: [entry], policy: .atEnd)
+              completion(timeline)
         }
       }
   }
@@ -73,7 +74,10 @@ struct Provider: IntentTimelineProvider {
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
-    let text: String
+    let today: Int
+    let willToDo: Int
+    let priorityToDo: Int
+    let allToDo: Int
 
 }
 
@@ -81,19 +85,28 @@ struct WeekWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-      LinearGradient(gradient: Gradient(colors: [.red, .orange]), startPoint: .top, endPoint: .bottom)
-           .edgesIgnoringSafeArea(.vertical)
-           .overlay(
-             VStack {
-               Text(entry.text)
-                 .bold()
-                 .foregroundColor(.white)
-                 .onChange(of: entry.text){ change in
-                   print("ASDFASDF")
-                   WidgetCenter.shared.reloadAllTimelines()
-                 }
-             }.padding(20)
-           )
+      HStack{
+        VStack {
+          Text("오늘")
+          Text(String(entry.today))
+            .bold()
+        }.padding(20)
+        VStack {
+          Text("예정")
+          Text(String(entry.willToDo))
+            .bold()
+        }.padding(20)
+        VStack {
+          Text("중요")
+          Text(String(entry.priorityToDo))
+            .bold()
+        }.padding(20)
+        VStack {
+          Text("전체")
+          Text(String(entry.allToDo))
+            .bold()
+        }.padding(20)
+      }
     }
 }
 
@@ -109,10 +122,10 @@ struct WeekWidget: Widget {
         .description("This is an example widget.")
     }
 }
-
-struct Host_Previews: PreviewProvider {
-    static var previews: some View {
-      WeekWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(),text: "Widget preview"))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-    }
-}
+//
+//struct Host_Previews: PreviewProvider {
+//    static var previews: some View {
+//      WeekWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(),text: "Widget preview"))
+//            .previewContext(WidgetPreviewContext(family: .systemSmall))
+//    }
+//}
