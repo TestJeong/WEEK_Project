@@ -46,8 +46,8 @@ struct Provider: IntentTimelineProvider {
           
           if let parsedData = try? decoder.decode(WidgetData.self, from: data!) {
             
-          for interval in 0 ..< 1 {
-                      let nextRefresh = Calendar.current.date(byAdding: .second , value: interval, to: date)!
+          for interval in 0 ..< 60 {
+            let nextRefresh = Calendar.current.date(byAdding: .minute , value: interval, to: date)!
             let entry = SimpleEntry(date: nextRefresh, configuration: configuration, today: parsedData.today, willToDo: parsedData.willToDo, priorityToDo: parsedData.priorityToDo, allToDo: parsedData.allToDo)
                       entries.append(entry)
                     }
@@ -61,7 +61,7 @@ struct Provider: IntentTimelineProvider {
             }
           
         } else {
-            let nextRefresh = Calendar.current.date(byAdding: .second, value: 5, to: date)!
+          let nextRefresh = Calendar.current.date(byAdding: .minute, value: 5, to: date)!
              let entry = SimpleEntry(date: nextRefresh, configuration: configuration, today: 1, willToDo: 2, priorityToDo: 3, allToDo: 4)
              let timeline = Timeline(entries: [entry], policy: .atEnd)
               completion(timeline)

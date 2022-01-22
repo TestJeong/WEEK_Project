@@ -148,7 +148,7 @@ const HomeScreen = () => {
       console.log({error});
     }
     // Android
-    SharedStorage.set(JSON.stringify('Asdf'));
+    //SharedStorage.set(JSON.stringify('Asdf'));
   };
 
   useEffect(() => {

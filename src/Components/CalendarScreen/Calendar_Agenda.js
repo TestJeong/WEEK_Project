@@ -38,9 +38,11 @@ const Schedule = () => {
           dispatch({type: AGENDA_DATA_REQUEST, data: day.timestamp});
           dispatch({type: AGENDA_DATA_TIMESTAMP, data: day.timestamp});
         }}
+        pastScrollRange={50}
         renderItem={renderItem}
         selected={default_Day}
         renderEmptyDate={render_}
+        showClosingKnob={true}
         theme={{
           selectedDayBackgroundColor: '#347ee7',
           todayTextColor: '#347ee7',

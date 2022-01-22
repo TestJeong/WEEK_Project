@@ -114,6 +114,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
           hideExtraDays={true}
           disableMonthChange={true}
           firstDay={7}
+          pastScrollRange={50}
           hideDayNames={false}
           showWeekNumbers={false}
           onPressArrowLeft={(substractMonth) => substractMonth()}
