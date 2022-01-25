@@ -23,7 +23,16 @@ const TapNavigator = () => {
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen name="HOME" component={ToDoStackNavigator} options={{tabBarIcon: ({color, size}) => <Icon name="home" size={size} color={color} />}} />
       <Tab.Screen name="CALENDAR" component={CalendarStackNavigator} options={{tabBarIcon: ({color, size}) => <Icon name="calendar" size={size} color={color} />}} />
-      <Tab.Screen name="SETTING" component={iap} options={{tabBarIcon: ({color, size}) => <Icon name="setting" size={size} color={color} />}} />
+      <Tab.Screen
+        name="SETTING"
+        component={iap}
+        options={{
+          cardStyle: {
+            backgroundColor: 'red',
+          },
+          tabBarIcon: ({color, size}) => <Icon name="setting" size={size} color={color} />,
+        }}
+      />
     </Tab.Navigator>
   );
 };

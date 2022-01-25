@@ -1,12 +1,21 @@
 import React, {useEffect} from 'react';
 import {useIsFocused} from '@react-navigation/native';
-import {View, SafeAreaView, StyleSheet} from 'react-native';
-import {Agenda} from 'react-native-calendars';
+import {View, SafeAreaView, StyleSheet, Text} from 'react-native';
+import {Agenda, LocaleConfig} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {AGENDA_DATA_REQUEST, AGENDA_DATA_TIMESTAMP} from '../../reducers/Catagory';
 import {Today} from '../../Utils/Day';
 import Agenda_List from './Agenda_List';
+
+LocaleConfig.locales['kr'] = {
+  monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+  monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+  dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+  dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+  today: '오늘',
+};
+LocaleConfig.defaultLocale = 'kr';
 
 const Schedule = () => {
   const dispatch = useDispatch();
@@ -16,6 +25,7 @@ const Schedule = () => {
 
   useEffect(() => {
     if (isFocused) {
+      console.log('기존 캘린더', Agenda_DATA);
       dispatch({type: AGENDA_DATA_REQUEST, data: Agenda_DATA_timestamp});
     }
   }, [isFocused]);
@@ -25,7 +35,11 @@ const Schedule = () => {
   };
 
   const render_ = () => {
-    return <View style={styles.emptyDate} />;
+    return (
+      <View style={styles.emptyDate}>
+        <Text>This is empty date!</Text>
+      </View>
+    );
   };
 
   const default_Day = Today();
@@ -38,11 +52,16 @@ const Schedule = () => {
           dispatch({type: AGENDA_DATA_REQUEST, data: day.timestamp});
           dispatch({type: AGENDA_DATA_TIMESTAMP, data: day.timestamp});
         }}
-        pastScrollRange={50}
+        pastScrollRange={10}
         renderItem={renderItem}
         selected={default_Day}
         renderEmptyDate={render_}
         showClosingKnob={true}
+        onRefresh={() => console.log('refreshing...')}
+        // Set this true while waiting for new data from a refresh
+        // refreshing={false}
+        // // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView
+        // refreshControl={null}
         theme={{
           selectedDayBackgroundColor: '#347ee7',
           todayTextColor: '#347ee7',

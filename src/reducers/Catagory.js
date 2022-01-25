@@ -24,7 +24,7 @@ export const init = {
   category_List_data_done: false,
   category_List_data_error: null,
 
-  Agenda_DATA: null,
+  Agenda_DATA: [],
   Agenda_DATA_loading: false,
   Agenda_DATA_done: false,
   Agenda_DATA_error: null,
