@@ -6,6 +6,7 @@ import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar} from 're
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {AGENDA_DATA_REQUEST, AGENDA_DATA_TIMESTAMP} from '../../reducers/Catagory';
+import Agenda_List from '../CalendarScreen/Agenda_List';
 import testIDs from '../testIDs';
 
 const today = new Date().toISOString().split('T')[0];
@@ -174,7 +175,7 @@ const ExpandableCalendarScreen = () => {
   };
 
   const renderItem = ({item}: any) => {
-    return <AgendaItem item={item} />;
+    return <Agenda_List item={item} />;
   };
 
   return (
