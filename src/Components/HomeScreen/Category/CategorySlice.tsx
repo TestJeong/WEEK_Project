@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {categoryData, clickCategory} from '../../CalendarScreen/CalendarType';
+import {categoryData} from '../Category/CategoryType';
 
 interface initType {
   categoryList: categoryData[];

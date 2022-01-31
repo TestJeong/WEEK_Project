@@ -24,11 +24,12 @@ function* ToDoList_Delete(action) {
 
 function* Category_Delete(action) {
   try {
+    console.log('딜리트 에러 ', action.data);
     yield call(Category_List_View_Delete, action.data);
     yield put({type: CATEGORY_LIST_DATA_SUCCESS});
-  } catch (e) {
-    console.error(e);
-    yield put({type: CATEGORY_LIST_DATA_ERROR, data: e, error: true});
+  } catch (error) {
+    console.error('카테고리 삭제 에러 -> ', error);
+    yield put({type: CATEGORY_LIST_DATA_ERROR, data: error, error: true});
   }
 }
 

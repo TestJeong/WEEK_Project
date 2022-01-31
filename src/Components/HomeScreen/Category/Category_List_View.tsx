@@ -28,7 +28,7 @@ const List_Text = styled.Text`
 
 type homeScreenProp = StackNavigationProp<RootStackParamList, 'ToDoList'>;
 
-const Category_View = ({data}) => {
+const Category_View = ({data}: any) => {
   const swiper = useRef<any>();
   const navigation = useNavigation<homeScreenProp>();
   const dispatch = useDispatch();

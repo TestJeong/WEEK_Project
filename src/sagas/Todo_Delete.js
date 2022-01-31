@@ -10,15 +10,15 @@ export const ToDoList_View_Delete = (term) => {
 };
 
 export const Category_List_View_Delete = (term) => {
-  const Category_List = realm.objects('CategoryList');
-  const Category_List_Data = Category_List.filtered('title == $0', term.item.title);
-
-  const TodoList_View = realm.objects('TodoDataList');
-  const TodoList_View_Data = TodoList_View.filtered('categoryTitle == $0', term.item.title);
-
   realm.write(() => {
-    realm.delete(Category_List_Data);
+    const Category_List = realm.objects('CategoryList');
+    const Category_List_Data = Category_List.filtered('title == $0', term.item.title);
+
+    const TodoList_View = realm.objects('TodoDataList');
+    const TodoList_View_Data = TodoList_View.filtered('categoryTitle == $0', term.item.title);
+
     realm.delete(TodoList_View_Data);
+    realm.delete(Category_List_Data);
   });
 };
 

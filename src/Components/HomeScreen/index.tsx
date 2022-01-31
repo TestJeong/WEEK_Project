@@ -5,14 +5,14 @@ import styled from 'styled-components/native';
 import Realms from 'realm';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import SharedGroupPreferences from 'react-native-shared-group-preferences';
 
 import realm from '../../db';
 import Category_List_View from './Category/Category_List_View';
 import Category_Modal_View from './Category/Category_Modal_View';
-import {CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
+import {CLICK_CATEGORY_RESET, CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from './ToDo/ToDo_Notification';
 
@@ -131,6 +131,7 @@ const HomeScreen = () => {
   const int_Local_Time = Number(string_Local_Time.replace(/-/g, ''));
 
   const TodoList_View = realm.objects('TodoDataList');
+  const Cate = realm.objects('CategoryList');
 
   const widgetData = {
     today: today_ToDo,
@@ -151,6 +152,14 @@ const HomeScreen = () => {
     //SharedStorage.set(JSON.stringify('Asdf'));
   };
 
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      dispatch({type: CLICK_CATEGORY_RESET});
+    }
+  }, [isFocused]);
+
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
@@ -158,6 +167,13 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
+    console.log('인덱스 유즞이펙트', Cate);
+    // try {
+    //   realm.addListener('change', categoryList);
+    // } catch (error) {
+    //   console.error(`이벤트 리스터 에러: ${error}`);
+    // }
+
     PushNotification.getApplicationIconBadgeNumber(function (number) {
       if (number > 0) {
         PushNotification.setApplicationIconBadgeNumber(0);
@@ -165,32 +181,27 @@ const HomeScreen = () => {
     });
 
     PushNotification.getScheduledLocalNotifications((notif) => {
-      console.log('예약 알림', notif);
+      //console.log('예약 알림', notif);
     });
 
     Edit_Schedule_Notif();
 
-    Realms.open({}).then((realm) => {
-      console.log('Realm is located at: ' + realm.path.toString());
-    });
+    // Realms.open({}).then((realm) => {
+    //   console.log('Realm is located at: ' + realm.path.toString());
+    // });
 
     const Today_List_View_Data = TodoList_View.filtered('listDay == $0 AND listClear == $1', int_Local_Time, false);
-
     const Will_List_View_Data = TodoList_View.filtered('listDay > $0 AND listClear == $1', int_Local_Time, false);
-
     const Priority_List_View_Data = TodoList_View.filtered('listPriority != $0 AND listClear == $1', 4, false);
+    const All_List_View_Data = TodoList_View.filtered('listClear == $0', false);
 
-    const All_List_View_Data = TodoList_View.filtered(
-      'listClear == $0',
-
-      false,
-    );
     handleSubmit();
     setToday_ToDo(Today_List_View_Data.length);
     setWill_ToDo(Will_List_View_Data.length);
     setPriority_ToDo(Priority_List_View_Data.length);
     setAll_ToDo(All_List_View_Data.length);
   }, [TodoList_View, categoryList]);
+  //TodoList_View, categoryList
 
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
@@ -236,6 +247,16 @@ const HomeScreen = () => {
     dispatch({type: CLICK_CATEGORY_TODO, data: Sort_All_TodoList_View});
   }, []);
 
+  const ho = () => {
+    const Category_List = realm.objects('CategoryList');
+    const Category_List_Data = Category_List.filtered('title == $0', 'asdf');
+
+    realm.write(() => {
+      //realm.delete(TodoList_View_Data);
+      realm.delete(Category_List_Data);
+    });
+  };
+
   return (
     <SafeAreaView style={{flex: 1, margin: 10}}>
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={null} />
@@ -252,7 +273,7 @@ const HomeScreen = () => {
         <TitleText>MY WEEK</TitleText>
 
         <Column_View>
-          <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>
+          <Column_Btn onPress={ho} style={{backgroundColor: '#fa897b'}}>
             <Main_Title_View>
               <Main_Title_Text>오늘</Main_Title_Text>
               <Main_Title_Text>⏰</Main_Title_Text>

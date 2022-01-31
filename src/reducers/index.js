@@ -4,6 +4,6 @@ import {CATEGORY_DATA} from '../Components/HomeScreen/Category/CategorySlice';
 
 const rootReducer = combineReducers({
   Catagory,
-  CATEGORY_DATA,
+  //CATEGORY_DATA,
 });
 export default rootReducer;

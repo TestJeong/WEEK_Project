@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import realm from '../../db';
-import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
+import {CLICK_CATEGORY_RESET, MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import {ToDoStackNavigator, CalendarStackNavigator} from '../../Components/Navgation/StackNavigator';
 import iap from '../Settings';
 
@@ -15,8 +15,8 @@ const TapNavigator = () => {
   useEffect(() => {
     const CategoryData = realm.objects('CategoryList');
     const SortCategoryDate = CategoryData.sorted('createTime');
-
     dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
+    dispatch({type: CLICK_CATEGORY_RESET});
   }, []);
 
   return (
