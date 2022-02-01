@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import {TextInput, View, Text, TouchableOpacity, Platform, Switch} from 'react-native';
-import {Calendar} from 'react-native-calendars';
 
+import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import {CLICK_DAY, CLICK_ENABLED} from '../../reducers/Catagory';
 import DateTime_Picke from '../HomeScreen/ToDo/DateTime_Picke';
+import {CLICK_DAY, CLICK_ENABLED} from '../../reducers/Catagory';
+import {GET_DAY} from '../HomeScreen/ToDo/ToDoSlice';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -71,6 +72,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
   const [isEnabled, setIsEnabled] = useState(false);
 
   const SaveCalendar = () => {
+    dispatch(GET_DAY(clickDay));
     dispatch({type: CLICK_DAY, data: Number(clickDay.replace(/-/g, ''))});
     dispatch({type: CLICK_ENABLED, data: isEnabled});
     closeModal();
@@ -106,7 +108,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
         <Calendar
           current={Date()}
           onDayPress={(day) => {
-            setClickDay(day.dateString);
+            setClickDay(day.dateString); // 2022-02-02
           }}
           monthFormat={'yyyy MM'}
           hideArrows={false}

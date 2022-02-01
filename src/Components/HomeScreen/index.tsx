@@ -167,13 +167,6 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log('인덱스 유즞이펙트', Cate);
-    // try {
-    //   realm.addListener('change', categoryList);
-    // } catch (error) {
-    //   console.error(`이벤트 리스터 에러: ${error}`);
-    // }
-
     PushNotification.getApplicationIconBadgeNumber(function (number) {
       if (number > 0) {
         PushNotification.setApplicationIconBadgeNumber(0);
@@ -247,33 +240,13 @@ const HomeScreen = () => {
     dispatch({type: CLICK_CATEGORY_TODO, data: Sort_All_TodoList_View});
   }, []);
 
-  const ho = () => {
-    const Category_List = realm.objects('CategoryList');
-    const Category_List_Data = Category_List.filtered('title == $0', 'asdf');
-
-    realm.write(() => {
-      //realm.delete(TodoList_View_Data);
-      realm.delete(Category_List_Data);
-    });
-  };
-
   return (
     <SafeAreaView style={{flex: 1, margin: 10}}>
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={null} />
-      {/* <View style={styles.container}>
-        <TextInput
-          onChangeText={(newText) => setText(newText)}
-          value={text}
-          returnKeyType="send"
-          onEndEditing={handleSubmit}
-          placeholder="Enter the text to display..."
-        />
-      </View> */}
       <Main_Container>
         <TitleText>MY WEEK</TitleText>
-
         <Column_View>
-          <Column_Btn onPress={ho} style={{backgroundColor: '#fa897b'}}>
+          <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>
             <Main_Title_View>
               <Main_Title_Text>오늘</Main_Title_Text>
               <Main_Title_Text>⏰</Main_Title_Text>

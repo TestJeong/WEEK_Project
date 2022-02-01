@@ -24,7 +24,6 @@ function* ToDoList_Delete(action) {
 
 function* Category_Delete(action) {
   try {
-    console.log('딜리트 에러 ', action.data);
     yield call(Category_List_View_Delete, action.data);
     yield put({type: CATEGORY_LIST_DATA_SUCCESS});
   } catch (error) {

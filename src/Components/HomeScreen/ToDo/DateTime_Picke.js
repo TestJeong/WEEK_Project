@@ -7,7 +7,7 @@ const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
   const dispatch = useDispatch();
 
   const handleConfirm = (date) => {
-    const DATE_TIME = date.toTimeString().split(' ')[0];
+    const DATE_TIME = date.toTimeString().split(' ')[0]; // 17:15:30
 
     const IOS_HOURS = (date.getHours() + 24) % 12 || 12;
 
@@ -18,7 +18,7 @@ const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
     const ANDROID_DAY = date.getHours() < 12 && date.getHours() >= 0 ? '오전' : '오후';
 
     const ANDROID_TIMESHEET = ANDROID_DAY + ' ' + ANDROID_HOURS + ':' + (ANDROID_MINUNTES > 10 ? ANDROID_MINUNTES : '0' + ANDROID_MINUNTES);
-
+    console.log('AD', ANDROID_TIMESHEET); // 오후 6: 42
     dispatch({
       type: CLICK_TIME,
       data: Platform.OS === 'ios' ? IOS_TIMESHEET : ANDROID_TIMESHEET,

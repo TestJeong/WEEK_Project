@@ -2,27 +2,20 @@ import {createSlice} from '@reduxjs/toolkit';
 import {categoryData, todoDataType} from '../Category/CategoryType';
 
 interface initType {
-  categoryList: categoryData[];
-  clickCategory: categoryData;
-  mainCategoryData: todoDataType[];
-  closeInputModal: any;
   onClickDay: string;
+  onClickPriority: number;
+  onClickTime: string;
+  twenty_Four_HoursTIme: string;
 }
 
 const initialState: initType = {
-  categoryList: [],
-  clickCategory: {
-    color: '',
-    createTime: '', // 2022-1-25-22-48-51
-    title: '',
-    todoData: [],
-  },
-  mainCategoryData: [],
-  closeInputModal: [],
   onClickDay: '', // 2022-01-01
+  onClickPriority: 0, // 1,2,3,4
+  onClickTime: '', // 오전 6:43
+  twenty_Four_HoursTIme: '', // 17:15:30
 };
 
-export const CategoryState = createSlice({
+export const ToDoState = createSlice({
   name: 'MyPageState',
   initialState,
   reducers: {
@@ -37,5 +30,5 @@ export const CategoryState = createSlice({
   },
 });
 
-export const {GET_DAY} = CategoryState.actions;
-export const CATEGORY_DATA = CategoryState.reducer;
+export const {GET_DAY} = ToDoState.actions;
+export const TODO_DATA = ToDoState.reducer;
