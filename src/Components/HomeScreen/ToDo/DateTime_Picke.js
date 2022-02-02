@@ -9,8 +9,6 @@ const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
 
   const handleConfirm = (date) => {
     const DATE_TIME = date.toTimeString().split(' ')[0]; // 17:15:30
-    // const IOS_HOURS = (date.getHours() + 24) % 12 || 12;
-    // const IOS_TIMESHEET = IOS_HOURS < 10 ? date.toLocaleTimeString().substring(0, 7) : date.toLocaleTimeString().substring(0, 8);
 
     const HOURS = ((date.getHours() + 11) % 12) + 1;
     const MINUNTES = date.getMinutes();

@@ -28,7 +28,7 @@
     "jetifier": "^2.0.0",
     "react": "17.0.2",
     "react-native": "0.66.2",
-    "react-native-actions-sheet": "^0.4.2",
+    "react-native-actions-sheet": "^0.6.0",
     "react-native-calendars": "^1.1276.0",
     "react-native-code-push": "^7.0.0",
     "react-native-flipper": "^0.129.0",

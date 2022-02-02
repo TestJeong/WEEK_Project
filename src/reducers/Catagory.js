@@ -3,15 +3,15 @@ import produce from 'immer';
 export const init = {
   categoryList: [],
 
-  clickCategory: null, // 메인화면에서 해당 카테고리 클릭시 저장되어있는 카테고리 정보데이터 -> selectedCategory
+  clickCategory: null, //oo 메인화면에서 해당 카테고리 클릭시 저장되어있는 카테고리 정보데이터 -> selectedCategory
   Click_Category_ToDo: null, // 메인화면에서 테마 카테고리 선택시 -> mainCategoryData
 
-  onClickTime: null, // twelve_HoursTime
-  timeString: null, // twenty_Four_HoursTime
+  onClickTime: null, //oo twelve_HoursTime 
+  timeString: null, //oo twenty_Four_HoursTime
 
-  onClickDay: null,
-  onClickToDoList: null, // 해당 투두에 대한 상세정보 -> 디테일페이지에서 사용 -> todoData
-  onClickPriority: null,
+  onClickDay: null, //oo onClickDay
+  onClickToDoList: null, //oo 해당 투두에 대한 상세정보 -> 디테일페이지에서 사용 -> todoData
+  onClickPriority: null,  //oo
   onClickClear: null,
   onClickCategory: null, // inputCategoryData
   onClickNotif_Enabled: false, //isNotificationEnabled
