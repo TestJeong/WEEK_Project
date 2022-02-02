@@ -14,6 +14,7 @@ import {MY_CATEGORY_DATA, CLICK_DAY, CLICK_PRIORITY, CLICK_CATEGORY_INPUT, CLICK
 import Category_Modal from '../Category/Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
 import {ANDROID_Notif, Notif_Day} from '../../../Utils/Day';
+import {REQUEST_CATEGORY_DATA} from '../Category/CategorySlice';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -147,6 +148,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
       }
 
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
+      dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       setTodoContents('');
     }
   };

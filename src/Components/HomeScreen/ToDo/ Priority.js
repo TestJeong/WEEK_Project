@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
 import {CLICK_PRIORITY} from '../../../reducers/Catagory';
+import {SELETCTED_PRIORITY} from './ToDoSlice';
 
 const Container = styled.View`
   border-radius: 10px;
@@ -42,21 +43,25 @@ const Priority_Modal = ({closeModal}) => {
 
   const Highest_Priority = useCallback(() => {
     dispatch({type: CLICK_PRIORITY, data: 3});
+    dispatch(SELETCTED_PRIORITY(3));
     closeModal();
   });
 
   const Medium_Priority = useCallback(() => {
     dispatch({type: CLICK_PRIORITY, data: 2});
+    dispatch(SELETCTED_PRIORITY(2));
     closeModal();
   });
 
   const Low_Priority = useCallback(() => {
     dispatch({type: CLICK_PRIORITY, data: 1});
+    dispatch(SELETCTED_PRIORITY(1));
     closeModal();
   });
 
   const Never_Priority = useCallback(() => {
     dispatch({type: CLICK_PRIORITY, data: 4});
+    dispatch(SELETCTED_PRIORITY(4));
     closeModal();
   });
 

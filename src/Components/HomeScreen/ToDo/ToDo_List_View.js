@@ -14,6 +14,7 @@ import realm from '../../../db';
 import {TODO_LIST_DATA_REQUEST, CLICK_TODO_LIST_DATA} from '../../../reducers/Catagory';
 import {Schedule_Notif} from './ToDo_Notification';
 import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../../../Utils/Day';
+import {SELECTED_TODOLIST_DATA} from './ToDoSlice';
 
 const List_Item = styled.View`
   height: 40px;
@@ -147,6 +148,7 @@ const ToDo_List_View = ({data, ListName}) => {
       );
     });
     dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
+    dispatch(SELECTED_TODOLIST_DATA(data.item));
 
     if (data.item.listDay && data.item.listTime_Data && onToggle_List === false) {
       PushNotification.cancelLocalNotification({id: String_ID});

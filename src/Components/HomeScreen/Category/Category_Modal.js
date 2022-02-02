@@ -38,15 +38,7 @@ const Category_Modal = ({closeModal}) => {
 
     return (
       <TouchableOpacity onPress={Category_Select} style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
-        <View
-          style={{
-            height: 20,
-            width: 20,
-            borderRadius: 20,
-            backgroundColor: Category_Data.item.color,
-            marginRight: 8,
-          }}
-        />
+        <View style={{height: 20, width: 20, borderRadius: 20, backgroundColor: Category_Data.item.color, marginRight: 8}} />
         <List_Item>
           <List_Text>{Category_Data.item.title}</List_Text>
         </List_Item>

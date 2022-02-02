@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
+import {View, TouchableOpacity, Text, SafeAreaView, StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -13,6 +7,7 @@ import {useDispatch} from 'react-redux';
 
 import realm from '../../db';
 import {CLICK_TODO_LIST_DATA} from '../../reducers/Catagory';
+import {SELECTED_TODOLIST_DATA} from '../HomeScreen/ToDo/ToDoSlice';
 
 const Render_View = styled.View`
   flex-direction: row;
@@ -47,6 +42,7 @@ const Agenda_List = ({item}) => {
   const goToList = () => {
     navigation.navigate('ToDoListDetail');
     dispatch({type: CLICK_TODO_LIST_DATA, data: item});
+    dispatch(SELECTED_TODOLIST_DATA(item));
   };
 
   const Toggle = () => {
@@ -62,40 +58,21 @@ const Agenda_List = ({item}) => {
       );
     });
     dispatch({type: CLICK_TODO_LIST_DATA, data: item});
+    dispatch(SELECTED_TODOLIST_DATA(item));
   };
 
   return (
-    <TouchableOpacity
-      onPress={goToList}
-      style={{marginRight: 10, marginTop: 17}}>
-      <Render_View
-        style={
-          (styles.container, {borderTopColor: onToggle ? '#ddd' : item.colors})
-        }>
+    <TouchableOpacity onPress={goToList} style={{marginRight: 10, marginTop: 17}}>
+      <Render_View style={(styles.container, {borderTopColor: onToggle ? '#ddd' : item.colors})}>
         <List_View>
-          <TouchableOpacity onPress={Toggle}>
-            {onToggle ? (
-              <Icon name="checkcircleo" size={30} color="#bbb" />
-            ) : (
-              <Icon name="checkcircleo" size={30} color="black" />
-            )}
-          </TouchableOpacity>
+          <TouchableOpacity onPress={Toggle}>{onToggle ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
           <ListText_View>
-            <Text
-              style={
-                onToggle ? styles.strikeTitleText : styles.defaultTitleText
-              }>
-              {item.listContent}
-            </Text>
-            <Text style={onToggle ? styles.strikeText : styles.defaultText}>
-              {item.categoryTitle}
-            </Text>
+            <Text style={onToggle ? styles.strikeTitleText : styles.defaultTitleText}>{item.listContent}</Text>
+            <Text style={onToggle ? styles.strikeText : styles.defaultText}>{item.categoryTitle}</Text>
           </ListText_View>
         </List_View>
 
-        <Text style={onToggle ? styles.strikeText : styles.defaultText}>
-          {item.listTime}
-        </Text>
+        <Text style={onToggle ? styles.strikeText : styles.defaultText}>{item.listTime}</Text>
       </Render_View>
     </TouchableOpacity>
   );

@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import realm from '../../db';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import {ToDoStackNavigator, CalendarStackNavigator} from '../../Components/Navgation/StackNavigator';
+import {REQUEST_CATEGORY_DATA} from '../HomeScreen/Category/CategorySlice';
 import iap from '../Settings';
 
 const Tab = createBottomTabNavigator();
@@ -15,6 +16,7 @@ const TapNavigator = () => {
   useEffect(() => {
     const CategoryData = realm.objects('CategoryList');
     const SortCategoryDate = CategoryData.sorted('createTime');
+    dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
     dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
   }, []);
 

@@ -3,18 +3,18 @@ import produce from 'immer';
 export const init = {
   categoryList: [],
 
-  clickCategory: null,
-  Click_Category_ToDo: null,
+  clickCategory: null, // 메인화면에서 해당 카테고리 클릭시 저장되어있는 카테고리 정보데이터 -> selectedCategory
+  Click_Category_ToDo: null, // 메인화면에서 테마 카테고리 선택시 -> mainCategoryData
 
-  onClickTime: null,
-  timeString: null,
+  onClickTime: null, // twelve_HoursTime
+  timeString: null, // twenty_Four_HoursTime
 
   onClickDay: null,
-  onClickToDoList: null,
+  onClickToDoList: null, // 해당 투두에 대한 상세정보 -> 디테일페이지에서 사용 -> todoData
   onClickPriority: null,
   onClickClear: null,
-  onClickCategory: null,
-  onClickNotif_Enabled: false,
+  onClickCategory: null, // inputCategoryData
+  onClickNotif_Enabled: false, //isNotificationEnabled
 
   todo_List_data_loading: false,
   todo_List_data_done: false,

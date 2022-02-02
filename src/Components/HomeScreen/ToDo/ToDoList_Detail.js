@@ -14,6 +14,7 @@ import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';
 import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../../../Utils/Day';
 import PushNotification from 'react-native-push-notification';
+import {SELECTED_TODOLIST_DATA} from './ToDoSlice';
 
 const Text_View = styled.View`
   background-color: white;
@@ -175,6 +176,7 @@ const ToDoList_Detail = ({navigation}) => {
     }
 
     dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
+    dispatch(SELECTED_TODOLIST_DATA(TodoList_View_Data));
     dispatch({type: CLICK_CATEGORY_INPUT, data: null});
 
     navigation.goBack();
@@ -230,13 +232,13 @@ const ToDoList_Detail = ({navigation}) => {
         style={{
           padding: 15,
         }}>
-        {/* <ActionSheet ref={actionSheetRef}>
+        <ActionSheet ref={actionSheetRef}>
           <Detail_Priorty hideActionSheet={hideActionSheet} />
         </ActionSheet>
 
         <ActionSheet ref={Category_actionSheetRef}>
           <Detail_Category hideActionSheet={Category_hide_Action} />
-        </ActionSheet> */}
+        </ActionSheet>
 
         <DateTime_Picke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
         <CalendarModal openModal={calendarModalVisible} closeModal={closeCalendarModal} InputData={false} />

@@ -10,6 +10,7 @@ import {MY_CATEGORY_DATA} from '../../../reducers/Catagory';
 import Category_Palette from './Category_Palette';
 import {Category_Notif} from '../Category/Category_Notif';
 import {UpdateMode} from 'realm';
+import {REQUEST_CATEGORY_DATA} from './CategorySlice';
 
 const ModalView = styled.View`
   /* 모달창 크기 조절 */
@@ -94,6 +95,7 @@ const Category_Modal_View = ({isOpen, close, data}: CModalType) => {
       const CategoryData = realm.objects('CategoryList');
       const SortCategoryDate = CategoryData.sorted('createTime');
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
+      dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       close();
       {
         data ? null : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
