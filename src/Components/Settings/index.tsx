@@ -166,8 +166,8 @@ const ExpandableCalendarScreen = () => {
     // fetch and set data for date + week ahead
     console.log('???', date);
 
-    dispatch({type: AGENDA_DATA_REQUEST, data: date.timestamp});
-    dispatch({type: AGENDA_DATA_TIMESTAMP, data: date.timestamp});
+    // dispatch({type: AGENDA_DATA_REQUEST, data: date.timestamp});
+    // dispatch({type: AGENDA_DATA_TIMESTAMP, data: date.timestamp});
   };
 
   const onMonthChange = (/* month, updateSource */) => {

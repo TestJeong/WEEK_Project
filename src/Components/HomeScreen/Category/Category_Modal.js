@@ -3,6 +3,7 @@ import {TextInput, View, Text, TouchableOpacity, StyleSheet, FlatList} from 'rea
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {CLICK_CATEGORY_INPUT} from '../../../reducers/Catagory';
+import {GET_CATEGORY_DATA} from '../ToDo/ToDoSlice';
 
 const Container = styled.View`
   border-radius: 10px;
@@ -26,13 +27,15 @@ const List_Text = styled.Text`
 `;
 
 const Category_Modal = ({closeModal}) => {
-  const {categoryList} = useSelector((state) => state.Catagory);
+  //const {categoryList} = useSelector((state) => state.Catagory);
+  const {categoryList} = useSelector((state) => state.CATEGORY_DATA);
 
   const dispatch = useDispatch();
 
   const Category_Item = ({Category_Data}) => {
     const Category_Select = () => {
-      dispatch({type: CLICK_CATEGORY_INPUT, data: Category_Data.item});
+      //({type: CLICK_CATEGORY_INPUT, data: Category_Data.item});
+      dispatch(GET_CATEGORY_DATA(Category_Data.item));
       closeModal();
     };
 

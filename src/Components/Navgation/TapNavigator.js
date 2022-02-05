@@ -7,6 +7,7 @@ import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import {ToDoStackNavigator, CalendarStackNavigator} from '../../Components/Navgation/StackNavigator';
 import {REQUEST_CATEGORY_DATA} from '../HomeScreen/Category/CategorySlice';
 import iap from '../Settings';
+import {RESET_INPUT_DATA} from '../HomeScreen/ToDo/ToDoSlice';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +18,8 @@ const TapNavigator = () => {
     const CategoryData = realm.objects('CategoryList');
     const SortCategoryDate = CategoryData.sorted('createTime');
     dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
-    dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
+    dispatch(RESET_INPUT_DATA());
+    // dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
   }, []);
 
   return (

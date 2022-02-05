@@ -26,7 +26,7 @@ const Schedule = () => {
   useEffect(() => {
     if (isFocused) {
       console.log('기존 캘린더', Agenda_DATA);
-      dispatch({type: AGENDA_DATA_REQUEST, data: Agenda_DATA_timestamp});
+      // dispatch({type: AGENDA_DATA_REQUEST, data: Agenda_DATA_timestamp});
     }
   }, [isFocused]);
 
@@ -49,8 +49,8 @@ const Schedule = () => {
       <Agenda
         items={Agenda_DATA}
         onDayPress={(day) => {
-          dispatch({type: AGENDA_DATA_REQUEST, data: day.timestamp});
-          dispatch({type: AGENDA_DATA_TIMESTAMP, data: day.timestamp});
+          // dispatch({type: AGENDA_DATA_REQUEST, data: day.timestamp});
+          //dispatch({type: AGENDA_DATA_TIMESTAMP, data: day.timestamp});
         }}
         pastScrollRange={10}
         renderItem={renderItem}

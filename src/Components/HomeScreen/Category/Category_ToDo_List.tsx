@@ -20,7 +20,7 @@ const Category_ToDo_List = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Category_ToDoList'>>();
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const {Click_Category_ToDo} = useSelector((state: any) => state.Catagory);
+  const {mainCategoryData} = useSelector((state: any) => state.CATEGORY_DATA);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -50,7 +50,7 @@ const Category_ToDo_List = () => {
     <>
       <ToDoInputModal isOpen={isModalVisible} close={closeModal} categoryName={null} categoryTime={null} />
       <View>
-        <FlatListView keyExtractor={(item, index) => '#' + index} data={Click_Category_ToDo} renderItem={(item) => <ToDo_List_View data={item} ListName={true} />} />
+        <FlatListView keyExtractor={(item, index) => '#' + index} data={mainCategoryData} renderItem={(item) => <ToDo_List_View data={item} ListName={true} />} />
       </View>
       <TouchableOpacity activeOpacity={0.5} onPress={opneModal} style={[styles.touchableOpacityStyle, {backgroundColor: 'blue'}]}>
         <Icon name="plus" color={'white'} size={30} />

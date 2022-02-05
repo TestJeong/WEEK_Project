@@ -15,7 +15,7 @@ const DateTime_Picke = ({hideDatePicker, isDatePickerVisible}) => {
     const DAY = date.getHours() < 12 && date.getHours() >= 0 ? '오전' : '오후';
     const TIMESHEET = DAY + ' ' + HOURS + ':' + (MINUNTES > 10 ? MINUNTES : '0' + MINUNTES);
 
-    dispatch({type: CLICK_TIME, data: TIMESHEET, hoho: DATE_TIME});
+    //dispatch({type: CLICK_TIME, data: TIMESHEET, hoho: DATE_TIME});
     dispatch(SELECTED_TIME({twelve_HoursTime: TIMESHEET, twenty_Four_HoursTime: DATE_TIME}));
 
     hideDatePicker();

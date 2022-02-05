@@ -51,6 +51,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-flipper": "^2.0.1",
     "redux-saga": "^1.1.3",
+    "redux-thunk": "^2.4.1",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {

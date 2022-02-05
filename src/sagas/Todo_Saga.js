@@ -1,4 +1,5 @@
 import {takeEvery, put, call, all, fork} from 'redux-saga/effects';
+import {TODO_LIST_DATA_ERROR1, TODO_LIST_DATA_REQUEST1, TODO_LIST_DATA_SUCCESS1} from '../Components/HomeScreen/ToDo/ToDoSlice';
 import {
   AGENDA_DATA_ERROR,
   AGENDA_DATA_REQUEST,
@@ -13,12 +14,13 @@ import {
 import {ToDoList_View_Delete, Agenda_Call_Data, Category_List_View_Delete} from './Todo_Delete';
 
 function* ToDoList_Delete(action) {
+  console.log('saga action data -> ', action.payload);
   try {
-    yield call(ToDoList_View_Delete, action.data);
-    yield put({type: TODO_LIST_DATA_SUCCESS});
+    yield call(ToDoList_View_Delete, action.payload.data);
+    yield put(TODO_LIST_DATA_SUCCESS1());
   } catch (e) {
     console.error(e);
-    yield put({type: TODO_LIST_DATA_ERROR, data: e, error: true});
+    yield put({type: TODO_LIST_DATA_ERROR1, data: e, error: true});
   }
 }
 
@@ -43,7 +45,7 @@ function* Agenda_DATA_ToDo(action) {
 }
 
 function* ToDo_Delete() {
-  yield takeEvery(TODO_LIST_DATA_REQUEST, ToDoList_Delete);
+  yield takeEvery(TODO_LIST_DATA_REQUEST1, ToDoList_Delete);
 }
 
 function* Category_List_Delete() {

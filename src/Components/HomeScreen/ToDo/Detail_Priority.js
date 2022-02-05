@@ -39,25 +39,25 @@ const Detail_Priorty = ({hideActionSheet}) => {
   const dispatch = useDispatch();
 
   const Highest_Priority = () => {
-    dispatch({type: CLICK_PRIORITY, data: 3});
+    //  dispatch({type: CLICK_PRIORITY, data: 3});
     dispatch(SELETCTED_PRIORITY(3));
     hideActionSheet();
   };
 
   const Medium_Priority = () => {
-    dispatch({type: CLICK_PRIORITY, data: 2});
+    // dispatch({type: CLICK_PRIORITY, data: 2});
     dispatch(SELETCTED_PRIORITY(2));
     hideActionSheet();
   };
 
   const Low_Priority = () => {
-    dispatch({type: CLICK_PRIORITY, data: 1});
+    //  dispatch({type: CLICK_PRIORITY, data: 1});
     dispatch(SELETCTED_PRIORITY(1));
     hideActionSheet();
   };
 
   const Never_Priority = () => {
-    dispatch({type: CLICK_PRIORITY, data: 4});
+    // dispatch({type: CLICK_PRIORITY, data: 4});
     dispatch(SELETCTED_PRIORITY(4));
     hideActionSheet();
   };

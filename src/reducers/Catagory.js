@@ -6,15 +6,15 @@ export const init = {
   clickCategory: null, //oo 메인화면에서 해당 카테고리 클릭시 저장되어있는 카테고리 정보데이터 -> selectedCategory
   Click_Category_ToDo: null, // 메인화면에서 테마 카테고리 선택시 -> mainCategoryData
 
-  onClickTime: null, //oo twelve_HoursTime 
+  onClickTime: null, //oo twelve_HoursTime
   timeString: null, //oo twenty_Four_HoursTime
 
   onClickDay: null, //oo onClickDay
   onClickToDoList: null, //oo 해당 투두에 대한 상세정보 -> 디테일페이지에서 사용 -> todoData
-  onClickPriority: null,  //oo
+  onClickPriority: null, //oo
   onClickClear: null,
-  onClickCategory: null, // inputCategoryData
-  onClickNotif_Enabled: false, //isNotificationEnabled
+  onClickCategory: null, //oo inputCategoryData
+  onClickNotif_Enabled: false, //oo isNotificationEnabled
 
   todo_List_data_loading: false,
   todo_List_data_done: false,
@@ -31,21 +31,21 @@ export const init = {
   Agenda_DATA_timestamp: null,
 };
 
-export const MY_CATEGORY_DATA = 'MY_CATEGORY_DATA';
+export const MY_CATEGORY_DATA = 'MY_CATEGORY_DATA'; // oo
 
-export const CLICK_CATEGORY = 'CLICK_CATEGORY';
-export const CLICK_CATEGORY_RESET = 'CLICK_CATEGORY_RESET';
+export const CLICK_CATEGORY = 'CLICK_CATEGORY'; // oo
+export const CLICK_CATEGORY_RESET = 'CLICK_CATEGORY_RESET'; // oo
 
-export const CLICK_CATEGORY_TODO = 'CLICK_CATEGORY_TODO';
+export const CLICK_CATEGORY_TODO = 'CLICK_CATEGORY_TODO'; // oo
 
-export const CLICK_TODO_LIST_DATA = 'CLICK_TODO_LIST_DATA';
+export const CLICK_TODO_LIST_DATA = 'CLICK_TODO_LIST_DATA'; // oo
 
-export const CLICK_ENABLED = 'CLICK_ENABLED';
-export const CLICK_DAY = 'CLICK_DAY';
-export const CLICK_TIME = 'CLICK_TIME';
-export const CLICK_PRIORITY = 'CLICK_PRIORITY';
-export const CLICK_CLEAR = 'CLICK_CLEAR';
-export const CLICK_CATEGORY_INPUT = 'CLICK_CATEGORY_INPUT';
+export const CLICK_ENABLED = 'CLICK_ENABLED'; // oo
+export const CLICK_DAY = 'CLICK_DAY'; // oo
+export const CLICK_TIME = 'CLICK_TIME'; // oo
+export const CLICK_PRIORITY = 'CLICK_PRIORITY';// oo
+export const CLICK_CLEAR = 'CLICK_CLEAR'; // oo
+export const CLICK_CATEGORY_INPUT = 'CLICK_CATEGORY_INPUT'; // oo
 
 export const AGENDA_DATA_TIMESTAMP = 'AGENDA_DATA_TIMESTAMP';
 export const AGENDA_DATA_REQUEST = 'AGENDA_DATA_REQUEST';

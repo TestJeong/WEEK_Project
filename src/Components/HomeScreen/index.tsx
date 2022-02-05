@@ -15,6 +15,7 @@ import Category_Modal_View from './Category/Category_Modal_View';
 import {CLICK_CATEGORY_RESET, CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from './ToDo/ToDo_Notification';
+import {RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './Category/CategorySlice';
 
 const TitleText = styled.Text`
   font-family: 'NanumGothicExtraBold';
@@ -122,7 +123,9 @@ const HomeScreen = () => {
   const [will_ToDo, setWill_ToDo] = useState(0);
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
-  const {categoryList} = useSelector((state: any) => state.Catagory); // 수정 필요
+  //const {categoryList} = useSelector((state: any) => state.Catagory); // 수정 필요
+
+  const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
@@ -131,7 +134,6 @@ const HomeScreen = () => {
   const int_Local_Time = Number(string_Local_Time.replace(/-/g, ''));
 
   const TodoList_View = realm.objects('TodoDataList');
-  const Cate = realm.objects('CategoryList');
 
   const widgetData = {
     today: today_ToDo,
@@ -156,7 +158,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (isFocused) {
-      dispatch({type: CLICK_CATEGORY_RESET});
+      dispatch(RESET_CATEGORYT_DATA());
     }
   }, [isFocused]);
 
@@ -194,7 +196,6 @@ const HomeScreen = () => {
     setPriority_ToDo(Priority_List_View_Data.length);
     setAll_ToDo(All_List_View_Data.length);
   }, [TodoList_View, categoryList]);
-  //TodoList_View, categoryList
 
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
@@ -211,7 +212,7 @@ const HomeScreen = () => {
     const TodoList_View_Data = TodoList_View.filtered('listDay == $0', int_Local_Time);
 
     navigation.navigate('Category_ToDoList', {header_Name: '오늘의 일정'});
-    dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
+    dispatch(SELETED_THEMA_CATEGORY_DATA(TodoList_View_Data));
   }, []);
 
   const will_ToDo_Data = useCallback(() => {
@@ -220,14 +221,14 @@ const HomeScreen = () => {
     const Sort_TodoList_View = TodoList_View_Data.sorted('listDay');
 
     navigation.navigate('Category_ToDoList', {header_Name: '예정된 일정'});
-    dispatch({type: CLICK_CATEGORY_TODO, data: Sort_TodoList_View});
+    dispatch(SELETED_THEMA_CATEGORY_DATA(Sort_TodoList_View));
   }, []);
 
   const Priority_ToDo_Data = useCallback(() => {
     const TodoList_View_Data = TodoList_View.filtered('listPriority != $0', 4);
 
     navigation.navigate('Category_ToDoList', {header_Name: '중요한 일정'});
-    dispatch({type: CLICK_CATEGORY_TODO, data: TodoList_View_Data});
+    dispatch(SELETED_THEMA_CATEGORY_DATA(TodoList_View_Data));
   }, []);
 
   const All_ToDo_Data = useCallback(() => {
@@ -237,7 +238,7 @@ const HomeScreen = () => {
     navigation.navigate('Category_ToDoList', {
       header_Name: '전체 일정',
     });
-    dispatch({type: CLICK_CATEGORY_TODO, data: Sort_All_TodoList_View});
+    dispatch(SELETED_THEMA_CATEGORY_DATA(Sort_All_TodoList_View));
   }, []);
 
   return (

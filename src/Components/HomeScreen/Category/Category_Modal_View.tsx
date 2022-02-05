@@ -94,7 +94,7 @@ const Category_Modal_View = ({isOpen, close, data}: CModalType) => {
 
       const CategoryData = realm.objects('CategoryList');
       const SortCategoryDate = CategoryData.sorted('createTime');
-      dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
+      //dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       close();
       {

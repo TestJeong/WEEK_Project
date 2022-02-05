@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {CLICK_CATEGORY_INPUT} from '../../../reducers/Catagory';
 
 import styled from 'styled-components/native';
+import {GET_CATEGORY_DATA} from './ToDoSlice';
 
 const Container = styled.View`
   border-radius: 10px;
@@ -41,12 +42,14 @@ const List_Btn = styled.TouchableOpacity`
 `;
 
 const Detail_Category = ({hideActionSheet}) => {
-  const {categoryList} = useSelector((state) => state.Catagory);
+  //const {categoryList} = useSelector((state) => state.Catagory);
+  const {categoryList} = useSelector((state) => state.CATEGORY_DATA);
   const dispatch = useDispatch();
 
   const Category_Item = ({Category_Data}) => {
     const Category_Select = () => {
-      dispatch({type: CLICK_CATEGORY_INPUT, data: Category_Data.item});
+      // dispatch({type: CLICK_CATEGORY_INPUT, data: Category_Data.item});
+      dispatch(GET_CATEGORY_DATA(Category_Data.item));
       hideActionSheet();
     };
 

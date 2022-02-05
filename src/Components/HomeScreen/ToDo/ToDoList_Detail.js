@@ -14,7 +14,7 @@ import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';
 import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../../../Utils/Day';
 import PushNotification from 'react-native-push-notification';
-import {SELECTED_TODOLIST_DATA} from './ToDoSlice';
+import {RESET_INPUT_DATA, SELECTED_TODOLIST_DATA} from './ToDoSlice';
 
 const Text_View = styled.View`
   background-color: white;
@@ -75,10 +75,13 @@ const ToDoList_Detail = ({navigation}) => {
   let actionSheet;
 
   const dispatch = useDispatch();
-  const {onClickToDoList, onClickTime, onClickDay, onClickPriority, clickCategory, onClickCategory, timeString} = useSelector((state) => state.Catagory);
-  const [todoTitle, setToDoTitle] = useState(onClickToDoList.listContent);
-  const [todoMemo, setToDoMemo] = useState(onClickToDoList.listMemo);
-  const [isEnableds, setIsEnableds] = useState(onClickToDoList.listEnabled);
+  //const {onClickToDoList, onClickTime, onClickDay, onClickPriority, clickCategory, onClickCategory, timeString} = useSelector((state) => state.Catagory);
+  const {todoData, twelve_HoursTime, onClickDay, onClickPriority, twenty_Four_HoursTime} = useSelector((state) => state.TODO_DATA);
+  const {selectedCategory, inputCategoryData} = useSelector((state) => state.CATEGORY_DATA);
+
+  const [todoTitle, setToDoTitle] = useState(todoData.listContent);
+  const [todoMemo, setToDoMemo] = useState(todoData.listMemo);
+  const [isEnableds, setIsEnableds] = useState(todoData.listEnabled);
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -95,7 +98,7 @@ const ToDoList_Detail = ({navigation}) => {
   useEffect(() => {
     PushNotification.getScheduledLocalNotifications((notif) => {
       const notifData = notif.filter((data) => {
-        return data.id === String(onClickToDoList.id);
+        return data.id === String(todoData.id);
       });
       notifData[0] && setCounter(notifData[0].number);
     });
@@ -103,43 +106,43 @@ const ToDoList_Detail = ({navigation}) => {
 
   const SaveBtn = () => {
     const TodoList_View = realm.objects('TodoDataList');
-    const TodoList_View_Data = TodoList_View.filtered('createTime == $0', onClickToDoList.createTime);
+    const TodoList_View_Data = TodoList_View.filtered('createTime == $0', todoData.createTime);
 
-    const categoryTitle = onClickCategory ? onClickCategory.title : onClickToDoList.categoryTitle;
+    const categoryTitle = inputCategoryData ? inputCategoryData.title : todoData.categoryTitle;
 
     const listContent = TodoList_View_Data[0].listContent;
-    const listTime = timeString ? timeString : onClickToDoList.listTime_Data;
-    const listDay = onClickDay ? onClickDay : onClickToDoList.listDay;
+    const listTime = twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data;
+    const listDay = onClickDay ? onClickDay : todoData.listDay;
 
     realm.write(() => {
       let city = realm.create(
         'TodoDataList',
         {
-          createTime: onClickToDoList.createTime,
+          createTime: todoData.createTime,
 
-          categoryTitle: onClickCategory ? onClickCategory.title : onClickToDoList.categoryTitle,
+          categoryTitle: inputCategoryData ? inputCategoryData.title : todoData.categoryTitle,
 
           listContent: todoTitle,
           listMemo: todoMemo,
           listEnabled: isEnableds,
 
-          listTime: onClickTime ? onClickTime : onClickToDoList.listTime ? onClickToDoList.listTime : null,
+          listTime: twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : null,
 
-          listDay: onClickDay ? onClickDay : onClickToDoList.listDay ? onClickToDoList.listDay : null,
+          listDay: onClickDay ? onClickDay : todoData.listDay ? todoData.listDay : null,
 
-          listPriority: onClickPriority ? onClickPriority : onClickToDoList.listPriority ? onClickToDoList.listPriority : null,
+          listPriority: onClickPriority ? onClickPriority : todoData.listPriority ? todoData.listPriority : null,
 
-          listTime_Data: timeString ? timeString : onClickToDoList.listTime_Data ? onClickToDoList.listTime_Data : null,
+          listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data ? todoData.listTime_Data : null,
         },
         true,
       );
-      if (onClickCategory) {
-        let user = realm.create('CategoryList', {createTime: onClickCategory ? onClickCategory.createTime : clickCategory.createTime}, true);
+      if (inputCategoryData) {
+        let user = realm.create('CategoryList', {createTime: inputCategoryData ? inputCategoryData.createTime : todoData.createTime}, true);
 
-        let categorys = realm.create('CategoryList', {createTime: clickCategory.createTime}, true);
+        let categorys = realm.create('CategoryList', {createTime: todoData.createTime}, true);
 
         const filterT = categorys.todoData.filter((data) => {
-          return data.createTime !== onClickToDoList.createTime;
+          return data.createTime !== todoData.createTime;
         });
 
         categorys.todoData = [];
@@ -151,33 +154,34 @@ const ToDoList_Detail = ({navigation}) => {
       }
     });
 
-    if (timeString || onClickDay || onClickCategory || listContent !== todoTitle || isEnableds) {
+    if (twenty_Four_HoursTime || onClickDay || inputCategoryData || listContent !== todoTitle || isEnableds) {
       let hey = new Date(IOS_Notif(listDay, listTime)) > new Date();
 
-      if (onClickToDoList.listDay && onClickToDoList.listTime_Data && Platform.OS === 'ios' && hey && isEnableds) {
-        Schedule_Notif(listDay, listTime, todoTitle, onClickToDoList.id, categoryTitle, counter);
+      if (todoData.listDay && todoData.listTime_Data && Platform.OS === 'ios' && hey && isEnableds) {
+        Schedule_Notif(listDay, listTime, todoTitle, todoData.id, categoryTitle, counter);
       } else if (
-        onClickToDoList.listDay &&
-        onClickToDoList.listTime_Data &&
+        todoData.listDay &&
+        todoData.listTime_Data &&
         Platform.OS === 'android' &&
         new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
         isEnableds
       ) {
-        Schedule_Notif(listDay, listTime, todoTitle, onClickToDoList.id, categoryTitle, counter);
+        Schedule_Notif(listDay, listTime, todoTitle, todoData.id, categoryTitle, counter);
       } else {
         console.log(' 왜 안돼?');
       }
     }
 
-    const Notif_ID = onClickToDoList.id;
+    const Notif_ID = todoData.id;
     const String_ID = String(Notif_ID);
     if (isEnableds === false) {
       PushNotification.cancelLocalNotification({id: String_ID});
     }
 
-    dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
+    //dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
     dispatch(SELECTED_TODOLIST_DATA(TodoList_View_Data));
-    dispatch({type: CLICK_CATEGORY_INPUT, data: null});
+    //dispatch({type: CLICK_CATEGORY_INPUT, data: null});
+    dispatch(RESET_INPUT_DATA());
 
     navigation.goBack();
   };
@@ -196,13 +200,14 @@ const ToDoList_Detail = ({navigation}) => {
         </TouchableOpacity>
       ),
     });
-  }, [onClickDay, onClickTime, onClickPriority, todoTitle, todoMemo, onClickCategory, isEnableds]);
+  }, [onClickDay, twelve_HoursTime, onClickPriority, todoTitle, todoMemo, inputCategoryData, isEnableds]);
 
   const unsubscribe = () => {
     navigation.addListener('blur', () => {
-      dispatch({type: CLICK_TIME, data: null});
-      dispatch({type: CLICK_DAY, data: null});
-      dispatch({type: CLICK_PRIORITY, data: null});
+      dispatch(RESET_INPUT_DATA());
+      // dispatch({type: CLICK_TIME, data: null});
+      // dispatch({type: CLICK_DAY, data: null});
+      // dispatch({type: CLICK_PRIORITY, data: null});
     });
   };
 
@@ -257,7 +262,7 @@ const ToDoList_Detail = ({navigation}) => {
             </Time_Icon_Container>
 
             <List_Text_Value>
-              {onClickCategory ? onClickCategory.title : onClickToDoList.categoryTitle}
+              {inputCategoryData ? inputCategoryData.title : todoData.categoryTitle}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
             </List_Text_Value>
@@ -269,7 +274,7 @@ const ToDoList_Detail = ({navigation}) => {
               <List_Text>날짜</List_Text>
             </Time_Icon_Container>
             <List_Text_Value>
-              {onClickDay ? Today(onClickDay) : onClickToDoList.listDay ? Today(onClickToDoList.listDay) : '없음'}
+              {onClickDay ? Today(onClickDay) : todoData.listDay ? Today(todoData.listDay) : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
             </List_Text_Value>
@@ -281,7 +286,7 @@ const ToDoList_Detail = ({navigation}) => {
               <List_Text>시간</List_Text>
             </Time_Icon_Container>
             <List_Text_Value>
-              {onClickTime ? onClickTime : onClickToDoList.listTime ? onClickToDoList.listTime : '없음'}
+              {twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
             </List_Text_Value>
@@ -326,22 +331,22 @@ const ToDoList_Detail = ({navigation}) => {
                         </View>
                       );
                   })()
-                : onClickToDoList.listPriority
+                : todoData.listPriority
                 ? (function () {
-                    if (onClickToDoList.listPriority === 1)
+                    if (todoData.listPriority === 1)
                       return (
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon name="star" size={12} color={'pink'} />
                         </View>
                       );
-                    if (onClickToDoList.listPriority === 2)
+                    if (todoData.listPriority === 2)
                       return (
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon name="star" size={12} color={'pink'} />
                           <Icon name="star" size={12} color={'pink'} />
                         </View>
                       );
-                    if (onClickToDoList.listPriority === 3)
+                    if (todoData.listPriority === 3)
                       return (
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon name="star" size={12} color={'pink'} />
@@ -349,7 +354,7 @@ const ToDoList_Detail = ({navigation}) => {
                           <Icon name="star" size={12} color={'pink'} />
                         </View>
                       );
-                    if (onClickToDoList.listPriority === 4)
+                    if (todoData.listPriority === 4)
                       return (
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                           <List_Text_Value>없음</List_Text_Value>

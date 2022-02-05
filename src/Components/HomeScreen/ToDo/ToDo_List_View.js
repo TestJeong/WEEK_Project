@@ -10,11 +10,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import PushNotification from 'react-native-push-notification';
 
 import realm from '../../../db';
-
-import {TODO_LIST_DATA_REQUEST, CLICK_TODO_LIST_DATA} from '../../../reducers/Catagory';
 import {Schedule_Notif} from './ToDo_Notification';
 import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../../../Utils/Day';
-import {SELECTED_TODOLIST_DATA} from './ToDoSlice';
+import {fetchTodo, SELECTED_TODOLIST_DATA, TODO_LIST_DATA_REQUEST1} from './ToDoSlice';
 
 const List_Item = styled.View`
   height: 40px;
@@ -62,8 +60,9 @@ const ToDo_List_View = ({data, ListName}) => {
 
   const [ListDay, setListDay] = useState(null);
   const [onToggle_List, setOnToggle_List] = useState(TodoList_View_Data[0].listClear);
-  const {categoryList} = useSelector((state) => state.Catagory);
+  //const {categoryList} = useSelector((state) => state.Catagory);
 
+  const {categoryList} = useSelector((state) => state.CATEGORY_DATA);
   useLayoutEffect(() => {
     setOnToggle_List(data.item.listClear);
   }, [data.item, categoryList]);
@@ -87,11 +86,14 @@ const ToDo_List_View = ({data, ListName}) => {
       extrapolate: 'clamp',
     });
 
-    const Notif_ID = data.item.id;
-    const Sring_ID = String(Notif_ID);
     const pressHandler = () => {
+      const Notif_ID = data.item.id;
+      const Sring_ID = String(Notif_ID);
       PushNotification.cancelLocalNotification({id: Sring_ID});
-      dispatch({type: TODO_LIST_DATA_REQUEST, data: data});
+      //dispatch({type: TODO_LIST_DATA_REQUEST, data: data});
+      console.log('??');
+      dispatch(TODO_LIST_DATA_REQUEST1({data}));
+      //dispatch(fetchTodo({data}));
       close();
     };
 
@@ -128,7 +130,7 @@ const ToDo_List_View = ({data, ListName}) => {
   const goToList = () => {
     navigation.navigate('ToDoListDetail', {ListName: ListName});
 
-    dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
+    //dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
     dispatch(SELECTED_TODOLIST_DATA(data.item));
   };
 
@@ -148,7 +150,7 @@ const ToDo_List_View = ({data, ListName}) => {
         true,
       );
     });
-    dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
+    //dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
     dispatch(SELECTED_TODOLIST_DATA(data.item));
 
     if (data.item.listDay && data.item.listTime_Data && onToggle_List === false) {

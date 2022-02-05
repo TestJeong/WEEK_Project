@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import DateTime_Picke from '../HomeScreen/ToDo/DateTime_Picke';
 import {CLICK_DAY, CLICK_ENABLED} from '../../reducers/Catagory';
-import {GET_DAY} from '../HomeScreen/ToDo/ToDoSlice';
+import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../HomeScreen/ToDo/ToDoSlice';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -66,15 +66,17 @@ const Text_Close = styled.Text`
 
 const CalendarModal = ({openModal, closeModal, InputData}) => {
   const dispatch = useDispatch();
-  const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
+  //const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
+  const {onClickDay, twelve_HoursTime} = useSelector((state) => state.TODO_DATA);
 
   const [clickDay, setClickDay] = useState(null);
   const [isEnabled, setIsEnabled] = useState(false);
 
   const SaveCalendar = () => {
     dispatch(GET_DAY(clickDay));
-    dispatch({type: CLICK_DAY, data: Number(clickDay.replace(/-/g, ''))});
-    dispatch({type: CLICK_ENABLED, data: isEnabled});
+    // dispatch({type: CLICK_DAY, data: Number(clickDay.replace(/-/g, ''))});
+    // dispatch({type: CLICK_ENABLED, data: isEnabled});
+    dispatch(GET_NOTIFICATION_ENABLED(isEnabled));
     closeModal();
   };
 
@@ -142,7 +144,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
               <Time_Text>시간</Time_Text>
             </Time_Icon_Container>
             <Time_Value>
-              {onClickTime ? onClickTime : '없음'}&nbsp; &nbsp;
+              {twelve_HoursTime ? twelve_HoursTime : '없음'}&nbsp; &nbsp;
               <Icon name="right" size={15} />
             </Time_Value>
           </Time_Input_Container>

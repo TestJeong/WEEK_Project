@@ -15,6 +15,7 @@ import Category_Modal from '../Category/Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
 import {ANDROID_Notif, Notif_Day} from '../../../Utils/Day';
 import {REQUEST_CATEGORY_DATA} from '../Category/CategorySlice';
+import {RESET_INPUT_DATA} from './ToDoSlice';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -62,7 +63,9 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   const inputRef = useRef();
 
-  const {onClickDay, onClickTime, onClickPriority, onClickCategory, timeString, onClickNotif_Enabled} = useSelector((state) => state.Catagory);
+  const {onClickDay, twelve_HoursTime, onClickPriority, twenty_Four_HoursTime, isNotificationEnabled} = useSelector((state) => state.TODO_DATA);
+  const {inputCategoryData} = useSelector((state) => state.CATEGORY_DATA);
+
   const dispatch = useDispatch();
 
   const [calendarModalVisible, setcalendarModalVisible] = useState(false);
@@ -96,10 +99,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   const ModalClose = () => {
     close();
-    dispatch({type: CLICK_TIME, data: null});
-    dispatch({type: CLICK_DAY, data: null});
-    dispatch({type: CLICK_PRIORITY, data: null});
-    dispatch({type: CLICK_CATEGORY_INPUT, data: null});
+    dispatch(RESET_INPUT_DATA());
     setTestBtn(false);
     setCategoryBtn(false);
   };
@@ -109,46 +109,47 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
     const CategoryData = realm.objects('CategoryList');
     const SortCategoryDate = CategoryData.sorted('createTime');
 
-    if (!onClickCategory && !categoryName) {
+    if (!inputCategoryData && !categoryName) {
       alert('카테고리를 설정 해주세요!');
     } else {
       realm.write(() => {
         let city = realm.create('TodoDataList', {
           createTime: Day(),
-          categoryTitle: onClickCategory ? onClickCategory.title : categoryName,
+          categoryTitle: inputCategoryData ? inputCategoryData.title : categoryName,
           listContent: todoContents,
           listDay: onClickDay ? onClickDay : null,
-          listTime: onClickTime ? onClickTime : null,
-          listTime_Data: timeString ? timeString : null,
+          listTime: twelve_HoursTime ? twelve_HoursTime : null,
+          listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : null,
           listPriority: onClickPriority ? onClickPriority : 4,
           id: NotifID,
-          listEnabled: onClickNotif_Enabled,
+          listEnabled: isNotificationEnabled,
         });
         let user = realm.create(
           'CategoryList',
           {
-            createTime: onClickCategory ? onClickCategory.createTime : categoryTime,
+            createTime: inputCategoryData ? inputCategoryData.createTime : categoryTime,
           },
           'modified',
         );
         user.todoData.unshift(city);
       });
-      const categoryTitle = onClickCategory ? onClickCategory.title : categoryName;
+      const categoryTitle = inputCategoryData ? inputCategoryData.title : categoryName;
 
-      if (onClickDay && onClickTime && Platform.OS === 'ios' && new Date(IOS_Notif(onClickDay, timeString)) > new Date(Notif_Day()) && onClickNotif_Enabled) {
-        Schedule_Notif(onClickDay, timeString, todoContents, NotifID, categoryTitle);
+      if (onClickDay && twelve_HoursTime && Platform.OS === 'ios' && new Date(IOS_Notif(onClickDay, twenty_Four_HoursTime)) > new Date(Notif_Day()) && isNotificationEnabled) {
+        Schedule_Notif(onClickDay, twenty_Four_HoursTime, todoContents, NotifID, categoryTitle);
       } else if (
         onClickDay &&
-        onClickTime &&
+        twelve_HoursTime &&
         Platform.OS === 'android' &&
-        new Date(ANDROID_Notif(onClickDay, timeString)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
-        onClickNotif_Enabled
+        new Date(ANDROID_Notif(onClickDay, twenty_Four_HoursTime)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
+        isNotificationEnabled
       ) {
-        Schedule_Notif(onClickDay, timeString, todoContents, NotifID, categoryTitle);
+        Schedule_Notif(onClickDay, twenty_Four_HoursTime, todoContents, NotifID, categoryTitle);
       }
 
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
+      dispatch(RESET_INPUT_DATA());
       setTodoContents('');
     }
   };
@@ -193,8 +194,8 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                   }}>
-                  <Icon name="bars" size={23} color={onClickCategory ? onClickCategory.color : 'black'} />
-                  <Category_Title>{onClickCategory ? onClickCategory.title : categoryName}</Category_Title>
+                  <Icon name="bars" size={23} color={inputCategoryData ? inputCategoryData.color : 'black'} />
+                  <Category_Title>{inputCategoryData ? inputCategoryData.title : categoryName}</Category_Title>
                 </TouchableOpacity>
               </View>
               <View>

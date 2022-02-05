@@ -13,6 +13,8 @@ import {CATEGORY_LIST_DATA_REQUEST, CLICK_CATEGORY} from '../../../reducers/Cata
 import Category_Modal_View from './Category_Modal_View';
 import {RootStackParamList} from '../../Navgation/StackNavigator';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {categoryDelete, RESET_CATEGORYT_DATA, SELETED_CATEGORY_DATA} from './CategorySlice';
+import realm from '../../../db';
 
 const List_Item = styled.View`
   margin: 15px 35px 15px 5px;
@@ -33,7 +35,8 @@ const Category_View = ({data}: any) => {
   const navigation = useNavigation<homeScreenProp>();
   const dispatch = useDispatch();
 
-  const {categoryList} = useSelector((state: any) => state.Catagory);
+  //const {categoryList} = useSelector((state: any) => state.Catagory);
+  const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [filterData, setFilterData] = useState<any>([]);
@@ -85,7 +88,8 @@ const Category_View = ({data}: any) => {
         console.log('AAA?SDFASDF?ASD', j);
         PushNotification.cancelLocalNotification(j.id);
       }
-      dispatch({type: CATEGORY_LIST_DATA_REQUEST, data: data});
+      //dispatch({type: CATEGORY_LIST_DATA_REQUEST, data: data});
+      dispatch(categoryDelete({data}));
       close();
     };
 
@@ -118,7 +122,8 @@ const Category_View = ({data}: any) => {
       categoryName: data.item.title,
       categoryTime: data.item.createTime,
     });
-    dispatch({type: CLICK_CATEGORY, data: data.item});
+    //dispatch({type: CLICK_CATEGORY, data: data.item});
+    dispatch(SELETED_CATEGORY_DATA(data.item));
   };
 
   return (
