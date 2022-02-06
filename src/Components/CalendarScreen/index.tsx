@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Agenda_List from './Agenda_List';
 import testIDs from '../testIDs';
 import {AGENDA_DATA_REQUEST} from './CalendarSlice';
+import {useState} from 'react';
 
 LocaleConfig.locales['kr'] = {
   monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -94,21 +95,19 @@ type MarkedDate = {
   [key: string]: object;
 };
 
-// function getMarkedDates(items: any[]) {
-//   const marked: MarkedDate = {};
-//   console.log('???', items);
-//   items.forEach((item) => {
-//     // NOTE: only mark dates with data
-//     if (item.data && item.data.length > 0 && !isEmpty(item.data[0])) {
-//       marked[item.title] = {marked: true};
-//     }
-//   });
-//   return marked;
-// }
+function getMarkedDates(items: any[]) {
+  const marked: MarkedDate = {};
+  items.forEach((item) => {
+    // NOTE: only mark dates with data
+    if (item.data && item.data.length > 0 && !isEmpty(item.data[0])) {
+      marked[item.title] = {marked: true};
+    } else {
+      //marked[item.title] = {disabled: true};
+    }
+  });
+  return marked;
+}
 
-// else {
-//   marked[item.title] = {disabled: true};
-// }
 function getTheme() {
   const disabledColor = 'grey';
 
@@ -128,10 +127,10 @@ function getTheme() {
     textDayHeaderFontWeight: 'normal',
     // dates
     dayTextColor: themeColor,
-    textDayFontSize: 18,
+    textDayFontSize: 12,
     textDayFontFamily: 'HelveticaNeue',
     textDayFontWeight: '500',
-    textDayStyle: {marginTop: Platform.OS === 'android' ? 2 : 4},
+    textDayStyle: {marginTop: Platform.OS === 'android' ? 6 : 8},
     // selected date
     selectedDayBackgroundColor: themeColor,
     selectedDayTextColor: 'white',
@@ -141,7 +140,7 @@ function getTheme() {
     dotColor: themeColor,
     selectedDotColor: 'white',
     disabledDotColor: disabledColor,
-    dotStyle: {marginTop: -2},
+    dotStyle: {marginTop: 2}, // -2
   };
 }
 
@@ -154,23 +153,29 @@ interface Props {
 
 const ExpandableCalendarScreen = () => {
   const dispatch = useDispatch();
-  // Agenda_DATA = useSelector((state:any) => state.Catagory);
-  const {Agenda_DATA, Agenda_DATA_timestamp} = useSelector((state: any) => state.CALENDAR_DATA);
+  const [onPressDay, setonPressDay] = useState('');
+  const {Agenda_DATA} = useSelector((state: any) => state.CALENDAR_DATA);
   const isFocused = useIsFocused();
 
-  //const marked = getMarkedDates(Agenda_DATA);
-  const theme = getTheme();
+  useEffect(() => {
+    if (isFocused) {
+      dispatch(AGENDA_DATA_REQUEST(onPressDay === '' ? today : onPressDay));
+    }
+  }, [isFocused]);
+
+  const marked = getMarkedDates(Agenda_DATA);
+  const theme: any = getTheme();
   const todayBtnTheme = {
     todayButtonTextColor: themeColor,
   };
 
   const onDateChanged = (date: any) => {
     var paramDate = new Date(date); // new Date('2021-06-08'): 화요일
-
     var day = paramDate.getDay();
     var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
     var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
-    console.log('?????  월요일 계싼기 -> ', tey);
+
+    setonPressDay(tey);
     dispatch(AGENDA_DATA_REQUEST(tey));
   };
 
@@ -188,12 +193,12 @@ const ExpandableCalendarScreen = () => {
       date={today}
       onDateChanged={onDateChanged}
       onMonthChange={onMonthChange}
-      showTodayButton
+      showTodayButton={false} // "오늘" 이라는 버튼 표시 여부
       disabledOpacity={0.6}
       // theme={this.todayBtnTheme}
       // todayBottomMargin={16}
     >
-      <SafeAreaView style={{flex: 0, backgroundColor: 'white'}}>
+      <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
         <ExpandableCalendar
           allowShadow={false}
           testID={testIDs.expandableCalendar.CONTAINER}
@@ -205,10 +210,10 @@ const ExpandableCalendarScreen = () => {
           // calendarStyle={styles.calendar}
           // headerStyle={styles.calendar} // for horizontal only
           // disableWeekScroll
-          // theme={this.theme}
+          theme={theme}
           // disableAllTouchEventsForDisabledDays
           firstDay={1}
-          //markedDates={marked}
+          markedDates={marked}
           enableSwipeMonths={false}
           onPressArrowLeft={() => {
             console.log('!@#');

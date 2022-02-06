@@ -55,7 +55,7 @@ const Agenda_List = ({item}) => {
           createTime: item.createTime,
           listClear: !onToggle,
         },
-        true,
+        'modified',
       );
     });
     //dispatch({type: CLICK_TODO_LIST_DATA, data: item});
@@ -64,15 +64,15 @@ const Agenda_List = ({item}) => {
 
   if (isEmpty(item)) {
     return (
-      <View>
-        <Text>aa</Text>
+      <View style={styles.emptyItem}>
+        <Text style={styles.emptyItemText}>No Events Planned Today</Text>
       </View>
     );
   }
 
   return (
-    <TouchableOpacity onPress={goToList} style={{marginRight: 10, marginTop: 17}} testID={testIDs.agenda.ITEM}>
-      <Render_View style={(styles.container, {borderTopColor: onToggle ? '#ddd' : item.colors})}>
+    <TouchableOpacity onPress={goToList} style={{marginLeft: 20, marginRight: 20, marginTop: 17}} testID={testIDs.agenda.ITEM}>
+      <Render_View style={(styles.container, {borderTopColor: onToggle ? '#ddd' : item.colors, backgroundColor: 'lightgray'})}>
         <List_View>
           <TouchableOpacity onPress={Toggle}>{onToggle ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
           <ListText_View>
@@ -104,6 +104,17 @@ const styles = StyleSheet.create({
     fontFamily: 'NanumGothicBold',
     color: '#bbb',
     textDecorationLine: 'line-through',
+  },
+  emptyItem: {
+    paddingLeft: 20,
+    height: 52,
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgrey',
+  },
+  emptyItemText: {
+    color: 'lightgrey',
+    fontSize: 14,
   },
 
   defaultTitleText: {

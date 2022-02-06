@@ -50,7 +50,7 @@ export const Agenda_Call_Data = (term) => {
     if (TodoData_Day_Sort.length === 0) {
       items.push({title: dateString, data: [{}]});
     } else {
-      //items[strTime] = [];
+      // items[data].push({a: 1});
       TodoData_Day_Sort.map((date) => {
         const Category = CategoryData.filtered('title == $0', date.categoryTitle);
         items.push({
@@ -67,6 +67,11 @@ export const Agenda_Call_Data = (term) => {
               listClear: date.listClear,
               colors: Category[0].color,
             },
+          ],
+          hey: [
+            TodoData_Day_Sort.map((test) => {
+              a = 1;
+            }),
           ],
         });
       });

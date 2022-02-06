@@ -274,7 +274,7 @@ const ToDoList_Detail = ({navigation}) => {
               <List_Text>날짜</List_Text>
             </Time_Icon_Container>
             <List_Text_Value>
-              {onClickDay ? Today(onClickDay) : todoData.listDay ? Today(todoData.listDay) : '없음'}
+              {onClickDay ? onClickDay : todoData.listDay ? Today(todoData.listDay) : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
             </List_Text_Value>
