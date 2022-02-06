@@ -21,18 +21,13 @@ const FlatListView = styled.FlatList`
 const ToDoList = ({route}) => {
   const {categoryName, categoryTime} = route.params;
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const [isModalVisible, setModalVisible] = useState(false);
-  //  const {clickCategory, categoryList} = useSelector((state) => state.Catagory);
   const {categoryList, selectedCategory} = useSelector((state) => state.CATEGORY_DATA);
   const {todoData} = useSelector((state) => state.TODO_DATA);
 
-  const isFocused = useIsFocused();
-
   useEffect(() => {
     Edit_Schedule_Notif();
-    // dispatch(RESET_INPUT_DATA());
   }, [categoryList, todoData]);
 
   useLayoutEffect(() => {

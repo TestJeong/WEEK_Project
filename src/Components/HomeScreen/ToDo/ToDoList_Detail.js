@@ -128,7 +128,7 @@ const ToDoList_Detail = ({navigation}) => {
 
           listTime: twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : null,
 
-          listDay: onClickDay ? onClickDay : todoData.listDay ? todoData.listDay : null,
+          listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : todoData.listDay ? todoData.listDay : null,
 
           listPriority: onClickPriority ? onClickPriority : todoData.listPriority ? todoData.listPriority : null,
 

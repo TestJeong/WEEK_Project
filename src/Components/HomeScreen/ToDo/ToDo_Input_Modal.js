@@ -149,7 +149,6 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
-      dispatch(RESET_INPUT_DATA());
       setTodoContents('');
     }
   };

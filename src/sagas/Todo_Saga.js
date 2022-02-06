@@ -1,16 +1,7 @@
 import {takeEvery, put, call, all, fork} from 'redux-saga/effects';
+import {AGENDA_DATA_ERROR, AGENDA_DATA_REQUEST, AGENDA_DATA_SUCCESS} from '../Components/CalendarScreen/CalendarSlice';
 import {TODO_LIST_DATA_ERROR1, TODO_LIST_DATA_REQUEST1, TODO_LIST_DATA_SUCCESS1} from '../Components/HomeScreen/ToDo/ToDoSlice';
-import {
-  AGENDA_DATA_ERROR,
-  AGENDA_DATA_REQUEST,
-  AGENDA_DATA_SUCCESS,
-  CATEGORY_LIST_DATA_ERROR,
-  CATEGORY_LIST_DATA_REQUEST,
-  CATEGORY_LIST_DATA_SUCCESS,
-  TODO_LIST_DATA_ERROR,
-  TODO_LIST_DATA_REQUEST,
-  TODO_LIST_DATA_SUCCESS,
-} from '../reducers/Catagory';
+import {CATEGORY_LIST_DATA_ERROR, CATEGORY_LIST_DATA_REQUEST, CATEGORY_LIST_DATA_SUCCESS} from '../reducers/Catagory';
 import {ToDoList_View_Delete, Agenda_Call_Data, Category_List_View_Delete} from './Todo_Delete';
 
 function* ToDoList_Delete(action) {
@@ -36,11 +27,11 @@ function* Category_Delete(action) {
 
 function* Agenda_DATA_ToDo(action) {
   try {
-    const result = yield call(Agenda_Call_Data, action.data);
-    yield put({type: AGENDA_DATA_SUCCESS, data: result});
+    const result = yield call(Agenda_Call_Data, action.payload);
+    yield put(AGENDA_DATA_SUCCESS(result));
   } catch (e) {
     console.error(e);
-    yield put({type: AGENDA_DATA_ERROR, data: e, error: true});
+    yield put(AGENDA_DATA_ERROR(e));
   }
 }
 

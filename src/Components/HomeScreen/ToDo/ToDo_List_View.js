@@ -129,8 +129,6 @@ const ToDo_List_View = ({data, ListName}) => {
 
   const goToList = () => {
     navigation.navigate('ToDoListDetail', {ListName: ListName});
-
-    //dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
     dispatch(SELECTED_TODOLIST_DATA(data.item));
   };
 
@@ -150,7 +148,6 @@ const ToDo_List_View = ({data, ListName}) => {
         true,
       );
     });
-    //dispatch({type: CLICK_TODO_LIST_DATA, data: data.item});
     dispatch(SELECTED_TODOLIST_DATA(data.item));
 
     if (data.item.listDay && data.item.listTime_Data && onToggle_List === false) {

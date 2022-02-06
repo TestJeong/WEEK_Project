@@ -1,13 +1,22 @@
 import {useIsFocused} from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
-import React, {Component, useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Platform, StyleSheet, Alert, View, Text, TouchableOpacity, Button} from 'react-native';
-import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar} from 'react-native-calendars';
+import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar, LocaleConfig} from 'react-native-calendars';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
-import {AGENDA_DATA_REQUEST, AGENDA_DATA_TIMESTAMP} from '../../reducers/Catagory';
-import Agenda_List from '../CalendarScreen/Agenda_List';
+import Agenda_List from './Agenda_List';
 import testIDs from '../testIDs';
+import {AGENDA_DATA_REQUEST} from './CalendarSlice';
+
+LocaleConfig.locales['kr'] = {
+  monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+  monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+  dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+  dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+  today: '오늘',
+};
+LocaleConfig.defaultLocale = 'kr';
 
 const today = new Date().toISOString().split('T')[0];
 const fastDate = getPastDate(3); // 현재 시간 - 3
@@ -146,15 +155,9 @@ interface Props {
 const ExpandableCalendarScreen = () => {
   const dispatch = useDispatch();
   // Agenda_DATA = useSelector((state:any) => state.Catagory);
-  const {Agenda_DATA, Agenda_DATA_timestamp} = useSelector((state: any) => state.Catagory);
+  const {Agenda_DATA, Agenda_DATA_timestamp} = useSelector((state: any) => state.CALENDAR_DATA);
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    if (isFocused) {
-      console.log('ASdfadf', Agenda_DATA);
-      //console.log('기존 캘린더', Agenda_DATA);
-    }
-  }, [isFocused]);
   //const marked = getMarkedDates(Agenda_DATA);
   const theme = getTheme();
   const todayBtnTheme = {
@@ -162,12 +165,13 @@ const ExpandableCalendarScreen = () => {
   };
 
   const onDateChanged = (date: any) => {
-    // console.warn('ExpandableCalendarScreen onDateChanged: ', date, updateSource);
-    // fetch and set data for date + week ahead
-    console.log('???', date);
+    var paramDate = new Date(date); // new Date('2021-06-08'): 화요일
 
-    // dispatch({type: AGENDA_DATA_REQUEST, data: date.timestamp});
-    // dispatch({type: AGENDA_DATA_TIMESTAMP, data: date.timestamp});
+    var day = paramDate.getDay();
+    var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
+    var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
+    console.log('?????  월요일 계싼기 -> ', tey);
+    dispatch(AGENDA_DATA_REQUEST(tey));
   };
 
   const onMonthChange = (/* month, updateSource */) => {
@@ -176,11 +180,12 @@ const ExpandableCalendarScreen = () => {
 
   const renderItem = ({item}: any) => {
     return <Agenda_List item={item} />;
+    //return <AgendaItem item={item} />;
   };
 
   return (
     <CalendarProvider
-      date={'2022-01-23'}
+      date={today}
       onDateChanged={onDateChanged}
       onMonthChange={onMonthChange}
       showTodayButton
@@ -204,6 +209,10 @@ const ExpandableCalendarScreen = () => {
           // disableAllTouchEventsForDisabledDays
           firstDay={1}
           //markedDates={marked}
+          enableSwipeMonths={false}
+          onPressArrowLeft={() => {
+            console.log('!@#');
+          }}
           leftArrowImageSource={leftArrowIcon}
           rightArrowImageSource={rightArrowIcon}
           // animateScroll
@@ -213,8 +222,8 @@ const ExpandableCalendarScreen = () => {
           theme={{calendarBackground: 'white'}}
           sections={Agenda_DATA}
           renderItem={renderItem}
-          // scrollToNextEvent
-          // sectionStyle={styles.section}
+
+          //sectionStyle={styles.section}
           // dayFormat={'YYYY-MM-d'}
         />
       </SafeAreaView>
@@ -236,6 +245,8 @@ const AgendaItem = React.memo(function AgendaItem(props: ItemProps) {
   const itemPressed = useCallback(() => {
     Alert.alert(item.title);
   }, []);
+
+  console.log('?? item 입니다 -> ', item);
 
   if (isEmpty(item)) {
     return (

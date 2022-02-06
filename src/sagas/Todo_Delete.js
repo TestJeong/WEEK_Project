@@ -21,7 +21,7 @@ export const Category_List_View_Delete = (term) => {
   });
 };
 
-export const Agenda_Call_Data = () => {
+export const Agenda_Call_Data = (term) => {
   // const timeToString = (time) => {
   //   const date = new Date(time);
 
@@ -34,12 +34,13 @@ export const Agenda_Call_Data = () => {
 
   let items = [];
 
-  for (let i = -15; i < 85; i++) {
+  for (let i = 0; i < 7; i++) {
     // const time = new Date().getTime() + i * 24 * 60 * 60 * 1000; // 157625342
     // const strTime = timeToString(term !== null ? term + i * 24 * 60 * 60 * 1000 : time);
     // const intTime = Number(strTime.replace(/-/g, ''));
+    const ho = new Date(term).getTime();
 
-    const date = new Date(Date.now() + 864e5 * i); // 864e5 == 86400000 == 24*60*60*1000 현재일로 부터 다음날
+    const date = new Date(ho + 864e5 * i); // 864e5 == 86400000 == 24*60*60*1000 현재일로 부터 다음날
     const dateString = date.toISOString().split('T')[0];
     const intTime = Number(dateString.replace(/-/g, ''));
 
@@ -47,7 +48,7 @@ export const Agenda_Call_Data = () => {
     const TodoData_Day_Sort = TodoData_Day.sorted('createTime');
 
     if (TodoData_Day_Sort.length === 0) {
-      items.push({title: dateString, data: []});
+      items.push({title: dateString, data: [{}]});
     } else {
       //items[strTime] = [];
       TodoData_Day_Sort.map((date) => {

@@ -8,6 +8,8 @@ import {useDispatch} from 'react-redux';
 import realm from '../../db';
 import {CLICK_TODO_LIST_DATA} from '../../reducers/Catagory';
 import {SELECTED_TODOLIST_DATA} from '../HomeScreen/ToDo/ToDoSlice';
+import testIDs from '../testIDs';
+import {isEmpty} from 'lodash';
 
 const Render_View = styled.View`
   flex-direction: row;
@@ -32,7 +34,6 @@ const ListText_View = styled.View`
 const Agenda_List = ({item}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
   const [onToggle, setOnToggle] = useState(item.listClear);
 
   useEffect(() => {
@@ -61,8 +62,16 @@ const Agenda_List = ({item}) => {
     dispatch(SELECTED_TODOLIST_DATA(item));
   };
 
+  if (isEmpty(item)) {
+    return (
+      <View>
+        <Text>aa</Text>
+      </View>
+    );
+  }
+
   return (
-    <TouchableOpacity onPress={goToList} style={{marginRight: 10, marginTop: 17}}>
+    <TouchableOpacity onPress={goToList} style={{marginRight: 10, marginTop: 17}} testID={testIDs.agenda.ITEM}>
       <Render_View style={(styles.container, {borderTopColor: onToggle ? '#ddd' : item.colors})}>
         <List_View>
           <TouchableOpacity onPress={Toggle}>{onToggle ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>

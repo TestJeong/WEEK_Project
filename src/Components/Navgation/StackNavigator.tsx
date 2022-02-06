@@ -8,6 +8,7 @@ import ToDoList_Detail from '../HomeScreen/ToDo/ToDoList_Detail';
 import Calendar_Agenda from '../CalendarScreen/Calendar_Agenda';
 import Category_ToDo_List from '../HomeScreen/Category/Category_ToDo_List';
 import {useNavigation} from '@react-navigation/native';
+import ExpandableCalendarScreen from '../CalendarScreen';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -78,7 +79,7 @@ const CalendarStackNavigator = () => {
   const navigation = useNavigation<any>();
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Agenda" component={Calendar_Agenda} options={{headerShown: false}} />
+      <Stack.Screen name="Agenda" component={ExpandableCalendarScreen} options={{headerShown: false}} />
       <Stack.Screen
         name="ToDoListDetail"
         component={ToDoList_Detail}

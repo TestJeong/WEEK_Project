@@ -6,7 +6,7 @@ import realm from '../../db';
 import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import {ToDoStackNavigator, CalendarStackNavigator} from '../../Components/Navgation/StackNavigator';
 import {REQUEST_CATEGORY_DATA} from '../HomeScreen/Category/CategorySlice';
-import iap from '../Settings';
+import iap from '../CalendarScreen';
 import {RESET_INPUT_DATA} from '../HomeScreen/ToDo/ToDoSlice';
 
 const Tab = createBottomTabNavigator();
@@ -26,7 +26,7 @@ const TapNavigator = () => {
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen name="HOME" component={ToDoStackNavigator} options={{tabBarIcon: ({color, size}) => <Icon name="home" size={size} color={color} />}} />
       <Tab.Screen name="CALENDAR" component={CalendarStackNavigator} options={{tabBarIcon: ({color, size}) => <Icon name="calendar" size={size} color={color} />}} />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="SETTING"
         component={iap}
         options={{
@@ -35,7 +35,7 @@ const TapNavigator = () => {
           },
           tabBarIcon: ({color, size}) => <Icon name="setting" size={size} color={color} />,
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
