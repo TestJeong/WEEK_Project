@@ -50,31 +50,23 @@ export const Agenda_Call_Data = (term) => {
     if (TodoData_Day_Sort.length === 0) {
       items.push({title: dateString, data: [{}]});
     } else {
-      // items[data].push({a: 1});
+      let todoDataArray = [];
       TodoData_Day_Sort.map((date) => {
         const Category = CategoryData.filtered('title == $0', date.categoryTitle);
-        items.push({
-          title: dateString,
-          data: [
-            {
-              createTime: date.createTime,
-              listContent: date.listContent,
-              categoryTitle: date.categoryTitle,
-              listTime: date.listTime,
-              listDay: date.listDay,
-              listPriority: date.listPriority,
-              listMemo: date.listMemo,
-              listClear: date.listClear,
-              colors: Category[0].color,
-            },
-          ],
-          hey: [
-            TodoData_Day_Sort.map((test) => {
-              a = 1;
-            }),
-          ],
+        todoDataArray.push({
+          createTime: date.createTime,
+          listContent: date.listContent,
+          categoryTitle: date.categoryTitle,
+          listTime: date.listTime,
+          listDay: date.listDay,
+          listPriority: date.listPriority,
+          listMemo: date.listMemo,
+          listClear: date.listClear,
+          colors: Category[0].color,
         });
       });
+
+      items.push({title: dateString, data: todoDataArray});
     }
   }
 

@@ -162,10 +162,10 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
         ) : null}
 
         <Button_View>
-          <TouchableOpacity onPress={closeModal} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <TouchableOpacity onPress={closeModal} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginLeft: 20}}>
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
-          <TouchableOpacity onPress={clickDay ? SaveCalendar : null} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <TouchableOpacity onPress={clickDay ? SaveCalendar : null} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginRight: 20}}>
             <Text_Close style={{color: '#2653af'}}>저장</Text_Close>
           </TouchableOpacity>
         </Button_View>

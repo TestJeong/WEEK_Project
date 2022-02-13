@@ -65,7 +65,6 @@ const ToDo_List_View = ({data, ListName}) => {
   const {categoryList} = useSelector((state) => state.CATEGORY_DATA);
   useLayoutEffect(() => {
     setOnToggle_List(data.item.listClear);
-    console.log('??A');
   }, [data.item, categoryList]);
 
   useEffect(() => {

@@ -117,7 +117,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
           createTime: Day(),
           categoryTitle: inputCategoryData ? inputCategoryData.title : categoryName,
           listContent: todoContents,
-          listDay: onClickDay ? onClickDay : null,
+          listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : null,
           listTime: twelve_HoursTime ? twelve_HoursTime : null,
           listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : null,
           listPriority: onClickPriority ? onClickPriority : 4,

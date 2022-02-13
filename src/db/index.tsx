@@ -21,7 +21,7 @@ export interface ToDoType {
   listEnabled: boolean;
 }
 
-const Category: Realm.ObjectSchema = {
+export const Category: Realm.ObjectSchema = {
   name: 'CategoryList',
   primaryKey: 'createTime',
   properties: {
@@ -35,7 +35,7 @@ const Category: Realm.ObjectSchema = {
   },
 };
 
-const TodoData: Realm.ObjectSchema = {
+export const TodoData: Realm.ObjectSchema = {
   name: 'TodoDataList',
   primaryKey: 'createTime',
   properties: {

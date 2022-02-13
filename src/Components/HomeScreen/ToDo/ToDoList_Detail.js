@@ -168,7 +168,6 @@ const ToDoList_Detail = ({navigation}) => {
       ) {
         Schedule_Notif(listDay, listTime, todoTitle, todoData.id, categoryTitle, counter);
       } else {
-        console.log(' 왜 안돼?');
       }
     }
 
@@ -188,14 +187,14 @@ const ToDoList_Detail = ({navigation}) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRightContainerStyle: {marginRight: 20},
+      headerRightContainerStyle: {marginRight: 10},
       headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+        <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginLeft: 20}}>
           <Icon name="left" size={20} />
         </TouchableOpacity>
       ),
       headerRight: () => (
-        <TouchableOpacity onPress={SaveBtn} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+        <TouchableOpacity onPress={SaveBtn} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginRight: 20}}>
           <Icon name="save" size={23} />
         </TouchableOpacity>
       ),

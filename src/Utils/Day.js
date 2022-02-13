@@ -38,7 +38,6 @@ export const IOS_Notif = (onClickDay, timeString) => {
   const allDay = years + '-' + month + '-' + day;
   const StringTime = timeString;
   const Alls = allDay + 'T' + StringTime;
-  console.log('??????? IOS_NTIF', Alls);
   return Alls;
 };
 

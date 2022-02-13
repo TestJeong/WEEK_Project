@@ -11,7 +11,7 @@ import WidgetKit
 @objc(WeekWidgetModule)
 class WeekWidgetModule: NSObject {
   static let GroupId = "group.com.week.ReactNativeWidget"
-  
+
   @objc(setWidgetData:)
    func setWidgetData(widgetData: NSDictionary) -> Void {
      do {
@@ -25,7 +25,7 @@ class WeekWidgetModule: NSObject {
      } catch {
      }
    }
-   
+
   @objc(refreshAllWidgets)
    func refreshAllWidgets() {
      if #available(iOS 14.0, *) {

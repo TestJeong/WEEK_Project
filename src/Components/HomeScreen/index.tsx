@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, ScrollView, View, Text, TouchableOpacity, SafeAreaView, Button, NativeModules} from 'react-native';
-import {FlatList, TextInput} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
-import Realms from 'realm';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
@@ -12,7 +10,6 @@ import SharedGroupPreferences from 'react-native-shared-group-preferences';
 import realm from '../../db';
 import Category_List_View from './Category/Category_List_View';
 import Category_Modal_View from './Category/Category_Modal_View';
-import {CLICK_CATEGORY_RESET, CLICK_CATEGORY_TODO} from '../../reducers/Catagory';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from './ToDo/ToDo_Notification';
 import {RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './Category/CategorySlice';

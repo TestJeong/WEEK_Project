@@ -1,10 +1,10 @@
+////
+////  Host.swift
+////  Host
+////
+////  Created by 정윤재 on 2022/01/09.
+////
 //
-//  Host.swift
-//  Host
-//
-//  Created by 정윤재 on 2022/01/09.
-//
-
 import WidgetKit
 import SwiftUI
 import Intents
@@ -37,29 +37,29 @@ struct Provider: IntentTimelineProvider {
       let userDefaults = UserDefaults.init(suiteName: "group.com.week.ReactNativeWidget")
       let date = Date().zeroSeconds!
       var entries: [SimpleEntry] = []
-    
+
       if userDefaults != nil {
         let entryDate = Date()
         if let savedData = userDefaults!.value(forKey: "widgetKey") as? String {
             let decoder = JSONDecoder()
             let data = savedData.data(using: .utf8)
-          
+
           if let parsedData = try? decoder.decode(WidgetData.self, from: data!) {
-            
+
           for interval in 0 ..< 60 {
             let nextRefresh = Calendar.current.date(byAdding: .minute , value: interval, to: date)!
             let entry = SimpleEntry(date: nextRefresh, configuration: configuration, today: parsedData.today, willToDo: parsedData.willToDo, priorityToDo: parsedData.priorityToDo, allToDo: parsedData.allToDo)
                       entries.append(entry)
                     }
-              
+
           let timeline = Timeline(entries: entries, policy: .atEnd)
-              
+
               WidgetCenter.shared.reloadAllTimelines()
               completion(timeline)
             } else {
                 print("Could not parse data")
             }
-          
+
         } else {
           let nextRefresh = Calendar.current.date(byAdding: .minute, value: 5, to: date)!
              let entry = SimpleEntry(date: nextRefresh, configuration: configuration, today: 1, willToDo: 2, priorityToDo: 3, allToDo: 4)
