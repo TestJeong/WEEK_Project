@@ -11,17 +11,18 @@ import WidgetKit
 @objc(WeekWidgetModule)
 class WeekWidgetModule: NSObject {
   static let GroupId = "group.com.week.ReactNativeWidget"
+  
+  @objc static func requiresMainQueueSetup() -> Bool {
+    return false
+  }
 
   @objc(setWidgetData:)
    func setWidgetData(widgetData: NSDictionary) -> Void {
      do {
        let fileManager = FileManager.default
        let directory = fileManager.containerURL(forSecurityApplicationGroupIdentifier: WeekWidgetModule.GroupId)
-       guard let fileURL = directory?.appendingPathComponent("widgetData.json") else {
-         return
-       }
-       try JSONSerialization.data(withJSONObject: widgetData)
-         .write(to: fileURL)
+  
+  
      } catch {
      }
    }
@@ -33,4 +34,3 @@ class WeekWidgetModule: NSObject {
      }
    }
  }
-

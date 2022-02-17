@@ -14,13 +14,14 @@ import {isEmpty} from 'lodash';
 const Render_View = styled.View`
   flex-direction: row;
   background-color: white;
-  height: 90px;
+  height: 70px;
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
   padding: 15px;
   border-top-width: 7px;
   width: 100%;
+  border-top-color: ${(props) => props.color};
 `;
 
 const List_View = styled.View`
@@ -65,38 +66,39 @@ const Agenda_List = ({item}) => {
   if (isEmpty(item)) {
     return (
       <View style={styles.emptyItem}>
-        <Text style={styles.emptyItemText}>No Events Planned Today</Text>
+        <Text style={styles.emptyItemText}>일정이 없습니다.</Text>
       </View>
     );
   }
 
   return (
-    <TouchableOpacity onPress={goToList} style={{marginLeft: 20, marginRight: 20, marginTop: 17}} testID={testIDs.agenda.ITEM}>
-      <Render_View style={(styles.container, {borderTopColor: onToggle ? '#ddd' : item.colors, backgroundColor: 'lightgray'})}>
-        <List_View>
-          <TouchableOpacity onPress={Toggle}>{onToggle ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
-          <ListText_View>
-            <Text style={onToggle ? styles.strikeTitleText : styles.defaultTitleText}>{item.listContent}</Text>
-            <Text style={onToggle ? styles.strikeText : styles.defaultText}>{item.categoryTitle}</Text>
-          </ListText_View>
-        </List_View>
-
-        <Text style={onToggle ? styles.strikeText : styles.defaultText}>{item.listTime}</Text>
-      </Render_View>
+    <TouchableOpacity onPress={goToList} style={{marginLeft: 20, marginRight: 20, marginTop: 5}} testID={testIDs.agenda.ITEM}>
+      <View style={{marginTop: 15, marginBottom: 15}}>
+        <Render_View style={styles.container} color={item.colors}>
+          <List_View>
+            <TouchableOpacity onPress={Toggle}>{onToggle ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
+            <ListText_View>
+              <Text style={onToggle ? styles.strikeTitleText : styles.defaultTitleText}>{item.listContent}</Text>
+              <Text style={onToggle ? styles.strikeText : styles.defaultText}>{item.categoryTitle}</Text>
+            </ListText_View>
+          </List_View>
+          <Text style={onToggle ? styles.strikeText : styles.defaultText}>{item.listTime}</Text>
+        </Render_View>
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    shadowColor: '#000',
+    shadowColor: '#555',
     shadowOffset: {
-      width: 0,
-      height: 1,
+      width: 0.5,
+      height: 0.5,
     },
-    shadowOpacity: 0.32,
-    shadowRadius: 1.22,
-    elevation: 3,
+    shadowOpacity: 0.22,
+    shadowRadius: 10,
+    elevation: 8,
   },
   strikeTitleText: {
     fontSize: 16,
@@ -109,8 +111,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     height: 52,
     justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: 'lightgrey',
   },
   emptyItemText: {
     color: 'lightgrey',
@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
   },
 
   defaultTitleText: {
-    fontSize: 16,
-    marginBottom: 15,
+    fontSize: 14,
+    marginBottom: 10,
     color: 'black',
     fontFamily: 'NanumGothicBold',
   },

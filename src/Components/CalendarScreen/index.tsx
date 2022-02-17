@@ -227,8 +227,7 @@ const ExpandableCalendarScreen = () => {
           theme={{calendarBackground: 'white'}}
           sections={Agenda_DATA}
           renderItem={renderItem}
-
-          //sectionStyle={styles.section}
+          sectionStyle={styles.section}
           // dayFormat={'YYYY-MM-d'}
         />
       </SafeAreaView>
@@ -281,8 +280,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   section: {
-    backgroundColor: lightThemeColor,
-    color: 'grey',
+    color: 'black',
     textTransform: 'capitalize',
   },
   item: {

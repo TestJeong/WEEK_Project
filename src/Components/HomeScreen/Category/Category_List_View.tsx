@@ -9,12 +9,9 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import E_Icon from 'react-native-vector-icons/Feather';
 import PushNotification from 'react-native-push-notification';
 
-import {CATEGORY_LIST_DATA_REQUEST, CLICK_CATEGORY} from '../../../reducers/Catagory';
 import Category_Modal_View from './Category_Modal_View';
 import {RootStackParamList} from '../../Navgation/StackNavigator';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {categoryDelete, RESET_CATEGORYT_DATA, SELETED_CATEGORY_DATA} from './CategorySlice';
-import realm from '../../../db';
 
 const List_Item = styled.View`
   margin: 15px 35px 15px 5px;

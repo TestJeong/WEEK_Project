@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState, useCallback} from 'react';
+import React, {useLayoutEffect, useState, useCallback, useEffect} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image, SafeAreaView, Keyboard} from 'react-native';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
@@ -9,6 +9,7 @@ import styled from 'styled-components/native';
 
 import ToDo_List_View from '../ToDo/ToDo_List_View';
 import {RootStackParamList} from '../../Navgation/StackNavigator';
+import {Edit_Schedule_Notif} from '../ToDo/ToDo_Notification';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -20,7 +21,12 @@ const Category_ToDo_List = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Category_ToDoList'>>();
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const {mainCategoryData} = useSelector((state: any) => state.CATEGORY_DATA);
+  const {mainCategoryData, categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
+  const {todoData} = useSelector((state: any) => state.TODO_DATA);
+
+  useEffect(() => {
+    Edit_Schedule_Notif();
+  }, [categoryList, todoData]);
 
   useLayoutEffect(() => {
     navigation.setOptions({

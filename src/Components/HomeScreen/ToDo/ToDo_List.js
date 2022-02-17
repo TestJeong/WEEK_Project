@@ -9,9 +9,6 @@ import styled from 'styled-components/native';
 
 import ToDo_List_View from '../ToDo/ToDo_List_View';
 import {Edit_Schedule_Notif} from './ToDo_Notification';
-import {RESET_CATEGORYT_DATA} from '../Category/CategorySlice';
-import {RESET_INPUT_DATA} from './ToDoSlice';
-import realm from '../../../db';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
