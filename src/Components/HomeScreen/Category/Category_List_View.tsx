@@ -11,7 +11,7 @@ import PushNotification from 'react-native-push-notification';
 
 import Category_Modal_View from './Category_Modal_View';
 import {RootStackParamList} from '../../Navgation/StackNavigator';
-import {categoryDelete, SELETED_CATEGORY_DATA} from './CategorySlice';
+import {categoryDelete, CATEGORY_DELETE_REQUEST, SELETED_CATEGORY_DATA} from './CategorySlice';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack/lib/typescript/src/types';
 
 const List_Item = styled.View`
@@ -85,8 +85,7 @@ const Category_View = ({data, drag}: any) => {
       for (let j of filterData) {
         PushNotification.cancelLocalNotification(j.id);
       }
-      //dispatch({type: CATEGORY_LIST_DATA_REQUEST, data: data});
-      dispatch(categoryDelete({data}));
+      dispatch(CATEGORY_DELETE_REQUEST({data}));
       close();
     };
 

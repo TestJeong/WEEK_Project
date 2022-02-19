@@ -7,6 +7,9 @@ interface initType {
   selectedCategory: categoryData;
   mainCategoryData: todoDataType[];
   closeInputModal: any;
+  categoryListData_loading: boolean;
+  categoryListData_done: boolean;
+  categoryListData_error: any;
 }
 
 const initialState: initType = {
@@ -19,6 +22,10 @@ const initialState: initType = {
   },
   mainCategoryData: [],
   closeInputModal: [],
+
+  categoryListData_loading: true,
+  categoryListData_done: false,
+  categoryListData_error: null,
 };
 
 export const categoryDelete = createAsyncThunk(
@@ -56,6 +63,21 @@ export const CategoryState = createSlice({
         todoData: [],
       };
     },
+    CATEGORY_DELETE_REQUEST: (state, action) => {
+      state.categoryListData_loading = true;
+      state.categoryListData_done = false;
+      state.categoryListData_error = null;
+    },
+    CATEGORY_DELETE_SUCCESS: (state) => {
+      state.categoryListData_loading = false;
+      state.categoryListData_done = true;
+      state.categoryListData_error = null;
+    },
+    CATEGORY_DELETE_ERROR: (state, action) => {
+      state.categoryListData_loading = false;
+      state.categoryListData_done = false;
+      state.categoryListData_error = action.payload;
+    },
   },
   extraReducers: {
     [categoryDelete.pending.type]: (state, action) => {},
@@ -66,5 +88,13 @@ export const CategoryState = createSlice({
   },
 });
 
-export const {SELETED_THEMA_CATEGORY_DATA, RESET_CATEGORYT_DATA, REQUEST_CATEGORY_DATA, SELETED_CATEGORY_DATA} = CategoryState.actions;
+export const {
+  SELETED_THEMA_CATEGORY_DATA,
+  RESET_CATEGORYT_DATA,
+  REQUEST_CATEGORY_DATA,
+  SELETED_CATEGORY_DATA,
+  CATEGORY_DELETE_REQUEST,
+  CATEGORY_DELETE_SUCCESS,
+  CATEGORY_DELETE_ERROR,
+} = CategoryState.actions;
 export const CATEGORY_DATA = CategoryState.reducer;

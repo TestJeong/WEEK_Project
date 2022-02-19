@@ -1,11 +1,11 @@
 import {takeEvery, put, call, all, fork} from 'redux-saga/effects';
 import {AGENDA_DATA_ERROR, AGENDA_DATA_REQUEST, AGENDA_DATA_SUCCESS} from '../Components/CalendarScreen/CalendarSlice';
+import {CATEGORY_DELETE_ERROR, CATEGORY_DELETE_REQUEST, CATEGORY_DELETE_SUCCESS} from '../Components/HomeScreen/Category/CategorySlice';
 import {TODO_LIST_DATA_ERROR1, TODO_LIST_DATA_REQUEST1, TODO_LIST_DATA_SUCCESS1} from '../Components/HomeScreen/ToDo/ToDoSlice';
 import {CATEGORY_LIST_DATA_ERROR, CATEGORY_LIST_DATA_REQUEST, CATEGORY_LIST_DATA_SUCCESS} from '../reducers/Catagory';
 import {ToDoList_View_Delete, Agenda_Call_Data, Category_List_View_Delete} from './Todo_Delete';
 
 function* ToDoList_Delete(action) {
-  console.log('saga action data -> ', action.payload);
   try {
     yield call(ToDoList_View_Delete, action.payload.data);
     yield put(TODO_LIST_DATA_SUCCESS1());
@@ -17,11 +17,11 @@ function* ToDoList_Delete(action) {
 
 function* Category_Delete(action) {
   try {
-    yield call(Category_List_View_Delete, action.data);
-    yield put({type: CATEGORY_LIST_DATA_SUCCESS});
+    yield call(Category_List_View_Delete, action.payload.data);
+    yield put(CATEGORY_DELETE_SUCCESS());
   } catch (error) {
     console.error('카테고리 삭제 에러 -> ', error);
-    yield put({type: CATEGORY_LIST_DATA_ERROR, data: error, error: true});
+    yield put({type: CATEGORY_DELETE_ERROR, data: error, error: true});
   }
 }
 
@@ -40,7 +40,7 @@ function* ToDo_Delete() {
 }
 
 function* Category_List_Delete() {
-  yield takeEvery(CATEGORY_LIST_DATA_REQUEST, Category_Delete);
+  yield takeEvery(CATEGORY_DELETE_REQUEST, Category_Delete);
 }
 
 function* Agenda_DATA_INF() {

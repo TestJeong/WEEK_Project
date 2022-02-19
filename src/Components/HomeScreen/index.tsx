@@ -36,13 +36,6 @@ const PlusText = styled.Text`
   margin-left: 10px;
 `;
 
-const FlatListView = styled(DraggableFlatList)`
-  background-color: #f8e6cb;
-  border-radius: 10px;
-  height: 70%;
-  padding: 0px 0px 0px 20px;
-`;
-
 const Main_Container = styled.View`
   height: 48%;
   justify-content: flex-end;
@@ -300,7 +293,13 @@ const HomeScreen = () => {
           data={categoryList}
           renderItem={(item) => <Category_List_View data={item} />}
         /> */}
-        <FlatListView data={categoryList} onDragEnd={({data}) => console.log('!!!!!!', data)} keyExtractor={(item: any, index: string) => '#' + index} renderItem={renderItem} />
+        <DraggableFlatList
+          style={styles.draggableList}
+          data={categoryList}
+          onDragEnd={({data}: any) => console.log('!!!!!!', data)}
+          keyExtractor={(item: any, index: number) => '#' + index}
+          renderItem={renderItem}
+        />
         <Plus_Category_Btn onPress={opneModal}>
           <Icon name="pluscircleo" size={25} />
           <PlusText>카테고리 추가</PlusText>
@@ -311,6 +310,12 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  draggableList: {
+    backgroundColor: '#f8e6cb',
+    borderRadius: 10,
+    height: '70%',
+    paddingLeft: 20,
+  },
   container: {
     height: '50%',
   },
