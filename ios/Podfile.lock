@@ -379,8 +379,6 @@ PODS:
     - React-Core
   - RNGestureHandler (2.2.0):
     - React-Core
-  - RNIap (6.0.1):
-    - React-Core
   - RNReactNativeSharedGroupPreferences (1.1.23):
     - React
   - RNReanimated (1.13.4):
@@ -461,7 +459,6 @@ DEPENDENCIES:
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
-  - RNIap (from `../node_modules/react-native-iap`)
   - RNReactNativeSharedGroupPreferences (from `../node_modules/react-native-shared-group-preferences`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -569,8 +566,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
-  RNIap:
-    :path: "../node_modules/react-native-iap"
   RNReactNativeSharedGroupPreferences:
     :path: "../node_modules/react-native-shared-group-preferences"
   RNReanimated:
@@ -639,7 +634,6 @@ SPEC CHECKSUMS:
   RNCPushNotificationIOS: 5b1cf9ad2aaa107ecb92d5d2d7005ba521b2b97a
   RNDateTimePicker: cad741dac386f8178bf76e86f0a3c4b22173e0e4
   RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
-  RNIap: 09b4b8f994fdf7ac96def503ee144b28adca8018
   RNReactNativeSharedGroupPreferences: bd6c52319a9f76bde33103cc3bc4f16ecc650653
   RNReanimated: c1b56d030d1616239861534d9adb531f8cffab68
   RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
