@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import ToDo_List from '../HomeScreen/ToDo/ToDo_List';
 import Home from '../HomeScreen';
 import ToDoList_Detail from '../HomeScreen/ToDo/ToDoList_Detail';
-import Calendar_Agenda from '../CalendarScreen/Calendar_Agenda';
 import Category_ToDo_List from '../HomeScreen/Category/Category_ToDo_List';
 import {useNavigation} from '@react-navigation/native';
 import ExpandableCalendarScreen from '../CalendarScreen';

@@ -11,7 +11,8 @@ import PushNotification from 'react-native-push-notification';
 
 import Category_Modal_View from './Category_Modal_View';
 import {RootStackParamList} from '../../Navgation/StackNavigator';
-import {categoryDelete, RESET_CATEGORYT_DATA, SELETED_CATEGORY_DATA} from './CategorySlice';
+import {categoryDelete, SELETED_CATEGORY_DATA} from './CategorySlice';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack/lib/typescript/src/types';
 
 const List_Item = styled.View`
   margin: 15px 35px 15px 5px;
@@ -25,9 +26,9 @@ const List_Text = styled.Text`
   font-family: 'NanumGothic';
 `;
 
-type homeScreenProp = StackNavigationProp<RootStackParamList, 'ToDoList'>;
+type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'ToDoList'>;
 
-const Category_View = ({data}: any) => {
+const Category_View = ({data, drag}: any) => {
   const swiper = useRef<any>();
   const navigation = useNavigation<homeScreenProp>();
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const Category_View = ({data}: any) => {
   useEffect(() => {
     PushNotification.getScheduledLocalNotifications((notif) => {
       const notifData = notif.filter((i) => {
-        return i.title === data.item.title;
+        return i.title === data.title;
       });
 
       setFilterData(notifData);
@@ -82,7 +83,6 @@ const Category_View = ({data}: any) => {
 
     const pressHandler = () => {
       for (let j of filterData) {
-        console.log('AAA?SDFASDF?ASD', j);
         PushNotification.cancelLocalNotification(j.id);
       }
       //dispatch({type: CATEGORY_LIST_DATA_REQUEST, data: data});
@@ -116,34 +116,34 @@ const Category_View = ({data}: any) => {
 
   const goToList = () => {
     navigation.navigate('ToDoList', {
-      categoryName: data.item.title,
-      categoryTime: data.item.createTime,
+      categoryName: data.title,
+      categoryTime: data.createTime,
     });
     //dispatch({type: CLICK_CATEGORY, data: data.item});
-    dispatch(SELETED_CATEGORY_DATA(data.item));
+    dispatch(SELETED_CATEGORY_DATA(data));
   };
-
   return (
     <Swipeable ref={swiper} friction={2} rightThreshold={40} renderRightActions={renderRightActions}>
-      <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={data.item} />
+      <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={data} />
       <TouchableOpacity
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
-        onPress={goToList}>
+        onPress={goToList}
+        onLongPress={drag}>
         <List_Item>
           <View
             style={{
               height: 20,
               width: 20,
               borderRadius: 20,
-              backgroundColor: data.item.color,
+              backgroundColor: data.color,
               marginRight: 15,
             }}
           />
-          <List_Text>{data.item.title}</List_Text>
+          <List_Text>{data.title}</List_Text>
         </List_Item>
 
         <Icon name="right" size={15} style={{marginRight: 15}} />

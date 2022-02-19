@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import SharedGroupPreferences from 'react-native-shared-group-preferences';
-
+import DraggableFlatList, {RenderItemParams} from 'react-native-draggable-flatlist';
 import realm from '../../db';
 import Category_List_View from './Category/Category_List_View';
 import Category_Modal_View from './Category/Category_Modal_View';
@@ -33,11 +33,11 @@ const PlusText = styled.Text`
   margin-left: 10px;
 `;
 
-const FlatListView = styled.FlatList`
-  background-color: #f8e6cb;
-  border-radius: 10px;
-  padding: 0px 0px 0px 20px;
-`;
+// const FlatListView = styled(DraggableFlatList)`
+//   background-color: #f8e6cb;
+//   border-radius: 10px;
+//   padding: 0px 0px 0px 20px;
+// `;
 
 const Main_Container = styled.View`
   height: 48%;
@@ -120,8 +120,6 @@ const HomeScreen = () => {
   const [will_ToDo, setWill_ToDo] = useState(0);
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
-  //const {categoryList} = useSelector((state: any) => state.Catagory); // 수정 필요
-
   const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
@@ -238,6 +236,12 @@ const HomeScreen = () => {
     dispatch(SELETED_THEMA_CATEGORY_DATA(Sort_All_TodoList_View));
   }, []);
 
+  const [data, setData] = useState(categoryList);
+
+  const renderItem = useCallback(({item, index, drag, isActive}: RenderItemParams<any>) => {
+    return <Category_List_View data={item} drag={drag} />;
+  }, []);
+
   return (
     <SafeAreaView style={{flex: 1, margin: 10}}>
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={null} />
@@ -286,12 +290,13 @@ const HomeScreen = () => {
       </Main_Container>
       <View style={styles.container}>
         <CategoryTitleText>CATEGORY</CategoryTitleText>
-        <FlatListView
+        {/* <FlatListView
           keyExtractor={(item, index) => '#' + index}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           data={categoryList}
           renderItem={(item) => <Category_List_View data={item} />}
-        />
+        /> */}
+        {/* <DraggableFlatList data={categoryList} onDragEnd={({data}) => console.log('!!!!!!', data)} keyExtractor={(item: any, index: string) => '#' + index} renderItem={renderItem} /> */}
         <Plus_Category_Btn onPress={opneModal}>
           <Icon name="pluscircleo" size={25} />
           <PlusText>카테고리 추가</PlusText>
