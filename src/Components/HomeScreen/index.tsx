@@ -13,6 +13,9 @@ import Category_Modal_View from './Category/Category_Modal_View';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from './ToDo/ToDo_Notification';
 import {RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './Category/CategorySlice';
+import {LogBox} from 'react-native';
+
+LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!"]);
 
 const TitleText = styled.Text`
   font-family: 'NanumGothicExtraBold';
@@ -33,11 +36,12 @@ const PlusText = styled.Text`
   margin-left: 10px;
 `;
 
-// const FlatListView = styled(DraggableFlatList)`
-//   background-color: #f8e6cb;
-//   border-radius: 10px;
-//   padding: 0px 0px 0px 20px;
-// `;
+const FlatListView = styled(DraggableFlatList)`
+  background-color: #f8e6cb;
+  border-radius: 10px;
+  height: 70%;
+  padding: 0px 0px 0px 20px;
+`;
 
 const Main_Container = styled.View`
   height: 48%;
@@ -296,7 +300,7 @@ const HomeScreen = () => {
           data={categoryList}
           renderItem={(item) => <Category_List_View data={item} />}
         /> */}
-        {/* <DraggableFlatList data={categoryList} onDragEnd={({data}) => console.log('!!!!!!', data)} keyExtractor={(item: any, index: string) => '#' + index} renderItem={renderItem} /> */}
+        <FlatListView data={categoryList} onDragEnd={({data}) => console.log('!!!!!!', data)} keyExtractor={(item: any, index: string) => '#' + index} renderItem={renderItem} />
         <Plus_Category_Btn onPress={opneModal}>
           <Icon name="pluscircleo" size={25} />
           <PlusText>카테고리 추가</PlusText>

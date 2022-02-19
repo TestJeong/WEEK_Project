@@ -204,9 +204,6 @@ const ToDoList_Detail = ({navigation}) => {
   const unsubscribe = () => {
     navigation.addListener('blur', () => {
       dispatch(RESET_INPUT_DATA());
-      // dispatch({type: CLICK_TIME, data: null});
-      // dispatch({type: CLICK_DAY, data: null});
-      // dispatch({type: CLICK_PRIORITY, data: null});
     });
   };
 

@@ -3,10 +3,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import realm from '../../db';
-import {MY_CATEGORY_DATA} from '../../reducers/Catagory';
 import {ToDoStackNavigator, CalendarStackNavigator} from '../../Components/Navgation/StackNavigator';
 import {REQUEST_CATEGORY_DATA} from '../HomeScreen/Category/CategorySlice';
-import iap from '../CalendarScreen';
 import {RESET_INPUT_DATA} from '../HomeScreen/ToDo/ToDoSlice';
 
 const Tab = createBottomTabNavigator();
@@ -19,7 +17,6 @@ const TapNavigator = () => {
     const SortCategoryDate = CategoryData.sorted('createTime');
     dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
     dispatch(RESET_INPUT_DATA());
-    // dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
   }, []);
 
   return (
