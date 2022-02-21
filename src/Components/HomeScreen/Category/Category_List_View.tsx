@@ -99,11 +99,7 @@ const Category_View = ({data, drag}: any) => {
   };
 
   const renderRightActions = (progress: any) => (
-    <View
-      style={{
-        width: 120,
-        flexDirection: 'row',
-      }}>
+    <View style={{width: 120, flexDirection: 'row'}}>
       {MoveTo_List_Action(<Icon name="edit" size={20} />, '#34558b', 192, progress)}
       {Delete_List_Action(<E_Icon name="trash-2" size={20} />, '#dd2c00', 128, progress)}
     </View>
@@ -118,30 +114,14 @@ const Category_View = ({data, drag}: any) => {
       categoryName: data.title,
       categoryTime: data.createTime,
     });
-    //dispatch({type: CLICK_CATEGORY, data: data.item});
     dispatch(SELETED_CATEGORY_DATA(data));
   };
   return (
     <Swipeable ref={swiper} friction={2} rightThreshold={40} renderRightActions={renderRightActions}>
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={data} />
-      <TouchableOpacity
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-        onPress={goToList}
-        onLongPress={drag}>
+      <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}} onPress={goToList} onLongPress={drag}>
         <List_Item>
-          <View
-            style={{
-              height: 20,
-              width: 20,
-              borderRadius: 20,
-              backgroundColor: data.color,
-              marginRight: 15,
-            }}
-          />
+          <View style={{height: 20, width: 20, borderRadius: 20, backgroundColor: data.color, marginRight: 15}} />
           <List_Text>{data.title}</List_Text>
         </List_Item>
 

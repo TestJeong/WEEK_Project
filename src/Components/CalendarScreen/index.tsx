@@ -24,7 +24,6 @@ const fastDate = getPastDate(3); // 현재 시간 - 3
 const futureDates = getFutureDates(9); // 현재 시간 + 9
 const dates = [fastDate, today].concat(futureDates);
 const themeColor = '#00AAAF';
-const lightThemeColor = '#EBF9F9';
 
 function getFutureDates(numberOfDays: number) {
   const array = [];
@@ -39,57 +38,6 @@ function getFutureDates(numberOfDays: number) {
 function getPastDate(numberOfDays: number) {
   return new Date(Date.now() - 864e5 * numberOfDays).toISOString().split('T')[0];
 }
-
-const ITEMS: any[] = [
-  {
-    title: '2022-01-01',
-    data: [{hour: '12am', duration: '1h', title: 'First adsfasdf'}],
-  },
-  {
-    title: dates[0],
-    data: [{hour: '12am', duration: '1h', title: 'First Yoga'}],
-  },
-  {
-    title: dates[1],
-    data: [
-      {hour: '4pm', duration: '1h', title: 'Pilates ABC'},
-      {hour: '5pm', duration: '1h', title: 'Vinyasa Yoga'},
-    ],
-  },
-  {
-    title: dates[2],
-    data: [
-      {hour: '1pm', duration: '1h', title: 'Ashtanga Yoga'},
-      {hour: '2pm', duration: '1h', title: 'Deep Stretches'},
-      {hour: '3pm', duration: '1h', title: 'Private Yoga'},
-    ],
-  },
-  {
-    title: dates[3],
-    data: [{hour: '12am', duration: '1h', title: 'Ashtanga Yoga'}],
-  },
-  {
-    title: dates[4],
-    data: [{}],
-  },
-  {
-    title: dates[5],
-    data: [
-      {hour: '9pm', duration: '1h', title: 'Middle Yoga'},
-      {hour: '10pm', duration: '1h', title: 'Ashtanga'},
-      {hour: '11pm', duration: '1h', title: 'TRX'},
-      {hour: '12pm', duration: '1h', title: 'Running Group'},
-    ],
-  },
-  {
-    title: dates[6],
-    data: [{hour: '12am', duration: '1h', title: 'Ashtanga Yoga'}],
-  },
-  {
-    title: dates[7],
-    data: [{}],
-  },
-];
 
 type MarkedDate = {
   [key: string]: object;
@@ -146,10 +94,6 @@ function getTheme() {
 
 const leftArrowIcon = require('../img/previous.png');
 const rightArrowIcon = require('../img/next.png');
-
-interface Props {
-  weekView?: boolean;
-}
 
 const ExpandableCalendarScreen = () => {
   const dispatch = useDispatch();
@@ -215,9 +159,6 @@ const ExpandableCalendarScreen = () => {
           firstDay={1}
           markedDates={marked}
           enableSwipeMonths={false}
-          onPressArrowLeft={() => {
-            console.log('!@#');
-          }}
           leftArrowImageSource={leftArrowIcon}
           rightArrowImageSource={rightArrowIcon}
           // animateScroll
@@ -228,7 +169,7 @@ const ExpandableCalendarScreen = () => {
           sections={Agenda_DATA}
           renderItem={renderItem}
           sectionStyle={styles.section}
-          // dayFormat={'YYYY-MM-d'}
+          avoidDateUpdates={true} // 스크롤 해도 주간 달력이 변경이 안됨
         />
       </SafeAreaView>
     </CalendarProvider>

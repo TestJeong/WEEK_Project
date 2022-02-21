@@ -18,7 +18,7 @@ import {LogBox} from 'react-native';
 LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!"]);
 
 const TitleText = styled.Text`
-  font-family: 'NanumGothicExtraBold';
+  font-family: 'NotoSansKR-Bold';
   font-size: 20px;
 
   margin-bottom: 25px;
@@ -46,6 +46,7 @@ const Column_View = styled.View`
   height: 30%;
   justify-content: space-between;
   margin-bottom: 35px;
+  align-items: flex-end;
 `;
 
 const Column_Btn = styled.TouchableOpacity`
@@ -243,7 +244,9 @@ const HomeScreen = () => {
     <SafeAreaView style={{flex: 1, margin: 10}}>
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={null} />
       <Main_Container>
-        <TitleText>MY WEEK</TitleText>
+        <View style={{flex: 0.9}}>
+          <TitleText>MY WEEK</TitleText>
+        </View>
         <Column_View>
           <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>
             <Main_Title_View>
