@@ -26,7 +26,7 @@ const List_Item = styled.View`
 
 const List_Text = styled.Text`
   font-size: 17px;
-  font-family: 'NanumGothicBold';
+  font-family: 'NotoSansKR-Medium';
 `;
 
 const List_Btn = styled.TouchableOpacity`
@@ -65,7 +65,7 @@ const Detail_Category = ({hideActionSheet}) => {
           }}
         />
         <List_Item>
-          <List_Text>{Category_Data.item.title}</List_Text>
+          <List_Text style={{includeFontPadding: false}}>{Category_Data.item.title}</List_Text>
         </List_Item>
       </List_Btn>
     );

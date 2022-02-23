@@ -35,7 +35,7 @@ const Icon_View = styled.View`
 
 const Priority_Text = styled.Text`
   font-size: 14px;
-  font-family: 'NanumGothicBold';
+  font-family: 'NotoSansKR-Bold';
 `;
 
 const Priority_Modal = ({closeModal}) => {

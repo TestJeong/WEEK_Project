@@ -67,9 +67,9 @@ const Schedule = () => {
           todayTextColor: '#347ee7',
           agendaTodayColor: '#347ee7',
           agendaKnobColor: '#3c4a6b',
-          textDayFontFamily: 'NanumGothic',
-          textMonthFontFamily: 'NanumGothicBold',
-          textDayHeaderFontFamily: 'NanumGothicBold',
+          textDayFontFamily: 'NotoSansKR-Bold',
+          textMonthFontFamily: 'NotoSansKR-Bold',
+          textDayHeaderFontFamily: 'NotoSansKR-Bold',
         }}
       />
     </SafeAreaView>

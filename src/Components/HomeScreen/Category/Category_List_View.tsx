@@ -23,7 +23,7 @@ const List_Item = styled.View`
 
 const List_Text = styled.Text`
   font-size: 17px;
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
 `;
 
 type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'ToDoList'>;
@@ -122,7 +122,7 @@ const Category_View = ({data, drag}: any) => {
       <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}} onPress={goToList} onLongPress={drag}>
         <List_Item>
           <View style={{height: 20, width: 20, borderRadius: 20, backgroundColor: data.color, marginRight: 15}} />
-          <List_Text>{data.title}</List_Text>
+          <List_Text style={{includeFontPadding: false}}>{data.title}</List_Text>
         </List_Item>
 
         <Icon name="right" size={15} style={{marginRight: 15}} />

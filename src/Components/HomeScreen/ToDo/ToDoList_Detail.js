@@ -28,13 +28,13 @@ const Text_View = styled.View`
 const Title_Text = styled.TextInput`
   border-bottom-width: 0.5px;
   border-bottom-color: #cad0d4;
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
   min-height: 50px;
   max-height: 150px;
   font-size: 20px;
 `;
 const Memo_Text = styled.TextInput`
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
   margin-top: 10px;
   margin-bottom: 10px;
   min-height: 130px;
@@ -58,13 +58,13 @@ const Time_Icon_Container = styled.View`
 `;
 
 const List_Text = styled.Text`
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
   margin-left: 15px;
   font-size: 16px;
 `;
 
 const List_Text_Value = styled.Text`
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
   font-size: 16px;
 `;
 
@@ -76,8 +76,8 @@ const ToDoList_Detail = ({navigation}) => {
 
   const dispatch = useDispatch();
   //const {onClickToDoList, onClickTime, onClickDay, onClickPriority, clickCategory, onClickCategory, timeString} = useSelector((state) => state.Catagory);
-  const {todoData, twelve_HoursTime, onClickDay, onClickPriority, twenty_Four_HoursTime} = useSelector((state) => state.TODO_DATA);
-  const {selectedCategory, inputCategoryData} = useSelector((state) => state.CATEGORY_DATA);
+  const {todoData, twelve_HoursTime, onClickDay, onClickPriority, twenty_Four_HoursTime, inputCategoryData} = useSelector((state) => state.TODO_DATA);
+  const {selectedCategory} = useSelector((state) => state.CATEGORY_DATA);
 
   const [todoTitle, setToDoTitle] = useState(todoData.listContent);
   const [todoMemo, setToDoMemo] = useState(todoData.listMemo);
@@ -96,6 +96,7 @@ const ToDoList_Detail = ({navigation}) => {
   };
 
   useEffect(() => {
+    console.log('???!', inputCategoryData);
     PushNotification.getScheduledLocalNotifications((notif) => {
       const notifData = notif.filter((data) => {
         return data.id === String(todoData.id);
@@ -137,9 +138,9 @@ const ToDoList_Detail = ({navigation}) => {
         true,
       );
       if (inputCategoryData) {
-        let user = realm.create('CategoryList', {createTime: inputCategoryData ? inputCategoryData.createTime : todoData.createTime}, true);
+        let user = realm.create('CategoryList', {createTime: inputCategoryData ? inputCategoryData.createTime : todoData.createTime}, 'modified');
 
-        let categorys = realm.create('CategoryList', {createTime: todoData.createTime}, true);
+        let categorys = realm.create('CategoryList', {createTime: selectedCategory.createTime}, true);
 
         const filterT = categorys.todoData.filter((data) => {
           return data.createTime !== todoData.createTime;
@@ -176,7 +177,7 @@ const ToDoList_Detail = ({navigation}) => {
     if (isEnableds === false) {
       PushNotification.cancelLocalNotification({id: String_ID});
     }
-
+    console.log('??!@#', isEnableds);
     //dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
     dispatch(SELECTED_TODOLIST_DATA(TodoList_View_Data));
     //dispatch({type: CLICK_CATEGORY_INPUT, data: null});
@@ -244,8 +245,8 @@ const ToDoList_Detail = ({navigation}) => {
         <DateTime_Picke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
         <CalendarModal openModal={calendarModalVisible} closeModal={closeCalendarModal} InputData={false} />
         <Text_View>
-          <Title_Text value={todoTitle} onChangeText={setToDoTitle} />
-          <Memo_Text value={todoMemo} onChangeText={setToDoMemo} multiline={true} textAlignVertical={'top'} placeholder="메모" />
+          <Title_Text style={{includeFontPadding: false}} value={todoTitle} onChangeText={setToDoTitle} />
+          <Memo_Text style={{includeFontPadding: false}} value={todoMemo} onChangeText={setToDoMemo} multiline={true} textAlignVertical={'top'} placeholder="메모" />
         </Text_View>
         <View>
           <Time_Input_Container
@@ -254,10 +255,10 @@ const ToDoList_Detail = ({navigation}) => {
             }}>
             <Time_Icon_Container>
               <Icon name="bars" size={23} color={'#be8bdc'} />
-              <List_Text>카테고리</List_Text>
+              <List_Text style={{includeFontPadding: false}}>카테고리</List_Text>
             </Time_Icon_Container>
 
-            <List_Text_Value>
+            <List_Text_Value style={{includeFontPadding: false}}>
               {inputCategoryData ? inputCategoryData.title : todoData.categoryTitle}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
@@ -267,9 +268,9 @@ const ToDoList_Detail = ({navigation}) => {
           <Time_Input_Container onPress={openCalendar}>
             <Time_Icon_Container>
               <Icon name="calendar" size={23} color={'#75bde0'} />
-              <List_Text>날짜</List_Text>
+              <List_Text style={{includeFontPadding: false}}>날짜</List_Text>
             </Time_Icon_Container>
-            <List_Text_Value>
+            <List_Text_Value style={{includeFontPadding: false}}>
               {onClickDay ? onClickDay : todoData.listDay ? Today(todoData.listDay) : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
@@ -279,9 +280,9 @@ const ToDoList_Detail = ({navigation}) => {
           <Time_Input_Container onPress={showDatePicker}>
             <Time_Icon_Container>
               <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
-              <List_Text>시간</List_Text>
+              <List_Text style={{includeFontPadding: false}}>시간</List_Text>
             </Time_Icon_Container>
-            <List_Text_Value>
+            <List_Text_Value style={{includeFontPadding: false}}>
               {twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : '없음'}
               &nbsp; &nbsp;
               <Icon name="right" size={15} />
@@ -294,9 +295,9 @@ const ToDoList_Detail = ({navigation}) => {
             }}>
             <Time_Icon_Container>
               <Icon name="staro" size={23} color={'#f89b9b'} />
-              <List_Text>우선순위</List_Text>
+              <List_Text style={{includeFontPadding: false}}>우선순위</List_Text>
             </Time_Icon_Container>
-            <List_Text_Value>
+            <List_Text_Value style={{includeFontPadding: false}}>
               {onClickPriority
                 ? (function () {
                     if (onClickPriority === 1)
@@ -323,7 +324,7 @@ const ToDoList_Detail = ({navigation}) => {
                     if (onClickPriority === 4)
                       return (
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <List_Text_Value>없음</List_Text_Value>
+                          <List_Text_Value style={{includeFontPadding: false}}>없음</List_Text_Value>
                         </View>
                       );
                   })()
@@ -353,7 +354,7 @@ const ToDoList_Detail = ({navigation}) => {
                     if (todoData.listPriority === 4)
                       return (
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <List_Text_Value>없음</List_Text_Value>
+                          <List_Text_Value style={{includeFontPadding: false}}>없음</List_Text_Value>
                         </View>
                       );
                   })()
@@ -366,7 +367,7 @@ const ToDoList_Detail = ({navigation}) => {
           <Time_Input_Container>
             <Time_Icon_Container>
               <Icon name="notification" size={23} color={'#ffa646'} />
-              <List_Text>알람허용</List_Text>
+              <List_Text style={{includeFontPadding: false}}>알람허용</List_Text>
             </Time_Icon_Container>
             <List_Text_Value>
               <Switch onValueChange={setIsEnableds} value={isEnableds} />

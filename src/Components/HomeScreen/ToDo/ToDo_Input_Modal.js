@@ -35,7 +35,7 @@ const ModalView = styled.View`
 `;
 
 const Text_Input_Container = styled.TextInput`
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
   font-size: 17px;
   margin-top: 2px;
   height: 50px;
@@ -54,7 +54,7 @@ const Button_View = styled.View`
 `;
 
 const Category_Title = styled.Text`
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
   margin-left: 15px;
 `;
 
@@ -170,7 +170,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
         <KeyboardAvoidingView style={{width: '100%'}} behavior={Platform.OS === 'ios' ? 'padding' : null}>
           <ModalView>
-            <Text_Input_Container ref={inputRef} value={todoContents} onChangeText={setTodoContents} placeholder="할일 목록 입력하세요" />
+            <Text_Input_Container style={{includeFontPadding: false}} ref={inputRef} value={todoContents} onChangeText={setTodoContents} placeholder="할일 목록 입력하세요" />
             {testBtn && Platform.OS === 'ios' && <Priority_Modal closeModal={() => setTestBtn(false)} />}
 
             {categoryBtn && Platform.OS === 'ios' && <Category_Modal closeModal={() => setCategoryBtn(false)} />}
@@ -194,7 +194,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
                     alignItems: 'center',
                   }}>
                   <Icon name="bars" size={23} color={inputCategoryData ? inputCategoryData.color : 'black'} />
-                  <Category_Title>{inputCategoryData ? inputCategoryData.title : categoryName}</Category_Title>
+                  <Category_Title style={{includeFontPadding: false}}>{inputCategoryData ? inputCategoryData.title : categoryName}</Category_Title>
                 </TouchableOpacity>
               </View>
               <View>

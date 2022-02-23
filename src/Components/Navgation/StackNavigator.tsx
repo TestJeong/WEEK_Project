@@ -34,6 +34,11 @@ const ToDoStackNavigator = () => {
         name="ToDoList"
         component={ToDo_List}
         options={{
+          headerTitleStyle: {
+            color: 'white',
+            fontSize: 17,
+            fontFamily: 'NotoSansKR-Bold',
+          },
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.navigate('Home')} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginLeft: 20}}>
               <Icon name="left" size={20} color={'white'} />
@@ -45,6 +50,11 @@ const ToDoStackNavigator = () => {
         name="Category_ToDoList"
         component={Category_ToDo_List}
         options={{
+          headerTitleStyle: {
+            color: 'black',
+            fontSize: 17,
+            fontFamily: 'NotoSansKR-Bold',
+          },
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.navigate('Home')} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginLeft: 20}}>
               <Icon name="left" size={20} />
@@ -63,7 +73,7 @@ const ToDoStackNavigator = () => {
             color: 'black',
             fontSize: 17,
             // lineHeight: 20,
-            fontFamily: 'NanumGothicExtraBold',
+            fontFamily: 'NotoSansKR-Bold',
           },
         }}
       />

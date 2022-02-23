@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   strikeTitleText: {
     fontSize: 16,
     marginBottom: 15,
-    fontFamily: 'NanumGothicBold',
+    fontFamily: 'NotoSansKR-Bold',
     color: '#bbb',
     textDecorationLine: 'line-through',
   },
@@ -121,17 +121,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 10,
     color: 'black',
-    fontFamily: 'NanumGothicBold',
+    fontFamily: 'NotoSansKR-Bold',
   },
   defaultText: {
     fontSize: 13,
     color: 'black',
-    fontFamily: 'NanumGothic',
+    fontFamily: 'NotoSansKR-Bold',
   },
 
   strikeText: {
     fontSize: 13,
-    fontFamily: 'NanumGothic',
+    fontFamily: 'NotoSansKR-Bold',
     color: '#bbb',
     textDecorationLine: 'line-through',
   },

@@ -29,18 +29,7 @@ const ToDoList = ({route}) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: () => (
-        <Text
-          style={{
-            letterSpacing: 1.5,
-            color: 'white',
-            fontSize: 17,
-            fontFamily: 'NanumGothicExtraBold',
-            lineHeight: 20,
-          }}>
-          {categoryName}
-        </Text>
-      ),
+      title: categoryName,
       headerStyle: {
         backgroundColor: selectedCategory.color,
       },

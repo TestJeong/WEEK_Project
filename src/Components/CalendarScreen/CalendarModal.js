@@ -51,17 +51,15 @@ const Button_View = styled.View`
 const Time_Text = styled.Text`
   font-size: 16px;
   margin-left: 15px;
-  font-family: 'NanumGothic';
 `;
 
 const Time_Value = styled.Text`
   font-size: 16px;
-  font-family: 'NanumGothic';
 `;
 
 const Text_Close = styled.Text`
   font-size: 16px;
-  font-family: 'NanumGothicBold';
+  font-family: 'NotoSansKR-Medium';
 `;
 
 const CalendarModal = ({openModal, closeModal, InputData}) => {
@@ -128,22 +126,24 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
           disableAllTouchEventsForDisabledDays={true}
           markedDates={clickDay ? Calendar_Mark() : null}
           theme={{
+            textDayStyle: {marginTop: Platform.OS === 'android' ? -7 : 3},
             todayBackgroundColor: '#347ee7',
             todayTextColor: 'white',
             dotColor: '#00adf5',
             selectedDotColor: 'red',
-            textDayFontFamily: 'NanumGothic',
-            textMonthFontFamily: 'NanumGothicBold',
-            textDayHeaderFontFamily: 'NanumGothicBold',
+            textDayFontFamily: 'NotoSansKR-Medium',
+            textMonthFontFamily: 'NotoSansKR-Medium',
+            textDayHeaderFontFamily: 'NotoSansKR-Bold',
+            includeFontPadding: false,
           }}
         />
         {InputData ? (
           <Time_Input_Container onPress={showDatePicker}>
             <Time_Icon_Container>
               <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
-              <Time_Text>시간</Time_Text>
+              <Time_Text style={{includeFontPadding: false}}>시간</Time_Text>
             </Time_Icon_Container>
-            <Time_Value>
+            <Time_Value style={{includeFontPadding: false}}>
               {twelve_HoursTime ? twelve_HoursTime : '없음'}&nbsp; &nbsp;
               <Icon name="right" size={15} />
             </Time_Value>
@@ -153,7 +153,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
           <Time_Input_Container onPress={showDatePicker}>
             <Time_Icon_Container>
               <Icon name="bells" size={23} color={'#b9cc95'} />
-              <Time_Text>알람 설정</Time_Text>
+              <Time_Text style={{includeFontPadding: false}}>알람 설정</Time_Text>
             </Time_Icon_Container>
             <Time_Value>
               <Switch onValueChange={setIsEnabled} value={isEnabled} />
@@ -163,10 +163,14 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
 
         <Button_View>
           <TouchableOpacity onPress={closeModal} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginLeft: 20}}>
-            <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
+            <Text_Close style={{includeFontPadding: false}} style={{color: '#2653af'}}>
+              닫기
+            </Text_Close>
           </TouchableOpacity>
           <TouchableOpacity onPress={clickDay ? SaveCalendar : null} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginRight: 20}}>
-            <Text_Close style={{color: '#2653af'}}>저장</Text_Close>
+            <Text_Close style={{includeFontPadding: false}} style={{color: '#2653af'}}>
+              저장
+            </Text_Close>
           </TouchableOpacity>
         </Button_View>
       </ModalView>

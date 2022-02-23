@@ -19,20 +19,19 @@ LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an ol
 
 const TitleText = styled.Text`
   font-family: 'NotoSansKR-Bold';
-  font-size: 20px;
-
+  font-size: 24px;
   margin-bottom: 25px;
 `;
 
 const CategoryTitleText = styled.Text`
   font-size: 20px;
-  font-family: 'NanumGothicExtraBold';
+  font-family: 'NotoSansKR-Bold';
   margin-bottom: 15px;
 `;
 
 const PlusText = styled.Text`
   font-size: 15px;
-  font-family: 'NanumGothicBold';
+  font-family: 'NotoSansKR-Bold';
   margin-left: 10px;
 `;
 
@@ -70,7 +69,7 @@ const Main_Title_Number = styled.View`
 const Main_Title_Number_Text = styled.Text`
   font-size: 30px;
 
-  font-family: 'NanumGothicBold';
+  font-family: 'NotoSansKR-Bold';
 `;
 
 const Main_Title_View = styled.View`
@@ -80,7 +79,7 @@ const Main_Title_View = styled.View`
 const Main_Title_Text = styled.Text`
   text-align: left;
   font-size: 20px;
-  font-family: 'NanumGothicBold';
+  font-family: 'NotoSansKR-Medium';
   padding-bottom: 10px;
 `;
 
@@ -245,51 +244,51 @@ const HomeScreen = () => {
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={null} />
       <Main_Container>
         <View style={{flex: 0.9}}>
-          <TitleText>MY WEEK</TitleText>
+          <TitleText style={{includeFontPadding: false}}>MY WEEK</TitleText>
         </View>
         <Column_View>
           <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>
             <Main_Title_View>
-              <Main_Title_Text>오늘</Main_Title_Text>
-              <Main_Title_Text>⏰</Main_Title_Text>
+              <Main_Title_Text style={{includeFontPadding: false}}>오늘</Main_Title_Text>
+              <Main_Title_Text style={{includeFontPadding: false}}>⏰</Main_Title_Text>
             </Main_Title_View>
             <Main_Title_Number>
-              <Main_Title_Number_Text>{today_ToDo}</Main_Title_Number_Text>
+              <Main_Title_Number_Text style={{includeFontPadding: false}}>{today_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
           <Column_Btn onPress={will_ToDo_Data} style={{backgroundColor: '#ccabd8'}}>
             <Main_Title_View>
-              <Main_Title_Text>예정</Main_Title_Text>
-              <Main_Title_Text>🛎</Main_Title_Text>
+              <Main_Title_Text style={{includeFontPadding: false}}>예정</Main_Title_Text>
+              <Main_Title_Text style={{includeFontPadding: false}}>🛎</Main_Title_Text>
             </Main_Title_View>
             <Main_Title_Number>
-              <Main_Title_Number_Text>{will_ToDo}</Main_Title_Number_Text>
+              <Main_Title_Number_Text style={{includeFontPadding: false}}>{will_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
         </Column_View>
         <Column_View>
           <Column_Btn onPress={Priority_ToDo_Data} style={{backgroundColor: '#d0e6a5'}}>
             <Main_Title_View>
-              <Main_Title_Text>중요</Main_Title_Text>
-              <Main_Title_Text>💡</Main_Title_Text>
+              <Main_Title_Text style={{includeFontPadding: false}}>중요</Main_Title_Text>
+              <Main_Title_Text style={{includeFontPadding: false}}>💡</Main_Title_Text>
             </Main_Title_View>
             <Main_Title_Number>
-              <Main_Title_Number_Text>{priority_ToDo}</Main_Title_Number_Text>
+              <Main_Title_Number_Text style={{includeFontPadding: false}}>{priority_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
           <Column_Btn onPress={All_ToDo_Data} style={{backgroundColor: '#a2b9ee'}}>
             <Main_Title_View>
-              <Main_Title_Text>전체</Main_Title_Text>
-              <Main_Title_Text>📅</Main_Title_Text>
+              <Main_Title_Text style={{includeFontPadding: false}}>전체</Main_Title_Text>
+              <Main_Title_Text style={{includeFontPadding: false}}>📅</Main_Title_Text>
             </Main_Title_View>
             <Main_Title_Number>
-              <Main_Title_Number_Text>{all_ToDo}</Main_Title_Number_Text>
+              <Main_Title_Number_Text style={{includeFontPadding: false}}>{all_ToDo}</Main_Title_Number_Text>
             </Main_Title_Number>
           </Column_Btn>
         </Column_View>
       </Main_Container>
       <View style={styles.container}>
-        <CategoryTitleText>CATEGORY</CategoryTitleText>
+        <CategoryTitleText style={{includeFontPadding: false}}>CATEGORY</CategoryTitleText>
         {/* <FlatListView
           keyExtractor={(item, index) => '#' + index}
           ItemSeparatorComponent={() => <View style={styles.separator} />}

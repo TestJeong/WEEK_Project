@@ -63,6 +63,7 @@ export const Agenda_Call_Data = (term) => {
           listMemo: date.listMemo,
           listClear: date.listClear,
           colors: Category[0].color,
+          listEnabled: date.listEnabled,
         });
       });
 

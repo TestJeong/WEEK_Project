@@ -28,14 +28,14 @@ const List_Text = styled.Text`
   font-size: 16px;
   width: 85%;
   line-height: 20px;
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
 `;
 
 const List_Clock_Text = styled.Text`
   font-size: 12px;
 
   line-height: 13px;
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
   padding-top: 7px;
 `;
 

@@ -30,16 +30,17 @@ const Category_ToDo_List = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: () => (
-        <Text
-          style={{
-            fontWeight: '800',
-            fontFamily: 'NanumGothicBold',
-            fontSize: 17,
-          }}>
-          {route.params.header_Name}
-        </Text>
-      ),
+      // headerTitle: () => (
+      //   <Text
+      //     style={{
+      //       fontWeight: '800',
+      //       fontFamily: 'NotoSansKR-Bold',
+      //       fontSize: 17,
+      //     }}>
+      //     {route.params.header_Name}
+      //   </Text>
+      // ),
+      title: route.params.header_Name,
     });
   }, []);
 

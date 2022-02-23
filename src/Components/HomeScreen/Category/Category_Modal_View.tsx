@@ -30,7 +30,7 @@ const Text_Input_Container = styled.TextInput`
   margin-top: 15px;
   margin-bottom: 35px;
   border-radius: 8px;
-  font-family: 'NanumGothic';
+  font-family: 'NotoSansKR-Medium';
   background-color: #cad0d4;
 `;
 
@@ -45,13 +45,13 @@ const Button_View = styled.View`
 const Text_Close = styled.Text`
   font-size: 16px;
   line-height: 20px;
-  font-family: 'NanumGothicExtraBold';
+  font-family: 'NotoSansKR-Bold';
 `;
 
 const Modal_Title = styled.Text`
   font-size: 17px;
   line-height: 20px;
-  font-family: 'NanumGothicBold';
+  font-family: 'NotoSansKR-Bold';
 `;
 
 const Hoper = styled.View`
@@ -119,7 +119,7 @@ const Category_Modal_View = ({isOpen, close, data}: CModalType) => {
           <TouchableOpacity onPress={CloseButton} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
-          <Modal_Title>MY CATEGORY</Modal_Title>
+          <Modal_Title style={{includeFontPadding: false}}>MY CATEGORY</Modal_Title>
           <TouchableOpacity onPress={SaveButton} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>완료</Text_Close>
           </TouchableOpacity>
