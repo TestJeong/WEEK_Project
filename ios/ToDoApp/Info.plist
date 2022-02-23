@@ -41,10 +41,10 @@
 		<string>NotoSansKR-Bold.ttf</string>
 		<string>NotoSansKR-Light.ttf</string>
 		<string>NotoSansKR-Medium.ttf</string>
-		<string>NotoSansKR-Regular.ttf</string> 
-		<string>NanumGothicRegular.ttf</string>
-		<string>NanumGothicBold.ttf</string>
-		<string>NanumGothicExtraBold.ttf</string>
+		<string>NotoSansKR-Regular.ttf</string>
+		<string>NotoSansKR-BoldRegular.ttf</string>
+		<string>NotoSansKR-Bold.ttf</string>
+		<string>NotoSansKR-BoldExtraBold.ttf</string>
 		<string>NanumSquareExtraBold.ttf</string>
 		<string>NanumSquareBold.ttf</string>
 		<string>NanumSquareLight.ttf</string>
@@ -64,6 +64,9 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>MaterialIcons.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
