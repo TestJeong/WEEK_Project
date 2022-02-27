@@ -63,8 +63,8 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   const inputRef = useRef();
 
-  const {onClickDay, twelve_HoursTime, onClickPriority, twenty_Four_HoursTime, isNotificationEnabled} = useSelector((state) => state.TODO_DATA);
-  const {inputCategoryData} = useSelector((state) => state.CATEGORY_DATA);
+  const {onClickDay, twelve_HoursTime, onClickPriority, twenty_Four_HoursTime, isNotificationEnabled, inputCategoryData} = useSelector((state) => state.TODO_DATA);
+  //const {inputCategoryData} = useSelector((state) => state.CATEGORY_DATA);
 
   const dispatch = useDispatch();
 

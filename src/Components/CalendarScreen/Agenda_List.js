@@ -72,8 +72,8 @@ const Agenda_List = ({item}) => {
   }
 
   return (
-    <TouchableOpacity onPress={goToList} style={{marginLeft: 20, marginRight: 20, marginTop: 5}} testID={testIDs.agenda.ITEM}>
-      <View style={{marginTop: 15, marginBottom: 15}}>
+    <TouchableOpacity onPress={goToList} style={{marginLeft: 20, marginRight: 20, marginTop: 5, paddingBottom: 10}} testID={testIDs.agenda.ITEM}>
+      <View style={{marginTop: 12, marginBottom: 0}}>
         <Render_View style={styles.container} color={item.colors}>
           <List_View>
             <TouchableOpacity onPress={Toggle}>{onToggle ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
@@ -93,10 +93,10 @@ const styles = StyleSheet.create({
   container: {
     shadowColor: '#555',
     shadowOffset: {
-      width: 0.5,
-      height: 0.5,
+      width: 0.1,
+      height: 0.1,
     },
-    shadowOpacity: 0.22,
+    shadowOpacity: 0.15,
     shadowRadius: 10,
     elevation: 8,
   },

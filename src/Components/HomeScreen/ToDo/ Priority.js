@@ -42,25 +42,21 @@ const Priority_Modal = ({closeModal}) => {
   const dispatch = useDispatch();
 
   const Highest_Priority = useCallback(() => {
-    //dispatch({type: CLICK_PRIORITY, data: 3});
     dispatch(SELETCTED_PRIORITY(3));
     closeModal();
   });
 
   const Medium_Priority = useCallback(() => {
-    //dispatch({type: CLICK_PRIORITY, data: 2});
     dispatch(SELETCTED_PRIORITY(2));
     closeModal();
   });
 
   const Low_Priority = useCallback(() => {
-    //dispatch({type: CLICK_PRIORITY, data: 1});
     dispatch(SELETCTED_PRIORITY(1));
     closeModal();
   });
 
   const Never_Priority = useCallback(() => {
-    //dispatch({type: CLICK_PRIORITY, data: 4});
     dispatch(SELETCTED_PRIORITY(4));
     closeModal();
   });
@@ -68,7 +64,9 @@ const Priority_Modal = ({closeModal}) => {
   return (
     <Container style={styles.container}>
       <Priority_Btn onPress={Never_Priority}>
-        <Icon_View></Icon_View>
+        <Icon_View>
+          <Icon name="star" size={12} color={'gray'} />
+        </Icon_View>
 
         <Priority_Text>우선도 없음</Priority_Text>
       </Priority_Btn>

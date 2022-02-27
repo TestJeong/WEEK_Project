@@ -8,7 +8,6 @@ import ActionSheet from 'react-native-actions-sheet';
 import realm from '../../../db';
 import CalendarModal from '../../CalendarScreen/CalendarModal';
 import DateTime_Picke from './DateTime_Picke';
-import {CLICK_CATEGORY_INPUT, CLICK_DAY, CLICK_PRIORITY, CLICK_TIME, CLICK_TODO_LIST_DATA} from '../../../reducers/Catagory';
 import Detail_Priorty from './Detail_Priority';
 import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';

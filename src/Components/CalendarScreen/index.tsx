@@ -9,6 +9,8 @@ import Agenda_List from './Agenda_List';
 import testIDs from '../testIDs';
 import {AGENDA_DATA_REQUEST} from './CalendarSlice';
 import {useState} from 'react';
+import realm from '../../db';
+import {Today} from '../../Utils/Day';
 
 LocaleConfig.locales['kr'] = {
   monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -20,46 +22,27 @@ LocaleConfig.locales['kr'] = {
 LocaleConfig.defaultLocale = 'kr';
 
 const today = new Date().toISOString().split('T')[0];
-const fastDate = getPastDate(3); // 현재 시간 - 3
-const futureDates = getFutureDates(9); // 현재 시간 + 9
-const dates = [fastDate, today].concat(futureDates);
 const themeColor = '#00AAAF';
 
-function getFutureDates(numberOfDays: number) {
-  const array = [];
-  for (let index = 1; index <= numberOfDays; index++) {
-    const date = new Date(Date.now() + 864e5 * index); // 864e5 == 86400000 == 24*60*60*1000 현재일로 부터 다음날
-    const dateString = date.toISOString().split('T')[0];
-    array.push(dateString);
-  }
-  return array;
-}
-
-function getPastDate(numberOfDays: number) {
-  return new Date(Date.now() - 864e5 * numberOfDays).toISOString().split('T')[0];
-}
-
-type MarkedDate = {
-  [key: string]: object;
-};
-
-function getMarkedDates(items: any[]) {
-  const marked: MarkedDate = {};
-  items.forEach((item) => {
-    // NOTE: only mark dates with data
-    if (item.data && item.data.length > 0 && !isEmpty(item.data[0])) {
-      marked[item.title] = {marked: true};
-    } else {
-      //marked[item.title] = {disabled: true};
-    }
-  });
-  return marked;
-}
+// 해당일의 주에서 월요일을 계산
+var paramDate = new Date(today); // new Date('2021-06-08'): 화요일
+var day = paramDate.getDay();
+var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
+var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
 
 function getTheme() {
   const disabledColor = 'grey';
 
   return {
+    'stylesheet.calendar.header': {
+      dayTextAtIndex5: {
+        color: 'blue',
+      },
+      dayTextAtIndex6: {
+        color: 'red',
+      },
+    },
+
     // arrows
     arrowColor: 'black',
     arrowStyle: {padding: 0},
@@ -74,7 +57,7 @@ function getTheme() {
     textDayHeaderFontFamily: 'HelveticaNeue',
     textDayHeaderFontWeight: 'normal',
     // dates
-    dayTextColor: themeColor,
+    dayTextColor: 'gray',
     textDayFontSize: 12,
     textDayFontFamily: 'HelveticaNeue',
     textDayFontWeight: '500',
@@ -103,40 +86,48 @@ const ExpandableCalendarScreen = () => {
 
   useEffect(() => {
     if (isFocused) {
-      dispatch(AGENDA_DATA_REQUEST(onPressDay === '' ? today : onPressDay));
+      dispatch(AGENDA_DATA_REQUEST(onPressDay === '' ? tey : onPressDay));
     }
   }, [isFocused]);
 
-  const marked = getMarkedDates(Agenda_DATA);
-  const theme: any = getTheme();
-  const todayBtnTheme = {
-    todayButtonTextColor: themeColor,
+  type MarkedDate = {
+    [key: string]: object;
   };
+
+  function getMarkedDates() {
+    const TodoList_View = realm.objects('TodoDataList');
+    const TodoList_View_Data = TodoList_View.filtered('listDay !=  $0', 0);
+
+    const marked: MarkedDate = {};
+    TodoList_View_Data.map((test) => {
+      let ch = Today(test.listDay); // 20220204 형식을 2022-02-24 형식으로 변환
+      marked[ch] = {marked: true};
+    });
+
+    return marked;
+  }
+
+  const marked = getMarkedDates();
+  const theme: any = getTheme();
 
   const onDateChanged = (date: any) => {
     var paramDate = new Date(date); // new Date('2021-06-08'): 화요일
     var day = paramDate.getDay();
     var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
     var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
-
+    getMarkedDates();
     setonPressDay(tey);
     dispatch(AGENDA_DATA_REQUEST(tey));
   };
 
-  const onMonthChange = (/* month, updateSource */) => {
-    // console.warn('ExpandableCalendarScreen onMonthChange: ', month, updateSource);
-  };
-
   const renderItem = ({item}: any) => {
     return <Agenda_List item={item} />;
-    //return <AgendaItem item={item} />;
   };
 
   return (
     <CalendarProvider
       date={today}
       onDateChanged={onDateChanged}
-      onMonthChange={onMonthChange}
       showTodayButton={false} // "오늘" 이라는 버튼 표시 여부
       disabledOpacity={0.6}
       // theme={this.todayBtnTheme}
@@ -175,45 +166,6 @@ const ExpandableCalendarScreen = () => {
     </CalendarProvider>
   );
 };
-
-interface ItemProps {
-  item: any;
-}
-
-const AgendaItem = React.memo(function AgendaItem(props: ItemProps) {
-  const {item} = props;
-
-  const buttonPressed = useCallback(() => {
-    Alert.alert('Show me more');
-  }, []);
-
-  const itemPressed = useCallback(() => {
-    Alert.alert(item.title);
-  }, []);
-
-  console.log('?? item 입니다 -> ', item);
-
-  if (isEmpty(item)) {
-    return (
-      <View style={styles.emptyItem}>
-        <Text style={styles.emptyItemText}>No Events Planned Today</Text>
-      </View>
-    );
-  }
-
-  return (
-    <TouchableOpacity onPress={itemPressed} style={styles.item} testID={testIDs.agenda.ITEM}>
-      <View>
-        <Text style={styles.itemHourText}>{item.hour}</Text>
-        <Text style={styles.itemDurationText}>{item.duration}</Text>
-      </View>
-      <Text style={styles.itemTitleText}>{item.title}</Text>
-      <View style={styles.itemButtonContainer}>
-        <Button color={'grey'} title={'Info'} onPress={buttonPressed} />
-      </View>
-    </TouchableOpacity>
-  );
-});
 
 const styles = StyleSheet.create({
   calendar: {

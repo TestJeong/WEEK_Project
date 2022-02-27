@@ -36,7 +36,7 @@ const PlusText = styled.Text`
 `;
 
 const Main_Container = styled.View`
-  height: 48%;
+  height: 47%;
   justify-content: flex-end;
 `;
 
@@ -44,7 +44,7 @@ const Column_View = styled.View`
   flex-direction: row;
   height: 30%;
   justify-content: space-between;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
   align-items: flex-end;
 `;
 
@@ -52,7 +52,7 @@ const Column_Btn = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
-  width: 45%;
+  width: 48%;
   border-radius: 10px;
 `;
 
@@ -246,7 +246,7 @@ const HomeScreen = () => {
         <View style={{flex: 0.9}}>
           <TitleText style={{includeFontPadding: false}}>MY WEEK</TitleText>
         </View>
-        <Column_View>
+        <Column_View style={{marginBottom: 40}}>
           <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>
             <Main_Title_View>
               <Main_Title_Text style={{includeFontPadding: false}}>오늘</Main_Title_Text>
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   container: {
-    height: '50%',
+    height: '52%',
   },
   separator: {
     backgroundColor: 'white',
