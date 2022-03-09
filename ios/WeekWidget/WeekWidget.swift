@@ -83,31 +83,48 @@ struct SimpleEntry: TimelineEntry {
 
 struct WeekWidgetEntryView : View {
     var entry: Provider.Entry
+  @Environment(\.widgetFamily) var family
 
-    var body: some View {
-      HStack{
-        VStack {
-          Text("오늘")
-          Text(String(entry.today))
-            .bold()
-        }.padding(20)
-        VStack {
-          Text("예정")
-          Text(String(entry.willToDo))
-            .bold()
-        }.padding(20)
-        VStack {
-          Text("중요")
-          Text(String(entry.priorityToDo))
-            .bold()
-        }.padding(20)
-        VStack {
-          Text("전체")
-          Text(String(entry.allToDo))
-            .bold()
-        }.padding(20)
-      }
-    }
+     @ViewBuilder
+     var body: some View {
+         
+         switch family {
+         case .systemSmall:
+             Text("Small")
+         case .systemMedium:
+             Text("Medium")
+         case .systemLarge:
+             Text("Large")
+         default:
+             Text("Some other WidgetFamily in the future.")
+         }
+
+     }
+
+//    var body: some View {
+//      HStack{
+//        VStack {
+//          Text("오늘")
+//          Text(String(entry.today))
+//            .bold()
+//        }.padding(20)
+//        VStack {
+//          Text("예정")
+//          Text(String(entry.willToDo))
+//            .bold()
+//        }.padding(20)
+//        VStack {
+//          Text("중요")
+//          Text(String(entry.priorityToDo))
+//            .bold()
+//        }.padding(20)
+//        VStack {
+//          Text("전체")
+//          Text(String(entry.allToDo))
+//            .bold()
+//        }.padding(20)
+//      }
+//    }
 }
 
 @main

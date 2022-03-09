@@ -7,7 +7,7 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
 import SharedGroupPreferences from 'react-native-shared-group-preferences';
 import DraggableFlatList, {RenderItemParams} from 'react-native-draggable-flatlist';
-import realm from '../../db';
+import realm, {CategoryType} from '../../db';
 import Category_List_View from './Category/Category_List_View';
 import Category_Modal_View from './Category/Category_Modal_View';
 import PushNotification from 'react-native-push-notification';
@@ -117,6 +117,8 @@ const HomeScreen = () => {
   const [will_ToDo, setWill_ToDo] = useState(0);
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
+
+  const [test, setTest] = useState(false);
   const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
@@ -148,6 +150,18 @@ const HomeScreen = () => {
 
   const isFocused = useIsFocused();
 
+  // useEffect(() => {
+  //   console.log('??');
+  //   // realm.write(() => {
+  //   //   realm.create<any>('CategoryList', {});
+  //   // });
+  // }, [test === true]);
+
+  (function () {
+    // 실행코드
+    console.log('12312312312');
+  })();
+
   useEffect(() => {
     if (isFocused) {
       dispatch(RESET_CATEGORYT_DATA());
@@ -173,9 +187,9 @@ const HomeScreen = () => {
 
     Edit_Schedule_Notif();
 
-    // Realms.open({}).then((realm) => {
-    //   console.log('Realm is located at: ' + realm.path.toString());
-    // });
+    Realm.open({}).then((realm) => {
+      console.log('Realm is located at: ' + realm.path.toString());
+    });
 
     const Today_List_View_Data = TodoList_View.filtered('listDay == $0 AND listClear == $1', int_Local_Time, false);
     const Will_List_View_Data = TodoList_View.filtered('listDay > $0 AND listClear == $1', int_Local_Time, false);
@@ -232,8 +246,6 @@ const HomeScreen = () => {
     });
     dispatch(SELETED_THEMA_CATEGORY_DATA(Sort_All_TodoList_View));
   }, []);
-
-  const [data, setData] = useState(categoryList);
 
   const renderItem = useCallback(({item, index, drag, isActive}: RenderItemParams<any>) => {
     return <Category_List_View data={item} drag={drag} />;

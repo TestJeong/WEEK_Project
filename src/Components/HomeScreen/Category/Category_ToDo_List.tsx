@@ -10,6 +10,7 @@ import styled from 'styled-components/native';
 import ToDo_List_View from '../ToDo/ToDo_List_View';
 import {RootStackParamList} from '../../Navgation/StackNavigator';
 import {Edit_Schedule_Notif} from '../ToDo/ToDo_Notification';
+import {Today} from '../../../Utils/Day';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -21,6 +22,7 @@ const Category_ToDo_List = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Category_ToDoList'>>();
 
   const [isModalVisible, setModalVisible] = useState(false);
+  const [today, setToday] = useState(null);
   const {mainCategoryData, categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
   const {todoData} = useSelector((state: any) => state.TODO_DATA);
 
@@ -30,22 +32,15 @@ const Category_ToDo_List = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      // headerTitle: () => (
-      //   <Text
-      //     style={{
-      //       fontWeight: '800',
-      //       fontFamily: 'NotoSansKR-Bold',
-      //       fontSize: 17,
-      //     }}>
-      //     {route.params.header_Name}
-      //   </Text>
-      // ),
       title: route.params.header_Name,
     });
   }, []);
 
   const opneModal = useCallback(() => {
     setModalVisible(!isModalVisible);
+    if (route.params.header_Name === '오늘의 일정') {
+      setToday(Today());
+    }
   }, []);
 
   const closeModal = useCallback(() => {
@@ -55,7 +50,7 @@ const Category_ToDo_List = () => {
 
   return (
     <>
-      <ToDoInputModal isOpen={isModalVisible} close={closeModal} categoryName={null} categoryTime={null} />
+      <ToDoInputModal isOpen={isModalVisible} close={closeModal} categoryName={null} categoryTime={null} day={today} />
       <View>
         <FlatListView keyExtractor={(item, index) => '#' + index} data={mainCategoryData} renderItem={(item) => <ToDo_List_View data={item} ListName={true} />} />
       </View>

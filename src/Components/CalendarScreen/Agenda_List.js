@@ -43,7 +43,6 @@ const Agenda_List = ({item}) => {
 
   const goToList = () => {
     navigation.navigate('ToDoListDetail');
-    //dispatch({type: CLICK_TODO_LIST_DATA, data: item});
     dispatch(SELECTED_TODOLIST_DATA(item));
   };
 
@@ -59,7 +58,6 @@ const Agenda_List = ({item}) => {
         'modified',
       );
     });
-    //dispatch({type: CLICK_TODO_LIST_DATA, data: item});
     dispatch(SELECTED_TODOLIST_DATA(item));
   };
 

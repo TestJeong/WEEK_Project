@@ -1,7 +1,6 @@
 import {useIsFocused} from '@react-navigation/native';
-import isEmpty from 'lodash/isEmpty';
 import React, {useCallback, useEffect} from 'react';
-import {Platform, StyleSheet, Alert, View, Text, TouchableOpacity, Button} from 'react-native';
+import {Platform, StyleSheet, Alert, View, Text, TouchableOpacity, Button, ViewStyle} from 'react-native';
 import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar, LocaleConfig} from 'react-native-calendars';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
@@ -11,6 +10,8 @@ import {AGENDA_DATA_REQUEST} from './CalendarSlice';
 import {useState} from 'react';
 import realm from '../../db';
 import {Today} from '../../Utils/Day';
+import {RootState} from '../../store/configureStore';
+import {ItodoType, MarkedDate} from './CalendarType';
 
 LocaleConfig.locales['kr'] = {
   monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -23,6 +24,8 @@ LocaleConfig.defaultLocale = 'kr';
 
 const today = new Date().toISOString().split('T')[0];
 const themeColor = '#00AAAF';
+const leftArrowIcon = require('../img/previous.png');
+const rightArrowIcon = require('../img/next.png');
 
 // 해당일의 주에서 월요일을 계산
 var paramDate = new Date(today); // new Date('2021-06-08'): 화요일
@@ -30,7 +33,7 @@ var day = paramDate.getDay();
 var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
 var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
 
-function getTheme() {
+const getTheme = () => {
   const disabledColor = 'grey';
 
   return {
@@ -73,15 +76,12 @@ function getTheme() {
     disabledDotColor: disabledColor,
     dotStyle: {marginTop: 2}, // -2
   };
-}
-
-const leftArrowIcon = require('../img/previous.png');
-const rightArrowIcon = require('../img/next.png');
+};
 
 const ExpandableCalendarScreen = () => {
   const dispatch = useDispatch();
   const [onPressDay, setonPressDay] = useState('');
-  const {Agenda_DATA} = useSelector((state: any) => state.CALENDAR_DATA);
+  const {Agenda_DATA} = useSelector((state: RootState) => state.CALENDAR_DATA);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -90,27 +90,22 @@ const ExpandableCalendarScreen = () => {
     }
   }, [isFocused]);
 
-  type MarkedDate = {
-    [key: string]: object;
-  };
-
-  function getMarkedDates() {
+  const getMarkedDates = () => {
     const TodoList_View = realm.objects('TodoDataList');
     const TodoList_View_Data = TodoList_View.filtered('listDay !=  $0', 0);
-
     const marked: MarkedDate = {};
-    TodoList_View_Data.map((test) => {
-      let ch = Today(test.listDay); // 20220204 형식을 2022-02-24 형식으로 변환
+    TodoList_View_Data.map((date: any) => {
+      let ch = Today(date.listDay); // 20220204 형식을 2022-02-24 형식으로 변환
       marked[ch] = {marked: true};
     });
 
     return marked;
-  }
+  };
 
   const marked = getMarkedDates();
   const theme: any = getTheme();
 
-  const onDateChanged = (date: any) => {
+  const onDateChanged = (date: string) => {
     var paramDate = new Date(date); // new Date('2021-06-08'): 화요일
     var day = paramDate.getDay();
     var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
@@ -120,7 +115,7 @@ const ExpandableCalendarScreen = () => {
     dispatch(AGENDA_DATA_REQUEST(tey));
   };
 
-  const renderItem = ({item}: any) => {
+  const renderItem = ({item}: ItodoType) => {
     return <Agenda_List item={item} />;
   };
 
@@ -167,7 +162,7 @@ const ExpandableCalendarScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<any>({
   calendar: {
     paddingLeft: 20,
     paddingRight: 20,

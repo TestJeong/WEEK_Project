@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TextInput, View, Text, TouchableOpacity, Platform, Switch} from 'react-native';
+import {TouchableOpacity, Platform, Switch} from 'react-native';
 
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
@@ -8,7 +8,6 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import DateTime_Picke from '../HomeScreen/ToDo/DateTime_Picke';
-import {CLICK_DAY, CLICK_ENABLED} from '../../reducers/Catagory';
 import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../HomeScreen/ToDo/ToDoSlice';
 
 const Modal_Container = styled(Modal)`
@@ -19,10 +18,8 @@ const Modal_Container = styled(Modal)`
 
 const ModalView = styled.View`
   flex-direction: column;
-
   /* 모달창 크기 조절 */
   width: 330px;
-
   border-radius: 10px;
   background-color: white;
   padding: 5px 5px;
@@ -64,16 +61,13 @@ const Text_Close = styled.Text`
 
 const CalendarModal = ({openModal, closeModal, InputData}) => {
   const dispatch = useDispatch();
-  //const {onClickTime, onClickDay} = useSelector((state) => state.Catagory);
   const {onClickDay, twelve_HoursTime} = useSelector((state) => state.TODO_DATA);
 
-  const [clickDay, setClickDay] = useState(null);
+  const [clickDay, setClickDay] = useState(Date());
   const [isEnabled, setIsEnabled] = useState(false);
 
   const SaveCalendar = () => {
     dispatch(GET_DAY(clickDay));
-    // dispatch({type: CLICK_DAY, data: Number(clickDay.replace(/-/g, ''))});
-    // dispatch({type: CLICK_ENABLED, data: isEnabled});
     dispatch(GET_NOTIFICATION_ENABLED(isEnabled));
     closeModal();
   };
@@ -93,7 +87,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
       [clickDay]: {
         selected: true,
         marked: false,
-        selectedColor: '#2ad4af',
+        selectedColor: '#00AAAF',
         disableTouchEvent: true,
       },
     };

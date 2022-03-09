@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-interface initType {
+export interface initType {
   Agenda_DATA: any;
   Agenda_DATA_Timestamp: string;
   Agenda_DATA_loading: boolean;

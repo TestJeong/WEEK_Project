@@ -25,5 +25,6 @@ const store = configureStore({
 //   composeWithDevTools(applyMiddleware(...middlewares)),
 // );
 sagaMiddleware.run(rootSaga);
+export type RootState = ReturnType<typeof store.getState>;
 
 export default store;

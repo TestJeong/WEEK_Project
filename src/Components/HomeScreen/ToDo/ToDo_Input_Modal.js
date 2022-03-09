@@ -58,7 +58,7 @@ const Category_Title = styled.Text`
   margin-left: 15px;
 `;
 
-const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
+const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
   const [todoContents, setTodoContents] = useState('');
 
   const inputRef = useRef();
@@ -75,6 +75,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
 
   useEffect(() => {
     if (isOpen) {
+      console.log('!!!!', day);
       Platform.OS === 'ios' ? inputRef.current.focus() : setTimeout(() => inputRef.current.focus(), 40);
     }
   }, [isOpen]);
@@ -117,7 +118,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
           createTime: Day(),
           categoryTitle: inputCategoryData ? inputCategoryData.title : categoryName,
           listContent: todoContents,
-          listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : null,
+          listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : day && Number(day.replace(/-/g, '')),
           listTime: twelve_HoursTime ? twelve_HoursTime : null,
           listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : null,
           listPriority: onClickPriority ? onClickPriority : 4,
@@ -178,7 +179,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime}) => {
             <Button_View>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity hitSlop={{top: 20, bottom: 20, left: 20, right: 20}} onPress={opneModal} style={{marginRight: 30}}>
-                  <Icon name="calendar" size={23} color={onClickDay ? '#75bde0' : 'black'} />
+                  <Icon name="calendar" size={23} color={day || onClickDay ? '#75bde0' : 'black'} />
                 </TouchableOpacity>
 
                 <TouchableOpacity hitSlop={{top: 20, bottom: 20, left: 20, right: 20}} onPress={likeOpen} style={{marginRight: 30}}>

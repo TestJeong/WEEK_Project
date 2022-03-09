@@ -1,4 +1,5 @@
 import Realm from 'realm';
+import {Day} from '../Utils/Day';
 
 export interface CategoryType {
   createTime: string;
@@ -25,13 +26,13 @@ export const Category: Realm.ObjectSchema = {
   name: 'CategoryList',
   primaryKey: 'createTime',
   properties: {
-    createTime: 'string',
-    title: 'string',
+    createTime: {type: 'string', default: Day()},
+    title: {type: 'string', default: 'Inbox'},
     color: {
       type: 'string',
       default: '#c2c8c5',
     },
-    todoData: 'TodoDataList[]',
+    todoData: {type: 'list', objectType: 'TodoDataList'},
   },
 };
 
@@ -55,7 +56,7 @@ export const TodoData: Realm.ObjectSchema = {
 
 let realm = new Realm({
   schema: [Category, TodoData],
-  schemaVersion: 13,
+  schemaVersion: 16,
   migration: (oldRealm, newRealm) => {
     // only apply this change if upgrading to schemaVersion 1
     if (oldRealm.schemaVersion < 1) {
