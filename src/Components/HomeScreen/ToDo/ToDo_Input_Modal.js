@@ -9,7 +9,7 @@ import styled from 'styled-components/native';
 import realm from '../../../db';
 import CalendarModal from '../../CalendarScreen/CalendarModal';
 import Priority_Modal from './ Priority';
-import {Day, IOS_Notif} from '../../../Utils/Day';
+import {Day, IOS_Notif, IOS_today} from '../../../Utils/Day';
 import {MY_CATEGORY_DATA, CLICK_DAY, CLICK_PRIORITY, CLICK_CATEGORY_INPUT, CLICK_TIME} from '../../../reducers/Catagory';
 import Category_Modal from '../Category/Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
@@ -136,7 +136,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
       });
       const categoryTitle = inputCategoryData ? inputCategoryData.title : categoryName;
 
-      if (onClickDay && twelve_HoursTime && Platform.OS === 'ios' && new Date(IOS_Notif(onClickDay, twenty_Four_HoursTime)) > new Date(Notif_Day()) && isNotificationEnabled) {
+      if (onClickDay && twelve_HoursTime && Platform.OS === 'ios' && new Date(IOS_Notif(onClickDay, twenty_Four_HoursTime)) > new Date(IOS_today()) && isNotificationEnabled) {
         Schedule_Notif(onClickDay, twenty_Four_HoursTime, todoContents, NotifID, categoryTitle);
       } else if (
         onClickDay &&
@@ -147,7 +147,6 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
       ) {
         Schedule_Notif(onClickDay, twenty_Four_HoursTime, todoContents, NotifID, categoryTitle);
       }
-
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       setTodoContents('');

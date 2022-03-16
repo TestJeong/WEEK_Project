@@ -157,11 +157,6 @@ const HomeScreen = () => {
   //   // });
   // }, [test === true]);
 
-  (function () {
-    // 실행코드
-    console.log('12312312312');
-  })();
-
   useEffect(() => {
     if (isFocused) {
       dispatch(RESET_CATEGORYT_DATA());
@@ -182,7 +177,7 @@ const HomeScreen = () => {
     });
 
     PushNotification.getScheduledLocalNotifications((notif) => {
-      //console.log('예약 알림', notif);
+      console.log('예약 알림', notif);
     });
 
     Edit_Schedule_Notif();
