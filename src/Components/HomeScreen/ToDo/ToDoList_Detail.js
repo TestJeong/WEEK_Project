@@ -176,10 +176,7 @@ const ToDoList_Detail = ({navigation}) => {
     if (isEnableds === false) {
       PushNotification.cancelLocalNotification({id: String_ID});
     }
-    console.log('??!@#', isEnableds);
-    //dispatch({type: CLICK_TODO_LIST_DATA, data: TodoList_View_Data});
     dispatch(SELECTED_TODOLIST_DATA(TodoList_View_Data));
-    //dispatch({type: CLICK_CATEGORY_INPUT, data: null});
     dispatch(RESET_INPUT_DATA());
 
     navigation.goBack();

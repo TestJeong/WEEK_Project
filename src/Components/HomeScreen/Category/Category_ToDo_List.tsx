@@ -4,9 +4,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
-
 import styled from 'styled-components/native';
-
 import ToDo_List_View from '../ToDo/ToDo_List_View';
 import {RootStackParamList} from '../../Navgation/StackNavigator';
 import {Edit_Schedule_Notif} from '../ToDo/ToDo_Notification';

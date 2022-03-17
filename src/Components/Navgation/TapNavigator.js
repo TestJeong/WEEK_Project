@@ -14,7 +14,7 @@ const TapNavigator = () => {
 
   useEffect(() => {
     const CategoryData = realm.objects('CategoryList');
-    const SortCategoryDate = CategoryData.sorted('createTime');
+    const SortCategoryDate = CategoryData.sorted('id');
     dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
     dispatch(RESET_INPUT_DATA());
   }, []);

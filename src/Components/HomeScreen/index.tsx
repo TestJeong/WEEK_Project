@@ -12,8 +12,9 @@ import Category_List_View from './Category/Category_List_View';
 import Category_Modal_View from './Category/Category_Modal_View';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from './ToDo/ToDo_Notification';
-import {RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './Category/CategorySlice';
+import {REQUEST_CATEGORY_DATA, RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './Category/CategorySlice';
 import {LogBox} from 'react-native';
+import {UpdateMode} from 'realm';
 
 LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!"]);
 
@@ -111,6 +112,11 @@ const data = {
   },
 };
 
+interface Idragtype {
+  item: CategoryType;
+  index: number;
+}
+
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [today_ToDo, setToday_ToDo] = useState(0);
@@ -118,7 +124,6 @@ const HomeScreen = () => {
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
 
-  const [test, setTest] = useState(false);
   const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
@@ -128,6 +133,7 @@ const HomeScreen = () => {
   const int_Local_Time = Number(string_Local_Time.replace(/-/g, ''));
 
   const TodoList_View = realm.objects('TodoDataList');
+  const CategoryL = realm.objects('CategoryList');
 
   const widgetData = {
     today: today_ToDo,
@@ -150,13 +156,6 @@ const HomeScreen = () => {
 
   const isFocused = useIsFocused();
 
-  // useEffect(() => {
-  //   console.log('??');
-  //   // realm.write(() => {
-  //   //   realm.create<any>('CategoryList', {});
-  //   // });
-  // }, [test === true]);
-
   useEffect(() => {
     if (isFocused) {
       dispatch(RESET_CATEGORYT_DATA());
@@ -176,9 +175,9 @@ const HomeScreen = () => {
       }
     });
 
-    PushNotification.getScheduledLocalNotifications((notif) => {
-      console.log('예약 알림', notif);
-    });
+    // PushNotification.getScheduledLocalNotifications((notif) => {
+    //   console.log('예약 알림', notif);
+    // });
 
     Edit_Schedule_Notif();
 
@@ -296,16 +295,16 @@ const HomeScreen = () => {
       </Main_Container>
       <View style={styles.container}>
         <CategoryTitleText style={{includeFontPadding: false}}>CATEGORY</CategoryTitleText>
-        {/* <FlatListView
-          keyExtractor={(item, index) => '#' + index}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          data={categoryList}
-          renderItem={(item) => <Category_List_View data={item} />}
-        /> */}
         <DraggableFlatList
           style={styles.draggableList}
           data={categoryList}
-          onDragEnd={({data}: any) => console.log('!!!!!!', data)}
+          onDragEnd={({data}: any) => {
+            data.forEach((item: CategoryType, index: number) => {
+              realm.write(() => {
+                realm.create('CategoryList', {createTime: item.createTime, id: index + 1}, UpdateMode.Modified);
+              });
+            });
+          }}
           keyExtractor={(item: any, index: number) => '#' + index}
           renderItem={renderItem}
         />

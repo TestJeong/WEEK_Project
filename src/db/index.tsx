@@ -1,7 +1,12 @@
 import Realm from 'realm';
 import {Day} from '../Utils/Day';
 
+export interface IsystemType {
+  firstType: Boolean;
+}
+
 export interface CategoryType {
+  id?: number;
   createTime: string;
   title: string;
   color: string;
@@ -22,11 +27,19 @@ export interface ToDoType {
   listEnabled: boolean;
 }
 
+export const System: Realm.ObjectSchema = {
+  name: 'System',
+  properties: {
+    firstType: {type: 'bool', default: true},
+  },
+};
+
 export const Category: Realm.ObjectSchema = {
   name: 'CategoryList',
   primaryKey: 'createTime',
   properties: {
     createTime: {type: 'string', default: Day()},
+    id: {type: 'int', default: 1},
     title: {type: 'string', default: 'Inbox'},
     color: {
       type: 'string',
@@ -55,8 +68,8 @@ export const TodoData: Realm.ObjectSchema = {
 };
 
 let realm = new Realm({
-  schema: [Category, TodoData],
-  schemaVersion: 16,
+  schema: [Category, TodoData, System],
+  schemaVersion: 20,
   migration: (oldRealm, newRealm) => {
     // only apply this change if upgrading to schemaVersion 1
     if (oldRealm.schemaVersion < 1) {

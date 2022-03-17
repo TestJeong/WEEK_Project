@@ -108,7 +108,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
   const ToDoInput_Enter = () => {
     const NotifID = Math.floor(Math.random() * 100000);
     const CategoryData = realm.objects('CategoryList');
-    const SortCategoryDate = CategoryData.sorted('createTime');
+    const SortCategoryDate = CategoryData.sorted('id');
 
     if (!inputCategoryData && !categoryName) {
       alert('카테고리를 설정 해주세요!');

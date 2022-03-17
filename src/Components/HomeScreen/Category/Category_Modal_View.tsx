@@ -78,9 +78,11 @@ const Category_Modal_View = ({isOpen, close, data}: CModalType) => {
   };
 
   const SaveButton: any = () => {
+    const CategoryData = realm.objects('CategoryList');
+
     if (categoryTitle !== '') {
       realm.write(() => {
-        realm.create<CategoryType>('CategoryList', {createTime: data ? data.createTime : Day(), title: categoryTitle, color: paletteColor}, UpdateMode.Modified);
+        realm.create<CategoryType>('CategoryList', {createTime: data ? data.createTime : Day(), title: categoryTitle, color: paletteColor, id: CategoryData.length + 1}, UpdateMode.Modified);
         if (data) {
           let ToDos: CategoryType = realm.create<CategoryType>('CategoryList', {createTime: data.createTime}, UpdateMode.Modified);
           ToDos.todoData.forEach((item: ToDoType) => {
@@ -92,7 +94,6 @@ const Category_Modal_View = ({isOpen, close, data}: CModalType) => {
         }
       });
 
-      const CategoryData = realm.objects('CategoryList');
       const SortCategoryDate = CategoryData.sorted('createTime');
       //dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
