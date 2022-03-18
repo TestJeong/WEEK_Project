@@ -1,8 +1,7 @@
 import React from 'react';
-import {TextInput, View, Text, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {CLICK_CATEGORY_INPUT} from '../../../reducers/Catagory';
 import {GET_CATEGORY_DATA} from '../ToDo/ToDoSlice';
 
 const Container = styled.View`

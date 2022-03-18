@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {StyleSheet, ScrollView, View, Text, TouchableOpacity, SafeAreaView, Button, NativeModules} from 'react-native';
+import {StyleSheet, View, SafeAreaView, NativeModules} from 'react-native';
 import styled from 'styled-components/native';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -12,7 +12,7 @@ import Category_List_View from './Category/Category_List_View';
 import Category_Modal_View from './Category/Category_Modal_View';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from './ToDo/ToDo_Notification';
-import {REQUEST_CATEGORY_DATA, RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './Category/CategorySlice';
+import {RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './Category/CategorySlice';
 import {LogBox} from 'react-native';
 import {UpdateMode} from 'realm';
 

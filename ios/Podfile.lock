@@ -377,12 +377,39 @@ PODS:
     - React-Core
   - RNDateTimePicker (5.1.0):
     - React-Core
-  - RNGestureHandler (2.2.0):
+  - RNGestureHandler (1.10.3):
     - React-Core
   - RNReactNativeSharedGroupPreferences (1.1.23):
     - React
-  - RNReanimated (1.13.4):
+  - RNReanimated (2.2.4):
+    - DoubleConversion
+    - FBLazyVector
+    - FBReactNativeSpec
+    - glog
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
+    - React
+    - React-callinvoker
     - React-Core
+    - React-Core/DevSupport
+    - React-Core/RCTWebSocket
+    - React-CoreModules
+    - React-cxxreact
+    - React-jsi
+    - React-jsiexecutor
+    - React-jsinspector
+    - React-RCTActionSheet
+    - React-RCTAnimation
+    - React-RCTBlob
+    - React-RCTImage
+    - React-RCTLinking
+    - React-RCTNetwork
+    - React-RCTSettings
+    - React-RCTText
+    - React-RCTVibration
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNScreens (3.10.1):
     - React-Core
     - React-RCTImage
@@ -633,9 +660,9 @@ SPEC CHECKSUMS:
   RNCMaskedView: f127cd9652acfa31b91dcff613e07ba18b774db6
   RNCPushNotificationIOS: 5b1cf9ad2aaa107ecb92d5d2d7005ba521b2b97a
   RNDateTimePicker: cad741dac386f8178bf76e86f0a3c4b22173e0e4
-  RNGestureHandler: bf572f552ea324acd5b5464b8d30755b2d8c1de6
+  RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReactNativeSharedGroupPreferences: bd6c52319a9f76bde33103cc3bc4f16ecc650653
-  RNReanimated: c1b56d030d1616239861534d9adb531f8cffab68
+  RNReanimated: e28dfaa950064b674fde0a9b736e62b9dff500a7
   RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9

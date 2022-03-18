@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {TextInput, View, Text, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
+import {View, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
 
 import Modal from 'react-native-modal';
 import {useSelector, useDispatch} from 'react-redux';
@@ -10,7 +10,7 @@ import realm from '../../../db';
 import CalendarModal from '../../CalendarScreen/CalendarModal';
 import Priority_Modal from './ Priority';
 import {Day, IOS_Notif, IOS_today} from '../../../Utils/Day';
-import {MY_CATEGORY_DATA, CLICK_DAY, CLICK_PRIORITY, CLICK_CATEGORY_INPUT, CLICK_TIME} from '../../../reducers/Catagory';
+import {MY_CATEGORY_DATA} from '../../../reducers/Catagory';
 import Category_Modal from '../Category/Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
 import {ANDROID_Notif, Notif_Day} from '../../../Utils/Day';
