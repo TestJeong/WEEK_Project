@@ -49,7 +49,8 @@ export const Schedule_Notif = (onClickDay, timeString, todoContents, NotifID, ca
     (created) => console.log(`createChannel 'default-channel-id' returned '${created}'`),
   );
 
-  const Platform_Date = Platform.OS === 'ios' ? IOS_Notif(onClickDay, timeString) : ANDROID_Notif(onClickDay, timeString);
+  //const Platform_Date = Platform.OS === 'ios' ? IOS_Notif(onClickDay, timeString) : ANDROID_Notif(onClickDay, timeString);
+  const Platform_Date = IOS_Notif(onClickDay, timeString);
 
   const ScheduleNotif = () => {
     PushNotification.localNotificationSchedule({

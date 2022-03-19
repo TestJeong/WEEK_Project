@@ -75,7 +75,6 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
 
   useEffect(() => {
     if (isOpen) {
-      console.log('!!!!', day);
       Platform.OS === 'ios' ? inputRef.current.focus() : setTimeout(() => inputRef.current.focus(), 40);
     }
   }, [isOpen]);
@@ -136,15 +135,7 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
       });
       const categoryTitle = inputCategoryData ? inputCategoryData.title : categoryName;
 
-      if (onClickDay && twelve_HoursTime && Platform.OS === 'ios' && new Date(IOS_Notif(onClickDay, twenty_Four_HoursTime)) > new Date(IOS_today()) && isNotificationEnabled) {
-        Schedule_Notif(onClickDay, twenty_Four_HoursTime, todoContents, NotifID, categoryTitle);
-      } else if (
-        onClickDay &&
-        twelve_HoursTime &&
-        Platform.OS === 'android' &&
-        new Date(ANDROID_Notif(onClickDay, twenty_Four_HoursTime)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
-        isNotificationEnabled
-      ) {
+      if (onClickDay && twelve_HoursTime && new Date(IOS_Notif(onClickDay, twenty_Four_HoursTime)) > new Date(IOS_today()) && isNotificationEnabled) {
         Schedule_Notif(onClickDay, twenty_Four_HoursTime, todoContents, NotifID, categoryTitle);
       }
       dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
