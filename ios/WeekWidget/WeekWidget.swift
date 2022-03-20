@@ -90,9 +90,9 @@ struct WeekWidgetEntryView : View {
          
          switch family {
          case .systemSmall:
-             Text("Small")
+           WidgetSmallF(entry: entry)
          case .systemMedium:
-             Text("Medium")
+           WidgetMedium(entry: entry)
          case .systemLarge:
              Text("Large")
          default:
@@ -100,31 +100,6 @@ struct WeekWidgetEntryView : View {
          }
 
      }
-
-//    var body: some View {
-//      HStack{
-//        VStack {
-//          Text("오늘")
-//          Text(String(entry.today))
-//            .bold()
-//        }.padding(20)
-//        VStack {
-//          Text("예정")
-//          Text(String(entry.willToDo))
-//            .bold()
-//        }.padding(20)
-//        VStack {
-//          Text("중요")
-//          Text(String(entry.priorityToDo))
-//            .bold()
-//        }.padding(20)
-//        VStack {
-//          Text("전체")
-//          Text(String(entry.allToDo))
-//            .bold()
-//        }.padding(20)
-//      }
-//    }
 }
 
 @main
@@ -135,6 +110,7 @@ struct WeekWidget: Widget {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
           WeekWidgetEntryView(entry: entry)
         }
+        .supportedFamilies([.systemSmall,.systemMedium])
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
     }

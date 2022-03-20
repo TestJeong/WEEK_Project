@@ -21,7 +21,7 @@ LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an ol
 const TitleText = styled.Text`
   font-family: 'NotoSansKR-Bold';
   font-size: 24px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 `;
 
 const CategoryTitleText = styled.Text`
@@ -37,13 +37,11 @@ const PlusText = styled.Text`
 `;
 
 const Main_Container = styled.View`
-  height: 47%;
   justify-content: flex-end;
 `;
 
 const Column_View = styled.View`
   flex-direction: row;
-  height: 30%;
   justify-content: space-between;
   margin-bottom: 20px;
   align-items: flex-end;
@@ -54,7 +52,9 @@ const Column_Btn = styled.TouchableOpacity`
   justify-content: space-between;
   padding: 20px;
   width: 48%;
+  height: 125px;
   border-radius: 10px;
+  margin-bottom: 10px;
 `;
 
 const Plus_Category_Btn = styled.TouchableOpacity`
@@ -69,7 +69,6 @@ const Main_Title_Number = styled.View`
 
 const Main_Title_Number_Text = styled.Text`
   font-size: 30px;
-
   font-family: 'NotoSansKR-Bold';
 `;
 
@@ -175,15 +174,15 @@ const HomeScreen = () => {
       }
     });
 
-    PushNotification.getScheduledLocalNotifications((notif) => {
-      console.log('예약 알림', notif);
-    });
+    // PushNotification.getScheduledLocalNotifications((notif) => {
+    //   console.log('예약 알림', notif);
+    // });
 
     Edit_Schedule_Notif();
 
-    Realm.open({}).then((realm) => {
-      console.log('Realm is located at: ' + realm.path.toString());
-    });
+    // Realm.open({}).then((realm) => {
+    //   console.log('Realm is located at: ' + realm.path.toString());
+    // });
 
     const Today_List_View_Data = TodoList_View.filtered('listDay == $0 AND listClear == $1', int_Local_Time, false);
     const Will_List_View_Data = TodoList_View.filtered('listDay > $0 AND listClear == $1', int_Local_Time, false);
@@ -246,58 +245,55 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, margin: 10}}>
+    <SafeAreaView style={{flex: 1, margin: 15}}>
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={null} />
-      <Main_Container>
-        <View style={{flex: 0.9}}>
-          <TitleText style={{includeFontPadding: false}}>MY WEEK</TitleText>
-        </View>
-        <Column_View style={{marginBottom: 40}}>
-          <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>
-            <Main_Title_View>
-              <Main_Title_Text style={{includeFontPadding: false}}>오늘</Main_Title_Text>
-              <Main_Title_Text style={{includeFontPadding: false}}>⏰</Main_Title_Text>
-            </Main_Title_View>
-            <Main_Title_Number>
-              <Main_Title_Number_Text style={{includeFontPadding: false}}>{today_ToDo}</Main_Title_Number_Text>
-            </Main_Title_Number>
-          </Column_Btn>
-          <Column_Btn onPress={will_ToDo_Data} style={{backgroundColor: '#ccabd8'}}>
-            <Main_Title_View>
-              <Main_Title_Text style={{includeFontPadding: false}}>예정</Main_Title_Text>
-              <Main_Title_Text style={{includeFontPadding: false}}>🛎</Main_Title_Text>
-            </Main_Title_View>
-            <Main_Title_Number>
-              <Main_Title_Number_Text style={{includeFontPadding: false}}>{will_ToDo}</Main_Title_Number_Text>
-            </Main_Title_Number>
-          </Column_Btn>
-        </Column_View>
-        <Column_View>
-          <Column_Btn onPress={Priority_ToDo_Data} style={{backgroundColor: '#d0e6a5'}}>
-            <Main_Title_View>
-              <Main_Title_Text style={{includeFontPadding: false}}>중요</Main_Title_Text>
-              <Main_Title_Text style={{includeFontPadding: false}}>💡</Main_Title_Text>
-            </Main_Title_View>
-            <Main_Title_Number>
-              <Main_Title_Number_Text style={{includeFontPadding: false}}>{priority_ToDo}</Main_Title_Number_Text>
-            </Main_Title_Number>
-          </Column_Btn>
-          <Column_Btn onPress={All_ToDo_Data} style={{backgroundColor: '#a2b9ee'}}>
-            <Main_Title_View>
-              <Main_Title_Text style={{includeFontPadding: false}}>전체</Main_Title_Text>
-              <Main_Title_Text style={{includeFontPadding: false}}>📅</Main_Title_Text>
-            </Main_Title_View>
-            <Main_Title_Number>
-              <Main_Title_Number_Text style={{includeFontPadding: false}}>{all_ToDo}</Main_Title_Number_Text>
-            </Main_Title_Number>
-          </Column_Btn>
-        </Column_View>
-      </Main_Container>
+      <TitleText style={{includeFontPadding: false}}>MY WEEK</TitleText>
+      <Column_View style={{marginBottom: 10}}>
+        <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>
+          <Main_Title_View>
+            <Main_Title_Text style={{includeFontPadding: false}}>오늘</Main_Title_Text>
+            <Main_Title_Text style={{includeFontPadding: false}}>⏰</Main_Title_Text>
+          </Main_Title_View>
+          <Main_Title_Number>
+            <Main_Title_Number_Text style={{includeFontPadding: false}}>{today_ToDo}</Main_Title_Number_Text>
+          </Main_Title_Number>
+        </Column_Btn>
+        <Column_Btn onPress={will_ToDo_Data} style={{backgroundColor: '#ccabd8'}}>
+          <Main_Title_View>
+            <Main_Title_Text style={{includeFontPadding: false}}>예정</Main_Title_Text>
+            <Main_Title_Text style={{includeFontPadding: false}}>🛎</Main_Title_Text>
+          </Main_Title_View>
+          <Main_Title_Number>
+            <Main_Title_Number_Text style={{includeFontPadding: false}}>{will_ToDo}</Main_Title_Number_Text>
+          </Main_Title_Number>
+        </Column_Btn>
+      </Column_View>
+      <Column_View>
+        <Column_Btn onPress={Priority_ToDo_Data} style={{backgroundColor: '#d0e6a5'}}>
+          <Main_Title_View>
+            <Main_Title_Text style={{includeFontPadding: false}}>중요</Main_Title_Text>
+            <Main_Title_Text style={{includeFontPadding: false}}>💡</Main_Title_Text>
+          </Main_Title_View>
+          <Main_Title_Number>
+            <Main_Title_Number_Text style={{includeFontPadding: false}}>{priority_ToDo}</Main_Title_Number_Text>
+          </Main_Title_Number>
+        </Column_Btn>
+        <Column_Btn onPress={All_ToDo_Data} style={{backgroundColor: '#a2b9ee'}}>
+          <Main_Title_View>
+            <Main_Title_Text style={{includeFontPadding: false}}>전체</Main_Title_Text>
+            <Main_Title_Text style={{includeFontPadding: false}}>📅</Main_Title_Text>
+          </Main_Title_View>
+          <Main_Title_Number>
+            <Main_Title_Number_Text style={{includeFontPadding: false}}>{all_ToDo}</Main_Title_Number_Text>
+          </Main_Title_Number>
+        </Column_Btn>
+      </Column_View>
+      <CategoryTitleText style={{includeFontPadding: false}}>CATEGORY</CategoryTitleText>
       <View style={styles.container}>
-        <CategoryTitleText style={{includeFontPadding: false}}>CATEGORY</CategoryTitleText>
         <DraggableFlatList
           style={styles.draggableList}
           data={categoryList}
+          ItemSeparatorComponent={() => <View style={{height: 1, opacity: 0.3, backgroundColor: 'gray', marginRight: 20}} />}
           onDragEnd={({data}: any) => {
             data.forEach((item: CategoryType, index: number) => {
               realm.write(() => {
@@ -308,11 +304,11 @@ const HomeScreen = () => {
           keyExtractor={(item: any, index: number) => '#' + index}
           renderItem={renderItem}
         />
-        <Plus_Category_Btn onPress={opneModal}>
-          <Icon name="pluscircleo" size={25} />
-          <PlusText>카테고리 추가</PlusText>
-        </Plus_Category_Btn>
       </View>
+      <Plus_Category_Btn onPress={opneModal}>
+        <Icon name="pluscircleo" size={25} />
+        <PlusText>카테고리 추가</PlusText>
+      </Plus_Category_Btn>
     </SafeAreaView>
   );
 };
@@ -321,11 +317,11 @@ const styles = StyleSheet.create({
   draggableList: {
     backgroundColor: '#f8e6cb',
     borderRadius: 10,
-    height: '70%',
     paddingLeft: 20,
+    height: '100%',
   },
   container: {
-    height: '52%',
+    flex: 1,
   },
   separator: {
     backgroundColor: 'white',
