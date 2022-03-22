@@ -10,7 +10,9 @@
 
 @interface RCT_EXTERN_MODULE(WeekWidgetModule, NSObject)
 
-RCT_EXTERN_METHOD(setWidgetData:(NSDictionary *))
+RCT_EXTERN_METHOD(setWidgetData:(NSArray *))
 RCT_EXTERN_METHOD(refreshAllWidgets)
+RCT_EXTERN_METHOD(getWidgetData:(NSString *))
+
 
 @end

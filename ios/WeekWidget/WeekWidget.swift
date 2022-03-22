@@ -78,7 +78,6 @@ struct SimpleEntry: TimelineEntry {
     let willToDo: Int
     let priorityToDo: Int
     let allToDo: Int
-
 }
 
 struct WeekWidgetEntryView : View {

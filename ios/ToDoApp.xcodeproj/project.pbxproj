@@ -15,14 +15,16 @@
 		224A6CDC278B27630044A918 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22FC3BB9278AB0230044DDFD /* SwiftUI.framework */; };
 		224A6CDF278B27630044A918 /* WeekWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224A6CDE278B27630044A918 /* WeekWidget.swift */; };
 		224A6CE2278B27640044A918 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 224A6CE1278B27640044A918 /* Assets.xcassets */; };
-		224A6CE4278B27640044A918 /* WeekWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 224A6CE0278B27630044A918 /* WeekWidget.intentdefinition */; };
 		224A6CE5278B27640044A918 /* WeekWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 224A6CE0278B27630044A918 /* WeekWidget.intentdefinition */; };
 		224A6CE8278B27640044A918 /* WeekWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 224A6CDA278B27630044A918 /* WeekWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		22B4F72A27E6D71900AF2EB5 /* WidgetMedium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F72927E6D71900AF2EB5 /* WidgetMedium.swift */; };
 		22B4F72C27E705DF00AF2EB5 /* WidgetSmallF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F72B27E705DF00AF2EB5 /* WidgetSmallF.swift */; };
-		22B4F73327E7213A00AF2EB5 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B4F73227E7213A00AF2EB5 /* Intents.framework */; };
-		22B4F73627E7213A00AF2EB5 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F73527E7213A00AF2EB5 /* IntentHandler.swift */; };
-		22B4F73A27E7213A00AF2EB5 /* WeekWidgetIntentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 22B4F73127E7213A00AF2EB5 /* WeekWidgetIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		22B4F77F27E7338500AF2EB5 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B4F73227E7213A00AF2EB5 /* Intents.framework */; };
+		22B4F78227E7338500AF2EB5 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F78127E7338500AF2EB5 /* IntentHandler.swift */; };
+		22B4F78627E7338500AF2EB5 /* WeekWidgetIntentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 22B4F77E27E7338500AF2EB5 /* WeekWidgetIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		22B4F78B27E7464300AF2EB5 /* WeekWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 224A6CE0278B27630044A918 /* WeekWidget.intentdefinition */; };
+		22B4F78C27E7465E00AF2EB5 /* WeekWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 224A6CE0278B27630044A918 /* WeekWidget.intentdefinition */; };
+		22B4F79027E747CB00AF2EB5 /* WeekWidgeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CCD437278F07720055BC1D /* WeekWidgeModule.swift */; };
 		22CCD438278F07720055BC1D /* WeekWidgeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CCD437278F07720055BC1D /* WeekWidgeModule.swift */; };
 		22CCD439278F07720055BC1D /* WeekWidgeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CCD437278F07720055BC1D /* WeekWidgeModule.swift */; };
 		22CCD43C278F0FEB0055BC1D /* WeekModuleBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CCD43B278F0FEB0055BC1D /* WeekModuleBridge.m */; };
@@ -60,11 +62,11 @@
 			remoteGlobalIDString = 224A6CD9278B27630044A918;
 			remoteInfo = HostExtension;
 		};
-		22B4F73827E7213A00AF2EB5 /* PBXContainerItemProxy */ = {
+		22B4F78427E7338500AF2EB5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 22B4F73027E7213A00AF2EB5;
+			remoteGlobalIDString = 22B4F77D27E7338500AF2EB5;
 			remoteInfo = WeekWidgetIntentExtension;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
@@ -83,7 +85,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				22B4F73A27E7213A00AF2EB5 /* WeekWidgetIntentExtension.appex in Embed App Extensions */,
+				22B4F78627E7338500AF2EB5 /* WeekWidgetIntentExtension.appex in Embed App Extensions */,
 				224A6CE8278B27640044A918 /* WeekWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -105,6 +107,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ToDoApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ToDoApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ToDoApp/main.m; sourceTree = "<group>"; };
+		223AABC427E8D1BF00C775FA /* WeekWidgetIntentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WeekWidgetIntentExtension.entitlements; sourceTree = "<group>"; };
 		224A6CDA278B27630044A918 /* WeekWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WeekWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		224A6CDE278B27630044A918 /* WeekWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekWidget.swift; sourceTree = "<group>"; };
 		224A6CE0278B27630044A918 /* WeekWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = WeekWidget.intentdefinition; sourceTree = "<group>"; };
@@ -114,10 +117,11 @@
 		22ADE596278C9B8000298F92 /* WeekWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WeekWidgetExtension.entitlements; sourceTree = "<group>"; };
 		22B4F72927E6D71900AF2EB5 /* WidgetMedium.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetMedium.swift; sourceTree = "<group>"; };
 		22B4F72B27E705DF00AF2EB5 /* WidgetSmallF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSmallF.swift; sourceTree = "<group>"; };
-		22B4F73127E7213A00AF2EB5 /* WeekWidgetIntentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WeekWidgetIntentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		22B4F73227E7213A00AF2EB5 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
-		22B4F73527E7213A00AF2EB5 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
-		22B4F73727E7213A00AF2EB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22B4F74D27E72AFF00AF2EB5 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		22B4F77E27E7338500AF2EB5 /* WeekWidgetIntentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WeekWidgetIntentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		22B4F78127E7338500AF2EB5 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		22B4F78327E7338500AF2EB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22CCD436278F07720055BC1D /* ToDoApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ToDoApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		22CCD437278F07720055BC1D /* WeekWidgeModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekWidgeModule.swift; sourceTree = "<group>"; };
 		22CCD43A278F0FEB0055BC1D /* WeekWidgetExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WeekWidgetExtension-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -212,11 +216,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		22B4F72E27E7213A00AF2EB5 /* Frameworks */ = {
+		22B4F77B27E7338500AF2EB5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22B4F73327E7213A00AF2EB5 /* Intents.framework in Frameworks */,
+				22B4F77F27E7338500AF2EB5 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,11 +289,12 @@
 			path = WeekWidget;
 			sourceTree = "<group>";
 		};
-		22B4F73427E7213A00AF2EB5 /* WeekWidgetIntentExtension */ = {
+		22B4F78027E7338500AF2EB5 /* WeekWidgetIntentExtension */ = {
 			isa = PBXGroup;
 			children = (
-				22B4F73527E7213A00AF2EB5 /* IntentHandler.swift */,
-				22B4F73727E7213A00AF2EB5 /* Info.plist */,
+				223AABC427E8D1BF00C775FA /* WeekWidgetIntentExtension.entitlements */,
+				22B4F78127E7338500AF2EB5 /* IntentHandler.swift */,
+				22B4F78327E7338500AF2EB5 /* Info.plist */,
 			);
 			path = WeekWidgetIntentExtension;
 			sourceTree = "<group>";
@@ -314,6 +319,7 @@
 				5A20D8FDA173A4A5F25803BE /* libPods-ToDoApp-tvOS.a */,
 				AF7CC82C2063379055887C33 /* libPods-ToDoApp-tvOSTests.a */,
 				22B4F73227E7213A00AF2EB5 /* Intents.framework */,
+				22B4F74D27E72AFF00AF2EB5 /* IntentsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -364,7 +370,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ToDoAppTests */,
 				224A6CDD278B27630044A918 /* WeekWidget */,
-				22B4F73427E7213A00AF2EB5 /* WeekWidgetIntentExtension */,
+				22B4F78027E7338500AF2EB5 /* WeekWidgetIntentExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D01FEF8889456CDE54BC41D5 /* Pods */,
@@ -385,7 +391,7 @@
 				2D02E47B1E0B4A5D006451C7 /* ToDoApp-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* ToDoApp-tvOSTests.xctest */,
 				224A6CDA278B27630044A918 /* WeekWidgetExtension.appex */,
-				22B4F73127E7213A00AF2EB5 /* WeekWidgetIntentExtension.appex */,
+				22B4F77E27E7338500AF2EB5 /* WeekWidgetIntentExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -476,7 +482,7 @@
 			);
 			dependencies = (
 				224A6CE7278B27640044A918 /* PBXTargetDependency */,
-				22B4F73927E7213A00AF2EB5 /* PBXTargetDependency */,
+				22B4F78527E7338500AF2EB5 /* PBXTargetDependency */,
 			);
 			name = ToDoApp;
 			productName = ToDoApp;
@@ -500,13 +506,13 @@
 			productReference = 224A6CDA278B27630044A918 /* WeekWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		22B4F73027E7213A00AF2EB5 /* WeekWidgetIntentExtension */ = {
+		22B4F77D27E7338500AF2EB5 /* WeekWidgetIntentExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 22B4F73B27E7213A00AF2EB5 /* Build configuration list for PBXNativeTarget "WeekWidgetIntentExtension" */;
+			buildConfigurationList = 22B4F78727E7338500AF2EB5 /* Build configuration list for PBXNativeTarget "WeekWidgetIntentExtension" */;
 			buildPhases = (
-				22B4F72D27E7213A00AF2EB5 /* Sources */,
-				22B4F72E27E7213A00AF2EB5 /* Frameworks */,
-				22B4F72F27E7213A00AF2EB5 /* Resources */,
+				22B4F77A27E7338500AF2EB5 /* Sources */,
+				22B4F77B27E7338500AF2EB5 /* Frameworks */,
+				22B4F77C27E7338500AF2EB5 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -514,7 +520,7 @@
 			);
 			name = WeekWidgetIntentExtension;
 			productName = WeekWidgetIntentExtension;
-			productReference = 22B4F73127E7213A00AF2EB5 /* WeekWidgetIntentExtension.appex */;
+			productReference = 22B4F77E27E7338500AF2EB5 /* WeekWidgetIntentExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		2D02E47A1E0B4A5D006451C7 /* ToDoApp-tvOS */ = {
@@ -580,7 +586,7 @@
 						LastSwiftMigration = 1310;
 						ProvisioningStyle = Automatic;
 					};
-					22B4F73027E7213A00AF2EB5 = {
+					22B4F77D27E7338500AF2EB5 = {
 						CreatedOnToolsVersion = 13.1;
 						DevelopmentTeam = 5393UWDC43;
 						ProvisioningStyle = Automatic;
@@ -620,7 +626,7 @@
 				2D02E47A1E0B4A5D006451C7 /* ToDoApp-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* ToDoApp-tvOSTests */,
 				224A6CD9278B27630044A918 /* WeekWidgetExtension */,
-				22B4F73027E7213A00AF2EB5 /* WeekWidgetIntentExtension */,
+				22B4F77D27E7338500AF2EB5 /* WeekWidgetIntentExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -656,7 +662,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		22B4F72F27E7213A00AF2EB5 /* Resources */ = {
+		22B4F77C27E7338500AF2EB5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1008,18 +1014,20 @@
 			files = (
 				22B4F72C27E705DF00AF2EB5 /* WidgetSmallF.swift in Sources */,
 				22CCD43D278F0FEB0055BC1D /* WeekModuleBridge.m in Sources */,
-				224A6CE4278B27640044A918 /* WeekWidget.intentdefinition in Sources */,
 				224A6CDF278B27630044A918 /* WeekWidget.swift in Sources */,
 				22CCD439278F07720055BC1D /* WeekWidgeModule.swift in Sources */,
+				22B4F78C27E7465E00AF2EB5 /* WeekWidget.intentdefinition in Sources */,
 				22B4F72A27E6D71900AF2EB5 /* WidgetMedium.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		22B4F72D27E7213A00AF2EB5 /* Sources */ = {
+		22B4F77A27E7338500AF2EB5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22B4F73627E7213A00AF2EB5 /* IntentHandler.swift in Sources */,
+				22B4F78B27E7464300AF2EB5 /* WeekWidget.intentdefinition in Sources */,
+				22B4F78227E7338500AF2EB5 /* IntentHandler.swift in Sources */,
+				22B4F79027E747CB00AF2EB5 /* WeekWidgeModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1053,10 +1061,10 @@
 			target = 224A6CD9278B27630044A918 /* WeekWidgetExtension */;
 			targetProxy = 224A6CE6278B27640044A918 /* PBXContainerItemProxy */;
 		};
-		22B4F73927E7213A00AF2EB5 /* PBXTargetDependency */ = {
+		22B4F78527E7338500AF2EB5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 22B4F73027E7213A00AF2EB5 /* WeekWidgetIntentExtension */;
-			targetProxy = 22B4F73827E7213A00AF2EB5 /* PBXContainerItemProxy */;
+			target = 22B4F77D27E7338500AF2EB5 /* WeekWidgetIntentExtension */;
+			targetProxy = 22B4F78427E7338500AF2EB5 /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1261,7 +1269,7 @@
 			};
 			name = Release;
 		};
-		22B4F73C27E7213A00AF2EB5 /* Debug */ = {
+		22B4F78827E7338500AF2EB5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1271,6 +1279,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = WeekWidgetIntentExtension/WeekWidgetIntentExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1291,13 +1300,14 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		22B4F73D27E7213A00AF2EB5 /* Release */ = {
+		22B4F78927E7338500AF2EB5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1307,6 +1317,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = WeekWidgetIntentExtension/WeekWidgetIntentExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
@@ -1326,6 +1337,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1587,11 +1599,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		22B4F73B27E7213A00AF2EB5 /* Build configuration list for PBXNativeTarget "WeekWidgetIntentExtension" */ = {
+		22B4F78727E7338500AF2EB5 /* Build configuration list for PBXNativeTarget "WeekWidgetIntentExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				22B4F73C27E7213A00AF2EB5 /* Debug */,
-				22B4F73D27E7213A00AF2EB5 /* Release */,
+				22B4F78827E7338500AF2EB5 /* Debug */,
+				22B4F78927E7338500AF2EB5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

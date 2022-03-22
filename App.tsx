@@ -7,11 +7,14 @@ import store from './src/store/configureStore';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import realm, {IsystemType} from './src/db';
 import {UpdateMode} from 'realm';
+import {NativeModules} from 'react-native';
 
 const App = () => {
   const firstCheck = realm.objects('System');
+  //const {WeekWidgetModule} = NativeModules;
 
   useEffect(() => {
+    //WeekWidgetModule.setWidgetData(hoho);
     if (firstCheck.length <= 0) {
       realm.write(() => {
         realm.create<any>('CategoryList', {});
