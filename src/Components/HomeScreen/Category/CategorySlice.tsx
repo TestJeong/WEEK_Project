@@ -2,8 +2,14 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {Category_List_View_Delete} from '../../../sagas/Todo_Delete';
 import {categoryData, todoDataType} from '../Category/CategoryType';
 
+interface initWidget {
+  color: string;
+  title: string;
+}
+
 interface initType {
   categoryList: categoryData[];
+  widgetCategory: any;
   selectedCategory: categoryData;
   mainCategoryData: todoDataType[];
   closeInputModal: any;
@@ -14,6 +20,7 @@ interface initType {
 
 const initialState: initType = {
   categoryList: [],
+  widgetCategory: [],
   selectedCategory: {
     color: '',
     createTime: '', // 2022-1-25-22-48-51
@@ -45,6 +52,9 @@ export const CategoryState = createSlice({
     // 모든 카테고리와 투두에 관한 정보를 불러옴
     REQUEST_CATEGORY_DATA: (state, action) => {
       state.categoryList = action.payload;
+      action.payload.map((item: initWidget) => {
+        state.widgetCategory = {...state.widgetCategory, color: item.color, title: item.title};
+      });
     },
     // 카테고리 리스트에서 선택한 카테고리에 대한 정보 저장
     SELETED_CATEGORY_DATA: (state, action) => {

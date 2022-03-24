@@ -51,14 +51,12 @@ class WeekWidgetModule: NSObject {
     return dictionary
   }
 
-  
-  func testData() -> NSString {
-    let userDefaults = UserDefaults.init(suiteName: "group.com.week.ReactNativeWidget")
-    var hoho = userDefaults!.value(forKey: "cate")
-    
-    return "hoho as! NSString"
-  }
-  
+//  @objc(testData:)
+//  func testData(dda: NSArray) -> Void {
+//    
+//    print("데이터 입니다 -> \(dda)")
+//  }
+//  
   
   
   

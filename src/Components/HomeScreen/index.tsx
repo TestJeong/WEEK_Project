@@ -123,7 +123,7 @@ const HomeScreen = () => {
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
 
-  const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
+  const {categoryList, widgetCategory} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
@@ -141,46 +141,14 @@ const HomeScreen = () => {
     allToDo: all_ToDo,
   };
 
-  // [
-  //   {color: '#c2c8c5', createTime: '2022-3-20-15-43-31', id: 2, title: 'Inbox', todoData: [Array]},
-  //   {color: '#e84575', createTime: '2022-3-22-21-49-37', id: 2, title: ' ㅓㅜㅠㅍ', todoData: [Array]},
-  // ];
-
-  const hoho = {
-    '101': {
-      providerId: 101,
-      providerName: 'categoryList[0].title',
-      values: {
-        humidity: '86',
-      },
-      units: {
-        humidity: '%',
-      },
-    },
-    '102': {
-      providerId: 102,
-      providerName: CategoryL[0].title,
-      values: {
-        humidity: '86.02',
-      },
-      units: {
-        humidity: '%',
-      },
-    },
-  };
-
-  const tete = [
-    {color: '#c2c8c5', createTime: '2022-3-20-15-43-31', id: 2, title: 'Inbox', todoData: [Array]},
-    {color: '#e84575', createTime: '2022-3-22-21-49-37', id: 2, title: ' ㅓㅜㅠㅍ', todoData: [Array]},
-  ];
+  const test = JSON.stringify(CategoryL);
 
   const handleSubmit = async () => {
-    console.log('?', CategoryL);
     try {
       // iOS
       await SharedGroupPreferences.setItem('widgetKey', widgetData, group);
       WeekWidgetModule.refreshAllWidgets();
-      WeekWidgetModule.setWidgetData(tete);
+      WeekWidgetModule.setWidgetData(JSON.parse(test));
       WeekWidgetModule.testget();
     } catch (error) {
       console.log({error});

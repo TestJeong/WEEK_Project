@@ -15,4 +15,5 @@ RCT_EXTERN_METHOD(refreshAllWidgets)
 RCT_EXTERN_METHOD(getWidgetData:(NSString *))
 
 
+
 @end
