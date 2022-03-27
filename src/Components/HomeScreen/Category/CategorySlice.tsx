@@ -23,7 +23,7 @@ const initialState: initType = {
   widgetCategory: [],
   selectedCategory: {
     color: '',
-    createTime: '', // 2022-1-25-22-48-51
+    createTime: 0, // 2022-1-25-22-48-51
     title: '',
     todoData: [],
   },
@@ -68,7 +68,7 @@ export const CategoryState = createSlice({
     RESET_CATEGORYT_DATA: (state) => {
       state.selectedCategory = {
         color: '',
-        createTime: '', // 2022-1-25-22-48-51
+        createTime: 0, // 2022-1-25-22-48-51
         title: '',
         todoData: [],
       };

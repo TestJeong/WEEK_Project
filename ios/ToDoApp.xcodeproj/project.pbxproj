@@ -17,6 +17,7 @@
 		224A6CE2278B27640044A918 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 224A6CE1278B27640044A918 /* Assets.xcassets */; };
 		224A6CE5278B27640044A918 /* WeekWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 224A6CE0278B27630044A918 /* WeekWidget.intentdefinition */; };
 		224A6CE8278B27640044A918 /* WeekWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 224A6CDA278B27630044A918 /* WeekWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		225457DD27EEA27B009F0A70 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F78127E7338500AF2EB5 /* IntentHandler.swift */; };
 		22B4F72A27E6D71900AF2EB5 /* WidgetMedium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F72927E6D71900AF2EB5 /* WidgetMedium.swift */; };
 		22B4F72C27E705DF00AF2EB5 /* WidgetSmallF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F72B27E705DF00AF2EB5 /* WidgetSmallF.swift */; };
 		22B4F77F27E7338500AF2EB5 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B4F73227E7213A00AF2EB5 /* Intents.framework */; };
@@ -1016,6 +1017,7 @@
 				22CCD43D278F0FEB0055BC1D /* WeekModuleBridge.m in Sources */,
 				224A6CDF278B27630044A918 /* WeekWidget.swift in Sources */,
 				22CCD439278F07720055BC1D /* WeekWidgeModule.swift in Sources */,
+				225457DD27EEA27B009F0A70 /* IntentHandler.swift in Sources */,
 				22B4F78C27E7465E00AF2EB5 /* WeekWidget.intentdefinition in Sources */,
 				22B4F72A27E6D71900AF2EB5 /* WidgetMedium.swift in Sources */,
 			);

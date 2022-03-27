@@ -82,7 +82,11 @@ const Category_Modal_View = ({isOpen, close, data}: CModalType) => {
 
     if (categoryTitle !== '') {
       realm.write(() => {
-        realm.create<CategoryType>('CategoryList', {createTime: data ? data.createTime : Day(), title: categoryTitle, color: paletteColor, id: CategoryData.length + 1}, UpdateMode.Modified);
+        realm.create<CategoryType>(
+          'CategoryList',
+          {createTime: data ? data.createTime : new Date().getTime(), title: categoryTitle, color: paletteColor, id: CategoryData.length + 1},
+          UpdateMode.Modified,
+        );
         if (data) {
           let ToDos: CategoryType = realm.create<CategoryType>('CategoryList', {createTime: data.createTime}, UpdateMode.Modified);
           ToDos.todoData.forEach((item: ToDoType) => {

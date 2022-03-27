@@ -1,6 +1,6 @@
 export interface categoryData {
   color: string;
-  createTime: string; // 2022-1-25-22-48-51
+  createTime: number; // 2022-1-25-22-48-51
   title: string;
   todoData: [];
 }

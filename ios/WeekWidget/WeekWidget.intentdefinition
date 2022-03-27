@@ -158,20 +158,6 @@
 					<key>INTypePropertyType</key>
 					<string>SpeakableString</string>
 				</dict>
-				<dict>
-					<key>INTypePropertyDisplayName</key>
-					<string>Todolist</string>
-					<key>INTypePropertyDisplayNameID</key>
-					<string>elzaSt</string>
-					<key>INTypePropertyDisplayPriority</key>
-					<integer>5</integer>
-					<key>INTypePropertyName</key>
-					<string>todolist</string>
-					<key>INTypePropertyTag</key>
-					<integer>118</integer>
-					<key>INTypePropertyType</key>
-					<string>TimeInterval</string>
-				</dict>
 			</array>
 		</dict>
 	</array>

@@ -17,19 +17,7 @@ class WeekWidgetModule: NSObject {
   @objc static func requiresMainQueueSetup() -> Bool {
     return false
   }
-  
-//  @objc(getWidgetData:)
-//  func getWidgetData(widgetData: NSString) {
-//
-//    if #available(iOS 14.0, *) {
-//      print("asdfasdf안녕 -> \(widgetData)")
-//      apple = "widgetData"
-//
-//
-//
-//    }
-//  }
-  
+
   func getWidgetData() -> Array<Any>? {
     var dictionary:  Array<Any>? = nil
     do {
@@ -47,34 +35,30 @@ class WeekWidgetModule: NSObject {
       dictionary = _dictionary
     } catch {
     }
-    print("1231231 rㅕㄹ과 -> \(dictionary)")
+    print("겟 입니다 -> \(dictionary)")
+     
     return dictionary
   }
+  
 
-//  @objc(testData:)
-//  func testData(dda: NSArray) -> Void {
-//    
-//    print("데이터 입니다 -> \(dda)")
-//  }
-//  
-  
-  
-  
   @objc(setWidgetData:)
-    func setWidgetData(widgetData: NSArray) -> Void {
-      print("asdfasdf23 -> \(widgetData)")
-      do {
-        let fileManager = FileManager.default
-        let directory = fileManager.containerURL(forSecurityApplicationGroupIdentifier: WeekWidgetModule.GroupId)
-        guard let fileURL = directory?.appendingPathComponent("widgetData.json") else {
-          return
-        }
-        try JSONSerialization.data(withJSONObject: widgetData)
-          .write(to: fileURL)
-      } catch {
+  func setWidgetData(widgetData: NSArray) -> Void {
+    do {
+      let fileManager = FileManager.default
+      let directory = fileManager.containerURL(forSecurityApplicationGroupIdentifier: WeekWidgetModule.GroupId)
+      guard let fileURL = directory?.appendingPathComponent("widgetData.json") else {
+        return
       }
+      print("ASDF\(widgetData)")
+      try JSONSerialization.data(withJSONObject: widgetData)
+      
+      
+        .write(to: fileURL)
+    } catch {
     }
-
+    
+  }
+  
   
   @objc(refreshAllWidgets)
   func refreshAllWidgets() {
@@ -82,4 +66,27 @@ class WeekWidgetModule: NSObject {
       WidgetCenter.shared.reloadAllTimelines()
     }
   }
+}
+
+struct ToDoDataa:Codable, Equatable {
+  let categoryTitle : String
+  let createTime : String
+  let id : Int
+  let listClear : Int
+  let listContent : String
+  let listDay : String
+  let listEnabled : Int
+  let listMemo : String
+  let listPriority : Int
+  let listTime : String
+  let listTime_Data : String
+  
+}
+
+struct Happle:Codable, Equatable {
+  let color: String
+  let createTime: Int
+  let id: Int
+  let title: String
+  let todoData: [ToDoDataa]
 }

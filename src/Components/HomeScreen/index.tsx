@@ -143,7 +143,22 @@ const HomeScreen = () => {
 
   const test = JSON.stringify(CategoryL);
 
+  const datas = [
+    {
+      createTime: 1648221333375,
+      id: 1,
+      title: 'Inbox',
+      color: '#c2c8c5',
+      todoData: [
+        {
+          createTime: '2022-3-26-18-32-10',
+        },
+      ],
+    },
+  ];
+
   const handleSubmit = async () => {
+    console.log('!@', test);
     try {
       // iOS
       await SharedGroupPreferences.setItem('widgetKey', widgetData, group);

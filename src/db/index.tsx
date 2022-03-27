@@ -7,7 +7,7 @@ export interface IsystemType {
 
 export interface CategoryType {
   id?: number;
-  createTime: string;
+  createTime: number;
   title: string;
   color: string;
   todoData: ToDoType[];
@@ -38,7 +38,7 @@ export const Category: Realm.ObjectSchema = {
   name: 'CategoryList',
   primaryKey: 'createTime',
   properties: {
-    createTime: {type: 'string', default: Day()},
+    createTime: {type: 'int', default: new Date().getTime()},
     id: {type: 'int', default: 1},
     title: {type: 'string', default: 'Inbox'},
     color: {
@@ -69,7 +69,7 @@ export const TodoData: Realm.ObjectSchema = {
 
 let realm = new Realm({
   schema: [Category, TodoData, System],
-  schemaVersion: 20,
+  schemaVersion: 21,
   migration: (oldRealm, newRealm) => {
     // only apply this change if upgrading to schemaVersion 1
     if (oldRealm.schemaVersion < 1) {

@@ -22,48 +22,58 @@ class IntentHandler: INExtension {
 extension IntentHandler: ConfigurationIntentHandling {
   func provideCategoryOptionsCollection(for intent: ConfigurationIntent, with completion: @escaping (INObjectCollection<Category>?, Error?) -> Void) {
     
-    
-    
-    
-    //    var items: Array<Category> = []
-    //    var list: INObjectCollection<Category>? = INObjectCollection(items: items)
-    //    let widgetData = WeekWidgetModule().test
-    ////
-    //    let menus: [Category] = widgetData.map { menu in
-    //      items.append(Category(identifier: menu as! String, display: menu as! String))
+    //        var items: Array<Category> = []
+    //        var list: INObjectCollection<Category>? = INObjectCollection(items: items)
+    //        guard let widgetData = WeekWidgetModule().getWidgetData() else {
+    //          completion(list, nil)
+    //          return
+    //        }
+    //        for provider in widgetData {
+    //          let _provider = provider as? Dictionary<String, Any>
+    //          let identifier = _provider!["providerId"] as? Int
+    //          let display = _provider!["providerName"] as? String
     //
-    //    }
-    //    completion(INObjectCollection(items: items), nil)
+    //          print("asdfasdf -> \(identifier)")
+    //
+    //          items.append(
+    //            Category(identifier: String(identifier!), display: display!)
+    //          )
+    //        }
+    //        list = INObjectCollection(items: items)
+    //        completion(list, nil)
     
-    
-    //    let catIdentifiers: [NSString] = [
-    //               "ネコノヒー",
-    //               "ムギ",
-    //               "アズキ",
-    //               WeekWidgetModule().testData(),
-    //               "안녕하세요"
-    //           ]
-    //           let allCatIdentifiers = INObjectCollection(items: catIdentifiers)
-    //           completion(allCatIdentifiers, nil)
-    
+    var hey: [String:Any] = [:]
     var items: Array<Category> = []
     var list: INObjectCollection<Category>? = INObjectCollection(items: items)
     guard let widgetData = WeekWidgetModule().getWidgetData() else {
       completion(list, nil)
       return
     }
+    
     for provider in widgetData {
       let _provider = provider as? Dictionary<String, Any>
-      let identifier = _provider!["title"] as? String
-      let test = _provider!["todoData"] as? [ToDoData]
-      let testa = _provider!["todoData"]
+      let display = _provider!["title"] as? String
+      let identifier = _provider!["createTime"] as? Int
       
-      print("asdf \(test)")
-      print("asdfoij;oi \(testa!)")
+      if let dates = _provider!["todoData"] as? [[String:Any]],
+         let weather = dates.first {
+        hey = weather
+       // print("AS!@# \(weather[ as? [ToDoDataa])")
+
+      }
       
-      let hoho =  Category(identifier: identifier!, display: identifier!)
-    
-      items.append(hoho)
+     
+
+//      if !dates!.isEmpty {
+//        let hey = dates! as? [ToDoDataa]
+//        print("asdfasdff ff \(hey)")
+//
+//      }
+      
+      print("!@# \(hey["createTime"])")
+      items.append(
+        Category(identifier: String(identifier!), display: display!)
+      )
     }
     list = INObjectCollection(items: items)
     completion(list, nil)
@@ -71,18 +81,7 @@ extension IntentHandler: ConfigurationIntentHandling {
   }
 }
 
-struct ToDoData:Codable, Identifiable, Equatable  {
-  let categoryTitle: String
-  let createTime: String
-  let id: Int
-  let listClear: Int
-  let listContent: String
-  let listDay: String
-  let listEnabled: Int
-  let listMemo: String
-  let listPriority: Int
-  let listTime: String
-  let listTime_Data: String
+struct ToA:Codable, Equatable {
+  let createTime : String
+ 
 }
-
-

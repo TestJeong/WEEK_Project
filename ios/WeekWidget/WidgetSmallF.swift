@@ -8,18 +8,19 @@
 import SwiftUI
 import WidgetKit
 
+
+
 struct WidgetSmallF: View {
   var entry: SimpleEntry
 
-    var body: some View {
-      Text("aaAAAA\(entry.title)")
-      
-      
-    }
+  
+  var body: some View {
+    Text("aaAAAA\(entry.title)")
+    if entry.todoData["createTime"] != nil {
+      Text(entry.todoData["listContent"] as! String)
+             }
+    
+    
+  }
+  
 }
-
-//struct WidgetSmallF_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WidgetSmallF()
-//    }
-//}
