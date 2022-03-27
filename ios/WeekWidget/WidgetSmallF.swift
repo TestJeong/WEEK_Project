@@ -15,9 +15,10 @@ struct WidgetSmallF: View {
 
   
   var body: some View {
-    Text("aaAAAA\(entry.title)")
-    if entry.todoData["createTime"] != nil {
-      Text(entry.todoData["listContent"] as! String)
+    Text(entry.title)
+    if entry.todoData.count > 0 {
+      Text(entry.todoData[0] as! String)
+      Text(String(entry.todoData.count))
              }
     
     
