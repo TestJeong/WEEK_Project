@@ -158,7 +158,6 @@ const HomeScreen = () => {
   ];
 
   const handleSubmit = async () => {
-    console.log('!@', test);
     try {
       // iOS
       await SharedGroupPreferences.setItem('widgetKey', widgetData, group);
@@ -217,7 +216,6 @@ const HomeScreen = () => {
 
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
-
   const opneModal = () => {
     setModalVisible(!isModalVisible);
   };

@@ -40,6 +40,7 @@ struct Provider: IntentTimelineProvider {
     
     var titles: String = "테스트중입니다zzz"
     var todoData:[Any] = []
+    var color: String = ""
     let providerId = configuration.Category?.identifier
     guard let widgetData = WeekWidgetModule().getWidgetData() else {
       return
@@ -49,6 +50,7 @@ struct Provider: IntentTimelineProvider {
         let _provider = provider as? Dictionary<String, Any>
         let display = _provider!["title"] as? String
         let identifier = _provider!["createTime"] as? Int
+        let categoryColor = _provider!["color"] as? String
         
         
         if(identifier == Int(providerId!)) {
@@ -67,6 +69,7 @@ struct Provider: IntentTimelineProvider {
             }
           }
           titles = display!
+          color = categoryColor!
         }
       }
     }
@@ -84,7 +87,7 @@ struct Provider: IntentTimelineProvider {
           for interval in 0 ..< 60 {
             let nextRefresh = Calendar.current.date(byAdding: .minute , value: interval, to: date)!
             
-            let entry = SimpleEntry(date: nextRefresh, configuration: configuration, today: parsedData.today, willToDo: parsedData.willToDo, priorityToDo: parsedData.priorityToDo, allToDo: parsedData.allToDo, title: titles ,color:"진짜 컬러",todoData: todoData)
+            let entry = SimpleEntry(date: nextRefresh, configuration: configuration, today: parsedData.today, willToDo: parsedData.willToDo, priorityToDo: parsedData.priorityToDo, allToDo: parsedData.allToDo, title: titles ,color: color,todoData: todoData)
             entries.append(entry)
           }
           
@@ -124,7 +127,8 @@ struct ToDoData:Codable, Identifiable, Equatable  {
 }
 
 
-struct SimpleEntry: TimelineEntry {
+struct SimpleEntry: TimelineEntry, Identifiable {
+  let id = UUID()
   let date: Date
   let configuration: ConfigurationIntent
   let today: Int
