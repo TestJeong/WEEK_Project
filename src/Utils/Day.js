@@ -32,10 +32,11 @@ export const IOS_Notif = (onClickDay, timeString) => {
   const ClickTime = onClickDay;
   const Change_String = String(ClickTime);
   const years = Change_String.substring(0, 4);
-  const month = Change_String.substring(5, 7);
-  const day = Change_String.substring(8, 10);
+  const month = Change_String.substring(4, 6);
+  const day = Change_String.substring(6, 8);
 
   const allDay = years + '-' + month + '-' + day;
+  console.log('IOS_>', allDay);
   const StringTime = timeString;
   const Alls = allDay + 'T' + StringTime;
   return Alls;

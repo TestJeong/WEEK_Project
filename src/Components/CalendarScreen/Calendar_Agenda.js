@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {AGENDA_DATA_REQUEST, AGENDA_DATA_TIMESTAMP} from '../../reducers/Catagory';
 import {Today} from '../../Utils/Day';
-import Agenda_List from './Agenda_List';
+import Agenda_List from './Agenda_List.tssx';
 
 LocaleConfig.locales['kr'] = {
   monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],

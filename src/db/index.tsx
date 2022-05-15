@@ -14,17 +14,17 @@ export interface CategoryType {
 }
 
 export interface ToDoType {
-  createTime: string;
-  categoryTitle: string;
-  id: number;
-  listContent: string;
+  createTime?: string;
+  categoryTitle?: string;
+  id?: number;
+  listContent?: string;
   listDay?: number;
   listTime?: string;
   listTime_Data?: string;
   listPriority?: number;
   listMemo?: string;
-  listClear: boolean;
-  listEnabled: boolean;
+  listClear?: boolean;
+  listEnabled?: boolean;
 }
 
 export const System: Realm.ObjectSchema = {

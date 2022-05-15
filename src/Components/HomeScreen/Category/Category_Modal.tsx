@@ -25,12 +25,12 @@ const List_Text = styled.Text`
   font-family: 'NotoSansKR-Bold';
 `;
 
-const Category_Modal = ({closeModal}) => {
-  const {categoryList} = useSelector((state) => state.CATEGORY_DATA);
+const Category_Modal = ({closeModal}: any) => {
+  const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const dispatch = useDispatch();
 
-  const Category_Item = ({Category_Data}) => {
+  const Category_Item = ({Category_Data}: any) => {
     const Category_Select = () => {
       dispatch(GET_CATEGORY_DATA(Category_Data.item));
       closeModal();

@@ -5,13 +5,17 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
 
-import realm from '../../db';
-import {CLICK_TODO_LIST_DATA} from '../../reducers/Catagory';
+import realm, {CategoryType, ToDoType} from '../../db';
 import {SELECTED_TODOLIST_DATA} from '../HomeScreen/ToDo/ToDoSlice';
 import testIDs from '../testIDs';
 import {isEmpty} from 'lodash';
+import {UpdateMode} from 'realm';
 
-const Render_View = styled.View`
+interface Props {
+  color: string;
+}
+
+const Render_View = styled.View<Props>`
   flex-direction: row;
   background-color: white;
   height: 70px;
@@ -32,7 +36,7 @@ const List_View = styled.View`
 const ListText_View = styled.View`
   margin-left: 17px;
 `;
-const Agenda_List = ({item}) => {
+const Agenda_List = ({item}: any) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [onToggle, setOnToggle] = useState(item.listClear);
@@ -49,13 +53,13 @@ const Agenda_List = ({item}) => {
   const Toggle = () => {
     setOnToggle(!onToggle);
     realm.write(() => {
-      realm.create(
+      realm.create<ToDoType>(
         'TodoDataList',
         {
           createTime: item.createTime,
           listClear: !onToggle,
         },
-        'modified',
+        UpdateMode.Modified,
       );
     });
     dispatch(SELECTED_TODOLIST_DATA(item));

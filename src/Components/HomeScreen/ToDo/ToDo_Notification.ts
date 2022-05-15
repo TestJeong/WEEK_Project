@@ -77,7 +77,6 @@ export const Edit_Schedule_Notif = () => {
 
     onNotification: function (notification) {
       console.log('NOTIFICATION1:', notification);
-
       notification.finish(PushNotificationIOS.FetchResult.NoData);
     },
 
@@ -90,11 +89,7 @@ export const Edit_Schedule_Notif = () => {
       console.error(err.message, err);
     },
 
-    permissions: {
-      alert: true,
-      badge: true,
-      sound: true,
-    },
+    permissions: {alert: true, badge: true, sound: true},
 
     popInitialNotification: true,
 

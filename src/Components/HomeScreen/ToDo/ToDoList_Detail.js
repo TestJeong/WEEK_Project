@@ -157,6 +157,7 @@ const ToDoList_Detail = ({navigation}) => {
     if (twenty_Four_HoursTime || onClickDay || inputCategoryData || listContent !== todoTitle || isEnableds) {
       let hey = new Date(IOS_Notif(listDay, listTime)) > new Date();
 
+      console.log('!00700', new Date(IOS_Notif(listDay, listTime)));
       if (todoData.listDay && todoData.listTime_Data && Platform.OS === 'ios' && hey && isEnableds) {
         Schedule_Notif(listDay, listTime, todoTitle, todoData.id, categoryTitle, counter);
       } else if (

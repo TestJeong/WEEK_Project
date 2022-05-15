@@ -13,6 +13,7 @@ export type RootStackParamList = {
   Home: undefined;
   ToDoList: {categoryName: string; categoryTime: string};
   Category_ToDoList: {header_Name: string};
+  TodoDataList: undefined;
   ToDoListDetail: undefined;
   Agenda: undefined;
 };

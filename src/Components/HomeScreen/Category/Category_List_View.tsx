@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Swipeable, {SwipeableProps} from 'react-native-gesture-handler/Swipeable';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
