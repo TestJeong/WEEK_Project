@@ -2,19 +2,19 @@ import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/AntDesign';
-import ToDo_List from '../HomeScreen/ToDo/ToDo_List';
-import Home from '../HomeScreen';
-import ToDoList_Detail from '../HomeScreen/ToDo/ToDoList_Detail';
-import Category_ToDo_List from '../HomeScreen/Category/Category_ToDo_List';
 import {useNavigation} from '@react-navigation/native';
-import ExpandableCalendarScreen from '../CalendarScreen';
+import ExpandableCalendarScreen from '../pages/calendarScreen';
+import ToDo_List from '@homeScreen/todo/ToDo_List';
+import Category_ToDo_List from '@homeScreen/category/Category_ToDo_List';
+import HomeScreen from '@homeScreen/index';
+import ToDoList_Detail from '@homeScreen/todo/ToDoList_Detail';
 
 export type RootStackParamList = {
   Home: undefined;
   ToDoList: {categoryName: string; categoryTime: string};
   Category_ToDoList: {header_Name: string};
   TodoDataList: undefined;
-  ToDoListDetail: undefined;
+  ToDoListDetail: {listName: string};
   Agenda: undefined;
 };
 
@@ -29,7 +29,7 @@ const ToDoStackNavigator = () => {
   const navigation = useNavigation<any>();
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
+      <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
 
       <Stack.Screen
         name="ToDoList"
@@ -107,7 +107,7 @@ const CalendarStackNavigator = () => {
 const ModalView = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
+      <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}} />
       <Stack.Screen name="ToDoList" component={ToDo_List} />
     </Stack.Navigator>
   );

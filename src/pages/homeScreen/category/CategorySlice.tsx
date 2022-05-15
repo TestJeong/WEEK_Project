@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {Category_List_View_Delete} from '../../../sagas/Todo_Delete';
-import {categoryData, todoDataType} from '../Category/CategoryType';
+import {CategoryItemType, TodoDataType} from './categoryType';
 
 interface initWidget {
   color: string;
@@ -8,10 +8,10 @@ interface initWidget {
 }
 
 interface initType {
-  categoryList: categoryData[];
+  categoryList: CategoryItemType[];
   widgetCategory: any;
-  selectedCategory: categoryData;
-  mainCategoryData: todoDataType[];
+  selectedCategory: CategoryItemType;
+  mainCategoryData: TodoDataType[];
   closeInputModal: any;
   categoryListData_loading: boolean;
   categoryListData_done: boolean;

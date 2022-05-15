@@ -12,7 +12,20 @@
     "strict": true,
     "target": "esnext",
     "resolveJsonModule": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "baseUrl": "./src",
+    "declaration": false,
+    "paths": {
+      "@homeScreen/*": ["pages/homeScreen/*"],
+      "@calendarScreen/*": ["pages/calendarScreen/*"],
+      "@/*": ["./*"],
+      "@Components/*": ["Components/*"],
+      "@navgation/*": ["navgation/*"],
+      "@modules/*": ["modules/*"],
+      "@db/*": ["db/*"],
+      "@utils/*": ["utils/*"],
+      "@images/*": ["assets/img*"]
+    }
   },
   "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
 }

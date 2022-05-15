@@ -43,7 +43,7 @@ export const CLICK_TODO_LIST_DATA = 'CLICK_TODO_LIST_DATA'; // oo
 export const CLICK_ENABLED = 'CLICK_ENABLED'; // oo
 export const CLICK_DAY = 'CLICK_DAY'; // oo
 export const CLICK_TIME = 'CLICK_TIME'; // oo
-export const CLICK_PRIORITY = 'CLICK_PRIORITY';// oo
+export const CLICK_PRIORITY = 'CLICK_PRIORITY'; // oo
 export const CLICK_CLEAR = 'CLICK_CLEAR'; // oo
 export const CLICK_CATEGORY_INPUT = 'CLICK_CATEGORY_INPUT'; // oo
 

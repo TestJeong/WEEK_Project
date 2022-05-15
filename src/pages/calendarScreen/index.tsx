@@ -5,11 +5,11 @@ import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar, LocaleCo
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import Agenda_List from './Agenda_List';
-import testIDs from '../testIDs';
+import testIDs from '../../Components/testIDs';
 import {AGENDA_DATA_REQUEST} from './CalendarSlice';
 import {useState} from 'react';
 import realm from '../../db';
-import {Today} from '../../Utils/Day';
+import {Today} from '../../utils/Day';
 import {RootState} from '../../store/configureStore';
 import {ItodoType, MarkedDate} from './CalendarType';
 
@@ -24,8 +24,8 @@ LocaleConfig.defaultLocale = 'kr';
 
 const today = new Date().toISOString().split('T')[0];
 const themeColor = '#00AAAF';
-const leftArrowIcon = require('../img/previous.png');
-const rightArrowIcon = require('../img/next.png');
+const leftArrowIcon = require('../../assets/img/previous.png');
+const rightArrowIcon = require('../../assets/img/next.png');
 
 // 해당일의 주에서 월요일을 계산
 var paramDate = new Date(today); // new Date('2021-06-08'): 화요일

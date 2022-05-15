@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
-import realm from '../../db';
-import {ToDoStackNavigator, CalendarStackNavigator} from '../../Components/Navgation/StackNavigator';
-import {REQUEST_CATEGORY_DATA} from '../HomeScreen/Category/CategorySlice';
-import {RESET_INPUT_DATA} from '../HomeScreen/ToDo/ToDoSlice';
+import {ToDoStackNavigator, CalendarStackNavigator} from './StackNavigator';
+import {RESET_INPUT_DATA} from '../pages/homeScreen/todo/ToDoSlice';
+import realm from '@/db';
+import {REQUEST_CATEGORY_DATA} from '@/pages/homeScreen/category/CategorySlice';
 
 const Tab = createBottomTabNavigator();
 

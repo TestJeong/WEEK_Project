@@ -1,11 +1,11 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, Image, SafeAreaView, Keyboard} from 'react-native';
+import {View} from 'react-native';
 
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
-import {CLICK_CATEGORY_INPUT} from '../../../reducers/Catagory';
 
 import styled from 'styled-components/native';
+import {CategoryListType} from '../category/categoryType';
 import {GET_CATEGORY_DATA} from './ToDoSlice';
 
 const Container = styled.View`
@@ -41,29 +41,19 @@ const List_Btn = styled.TouchableOpacity`
   border-radius: 10px;
 `;
 
-const Detail_Category = ({hideActionSheet}) => {
-  //const {categoryList} = useSelector((state) => state.Catagory);
-  const {categoryList} = useSelector((state) => state.CATEGORY_DATA);
+const Detail_Category = ({hideActionSheet}: {hideActionSheet: () => void}) => {
+  const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
   const dispatch = useDispatch();
 
-  const Category_Item = ({Category_Data}) => {
+  const Category_Item = ({Category_Data}: CategoryListType) => {
     const Category_Select = () => {
-      // dispatch({type: CLICK_CATEGORY_INPUT, data: Category_Data.item});
       dispatch(GET_CATEGORY_DATA(Category_Data.item));
       hideActionSheet();
     };
 
     return (
       <List_Btn onPress={Category_Select}>
-        <View
-          style={{
-            height: 20,
-            width: 20,
-            borderRadius: 20,
-            backgroundColor: Category_Data.item.color,
-            marginRight: 20,
-          }}
-        />
+        <View style={{height: 20, width: 20, borderRadius: 20, backgroundColor: Category_Data.item.color, marginRight: 20}} />
         <List_Item>
           <List_Text style={{includeFontPadding: false}}>{Category_Data.item.title}</List_Text>
         </List_Item>

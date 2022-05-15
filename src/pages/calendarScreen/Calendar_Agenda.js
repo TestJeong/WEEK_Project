@@ -5,7 +5,7 @@ import {Agenda, LocaleConfig} from 'react-native-calendars';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {AGENDA_DATA_REQUEST, AGENDA_DATA_TIMESTAMP} from '../../reducers/Catagory';
-import {Today} from '../../Utils/Day';
+import {Today} from '../../utils/Day';
 import Agenda_List from './Agenda_List.tssx';
 
 LocaleConfig.locales['kr'] = {

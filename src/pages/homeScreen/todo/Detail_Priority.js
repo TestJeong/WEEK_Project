@@ -1,9 +1,7 @@
 import React from 'react';
-import {TextInput, View, Text, TouchableOpacity, KeyboardAvoidingView, StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
-import {CLICK_PRIORITY} from '../../../reducers/Catagory';
 import {SELETCTED_PRIORITY} from './ToDoSlice';
 
 const Container = styled.View`
@@ -62,15 +60,12 @@ const Detail_Priorty = ({hideActionSheet}) => {
     <Container>
       <Priority_Btn onPress={Never_Priority}>
         <Icon name="staro" size={20} color={'pink'} />
-        {/* <Priority_Text>우선도 없음</Priority_Text> */}
       </Priority_Btn>
 
       <Priority_Btn onPress={Low_Priority}>
         <Icon_View>
           <Icon name="star" size={20} color={'pink'} />
         </Icon_View>
-
-        {/* <Priority_Text>낮은 우선도</Priority_Text> */}
       </Priority_Btn>
 
       <Priority_Btn onPress={Medium_Priority}>
@@ -78,7 +73,6 @@ const Detail_Priorty = ({hideActionSheet}) => {
           <Icon name="star" size={20} color={'pink'} />
           <Icon name="star" size={20} color={'pink'} />
         </Icon_View>
-        {/* <Priority_Text>중간 우선도</Priority_Text> */}
       </Priority_Btn>
 
       <Priority_Btn onPress={Highest_Priority}>
@@ -87,7 +81,6 @@ const Detail_Priorty = ({hideActionSheet}) => {
           <Icon name="star" size={20} color={'pink'} />
           <Icon name="star" size={20} color={'pink'} />
         </Icon_View>
-        {/*  <Priority_Text>높은 우선도</Priority_Text> */}
       </Priority_Btn>
     </Container>
   );

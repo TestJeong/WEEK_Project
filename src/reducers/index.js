@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
 import Catagory from './Catagory';
-import {CATEGORY_DATA} from '../Components/HomeScreen/Category/CategorySlice';
-import {TODO_DATA} from '../Components/HomeScreen/ToDo/ToDoSlice';
-import {CALENDAR_DATA} from '../Components/CalendarScreen/CalendarSlice';
+import {CATEGORY_DATA} from '../pages/homeScreen/category/CategorySlice';
+import {TODO_DATA} from '@/pages/homeScreen/todo/ToDoSlice';
+import {CALENDAR_DATA} from '../pages/calendarScreen/CalendarSlice';
 
 const rootReducer = combineReducers({
   //Catagory,

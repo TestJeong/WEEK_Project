@@ -6,12 +6,12 @@ import styled from 'styled-components/native';
 import ActionSheet from 'react-native-actions-sheet';
 
 import realm from '../../../db';
-import CalendarModal from '../../CalendarScreen/CalendarModal';
+import CalendarModal from '../../calendarScreen/CalendarModal';
 import DateTime_Picke from './DateTime_Picke';
 import Detail_Priorty from './Detail_Priority';
 import Detail_Category from './Detail_Category';
 import {Schedule_Notif} from './ToDo_Notification';
-import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../../../Utils/Day';
+import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../../../utils/Day';
 import PushNotification from 'react-native-push-notification';
 import {RESET_INPUT_DATA, SELECTED_TODOLIST_DATA} from './ToDoSlice';
 
@@ -169,6 +169,7 @@ const ToDoList_Detail = ({navigation}) => {
       ) {
         Schedule_Notif(listDay, listTime, todoTitle, todoData.id, categoryTitle, counter);
       } else {
+        console.warn('[ToDoList_Detail.js] => 디테일 부분 수정에서 아무 조건식에 걸리지 않음');
       }
     }
 

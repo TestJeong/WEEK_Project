@@ -11,7 +11,7 @@ import PushNotification from 'react-native-push-notification';
 
 import realm from '../../../db';
 import {Schedule_Notif} from './ToDo_Notification';
-import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../../../Utils/Day';
+import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../../../utils/Day';
 import {fetchTodo, SELECTED_TODOLIST_DATA, TODO_LIST_DATA_REQUEST1} from './ToDoSlice';
 
 const List_Item = styled.View`
@@ -50,7 +50,7 @@ const List_Title_Content = styled.View`
   width: 100%;
 `;
 
-const ToDo_List_View = ({data, ListName}) => {
+const ToDo_List_View = ({data, listName}) => {
   const swiper = useRef();
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -128,7 +128,7 @@ const ToDo_List_View = ({data, ListName}) => {
   };
 
   const goToList = () => {
-    navigation.navigate('ToDoListDetail', {ListName: ListName});
+    navigation.navigate('ToDoListDetail', {listName: listName});
     dispatch(SELECTED_TODOLIST_DATA(data.item));
   };
 

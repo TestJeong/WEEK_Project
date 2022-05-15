@@ -1,10 +1,11 @@
 import {Platform} from 'react-native';
-import PushNotification from 'react-native-push-notification';
+import PushNotification, {PushNotificationObject, PushNotificationScheduledLocalObject, PushNotificationScheduleObject} from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {ANDROID_Notif, IOS_Notif} from '../../../Utils/Day';
+import {ANDROID_Notif, IOS_Notif} from '../../../utils/Day';
+import {InotifType} from './todoType';
 
 let lastId = 0;
-export const Schedule_Notif = (onClickDay, timeString, todoContents, NotifID, categoryTitle, num) => {
+export const Schedule_Notif = ({onClickDay, timeString, todoContents, NotifID, categoryTitle, num}: InotifType) => {
   console.log('알람 테스트', onClickDay, timeString, todoContents, NotifID, categoryTitle, num);
   PushNotification.configure({
     onRegister: function (token) {
@@ -108,9 +109,19 @@ export const Edit_Schedule_Notif = () => {
     (created) => console.log(`createChannel 'default-channel-id' returned '${created}'`),
   );
 
-  PushNotification.getScheduledLocalNotifications((notif) => {
+  interface IcustomNotifType {
+    data: {};
+    date: Date;
+    id: string;
+    message?: string;
+    number: number;
+    soundName: string;
+    title: string;
+  }
+
+  PushNotification.getScheduledLocalNotifications((notif: PushNotificationScheduledLocalObject[]) => {
     let Edit_lastID = 1;
-    const Schedule_sort = notif.sort((a, b) => {
+    const Schedule_sort: IcustomNotifType[] = notif.sort((a: any, b: any) => {
       return a.date - b.date;
     });
 

@@ -7,14 +7,14 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
 import realm from '../../../db';
-import CalendarModal from '../../CalendarScreen/CalendarModal';
-import Priority_Modal from './ Priority';
-import {Day, IOS_Notif, IOS_today} from '../../../Utils/Day';
+import CalendarModal from '../../calendarScreen/CalendarModal';
+import Priority_Modal from './Priority';
+import {Day, IOS_Notif, IOS_today} from '../../../utils/Day';
 import {MY_CATEGORY_DATA} from '../../../reducers/Catagory';
-import Category_Modal from '../Category/Category_Modal';
+import Category_Modal from '../category/Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
-import {ANDROID_Notif, Notif_Day} from '../../../Utils/Day';
-import {REQUEST_CATEGORY_DATA} from '../Category/CategorySlice';
+import {ANDROID_Notif, Notif_Day} from '../../../utils/Day';
+import {REQUEST_CATEGORY_DATA} from '../category/CategorySlice';
 import {RESET_INPUT_DATA} from './ToDoSlice';
 
 const Modal_Container = styled(Modal)`

@@ -1,13 +1,13 @@
 import React, {useLayoutEffect, useState, useEffect} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image, SafeAreaView, Keyboard} from 'react-native';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
-import ToDoInputModal from '../ToDo/ToDo_Input_Modal';
+import ToDoInputModal from './ToDo_Input_Modal';
 import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import styled from 'styled-components/native';
 
-import ToDo_List_View from '../ToDo/ToDo_List_View';
+import ToDo_List_View from './ToDo_List_View';
 import {Edit_Schedule_Notif} from './ToDo_Notification';
 
 const FlatListView = styled.FlatList`

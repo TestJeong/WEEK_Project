@@ -10,9 +10,9 @@ import E_Icon from 'react-native-vector-icons/Feather';
 import PushNotification from 'react-native-push-notification';
 
 import Category_Modal_View from './Category_Modal_View';
-import {RootStackParamList} from '../../Navgation/StackNavigator';
-import {categoryDelete, CATEGORY_DELETE_REQUEST, SELETED_CATEGORY_DATA} from './CategorySlice';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {CATEGORY_DELETE_REQUEST, SELETED_CATEGORY_DATA} from '@homeScreen/category/CategorySlice';
+import {RootStackParamList} from '@/navgation/StackNavigator';
 
 const List_Item = styled.View`
   margin: 15px 35px 15px 5px;
@@ -28,12 +28,11 @@ const List_Text = styled.Text`
 
 type homeScreenProp = NativeStackNavigationProp<RootStackParamList, 'ToDoList'>;
 
-const Category_View = ({data, drag}: any) => {
+const Category_List_View = ({data, drag}: any) => {
   const swiper = useRef<any>();
   const navigation = useNavigation<homeScreenProp>();
-  const dispatch = useDispatch();
 
-  //const {categoryList} = useSelector((state: any) => state.Catagory);
+  const dispatch = useDispatch();
   const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -44,7 +43,6 @@ const Category_View = ({data, drag}: any) => {
       const notifData = notif.filter((i) => {
         return i.title === data.title;
       });
-
       setFilterData(notifData);
     });
   }, [categoryList]);
@@ -150,4 +148,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Category_View;
+export default Category_List_View;

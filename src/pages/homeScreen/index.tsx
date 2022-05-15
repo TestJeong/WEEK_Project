@@ -8,11 +8,11 @@ import SplashScreen from 'react-native-splash-screen';
 import SharedGroupPreferences from 'react-native-shared-group-preferences';
 import DraggableFlatList, {RenderItemParams} from 'react-native-draggable-flatlist';
 import realm, {CategoryType} from '../../db';
-import Category_List_View from './Category/Category_List_View';
-import Category_Modal_View from './Category/Category_Modal_View';
+import Category_List_View from './category/Category_List_View';
+import Category_Modal_View from './category/Category_Modal_View';
 import PushNotification from 'react-native-push-notification';
-import {Edit_Schedule_Notif} from './ToDo/ToDo_Notification';
-import {RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './Category/CategorySlice';
+import {Edit_Schedule_Notif} from './todo/ToDo_Notification';
+import {RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './category/CategorySlice';
 import {LogBox} from 'react-native';
 import {UpdateMode} from 'realm';
 
@@ -165,7 +165,7 @@ const HomeScreen = () => {
       WeekWidgetModule.setWidgetData(JSON.parse(test));
       WeekWidgetModule.testget();
     } catch (error) {
-      console.log({error});
+      //console.log({error});
     }
     // Android
     //SharedStorage.set(JSON.stringify('Asdf'));
@@ -192,9 +192,9 @@ const HomeScreen = () => {
       }
     });
 
-    PushNotification.getScheduledLocalNotifications((notif) => {
-      console.log('예약 알림', notif);
-    });
+    // PushNotification.getScheduledLocalNotifications((notif) => {
+    //   console.log('예약 알림 => ', notif);
+    // });
 
     Edit_Schedule_Notif();
 

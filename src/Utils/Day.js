@@ -57,9 +57,9 @@ export const IOS_today = () => {
 export const ANDROID_Notif = (onClickDay, timeString) => {
   const ClickTime = onClickDay;
   const Change_String = String(ClickTime);
-  const years = Change_String.substring(0, 4);
-  const month = Change_String.substring(5, 7);
-  const day = Change_String.substring(8, 10);
+  const years = Change_String.substring(0, 4); // 0,4
+  const month = Change_String.substring(4, 6); // 5,7
+  const day = Change_String.substring(6, 8); // 8,10
 
   const allDay = years + '/' + month + '/' + day;
   const StringTime = timeString;
@@ -76,7 +76,6 @@ export const Notif_Day = () => {
   var min = new Date().getMinutes(); //Current Minutes
   var sec = new Date().getSeconds(); //Current Seconds
   let day = year + '/' + month + '/' + date + ' ' + hours + ':' + min + ':' + sec;
-  console.log('ddkssdug', day);
 
   return day;
 };

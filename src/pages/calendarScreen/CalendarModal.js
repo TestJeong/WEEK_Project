@@ -7,8 +7,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import DateTime_Picke from '../HomeScreen/ToDo/DateTime_Picke';
-import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../HomeScreen/ToDo/ToDoSlice';
+import DateTime_Picke from '../homeScreen/todo/DateTime_Picke';
+import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../homeScreen/todo/ToDoSlice';
 
 const Modal_Container = styled(Modal)`
   flex: 1;

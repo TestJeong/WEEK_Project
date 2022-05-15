@@ -6,10 +6,11 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
 
 import realm, {CategoryType, ToDoType} from '../../db';
-import {SELECTED_TODOLIST_DATA} from '../HomeScreen/ToDo/ToDoSlice';
-import testIDs from '../testIDs';
+import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/ToDoSlice';
 import {isEmpty} from 'lodash';
 import {UpdateMode} from 'realm';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '@/navgation/StackNavigator';
 
 interface Props {
   color: string;
@@ -38,7 +39,7 @@ const ListText_View = styled.View`
 `;
 const Agenda_List = ({item}: any) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ToDoListDetail'>>();
   const [onToggle, setOnToggle] = useState(item.listClear);
 
   useEffect(() => {
@@ -72,9 +73,9 @@ const Agenda_List = ({item}: any) => {
       </View>
     );
   }
-
+  // testID={testIDs.agenda.ITEM}
   return (
-    <TouchableOpacity onPress={goToList} style={{marginLeft: 20, marginRight: 20, marginTop: 5, paddingBottom: 10}} testID={testIDs.agenda.ITEM}>
+    <TouchableOpacity onPress={goToList} style={{marginLeft: 20, marginRight: 20, marginTop: 5, paddingBottom: 10}}>
       <View style={{marginTop: 12, marginBottom: 0}}>
         <Render_View style={styles.container} color={item.colors}>
           <List_View>

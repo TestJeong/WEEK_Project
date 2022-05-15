@@ -1,14 +1,14 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {ToDoList_View_Delete} from '../../../sagas/Todo_Delete';
-import {categoryData, todoDataType} from '../Category/CategoryType';
+import {CategoryItemType, TodoDataType} from '../category/categoryType';
 
 interface initType {
   onClickDay: string;
   onClickPriority: number;
   twelve_HoursTime: string;
   twenty_Four_HoursTime: string;
-  todoData: todoDataType;
-  inputCategoryData: categoryData;
+  todoData: TodoDataType;
+  inputCategoryData: CategoryItemType;
   isNotificationEnabled: boolean;
   todo_List_data_loading: boolean;
   todo_List_data_done: boolean;
