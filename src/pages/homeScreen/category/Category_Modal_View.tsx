@@ -11,6 +11,7 @@ import Category_Palette from './Category_Palette';
 import {Category_Notif} from './Category_Notif';
 import {UpdateMode} from 'realm';
 import {REQUEST_CATEGORY_DATA} from './CategorySlice';
+import {CategoryModalType} from './categoryType';
 
 const ModalView = styled.View`
   /* 모달창 크기 조절 */
@@ -61,71 +62,70 @@ const Hoper = styled.View`
   border-radius: 50px;
 `;
 
-interface CModalType {
-  isOpen: boolean;
-  close(): void;
-  data: any;
-}
-
-const Category_Modal_View = ({isOpen, close, data}: CModalType) => {
-  const [categoryTitle, setcategoryTitle] = useState(data ? data.title : '');
-  const [paletteColor, setPaletteColor] = useState(data ? data.color : '#c2c8c5');
+const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) => {
+  const [categoryTitle, setcategoryTitle] = useState(categoryItem ? categoryItem.title : '');
+  const [paletteColor, setPaletteColor] = useState(categoryItem ? categoryItem.color : '#c2c8c5');
 
   const dispatch = useDispatch();
 
-  const handleSelect = (color: any) => {
+  const handleSelect = (color: {item: string}) => {
     setPaletteColor(color.item);
   };
 
-  const SaveButton: any = () => {
+  const changeToDoItem = () => {
+    if (categoryItem) {
+      let ToDoItem = realm.create<CategoryType>('CategoryList', {createTime: categoryItem.createTime}, UpdateMode.Modified);
+
+      ToDoItem.todoData.map((item: ToDoType) => {
+        if (item.categoryTitle !== categoryTitle && item.listDay && item.listTime_Data) Category_Notif({item, categoryTitle});
+        realm.create<ToDoType>('TodoDataList', {createTime: item.createTime, categoryTitle: categoryTitle}, UpdateMode.Modified);
+      });
+    }
+  };
+
+  const onPressSaveBtn = () => {
     const CategoryData = realm.objects('CategoryList');
+    const date = categoryItem ? categoryItem.createTime : new Date().getTime();
 
     if (categoryTitle !== '') {
       realm.write(() => {
         realm.create<CategoryType>(
           'CategoryList',
-          {createTime: data ? data.createTime : new Date().getTime(), title: categoryTitle, color: paletteColor, id: CategoryData.length + 1},
+          {
+            createTime: date,
+            title: categoryTitle,
+            color: paletteColor,
+            id: CategoryData.length + 1,
+          },
           UpdateMode.Modified,
         );
-        if (data) {
-          let ToDos: CategoryType = realm.create<CategoryType>('CategoryList', {createTime: data.createTime}, UpdateMode.Modified);
-          ToDos.todoData.forEach((item: ToDoType) => {
-            if (item.categoryTitle !== categoryTitle && item.listDay && item.listTime_Data) {
-              Category_Notif({item, categoryTitle});
-            }
-            realm.create<ToDoType>('TodoDataList', {createTime: item.createTime, categoryTitle: categoryTitle}, UpdateMode.Modified);
-          });
-        }
+        changeToDoItem();
       });
 
       const SortCategoryDate = CategoryData.sorted('createTime');
-      //dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       close();
-      {
-        data ? null : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
-      }
+      // 카테고리를 만들고 다시 카테고리를 만들경우 색상이랑 타이틀이 남아있음
+      categoryItem ? null : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
     } else {
       close();
     }
   };
 
-  const CloseButton = useCallback(() => {
+  const onPressCloseBtn = useCallback(() => {
     close();
-    {
-      data ? (setPaletteColor(data.color), setcategoryTitle(data.title)) : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
-    }
+    categoryItem ? (setPaletteColor(categoryItem.color), setcategoryTitle(categoryItem.title)) : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
   }, []);
 
   return (
     <Modal style={styles.modalContainer} isVisible={isOpen} onBackdropPress={close}>
       <ModalView>
         <Button_View>
-          <TouchableOpacity onPress={CloseButton} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <TouchableOpacity onPress={onPressCloseBtn} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
           <Modal_Title style={{includeFontPadding: false}}>MY CATEGORY</Modal_Title>
-          <TouchableOpacity onPress={SaveButton} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
+          <TouchableOpacity onPress={onPressSaveBtn} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>완료</Text_Close>
           </TouchableOpacity>
         </Button_View>

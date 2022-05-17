@@ -1,14 +1,14 @@
 import React, {useLayoutEffect, useState, useCallback, useEffect} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image, SafeAreaView, Keyboard} from 'react-native';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import ToDoInputModal from '../todo/ToDo_Input_Modal';
+import ToDoInputModal from '../todo/ToDoInputModal';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
-import ToDo_List_View from '../todo/ToDo_List_View';
-import {Edit_Schedule_Notif} from '../todo/ToDo_Notification';
+import ToDoItem from '../todo/ToDoItem';
 import {Today} from '@/utils/Day';
 import {RootStackParamList} from '@/navgation/StackNavigator';
+import {Edit_Schedule_Notif} from '@homeScreen/todo/ToDo_Notification';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -29,9 +29,7 @@ const Category_ToDo_List = () => {
   }, [categoryList, todoData]);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      title: route.params.header_Name,
-    });
+    navigation.setOptions({title: route.params.header_Name});
   }, []);
 
   const opneModal = useCallback(() => {
@@ -50,7 +48,7 @@ const Category_ToDo_List = () => {
     <>
       <ToDoInputModal isOpen={isModalVisible} close={closeModal} categoryName={null} categoryTime={null} day={today} />
       <View>
-        <FlatListView keyExtractor={(item, index) => '#' + index} data={mainCategoryData} renderItem={(item) => <ToDo_List_View data={item} listName={true} />} />
+        <FlatListView keyExtractor={(item, index) => '#' + index} data={mainCategoryData} renderItem={(item) => <ToDoItem data={item} listName={true} />} />
       </View>
       <TouchableOpacity activeOpacity={0.5} onPress={opneModal} style={[styles.touchableOpacityStyle, {backgroundColor: 'blue'}]}>
         <Icon name="plus" color={'white'} size={30} />

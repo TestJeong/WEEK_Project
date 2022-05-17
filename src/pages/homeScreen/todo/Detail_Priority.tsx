@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
-import {SELETCTED_PRIORITY} from './ToDoSlice';
+import {SELETCTED_PRIORITY} from './todoSlice';
 
 const Container = styled.View`
   border-radius: 10px;
@@ -33,7 +33,7 @@ const Icon_View = styled.View`
   width: 25%;
 `;
 
-const Detail_Priorty = ({hideActionSheet}) => {
+const Detail_Priorty = ({hideActionSheet}: {hideActionSheet: () => boolean}) => {
   const dispatch = useDispatch();
 
   const Highest_Priority = () => {

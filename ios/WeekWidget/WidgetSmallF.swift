@@ -22,7 +22,7 @@ struct WidgetSmallF: View {
         Spacer()
       }
       .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-      .frame(height:30)
+      .frame(height:40)
       .background(Color(hex:entry.color))
       VStack{
         ForEach(entry.todoData as! [String], id: \.self) { todoTitle in

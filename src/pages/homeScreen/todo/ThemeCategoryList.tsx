@@ -6,7 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import styled from 'styled-components/native';
 import {CategoryListType} from '../category/categoryType';
-import {GET_CATEGORY_DATA} from './ToDoSlice';
+import {GET_CATEGORY_DATA} from './todoSlice';
 
 const Container = styled.View`
   border-radius: 10px;
@@ -41,7 +41,7 @@ const List_Btn = styled.TouchableOpacity`
   border-radius: 10px;
 `;
 
-const Detail_Category = ({hideActionSheet}: {hideActionSheet: () => void}) => {
+const ThemeCategoryList = ({hideActionSheet}: {hideActionSheet: () => boolean}) => {
   const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
   const dispatch = useDispatch();
 
@@ -75,4 +75,4 @@ const Detail_Category = ({hideActionSheet}: {hideActionSheet: () => void}) => {
   );
 };
 
-export default Detail_Category;
+export default ThemeCategoryList;

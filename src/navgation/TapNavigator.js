@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {ToDoStackNavigator, CalendarStackNavigator} from './StackNavigator';
-import {RESET_INPUT_DATA} from '../pages/homeScreen/todo/ToDoSlice';
+import {RESET_INPUT_DATA} from '../pages/homeScreen/todo/todoSlice';
 import realm from '@/db';
 import {REQUEST_CATEGORY_DATA} from '@/pages/homeScreen/category/CategorySlice';
 

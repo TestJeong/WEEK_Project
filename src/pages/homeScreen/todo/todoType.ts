@@ -11,3 +11,16 @@ export interface IdateTimeType {
   hideDatePicker: () => boolean;
   isDatePickerVisible: boolean;
 }
+
+export interface ItodoInputModalType {
+  isOpen: boolean;
+  close: () => void;
+  categoryName: string;
+  categoryTime: string;
+  day?: string;
+}
+
+export interface ItodoListType {
+  data: any;
+  listName: boolean;
+}

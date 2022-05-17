@@ -1,23 +1,24 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {View, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native';
+import React, {useState, useRef, useEffect, MutableRefObject} from 'react';
+import {View, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput} from 'react-native';
 
 import Modal from 'react-native-modal';
 import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
-import realm from '../../../db';
+import realm, {CategoryType, ToDoType} from '../../../db';
 import CalendarModal from '../../calendarScreen/CalendarModal';
-import Priority_Modal from './Priority';
+import PriorityModal from './PriorityModal';
 import {Day, IOS_Notif, IOS_today} from '../../../utils/Day';
 import {MY_CATEGORY_DATA} from '../../../reducers/Catagory';
 import Category_Modal from '../category/Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
-import {ANDROID_Notif, Notif_Day} from '../../../utils/Day';
 import {REQUEST_CATEGORY_DATA} from '../category/CategorySlice';
-import {RESET_INPUT_DATA} from './ToDoSlice';
+import {RESET_INPUT_DATA} from './todoSlice';
+import {ItodoInputModalType} from './todoType';
+import {UpdateMode} from 'realm';
 
-const Modal_Container = styled(Modal)`
+const Modal_Container = styled(Modal as any)`
   flex: 1;
   justify-content: flex-end;
   align-items: center;
@@ -58,20 +59,16 @@ const Category_Title = styled.Text`
   margin-left: 15px;
 `;
 
-const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
-  const [todoContents, setTodoContents] = useState('');
-
-  const inputRef = useRef();
-
-  const {onClickDay, twelve_HoursTime, onClickPriority, twenty_Four_HoursTime, isNotificationEnabled, inputCategoryData} = useSelector((state) => state.TODO_DATA);
-  //const {inputCategoryData} = useSelector((state) => state.CATEGORY_DATA);
-
+const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoInputModalType) => {
+  const {onClickDay, twelve_HoursTime, onClickPriority, twenty_Four_HoursTime, isNotificationEnabled, inputCategoryData} = useSelector((state: any) => state.TODO_DATA);
   const dispatch = useDispatch();
 
-  const [calendarModalVisible, setcalendarModalVisible] = useState(false);
+  const inputRef = useRef<any>();
 
-  const [testBtn, setTestBtn] = useState(false);
-  const [categoryBtn, setCategoryBtn] = useState(false);
+  const [todoContents, setTodoContents] = useState('');
+  const [calendarModalVisible, setcalendarModalVisible] = useState(false);
+  const [priorityModalVisible, setPriorityModalVisible] = useState(false);
+  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -79,32 +76,34 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
     }
   }, [isOpen]);
 
-  const opneModal = () => {
-    setcalendarModalVisible(!calendarModalVisible);
-  };
+  // 캘린더 모달창 open
+  const opneModal = () => setcalendarModalVisible(!calendarModalVisible);
 
-  const closeCalendarModal = () => {
-    setcalendarModalVisible(false);
-  };
+  // 캘린더 모달창 close
+  const closeCalendarModal = () => setcalendarModalVisible(false);
 
+  // 우선순위 모달창
   const likeOpen = () => {
-    setTestBtn(!testBtn);
-    setCategoryBtn(false);
+    setPriorityModalVisible(!priorityModalVisible);
+    setCategoryModalVisible(false);
   };
 
+  // 카테고리 모달창
   const CategoryOpen = () => {
-    setCategoryBtn(!categoryBtn);
-    setTestBtn(false);
+    setCategoryModalVisible(!categoryModalVisible);
+    setPriorityModalVisible(false);
   };
 
+  // todo modal창 backdrop 클릭시
   const ModalClose = () => {
     close();
     dispatch(RESET_INPUT_DATA());
-    setTestBtn(false);
-    setCategoryBtn(false);
+    setPriorityModalVisible(false);
+    setCategoryModalVisible(false);
   };
 
-  const ToDoInput_Enter = () => {
+  // todo 추가
+  const onPressEnter = () => {
     const NotifID = Math.floor(Math.random() * 100000);
     const CategoryData = realm.objects('CategoryList');
     const SortCategoryDate = CategoryData.sorted('id');
@@ -112,35 +111,46 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
     if (!inputCategoryData && !categoryName) {
       alert('카테고리를 설정 해주세요!');
     } else {
-      realm.write(() => {
-        let city = realm.create('TodoDataList', {
-          createTime: Day(),
-          categoryTitle: inputCategoryData ? inputCategoryData.title : categoryName,
-          listContent: todoContents,
-          listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : day && Number(day.replace(/-/g, '')),
-          listTime: twelve_HoursTime ? twelve_HoursTime : null,
-          listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : null,
-          listPriority: onClickPriority ? onClickPriority : 4,
-          id: NotifID,
-          listEnabled: isNotificationEnabled,
-        });
-        let user = realm.create(
-          'CategoryList',
-          {
-            createTime: inputCategoryData ? inputCategoryData.createTime : categoryTime,
-          },
-          'modified',
-        );
-        user.todoData.unshift(city);
-      });
-      const categoryTitle = inputCategoryData ? inputCategoryData.title : categoryName;
+      addToDoItem(NotifID);
+      addNotification(NotifID);
 
-      if (onClickDay && twelve_HoursTime && new Date(IOS_Notif(onClickDay, twenty_Four_HoursTime)) > new Date(IOS_today()) && isNotificationEnabled) {
-        Schedule_Notif(onClickDay, twenty_Four_HoursTime, todoContents, NotifID, categoryTitle);
-      }
-      dispatch({type: MY_CATEGORY_DATA, data: SortCategoryDate});
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       setTodoContents('');
+    }
+  };
+
+  // todo item 추가
+  const addToDoItem = (notifID: number) => {
+    realm.write(() => {
+      let todoItem = realm.create<ToDoType>('TodoDataList', {
+        createTime: Day(),
+        categoryTitle: inputCategoryData ? inputCategoryData.title : categoryName,
+        listContent: todoContents,
+        listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : day && Number(day.replace(/-/g, '')),
+        listTime: twelve_HoursTime ? twelve_HoursTime : null,
+        listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : null,
+        listPriority: onClickPriority ? onClickPriority : 4,
+        id: notifID,
+        listEnabled: isNotificationEnabled,
+      });
+      let categoryItem = realm.create<CategoryType>(
+        'CategoryList',
+        {
+          createTime: inputCategoryData ? inputCategoryData.createTime : categoryTime,
+        },
+        UpdateMode.Modified,
+      );
+      categoryItem.todoData.unshift(todoItem);
+    });
+  };
+
+  // notification 추가
+  const addNotification = (notifID: number) => {
+    const categoryTitle = inputCategoryData ? inputCategoryData.title : categoryName;
+    const timeCheck = new Date(IOS_Notif(onClickDay, twenty_Four_HoursTime)) > new Date(IOS_today());
+
+    if (onClickDay && twelve_HoursTime && timeCheck && isNotificationEnabled) {
+      Schedule_Notif({onClickDay, timeString: twenty_Four_HoursTime, todoContents, NotifID: notifID, categoryTitle});
     }
   };
 
@@ -155,16 +165,14 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
         isVisible={isOpen}
         onBackdropPress={ModalClose}>
         <CalendarModal openModal={calendarModalVisible} closeModal={closeCalendarModal} InputData />
-        {testBtn && Platform.OS === 'android' && <Priority_Modal closeModal={() => setTestBtn(false)} />}
-
-        {categoryBtn && Platform.OS === 'android' && <Category_Modal closeModal={() => setCategoryBtn(false)} />}
+        {priorityModalVisible && Platform.OS === 'android' && <PriorityModal closeModal={() => setPriorityModalVisible(false)} />}
+        {categoryModalVisible && Platform.OS === 'android' && <Category_Modal closeModal={() => setCategoryModalVisible(false)} />}
 
         <KeyboardAvoidingView style={{width: '100%'}} behavior={Platform.OS === 'ios' ? 'padding' : null}>
           <ModalView>
             <Text_Input_Container style={{includeFontPadding: false}} ref={inputRef} value={todoContents} onChangeText={setTodoContents} placeholder="할일 목록 입력하세요" />
-            {testBtn && Platform.OS === 'ios' && <Priority_Modal closeModal={() => setTestBtn(false)} />}
-
-            {categoryBtn && Platform.OS === 'ios' && <Category_Modal closeModal={() => setCategoryBtn(false)} />}
+            {priorityModalVisible && Platform.OS === 'ios' && <PriorityModal closeModal={() => setPriorityModalVisible(false)} />}
+            {categoryModalVisible && Platform.OS === 'ios' && <Category_Modal closeModal={() => setCategoryModalVisible(false)} />}
 
             <Button_View>
               <View style={{flexDirection: 'row'}}>
@@ -176,21 +184,14 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
                   <Icon name="staro" size={23} color={onClickPriority ? '#e984a2' : 'black'} />
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-                  onPress={CategoryOpen}
-                  style={{
-                    marginRight: 30,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
+                <TouchableOpacity hitSlop={{top: 20, bottom: 20, left: 20, right: 20}} onPress={CategoryOpen} style={{marginRight: 30, flexDirection: 'row', alignItems: 'center'}}>
                   <Icon name="bars" size={23} color={inputCategoryData ? inputCategoryData.color : 'black'} />
                   <Category_Title style={{includeFontPadding: false}}>{inputCategoryData ? inputCategoryData.title : categoryName}</Category_Title>
                 </TouchableOpacity>
               </View>
               <View>
                 {todoContents ? (
-                  <TouchableOpacity hitSlop={{top: 20, bottom: 20, left: 20, right: 20}} onPress={ToDoInput_Enter}>
+                  <TouchableOpacity hitSlop={{top: 20, bottom: 20, left: 20, right: 20}} onPress={onPressEnter}>
                     <Icon name="enter" size={23} color={'black'} />
                   </TouchableOpacity>
                 ) : (
@@ -207,4 +208,4 @@ const ToDOInputModal = ({isOpen, close, categoryName, categoryTime, day}) => {
   );
 };
 
-export default ToDOInputModal;
+export default ToDoInputModal;

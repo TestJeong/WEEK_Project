@@ -73,7 +73,7 @@ export const ToDoState = createSlice({
       state.todo_List_data_done = false;
       state.todo_List_data_error = action.payload;
     },
-    RESET_INPUT_DATA: (state, action) => {
+    RESET_INPUT_DATA: (state) => {
       state.onClickDay = '';
       state.onClickPriority = 0;
       state.twelve_HoursTime = '';

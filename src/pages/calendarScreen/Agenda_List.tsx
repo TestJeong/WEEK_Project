@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
 
 import realm, {CategoryType, ToDoType} from '../../db';
-import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/ToDoSlice';
+import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/todoSlice';
 import {isEmpty} from 'lodash';
 import {UpdateMode} from 'realm';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';

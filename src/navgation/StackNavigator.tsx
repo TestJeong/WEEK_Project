@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 import ExpandableCalendarScreen from '../pages/calendarScreen';
-import ToDo_List from '@homeScreen/todo/ToDo_List';
+import ToDo_List from '@homeScreen/todo/ToDoList';
 import Category_ToDo_List from '@homeScreen/category/Category_ToDo_List';
 import HomeScreen from '@homeScreen/index';
 import ToDoList_Detail from '@homeScreen/todo/ToDoList_Detail';
@@ -14,7 +14,7 @@ export type RootStackParamList = {
   ToDoList: {categoryName: string; categoryTime: string};
   Category_ToDoList: {header_Name: string};
   TodoDataList: undefined;
-  ToDoListDetail: {listName: string};
+  ToDoListDetail: {listName: boolean};
   Agenda: undefined;
 };
 

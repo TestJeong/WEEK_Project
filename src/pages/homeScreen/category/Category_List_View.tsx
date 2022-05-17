@@ -51,21 +51,21 @@ const Category_List_View = ({data, drag}: any) => {
     setModalVisible(false);
   };
 
-  const MoveTo_List_Action = (text: React.ReactNode, color: string, x: number, progress: any) => {
+  const Edit_List_Action = (text: React.ReactNode, color: string, x: number, progress: any) => {
     const trans = progress.interpolate({
       inputRange: [0, 1],
       outputRange: [x, 0],
       extrapolate: 'clamp',
     });
 
-    const MoveToList = () => {
+    const onPressBtn = () => {
       setModalVisible(!isModalVisible);
-      close();
+      swiper.current.close();
     };
 
     return (
       <Animated.View style={{flex: 1, transform: [{translateX: trans}]}}>
-        <RectButton onPress={MoveToList} style={[styles.rightAction, {backgroundColor: color}]}>
+        <RectButton onPress={onPressBtn} style={[styles.rightAction, {backgroundColor: color}]}>
           <Text style={styles.actionText}>{text}</Text>
         </RectButton>
       </Animated.View>
@@ -84,7 +84,7 @@ const Category_List_View = ({data, drag}: any) => {
         PushNotification.cancelLocalNotification(j.id);
       }
       dispatch(CATEGORY_DELETE_REQUEST({data}));
-      close();
+      swiper.current.close();
     };
 
     return (
@@ -98,14 +98,10 @@ const Category_List_View = ({data, drag}: any) => {
 
   const renderRightActions = (progress: any) => (
     <View style={{width: 120, flexDirection: 'row'}}>
-      {MoveTo_List_Action(<Icon name="edit" size={20} />, '#34558b', 192, progress)}
+      {Edit_List_Action(<Icon name="edit" size={20} />, '#34558b', 192, progress)}
       {Delete_List_Action(<E_Icon name="trash-2" size={20} />, '#dd2c00', 128, progress)}
     </View>
   );
-
-  const close = () => {
-    swiper.current.close();
-  };
 
   const goToList = () => {
     navigation.navigate('ToDoList', {
@@ -116,7 +112,7 @@ const Category_List_View = ({data, drag}: any) => {
   };
   return (
     <Swipeable ref={swiper} friction={2} rightThreshold={40} renderRightActions={renderRightActions}>
-      <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={data} />
+      <Category_Modal_View isOpen={isModalVisible} close={closeModal} categoryItem={data} />
       <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}} onPress={goToList} onLongPress={drag}>
         <List_Item>
           <View style={{height: 20, width: 20, borderRadius: 20, backgroundColor: data.color, marginRight: 15}} />

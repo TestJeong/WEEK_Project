@@ -263,7 +263,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{flex: 1, margin: 15}}>
-      <Category_Modal_View isOpen={isModalVisible} close={closeModal} data={null} />
+      <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
       <TitleText style={{includeFontPadding: false}}>MY WEEK</TitleText>
       <Column_View style={{marginBottom: 10}}>
         <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>

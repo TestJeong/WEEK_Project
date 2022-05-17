@@ -9,10 +9,15 @@ import E_Icon from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
 import PushNotification from 'react-native-push-notification';
 
-import realm from '../../../db';
+import realm, {ToDoType} from '../../../db';
 import {Schedule_Notif} from './ToDo_Notification';
 import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../../../utils/Day';
-import {fetchTodo, SELECTED_TODOLIST_DATA, TODO_LIST_DATA_REQUEST1} from './ToDoSlice';
+import {fetchTodo, SELECTED_TODOLIST_DATA, TODO_LIST_DATA_REQUEST1} from './todoSlice';
+import {ItodoListType} from './todoType';
+import {UpdateMode} from 'realm';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '@/navgation/StackNavigator';
+import {TodoDataType} from '@homeScreen/category/categoryType';
 
 const List_Item = styled.View`
   height: 40px;
@@ -50,36 +55,36 @@ const List_Title_Content = styled.View`
   width: 100%;
 `;
 
-const ToDo_List_View = ({data, listName}) => {
-  const swiper = useRef();
-  const navigation = useNavigation();
+const ToDoItem = ({data, listName}: ItodoListType) => {
+  const swiper = useRef<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ToDoListDetail'>>();
   const dispatch = useDispatch();
 
   const TodoList_View = realm.objects('TodoDataList');
-  const TodoList_View_Data = TodoList_View.filtered('createTime == $0', data.item.createTime);
+  const TodoList_View_Data: any = TodoList_View.filtered('createTime == $0', data.item.createTime);
 
   const [ListDay, setListDay] = useState(null);
   const [onToggle_List, setOnToggle_List] = useState(TodoList_View_Data[0].listClear);
-  //const {categoryList} = useSelector((state) => state.Catagory);
 
-  const {categoryList} = useSelector((state) => state.CATEGORY_DATA);
+  const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
   useLayoutEffect(() => {
     setOnToggle_List(data.item.listClear);
   }, [data.item, categoryList]);
 
   useEffect(() => {
+    console.log('!@!@!@!@', typeof TodoList_View_Data[0]);
     if (data.item.listDay === null) {
       setListDay(null);
     } else {
       const String_ListDay = String(data.item.listDay);
-      const ListDay_Month = String_ListDay.substring(4, 6) >= 10 ? String_ListDay.substring(4, 6) : String_ListDay.substring(5, 6);
+      const ListDay_Month = Number(String_ListDay.substring(4, 6)) >= 10 ? String_ListDay.substring(4, 6) : String_ListDay.substring(5, 6);
       const ListDay_Day = String_ListDay.substring(6, 8);
       const ListDay_Total = ListDay_Month + '월' + ' ' + ListDay_Day + '일 ';
       setListDay(ListDay_Total);
     }
   }, [data.item]);
 
-  const Delete_List_Action = (text, color, x, progress) => {
+  const Delete_List_Action = (text: React.ReactNode, color: string, x: number, progress: any) => {
     const trans = progress.interpolate({
       inputRange: [0, 1],
       outputRange: [x, 0],
@@ -89,11 +94,8 @@ const ToDo_List_View = ({data, listName}) => {
     const pressHandler = () => {
       const Notif_ID = data.item.id;
       const Sring_ID = String(Notif_ID);
-      PushNotification.cancelLocalNotification({id: Sring_ID});
-      //dispatch({type: TODO_LIST_DATA_REQUEST, data: data});
-      console.log('??');
+      PushNotification.cancelLocalNotification(Sring_ID); //{id: String_ID}
       dispatch(TODO_LIST_DATA_REQUEST1({data}));
-      //dispatch(fetchTodo({data}));
       close();
     };
 
@@ -113,7 +115,7 @@ const ToDo_List_View = ({data, listName}) => {
     );
   };
 
-  const renderRightActions = (progress) => (
+  const renderRightActions = (progress: any) => (
     <View
       style={{
         width: 60,
@@ -139,19 +141,19 @@ const ToDo_List_View = ({data, listName}) => {
     setOnToggle_List(!onToggle_List);
 
     realm.write(() => {
-      realm.create(
+      realm.create<ToDoType>(
         'TodoDataList',
         {
           createTime: data.item.createTime,
           listClear: !onToggle_List,
         },
-        true,
+        UpdateMode.Modified,
       );
     });
     dispatch(SELECTED_TODOLIST_DATA(data.item));
 
     if (data.item.listDay && data.item.listTime_Data && onToggle_List === false) {
-      PushNotification.cancelLocalNotification({id: String_ID});
+      PushNotification.cancelLocalNotification(String_ID); //{id: String_ID}
     } else if (
       data.item.listDay &&
       data.item.listTime_Data &&
@@ -160,7 +162,7 @@ const ToDo_List_View = ({data, listName}) => {
       new Date(IOS_Notif(data.item.listDay, data.item.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
       data.item.listEnabled
     ) {
-      Schedule_Notif(data.item.listDay, data.item.listTime_Data, data.item.listContent, String_ID, data.item.categoryTitle);
+      Schedule_Notif({onClickDay: data.item.listDay, timeString: data.item.listTime_Data, todoContents: data.item.listContent, NotifID: Number(String_ID), categoryTitle: data.item.categoryTitle});
     } else if (
       data.item.listDay &&
       data.item.listTime_Data &&
@@ -169,7 +171,7 @@ const ToDo_List_View = ({data, listName}) => {
       new Date(ANDROID_Notif(data.item.listDay, data.item.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
       data.item.listEnabled
     ) {
-      Schedule_Notif(data.item.listDay, data.item.listTime_Data, data.item.listContent, String_ID, data.item.categoryTitle);
+      Schedule_Notif({onClickDay: data.item.listDay, timeString: data.item.listTime_Data, todoContents: data.item.listContent, NotifID: Number(String_ID), categoryTitle: data.item.categoryTitle});
     }
   };
 
@@ -267,4 +269,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ToDo_List_View;
+export default ToDoItem;

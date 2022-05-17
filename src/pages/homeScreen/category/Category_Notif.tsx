@@ -1,6 +1,6 @@
-import {ToDoType} from '../../../db';
-import {ANDROID_Notif, Notif_Day} from '../../../utils/Day';
-import {Schedule_Notif} from '../todo/ToDo_Notification';
+import {ToDoType} from '@/db';
+import {ANDROID_Notif, Notif_Day} from '@/utils/Day';
+import {Schedule_Notif} from '@homeScreen/todo/ToDo_Notification';
 
 interface CategoryNotificationType {
   item: ToDoType;

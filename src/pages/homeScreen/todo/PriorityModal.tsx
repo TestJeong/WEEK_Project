@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
-import {SELETCTED_PRIORITY} from '@/pages/homeScreen/todo/ToDoSlice';
+import {SELETCTED_PRIORITY} from '@homeScreen/todo/todoSlice';
 
 const Container = styled.View`
   border-radius: 10px;
@@ -27,7 +27,6 @@ const Priority_Btn = styled.TouchableOpacity`
 
 const Icon_View = styled.View`
   flex-direction: row;
-
   justify-content: center;
   width: 35%;
 `;
@@ -37,7 +36,7 @@ const Priority_Text = styled.Text`
   font-family: 'NotoSansKR-Bold';
 `;
 
-const Priority_Modal = ({closeModal}: {closeModal: () => boolean}) => {
+const PriorityModal = ({closeModal}: {closeModal: () => void}) => {
   const dispatch = useDispatch();
 
   const Highest_Priority = useCallback(() => {
@@ -111,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Priority_Modal;
+export default PriorityModal;

@@ -7,13 +7,13 @@ import ActionSheet from 'react-native-actions-sheet';
 
 import realm from '../../../db';
 import CalendarModal from '../../calendarScreen/CalendarModal';
-import DateTime_Picke from './DateTime_Picke';
+import DateTimePicke from './DateTimePicke';
 import Detail_Priorty from './Detail_Priority';
-import Detail_Category from './Detail_Category';
+import ThemeCategoryList from './ThemeCategoryList';
 import {Schedule_Notif} from './ToDo_Notification';
 import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../../../utils/Day';
 import PushNotification from 'react-native-push-notification';
-import {RESET_INPUT_DATA, SELECTED_TODOLIST_DATA} from './ToDoSlice';
+import {RESET_INPUT_DATA, SELECTED_TODOLIST_DATA} from './todoSlice';
 
 const Text_View = styled.View`
   background-color: white;
@@ -237,10 +237,10 @@ const ToDoList_Detail = ({navigation}) => {
         </ActionSheet>
 
         <ActionSheet ref={Category_actionSheetRef}>
-          <Detail_Category hideActionSheet={Category_hide_Action} />
+          <ThemeCategoryList hideActionSheet={Category_hide_Action} />
         </ActionSheet>
 
-        <DateTime_Picke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
+        <DateTimePicke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
         <CalendarModal openModal={calendarModalVisible} closeModal={closeCalendarModal} InputData={false} />
         <Text_View>
           <Title_Text style={{includeFontPadding: false}} value={todoTitle} onChangeText={setToDoTitle} />

@@ -1,10 +1,9 @@
 import {Platform} from 'react-native';
-import PushNotification, {PushNotificationObject, PushNotificationScheduledLocalObject, PushNotificationScheduleObject} from 'react-native-push-notification';
+import PushNotification, {PushNotificationScheduledLocalObject} from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {ANDROID_Notif, IOS_Notif} from '../../../utils/Day';
+import {IOS_Notif} from '../../../utils/Day';
 import {InotifType} from './todoType';
 
-let lastId = 0;
 export const Schedule_Notif = ({onClickDay, timeString, todoContents, NotifID, categoryTitle, num}: InotifType) => {
   console.log('알람 테스트', onClickDay, timeString, todoContents, NotifID, categoryTitle, num);
   PushNotification.configure({
@@ -72,28 +71,8 @@ export const Schedule_Notif = ({onClickDay, timeString, todoContents, NotifID, c
 
 export const Edit_Schedule_Notif = () => {
   PushNotification.configure({
-    onRegister: function (token) {
-      console.log('TOKEN:', token);
-    },
-
-    onNotification: function (notification) {
-      console.log('NOTIFICATION1:', notification);
-      notification.finish(PushNotificationIOS.FetchResult.NoData);
-    },
-
-    onAction: function (notification) {
-      console.log('ACTION:', notification.action);
-      console.log('NOTIFICATION2:', notification);
-    },
-
-    onRegistrationError: function (err) {
-      console.error(err.message, err);
-    },
-
     permissions: {alert: true, badge: true, sound: true},
-
     popInitialNotification: true,
-
     requestPermissions: Platform.OS === 'ios',
   });
 
@@ -106,7 +85,7 @@ export const Edit_Schedule_Notif = () => {
       importance: 4,
       vibrate: true,
     },
-    (created) => console.log(`createChannel 'default-channel-id' returned '${created}'`),
+    () => {},
   );
 
   interface IcustomNotifType {
@@ -118,7 +97,7 @@ export const Edit_Schedule_Notif = () => {
     soundName: string;
     title: string;
   }
-
+  // 현재 알림 리스트
   PushNotification.getScheduledLocalNotifications((notif: PushNotificationScheduledLocalObject[]) => {
     let Edit_lastID = 1;
     const Schedule_sort: IcustomNotifType[] = notif.sort((a: any, b: any) => {

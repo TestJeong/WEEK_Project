@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {GET_CATEGORY_DATA} from '../todo/ToDoSlice';
+import {GET_CATEGORY_DATA} from '../todo/todoSlice';
 
 const Container = styled.View`
   border-radius: 10px;

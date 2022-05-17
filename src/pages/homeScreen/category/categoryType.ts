@@ -26,3 +26,9 @@ export interface CategoryListType {
     item: CategoryItemType;
   };
 }
+
+export interface CategoryModalType {
+  isOpen: boolean;
+  close(): void;
+  categoryItem?: CategoryItemType;
+}

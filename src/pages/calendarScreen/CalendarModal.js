@@ -7,8 +7,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-import DateTime_Picke from '../homeScreen/todo/DateTime_Picke';
-import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../homeScreen/todo/ToDoSlice';
+import DateTimePicke from '../homeScreen/todo/DateTimePicke';
+import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../homeScreen/todo/todoSlice';
 
 const Modal_Container = styled(Modal)`
   flex: 1;
@@ -97,7 +97,7 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
 
   return (
     <Modal_Container useNativeDriverForBackdrop={true} isVisible={openModal} onBackdropPress={closeModal} backdropOpacity={0.2}>
-      <DateTime_Picke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
+      <DateTimePicke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
       <ModalView style={{height: InputData ? 'auto' : 'auto'}}>
         <Calendar
           current={Date()}

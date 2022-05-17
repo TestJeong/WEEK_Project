@@ -1,13 +1,13 @@
 import React, {useLayoutEffect, useState, useEffect} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image, SafeAreaView, Keyboard} from 'react-native';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import ToDoInputModal from './ToDo_Input_Modal';
-import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import ToDoInputModal from './ToDoInputModal';
+import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import styled from 'styled-components/native';
 
-import ToDo_List_View from './ToDo_List_View';
+import ToDoItem from './ToDoItem';
 import {Edit_Schedule_Notif} from './ToDo_Notification';
 
 const FlatListView = styled.FlatList`
@@ -15,13 +15,13 @@ const FlatListView = styled.FlatList`
   height: 100%;
 `;
 
-const ToDoList = ({route}) => {
+const ToDoList = ({route}: any) => {
   const {categoryName, categoryTime} = route.params;
   const navigation = useNavigation();
 
   const [isModalVisible, setModalVisible] = useState(false);
-  const {categoryList, selectedCategory} = useSelector((state) => state.CATEGORY_DATA);
-  const {todoData} = useSelector((state) => state.TODO_DATA);
+  const {categoryList, selectedCategory} = useSelector((state: any) => state.CATEGORY_DATA);
+  const {todoData} = useSelector((state: any) => state.TODO_DATA);
 
   useEffect(() => {
     Edit_Schedule_Notif();
@@ -49,7 +49,7 @@ const ToDoList = ({route}) => {
     <>
       <ToDoInputModal isOpen={isModalVisible} close={closeModal} categoryName={categoryName} categoryTime={categoryTime} />
       <View>
-        <FlatListView keyExtractor={(item, index) => '#' + index} data={selectedCategory.todoData} renderItem={(item) => <ToDo_List_View data={item} ListName={false} />} />
+        <FlatListView keyExtractor={(item, index) => '#' + index} data={selectedCategory.todoData} renderItem={(item) => <ToDoItem data={item} listName={false} />} />
       </View>
       <TouchableOpacity hitSlop={{top: 5, bottom: 5, left: 5, right: 5}} activeOpacity={0.5} onPress={opneModal} style={[styles.touchableOpacityStyle, {backgroundColor: selectedCategory.color}]}>
         <Icon name="plus" color={'white'} size={30} />

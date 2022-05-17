@@ -1,5 +1,5 @@
 import Realm from 'realm';
-import {Day} from '../Utils/Day';
+import {Day} from '../utils/Day';
 
 export interface IsystemType {
   firstType: Boolean;
@@ -7,10 +7,10 @@ export interface IsystemType {
 
 export interface CategoryType {
   id?: number;
-  createTime: number;
-  title: string;
-  color: string;
-  todoData: ToDoType[];
+  createTime?: number;
+  title?: string;
+  color?: string;
+  todoData?: ToDoType[];
 }
 
 export interface ToDoType {
