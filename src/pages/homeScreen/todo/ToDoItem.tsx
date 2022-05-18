@@ -72,7 +72,6 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
   }, [data.item, categoryList]);
 
   useEffect(() => {
-    console.log('!@!@!@!@', typeof TodoList_View_Data[0]);
     if (data.item.listDay === null) {
       setListDay(null);
     } else {

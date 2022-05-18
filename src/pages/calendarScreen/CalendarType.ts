@@ -7,3 +7,9 @@ export interface ItodoType {
 export interface MarkedDate {
   [key: string]: object;
 }
+
+export interface IcalendarModalType {
+  openModal: boolean;
+  closeModal: () => void;
+  InputData: boolean;
+}

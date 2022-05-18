@@ -8,7 +8,7 @@ export interface InotifType {
 }
 
 export interface IdateTimeType {
-  hideDatePicker: () => boolean;
+  hideDatePicker: () => void;
   isDatePickerVisible: boolean;
 }
 

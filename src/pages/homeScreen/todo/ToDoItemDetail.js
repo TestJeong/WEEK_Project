@@ -14,6 +14,8 @@ import {Schedule_Notif} from './ToDo_Notification';
 import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../../../utils/Day';
 import PushNotification from 'react-native-push-notification';
 import {RESET_INPUT_DATA, SELECTED_TODOLIST_DATA} from './todoSlice';
+import Priority from '@homeScreen/components/Priority';
+import DetailButton from '@homeScreen/components/DetailButton';
 
 const Text_View = styled.View`
   background-color: white;
@@ -70,11 +72,8 @@ const List_Text_Value = styled.Text`
 const actionSheetRef = createRef();
 const Category_actionSheetRef = createRef();
 
-const ToDoList_Detail = ({navigation}) => {
-  let actionSheet;
-
+const ToDoItemDetail = ({navigation}) => {
   const dispatch = useDispatch();
-  //const {onClickToDoList, onClickTime, onClickDay, onClickPriority, clickCategory, onClickCategory, timeString} = useSelector((state) => state.Catagory);
   const {todoData, twelve_HoursTime, onClickDay, onClickPriority, twenty_Four_HoursTime, inputCategoryData} = useSelector((state) => state.TODO_DATA);
   const {selectedCategory} = useSelector((state) => state.CATEGORY_DATA);
 
@@ -95,7 +94,6 @@ const ToDoList_Detail = ({navigation}) => {
   };
 
   useEffect(() => {
-    console.log('???!', inputCategoryData);
     PushNotification.getScheduledLocalNotifications((notif) => {
       const notifData = notif.filter((data) => {
         return data.id === String(todoData.id);
@@ -186,6 +184,7 @@ const ToDoList_Detail = ({navigation}) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      title: '상세정보',
       headerRightContainerStyle: {marginRight: 10},
       headerLeft: () => (
         <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginLeft: 20}}>
@@ -228,10 +227,7 @@ const ToDoList_Detail = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <ScrollView
-        style={{
-          padding: 15,
-        }}>
+      <ScrollView style={{padding: 15}}>
         <ActionSheet ref={actionSheetRef}>
           <Detail_Priorty hideActionSheet={hideActionSheet} />
         </ActionSheet>
@@ -247,134 +243,39 @@ const ToDoList_Detail = ({navigation}) => {
           <Memo_Text style={{includeFontPadding: false}} value={todoMemo} onChangeText={setToDoMemo} multiline={true} textAlignVertical={'top'} placeholder="메모" />
         </Text_View>
         <View>
-          <Time_Input_Container
-            onPress={() => {
+          <DetailButton
+            onPressBtn={() => {
               Category_actionSheetRef.current?.setModalVisible();
-            }}>
-            <Time_Icon_Container>
-              <Icon name="bars" size={23} color={'#be8bdc'} />
-              <List_Text style={{includeFontPadding: false}}>카테고리</List_Text>
-            </Time_Icon_Container>
+            }}
+            title={'카테고리'}
+            iconName={'bars'}>
+            {inputCategoryData ? inputCategoryData.title : todoData.categoryTitle}
+          </DetailButton>
 
-            <List_Text_Value style={{includeFontPadding: false}}>
-              {inputCategoryData ? inputCategoryData.title : todoData.categoryTitle}
-              &nbsp; &nbsp;
-              <Icon name="right" size={15} />
-            </List_Text_Value>
-          </Time_Input_Container>
+          <DetailButton onPressBtn={openCalendar} title={'날짜'} iconName={'calendar'}>
+            {twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : '없음'}
+          </DetailButton>
 
-          <Time_Input_Container onPress={openCalendar}>
-            <Time_Icon_Container>
-              <Icon name="calendar" size={23} color={'#75bde0'} />
-              <List_Text style={{includeFontPadding: false}}>날짜</List_Text>
-            </Time_Icon_Container>
-            <List_Text_Value style={{includeFontPadding: false}}>
-              {onClickDay ? onClickDay : todoData.listDay ? Today(todoData.listDay) : '없음'}
-              &nbsp; &nbsp;
-              <Icon name="right" size={15} />
-            </List_Text_Value>
-          </Time_Input_Container>
+          <DetailButton onPressBtn={showDatePicker} title={'시간'} iconName={'clockcircleo'}>
+            {twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : '없음'}
+          </DetailButton>
 
-          <Time_Input_Container onPress={showDatePicker}>
-            <Time_Icon_Container>
-              <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
-              <List_Text style={{includeFontPadding: false}}>시간</List_Text>
-            </Time_Icon_Container>
-            <List_Text_Value style={{includeFontPadding: false}}>
-              {twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : '없음'}
-              &nbsp; &nbsp;
-              <Icon name="right" size={15} />
-            </List_Text_Value>
-          </Time_Input_Container>
-
-          <Time_Input_Container
-            onPress={() => {
+          <DetailButton
+            onPressBtn={() => {
               actionSheetRef.current?.setModalVisible();
-            }}>
-            <Time_Icon_Container>
-              <Icon name="staro" size={23} color={'#f89b9b'} />
-              <List_Text style={{includeFontPadding: false}}>우선순위</List_Text>
-            </Time_Icon_Container>
-            <List_Text_Value style={{includeFontPadding: false}}>
-              {onClickPriority
-                ? (function () {
-                    if (onClickPriority === 1)
-                      return (
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Icon name="star" size={12} color={'pink'} />
-                        </View>
-                      );
-                    if (onClickPriority === 2)
-                      return (
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Icon name="star" size={12} color={'pink'} />
-                          <Icon name="star" size={12} color={'pink'} />
-                        </View>
-                      );
-                    if (onClickPriority === 3)
-                      return (
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Icon name="star" size={12} color={'pink'} />
-                          <Icon name="star" size={12} color={'pink'} />
-                          <Icon name="star" size={12} color={'pink'} />
-                        </View>
-                      );
-                    if (onClickPriority === 4)
-                      return (
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <List_Text_Value style={{includeFontPadding: false}}>없음</List_Text_Value>
-                        </View>
-                      );
-                  })()
-                : todoData.listPriority
-                ? (function () {
-                    if (todoData.listPriority === 1)
-                      return (
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Icon name="star" size={12} color={'pink'} />
-                        </View>
-                      );
-                    if (todoData.listPriority === 2)
-                      return (
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Icon name="star" size={12} color={'pink'} />
-                          <Icon name="star" size={12} color={'pink'} />
-                        </View>
-                      );
-                    if (todoData.listPriority === 3)
-                      return (
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Icon name="star" size={12} color={'pink'} />
-                          <Icon name="star" size={12} color={'pink'} />
-                          <Icon name="star" size={12} color={'pink'} />
-                        </View>
-                      );
-                    if (todoData.listPriority === 4)
-                      return (
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <List_Text_Value style={{includeFontPadding: false}}>없음</List_Text_Value>
-                        </View>
-                      );
-                  })()
-                : '없음'}
-              &nbsp; &nbsp;
-              <Icon name="right" size={15} />
-            </List_Text_Value>
-          </Time_Input_Container>
+            }}
+            title={'우선순위'}
+            iconName={'staro'}>
+            {onClickPriority ? Priority(onClickPriority) : todoData.listPriority ? Priority(todoData.listPriority) : '없음'}
+          </DetailButton>
 
-          <Time_Input_Container>
-            <Time_Icon_Container>
-              <Icon name="notification" size={23} color={'#ffa646'} />
-              <List_Text style={{includeFontPadding: false}}>알람허용</List_Text>
-            </Time_Icon_Container>
-            <List_Text_Value>
-              <Switch onValueChange={setIsEnableds} value={isEnableds} />
-            </List_Text_Value>
-          </Time_Input_Container>
+          <DetailButton title={'알람허용'} iconName={'notification'} isArrow={false}>
+            <Switch onValueChange={setIsEnableds} value={isEnableds} />
+          </DetailButton>
         </View>
       </ScrollView>
     </TouchableWithoutFeedback>
   );
 };
 
-export default ToDoList_Detail;
+export default ToDoItemDetail;

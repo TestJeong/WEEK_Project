@@ -10,7 +10,6 @@ import realm, {CategoryType, ToDoType} from '../../../db';
 import CalendarModal from '../../calendarScreen/CalendarModal';
 import PriorityModal from './PriorityModal';
 import {Day, IOS_Notif, IOS_today} from '../../../utils/Day';
-import {MY_CATEGORY_DATA} from '../../../reducers/Catagory';
 import Category_Modal from '../category/Category_Modal';
 import {Schedule_Notif} from './ToDo_Notification';
 import {REQUEST_CATEGORY_DATA} from '../category/CategorySlice';

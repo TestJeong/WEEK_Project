@@ -2,7 +2,7 @@ import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import {createStore, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas';
-import rootReducer from '../reducers';
+import rootReducer from './rootReducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 

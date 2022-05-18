@@ -73,7 +73,6 @@ const Agenda_List = ({item}: any) => {
       </View>
     );
   }
-  // testID={testIDs.agenda.ITEM}
   return (
     <TouchableOpacity onPress={goToList} style={{marginLeft: 20, marginRight: 20, marginTop: 5, paddingBottom: 10}}>
       <View style={{marginTop: 12, marginBottom: 0}}>

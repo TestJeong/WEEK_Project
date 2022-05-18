@@ -7,7 +7,7 @@ import ExpandableCalendarScreen from '../pages/calendarScreen';
 import ToDo_List from '@homeScreen/todo/ToDoList';
 import Category_ToDo_List from '@homeScreen/category/Category_ToDo_List';
 import HomeScreen from '@homeScreen/index';
-import ToDoList_Detail from '@homeScreen/todo/ToDoList_Detail';
+import ToDoItemDetail from '@homeScreen/todo/ToDoItemDetail';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -66,7 +66,7 @@ const ToDoStackNavigator = () => {
 
       <Stack.Screen
         name="ToDoListDetail"
-        component={ToDoList_Detail}
+        component={ToDoItemDetail}
         options={{
           headerTitle: '상세정보',
           headerTitleStyle: {
@@ -89,7 +89,7 @@ const CalendarStackNavigator = () => {
       <Stack.Screen name="Agenda" component={ExpandableCalendarScreen} options={{headerShown: false}} />
       <Stack.Screen
         name="ToDoListDetail"
-        component={ToDoList_Detail}
+        component={ToDoItemDetail}
         options={{
           headerTitle: '상세정보',
           //headerLeftContainerStyle: {marginLeft: 20},

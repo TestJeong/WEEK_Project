@@ -9,8 +9,9 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import DateTimePicke from '../homeScreen/todo/DateTimePicke';
 import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../homeScreen/todo/todoSlice';
+import {IcalendarModalType} from './calendarType';
 
-const Modal_Container = styled(Modal)`
+const Modal_Container = styled(Modal as any)`
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -59,9 +60,9 @@ const Text_Close = styled.Text`
   font-family: 'NotoSansKR-Medium';
 `;
 
-const CalendarModal = ({openModal, closeModal, InputData}) => {
+const CalendarModal = ({openModal, closeModal, InputData}: IcalendarModalType) => {
   const dispatch = useDispatch();
-  const {onClickDay, twelve_HoursTime} = useSelector((state) => state.TODO_DATA);
+  const {onClickDay, twelve_HoursTime} = useSelector((state: any) => state.TODO_DATA);
 
   const [clickDay, setClickDay] = useState(Date());
   const [isEnabled, setIsEnabled] = useState(false);
@@ -157,14 +158,10 @@ const CalendarModal = ({openModal, closeModal, InputData}) => {
 
         <Button_View>
           <TouchableOpacity onPress={closeModal} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginLeft: 20}}>
-            <Text_Close style={{includeFontPadding: false}} style={{color: '#2653af'}}>
-              닫기
-            </Text_Close>
+            <Text_Close style={{includeFontPadding: false, color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
           <TouchableOpacity onPress={clickDay ? SaveCalendar : null} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginRight: 20}}>
-            <Text_Close style={{includeFontPadding: false}} style={{color: '#2653af'}}>
-              저장
-            </Text_Close>
+            <Text_Close style={{includeFontPadding: false, color: '#2653af'}}>저장</Text_Close>
           </TouchableOpacity>
         </Button_View>
       </ModalView>

@@ -5,8 +5,6 @@ import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 
 import realm, {CategoryType, ToDoType} from '../../../db';
-import {Day} from '../../../utils/Day';
-import {MY_CATEGORY_DATA} from '../../../reducers/Catagory';
 import Category_Palette from './Category_Palette';
 import {Category_Notif} from './Category_Notif';
 import {UpdateMode} from 'realm';
