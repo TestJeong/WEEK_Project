@@ -1,6 +1,8 @@
-import {all, takeEvery} from 'redux-saga/effects';
-import apiSaga from '../sagas/Todo_Saga';
+import {all} from 'redux-saga/effects';
+import calendarSaga from './calendar';
+import categorySaga from './category';
+import todoSaga from './todo';
 
 export default function* rootSaga() {
-  yield all([apiSaga()]);
+  yield all([calendarSaga(), categorySaga(), todoSaga()]);
 }

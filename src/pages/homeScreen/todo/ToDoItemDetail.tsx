@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 import ActionSheet from 'react-native-actions-sheet';
 
-import realm from '../../../db';
+import realm, {CategoryType, ToDoType} from '../../../db';
 import CalendarModal from '../../calendarScreen/CalendarModal';
 import DateTimePicke from './DateTimePicke';
 import Detail_Priorty from './Detail_Priority';
@@ -16,6 +16,8 @@ import PushNotification from 'react-native-push-notification';
 import {RESET_INPUT_DATA, SELECTED_TODOLIST_DATA} from './todoSlice';
 import Priority from '@homeScreen/components/Priority';
 import DetailButton from '@homeScreen/components/DetailButton';
+import {UpdateMode} from 'realm';
+import {useNavigation} from '@react-navigation/native';
 
 const Text_View = styled.View`
   background-color: white;
@@ -43,39 +45,14 @@ const Memo_Text = styled.TextInput`
   font-size: 16px;
 `;
 
-const Time_Input_Container = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 10px;
-  background-color: white;
-  margin-bottom: 30px;
-  border-radius: 20px;
-`;
+const actionSheetRef = createRef<any>();
+const Category_actionSheetRef = createRef<any>();
 
-const Time_Icon_Container = styled.View`
-  flex-direction: row;
-  align-items: center;
-`;
-
-const List_Text = styled.Text`
-  font-family: 'NotoSansKR-Medium';
-  margin-left: 15px;
-  font-size: 16px;
-`;
-
-const List_Text_Value = styled.Text`
-  font-family: 'NotoSansKR-Medium';
-  font-size: 16px;
-`;
-
-const actionSheetRef = createRef();
-const Category_actionSheetRef = createRef();
-
-const ToDoItemDetail = ({navigation}) => {
+const ToDoItemDetail = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {todoData, twelve_HoursTime, onClickDay, onClickPriority, twenty_Four_HoursTime, inputCategoryData} = useSelector((state) => state.TODO_DATA);
-  const {selectedCategory} = useSelector((state) => state.CATEGORY_DATA);
+  const {selectedCategory} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const [todoTitle, setToDoTitle] = useState(todoData.listContent);
   const [todoMemo, setToDoMemo] = useState(todoData.listMemo);
@@ -103,41 +80,34 @@ const ToDoItemDetail = ({navigation}) => {
   }, []);
 
   const SaveBtn = () => {
-    const TodoList_View = realm.objects('TodoDataList');
+    // REALM_TodoDataList
+    const TodoList_View = realm.objects<any>('TodoDataList');
     const TodoList_View_Data = TodoList_View.filtered('createTime == $0', todoData.createTime);
 
     const categoryTitle = inputCategoryData ? inputCategoryData.title : todoData.categoryTitle;
-
     const listContent = TodoList_View_Data[0].listContent;
     const listTime = twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data;
     const listDay = onClickDay ? onClickDay : todoData.listDay;
 
     realm.write(() => {
-      let city = realm.create(
+      let city = realm.create<ToDoType>(
         'TodoDataList',
         {
           createTime: todoData.createTime,
-
           categoryTitle: inputCategoryData ? inputCategoryData.title : todoData.categoryTitle,
-
           listContent: todoTitle,
           listMemo: todoMemo,
           listEnabled: isEnableds,
-
           listTime: twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : null,
-
           listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : todoData.listDay ? todoData.listDay : null,
-
           listPriority: onClickPriority ? onClickPriority : todoData.listPriority ? todoData.listPriority : null,
-
           listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data ? todoData.listTime_Data : null,
         },
-        true,
+        UpdateMode.Modified,
       );
       if (inputCategoryData) {
-        let user = realm.create('CategoryList', {createTime: inputCategoryData ? inputCategoryData.createTime : todoData.createTime}, 'modified');
-
-        let categorys = realm.create('CategoryList', {createTime: selectedCategory.createTime}, true);
+        let user = realm.create<CategoryType>('CategoryList', {createTime: inputCategoryData ? inputCategoryData.createTime : todoData.createTime}, UpdateMode.Modified);
+        let categorys = realm.create<CategoryType>('CategoryList', {createTime: selectedCategory.createTime}, UpdateMode.Modified);
 
         const filterT = categorys.todoData.filter((data) => {
           return data.createTime !== todoData.createTime;
@@ -174,7 +144,7 @@ const ToDoItemDetail = ({navigation}) => {
     const Notif_ID = todoData.id;
     const String_ID = String(Notif_ID);
     if (isEnableds === false) {
-      PushNotification.cancelLocalNotification({id: String_ID});
+      PushNotification.cancelLocalNotification(String_ID);
     }
     dispatch(SELECTED_TODOLIST_DATA(TodoList_View_Data));
     dispatch(RESET_INPUT_DATA());
@@ -253,7 +223,7 @@ const ToDoItemDetail = ({navigation}) => {
           </DetailButton>
 
           <DetailButton onPressBtn={openCalendar} title={'날짜'} iconName={'calendar'}>
-            {twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : '없음'}
+            {onClickDay ? onClickDay : todoData.listDay ? Today(todoData.listDay) : '없음'}
           </DetailButton>
 
           <DetailButton onPressBtn={showDatePicker} title={'시간'} iconName={'clockcircleo'}>

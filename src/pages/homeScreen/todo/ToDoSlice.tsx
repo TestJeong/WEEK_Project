@@ -1,5 +1,4 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {ToDoList_View_Delete} from '../../../sagas/Todo_Delete';
+import {createSlice} from '@reduxjs/toolkit';
 import {CategoryItemType, TodoDataType} from '../category/categoryType';
 
 interface initType {
@@ -41,29 +40,16 @@ const initialState: initType = {
   todo_List_data_error: null,
 };
 
-export const fetchTodo = createAsyncThunk(
-  'ToDoState/fetchTodo', // 액션 이름을 정의해 주도록 합니다.
-  async (todoId: any) => {
-    try {
-      //console.log('?aaaaa', todoId.data);
-      await ToDoList_View_Delete(todoId.data);
-      console.log('11');
-    } catch (error) {
-      console.log('에러입니다 ㅁㄴㅇㄹㅁㄴㅇ', error);
-    }
-  },
-);
-
 export const ToDoState = createSlice({
   name: 'ToDoState',
   initialState,
   reducers: {
-    TODO_LIST_DATA_REQUEST1: (state, action) => {
+    TODO_LIST_DATA_REQUEST1: (state) => {
       state.todo_List_data_loading = true;
       state.todo_List_data_done = false;
       state.todo_List_data_error = null;
     },
-    TODO_LIST_DATA_SUCCESS1: (state, action) => {
+    TODO_LIST_DATA_SUCCESS1: (state) => {
       state.todo_List_data_loading = false;
       state.todo_List_data_done = true;
       state.todo_List_data_error = null;
@@ -106,24 +92,6 @@ export const ToDoState = createSlice({
     GET_NOTIFICATION_ENABLED: (state, action) => {
       state.isNotificationEnabled = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchTodo.pending, (state, action) => {
-      state.todo_List_data_loading = true;
-      state.todo_List_data_done = false;
-      state.todo_List_data_error = null;
-    }),
-      builder.addCase(fetchTodo.fulfilled, (state, action) => {
-        state.todo_List_data_loading = false;
-        state.todo_List_data_done = true;
-        state.todo_List_data_error = null;
-        //state.todoData = null;
-      }),
-      builder.addCase(fetchTodo.rejected, (state, action) => {
-        state.todo_List_data_loading = false;
-        state.todo_List_data_done = false;
-        state.todo_List_data_error = action.payload;
-      });
   },
 });
 
