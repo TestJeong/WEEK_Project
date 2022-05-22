@@ -1,5 +1,4 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {Category_List_View_Delete} from '../../../sagas/Todo_Delete';
+import {createSlice} from '@reduxjs/toolkit';
 import {CategoryItemType, TodoDataType} from './categoryType';
 
 interface initWidget {
@@ -34,16 +33,6 @@ const initialState: initType = {
   categoryListData_done: false,
   categoryListData_error: null,
 };
-
-export const categoryDelete = createAsyncThunk(
-  'CategoryState/deleteCategory', // 액션 이름을 정의해 주도록 합니다.
-  async (todoId: any) => {
-    console.log('썽크 데이터 -> ', todoId.data);
-    const response = await Category_List_View_Delete(todoId.data);
-    console.log('???asdf', response);
-    return response;
-  },
-);
 
 export const CategoryState = createSlice({
   name: 'CategoryState',
@@ -87,13 +76,6 @@ export const CategoryState = createSlice({
       state.categoryListData_loading = false;
       state.categoryListData_done = false;
       state.categoryListData_error = action.payload;
-    },
-  },
-  extraReducers: {
-    [categoryDelete.pending.type]: (state, action) => {},
-    [categoryDelete.fulfilled.type]: (state, action) => {},
-    [categoryDelete.rejected.type]: (state, action) => {
-      console.log('에러 남');
     },
   },
 });

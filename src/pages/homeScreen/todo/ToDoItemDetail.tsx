@@ -13,7 +13,7 @@ import ThemeCategoryList from './ThemeCategoryList';
 import {Schedule_Notif} from './ToDo_Notification';
 import {Today, ANDROID_Notif, Notif_Day, IOS_Notif} from '../../../utils/Day';
 import PushNotification from 'react-native-push-notification';
-import {RESET_INPUT_DATA, SELECTED_TODOLIST_DATA} from './todoSlice';
+import {REQEUST_TODO_ITEM_SAVE, RESET_INPUT_DATA, SELECTED_TODOLIST_DATA} from './todoSlice';
 import Priority from '@homeScreen/components/Priority';
 import DetailButton from '@homeScreen/components/DetailButton';
 import {UpdateMode} from 'realm';
@@ -51,7 +51,7 @@ const Category_actionSheetRef = createRef<any>();
 const ToDoItemDetail = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {todoData, twelve_HoursTime, onClickDay, onClickPriority, twenty_Four_HoursTime, inputCategoryData} = useSelector((state) => state.TODO_DATA);
+  const {todoData, twelve_HoursTime, onClickDay, onClickPriority, twenty_Four_HoursTime, inputCategoryData} = useSelector((state: any) => state.TODO_DATA);
   const {selectedCategory} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const [todoTitle, setToDoTitle] = useState(todoData.listContent);
@@ -81,6 +81,7 @@ const ToDoItemDetail = () => {
 
   const SaveBtn = () => {
     // REALM_TodoDataList
+
     const TodoList_View = realm.objects<any>('TodoDataList');
     const TodoList_View_Data = TodoList_View.filtered('createTime == $0', todoData.createTime);
 
@@ -88,39 +89,39 @@ const ToDoItemDetail = () => {
     const listContent = TodoList_View_Data[0].listContent;
     const listTime = twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data;
     const listDay = onClickDay ? onClickDay : todoData.listDay;
+    dispatch(REQEUST_TODO_ITEM_SAVE({todoTitle, todoMemo, isEnableds}));
+    // realm.write(() => {
+    //   let city = realm.create<ToDoType>(
+    //     'TodoDataList',
+    //     {
+    //       createTime: todoData.createTime,
+    //       categoryTitle: inputCategoryData ? inputCategoryData.title : todoData.categoryTitle,
+    //       listContent: todoTitle,
+    //       listMemo: todoMemo,
+    //       listEnabled: isEnableds,
+    //       listTime: twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : null,
+    //       listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : todoData.listDay ? todoData.listDay : null,
+    //       listPriority: onClickPriority ? onClickPriority : todoData.listPriority ? todoData.listPriority : null,
+    //       listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data ? todoData.listTime_Data : null,
+    //     },
+    //     UpdateMode.Modified,
+    //   );
+    //   if (inputCategoryData) {
+    //     let user = realm.create<CategoryType>('CategoryList', {createTime: inputCategoryData ? inputCategoryData.createTime : todoData.createTime}, UpdateMode.Modified);
+    //     let categorys = realm.create<CategoryType>('CategoryList', {createTime: selectedCategory.createTime}, UpdateMode.Modified);
 
-    realm.write(() => {
-      let city = realm.create<ToDoType>(
-        'TodoDataList',
-        {
-          createTime: todoData.createTime,
-          categoryTitle: inputCategoryData ? inputCategoryData.title : todoData.categoryTitle,
-          listContent: todoTitle,
-          listMemo: todoMemo,
-          listEnabled: isEnableds,
-          listTime: twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : null,
-          listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : todoData.listDay ? todoData.listDay : null,
-          listPriority: onClickPriority ? onClickPriority : todoData.listPriority ? todoData.listPriority : null,
-          listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data ? todoData.listTime_Data : null,
-        },
-        UpdateMode.Modified,
-      );
-      if (inputCategoryData) {
-        let user = realm.create<CategoryType>('CategoryList', {createTime: inputCategoryData ? inputCategoryData.createTime : todoData.createTime}, UpdateMode.Modified);
-        let categorys = realm.create<CategoryType>('CategoryList', {createTime: selectedCategory.createTime}, UpdateMode.Modified);
+    //     const filterT = categorys.todoData.filter((data) => {
+    //       return data.createTime !== todoData.createTime;
+    //     });
 
-        const filterT = categorys.todoData.filter((data) => {
-          return data.createTime !== todoData.createTime;
-        });
+    //     categorys.todoData = [];
+    //     filterT.forEach((item) => {
+    //       categorys.todoData.push(item);
+    //     });
 
-        categorys.todoData = [];
-        filterT.forEach((item) => {
-          categorys.todoData.push(item);
-        });
-
-        user.todoData.unshift(city);
-      }
-    });
+    //     user.todoData.unshift(city);
+    //   }
+    // });
 
     if (twenty_Four_HoursTime || onClickDay || inputCategoryData || listContent !== todoTitle || isEnableds) {
       let hey = new Date(IOS_Notif(listDay, listTime)) > new Date();

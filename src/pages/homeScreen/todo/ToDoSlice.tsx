@@ -1,7 +1,7 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {CategoryItemType, TodoDataType} from '../category/categoryType';
 
-interface initType {
+export interface initType {
   onClickDay: string;
   onClickPriority: number;
   twelve_HoursTime: string;
@@ -9,9 +9,14 @@ interface initType {
   todoData: TodoDataType;
   inputCategoryData: CategoryItemType;
   isNotificationEnabled: boolean;
-  todo_List_data_loading: boolean;
-  todo_List_data_done: boolean;
-  todo_List_data_error: any;
+
+  todoItemDeleteLoading: boolean;
+  todoItemDeleteDone: boolean;
+  todoItemDeleteError: any;
+
+  todoItemSaveLoading: boolean;
+  todoItemSaveDone: boolean;
+  todoItemSaveError: Error;
 }
 
 const initialState: initType = {
@@ -35,29 +40,50 @@ const initialState: initType = {
   inputCategoryData: null,
   isNotificationEnabled: false,
 
-  todo_List_data_loading: true,
-  todo_List_data_done: false,
-  todo_List_data_error: null,
+  todoItemDeleteLoading: true,
+  todoItemDeleteDone: false,
+  todoItemDeleteError: null,
+
+  todoItemSaveLoading: true,
+  todoItemSaveDone: false,
+  todoItemSaveError: null,
 };
 
 export const ToDoState = createSlice({
   name: 'ToDoState',
   initialState,
   reducers: {
-    TODO_LIST_DATA_REQUEST1: (state) => {
-      state.todo_List_data_loading = true;
-      state.todo_List_data_done = false;
-      state.todo_List_data_error = null;
+    // todo 디테일 페이지에서 저장버튼
+    REQEUST_TODO_ITEM_SAVE: (state, _action) => {
+      state.todoItemSaveLoading = true;
+      state.todoItemSaveDone = false;
+      state.todoItemSaveError = null;
     },
-    TODO_LIST_DATA_SUCCESS1: (state) => {
-      state.todo_List_data_loading = false;
-      state.todo_List_data_done = true;
-      state.todo_List_data_error = null;
+    SUCCESS_TODO_ITEM_SAVE: (state) => {
+      state.todoItemSaveLoading = false;
+      state.todoItemSaveDone = true;
+      state.todoItemSaveError = null;
     },
-    TODO_LIST_DATA_ERROR1: (state, action) => {
-      state.todo_List_data_loading = false;
-      state.todo_List_data_done = false;
-      state.todo_List_data_error = action.payload;
+    ERROR_TODO_ITEM_SAVE: (state, action) => {
+      state.todoItemSaveLoading = false;
+      state.todoItemSaveDone = false;
+      state.todoItemSaveError = action.payload;
+    },
+    // todo item 삭제
+    REQEUST_TODO_ITEM_DELETE: (state, _action) => {
+      state.todoItemDeleteLoading = true;
+      state.todoItemDeleteDone = false;
+      state.todoItemDeleteError = null;
+    },
+    SUCCESS_TODO_ITEM_DELETE: (state) => {
+      state.todoItemDeleteLoading = false;
+      state.todoItemDeleteDone = true;
+      state.todoItemDeleteError = null;
+    },
+    ERROR_TODO_ITEM_DELETE: (state, action) => {
+      state.todoItemDeleteLoading = false;
+      state.todoItemDeleteDone = false;
+      state.todoItemDeleteError = action.payload;
     },
     RESET_INPUT_DATA: (state) => {
       state.onClickDay = '';
@@ -71,8 +97,8 @@ export const ToDoState = createSlice({
       state.inputCategoryData = action.payload;
     },
     // 시간을 선택할 경우 12시간제(표시용) 와 24시간제(로컬알림용)를 저장합니다
-    SELECTED_TIME: (state, action) => {
-      const {twelve_HoursTime, twenty_Four_HoursTime} = action.payload;
+    SELECTED_TIME: (state, {payload}: PayloadAction<{twelve_HoursTime: string; twenty_Four_HoursTime: string}>) => {
+      const {twelve_HoursTime, twenty_Four_HoursTime} = payload;
       state.twelve_HoursTime = twelve_HoursTime;
       state.twenty_Four_HoursTime = twenty_Four_HoursTime;
     },
@@ -96,9 +122,12 @@ export const ToDoState = createSlice({
 });
 
 export const {
-  TODO_LIST_DATA_REQUEST1,
-  TODO_LIST_DATA_SUCCESS1,
-  TODO_LIST_DATA_ERROR1,
+  REQEUST_TODO_ITEM_SAVE,
+  SUCCESS_TODO_ITEM_SAVE,
+  ERROR_TODO_ITEM_SAVE,
+  REQEUST_TODO_ITEM_DELETE,
+  SUCCESS_TODO_ITEM_DELETE,
+  ERROR_TODO_ITEM_DELETE,
   RESET_INPUT_DATA,
   GET_DAY,
   SELECTED_TIME,

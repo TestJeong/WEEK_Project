@@ -12,7 +12,7 @@ import PushNotification from 'react-native-push-notification';
 import realm, {ToDoType} from '../../../db';
 import {Schedule_Notif} from './ToDo_Notification';
 import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../../../utils/Day';
-import {fetchTodo, SELECTED_TODOLIST_DATA, TODO_LIST_DATA_REQUEST1} from './todoSlice';
+import {REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './todoSlice';
 import {ItodoListType} from './todoType';
 import {UpdateMode} from 'realm';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -94,7 +94,8 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
       const Notif_ID = data.item.id;
       const Sring_ID = String(Notif_ID);
       PushNotification.cancelLocalNotification(Sring_ID); //{id: String_ID}
-      dispatch(TODO_LIST_DATA_REQUEST1({data}));
+      console.log('12312312312', data);
+      dispatch(REQEUST_TODO_ITEM_DELETE({data}));
       close();
     };
 

@@ -1,21 +1,65 @@
-import {TODO_LIST_DATA_ERROR1, TODO_LIST_DATA_REQUEST1, TODO_LIST_DATA_SUCCESS1} from '@homeScreen/todo/todoSlice';
-import {takeEvery, put, call, all, fork} from 'redux-saga/effects';
-import {ToDoList_View_Delete} from './todoSaga';
+import {
+  REQEUST_TODO_ITEM_DELETE,
+  SUCCESS_TODO_ITEM_DELETE,
+  ERROR_TODO_ITEM_DELETE,
+  ERROR_TODO_ITEM_SAVE,
+  SUCCESS_TODO_ITEM_SAVE,
+  REQEUST_TODO_ITEM_SAVE,
+  TODO_DATA,
+  initType,
+} from '@homeScreen/todo/todoSlice';
+import {PayloadAction} from '@reduxjs/toolkit';
+import {takeEvery, put, call, all, fork, select} from 'redux-saga/effects';
+import {helperTodoItemDelete, helperTodoItemSave} from './todoSaga';
 
-function* todoItemDelete(action: any) {
+interface aa {
+  data: {
+    index: number;
+    item: any;
+  };
+}
+
+export interface aq {
+  isEnableds: boolean;
+  todoMemo: string;
+  todoTitle: string;
+}
+
+// ----------------------------------------------------------------------------------
+
+function* todoItemDelete(action: PayloadAction<aa>) {
   try {
-    yield call(ToDoList_View_Delete, action.payload.data);
-    yield put(TODO_LIST_DATA_SUCCESS1());
+    yield call(helperTodoItemDelete, action.payload.data);
+    yield put(SUCCESS_TODO_ITEM_DELETE());
   } catch (e) {
     console.error(e);
-    yield put({type: TODO_LIST_DATA_ERROR1, data: e, error: true});
+    yield put({type: ERROR_TODO_ITEM_DELETE, data: e, error: true});
   }
 }
 
-function* ToDo_Delete() {
-  yield takeEvery(TODO_LIST_DATA_REQUEST1, todoItemDelete);
+function* todoItemSave({payload}: PayloadAction<aq>) {
+  const state: initType = yield select(({TODO_DATA}) => TODO_DATA);
+  try {
+    yield call(helperTodoItemSave, state, payload);
+    yield put(SUCCESS_TODO_ITEM_SAVE());
+  } catch (e) {
+    console.error(e);
+    yield put({type: ERROR_TODO_ITEM_SAVE, data: e, error: true});
+  }
 }
 
+// ----------------------------------------------------------------------------------
+
+function* requestTodoItemDelete() {
+  yield takeEvery(REQEUST_TODO_ITEM_DELETE, todoItemDelete);
+}
+
+function* requestTodoItemSave() {
+  yield takeEvery(REQEUST_TODO_ITEM_SAVE, todoItemSave);
+}
+
+// ----------------------------------------------------------------------------------
+
 export default function* todoSaga() {
-  yield all([fork(ToDo_Delete)]); // fork(Agenda_DATA_INF)
+  yield all([fork(requestTodoItemDelete), fork(requestTodoItemSave)]);
 }
