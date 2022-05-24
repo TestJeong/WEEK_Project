@@ -6,7 +6,6 @@
 //
 
 import Intents
-import WeekWidgetExtension
 import SwiftUI
 
 class IntentHandler: INExtension {

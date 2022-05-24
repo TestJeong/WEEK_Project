@@ -19,18 +19,21 @@ struct WidgetSmallF: View {
       HStack{
         Text(entry.title)
           .bold()
+          .foregroundColor(Color(hex:"#000000"))
+          .font(.system(size:14))
         Spacer()
       }
-      .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-      .frame(height:40)
+      .padding(EdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15))
+      .frame(height:35)
       .background(Color(hex:entry.color))
       VStack{
         ForEach(entry.todoData as! [String], id: \.self) { todoTitle in
           HStack{
             Group{
-              Circle()
-                .foregroundColor(Color("red1"))
-                .frame(width: 10, height: 10)
+              Rectangle()
+                .stroke(Color(hex:entry.color), style:StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+                .frame(width: 12, height: 12)
+                .cornerRadius(3)
               Text(todoTitle)
             }
             
