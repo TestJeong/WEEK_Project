@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePicke from '../homeScreen/todo/DateTimePicke';
 import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../homeScreen/todo/todoSlice';
 import {IcalendarModalType} from './calendarType';
+import {useEffect} from 'react';
 
 const Modal_Container = styled(Modal as any)`
   flex: 1;
@@ -64,7 +65,13 @@ const CalendarModal = ({openModal, closeModal, InputData}: IcalendarModalType) =
   const dispatch = useDispatch();
   const {onClickDay, twelve_HoursTime} = useSelector((state: any) => state.TODO_DATA);
 
-  const [clickDay, setClickDay] = useState(Date());
+  const today = new Date().toISOString().split('T')[0];
+  var paramDate = new Date(today);
+  var day = paramDate.getDay();
+  var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
+  var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
+
+  const [clickDay, setClickDay] = useState(tey);
   const [isEnabled, setIsEnabled] = useState(false);
 
   const SaveCalendar = () => {

@@ -4,7 +4,7 @@ export interface InotifType {
   todoContents?: string;
   NotifID?: number;
   categoryTitle?: string;
-  num?: string;
+  num?: number;
 }
 
 export interface IdateTimeType {

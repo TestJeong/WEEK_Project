@@ -12,9 +12,10 @@ import Category_List_View from './category/Category_List_View';
 import Category_Modal_View from './category/Category_Modal_View';
 import PushNotification from 'react-native-push-notification';
 import {Edit_Schedule_Notif} from './todo/ToDo_Notification';
-import {RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './category/CategorySlice';
+import {REQUEST_CATEGORY_DATA, RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './category/CategorySlice';
 import {LogBox} from 'react-native';
 import {UpdateMode} from 'realm';
+import {RESET_INPUT_DATA} from './todo/todoSlice';
 
 LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!"]);
 
@@ -88,34 +89,6 @@ const SharedStorage = NativeModules.SharedStorage;
 
 const {WeekWidgetModule} = NativeModules;
 
-const data = {
-  '101': {
-    providerId: 101,
-    providerName: 'Open Weather Map',
-    values: {
-      humidity: '86',
-    },
-    units: {
-      humidity: '%',
-    },
-  },
-  '102': {
-    providerId: 102,
-    providerName: 'Weather API',
-    values: {
-      humidity: '86.02',
-    },
-    units: {
-      humidity: '%',
-    },
-  },
-};
-
-interface Idragtype {
-  item: CategoryType;
-  index: number;
-}
-
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [today_ToDo, setToday_ToDo] = useState(0);
@@ -142,20 +115,6 @@ const HomeScreen = () => {
   };
 
   const test = JSON.stringify(CategoryL);
-
-  const datas = [
-    {
-      createTime: 1648221333375,
-      id: 1,
-      title: 'Inbox',
-      color: '#c2c8c5',
-      todoData: [
-        {
-          createTime: '2022-3-26-18-32-10',
-        },
-      ],
-    },
-  ];
 
   const handleSubmit = async () => {
     try {
@@ -192,9 +151,9 @@ const HomeScreen = () => {
       }
     });
 
-    // PushNotification.getScheduledLocalNotifications((notif) => {
-    //   console.log('예약 알림 => ', notif);
-    // });
+    PushNotification.getScheduledLocalNotifications((notif) => {
+      console.log('예약 알림 => ', notif);
+    });
 
     Edit_Schedule_Notif();
 
@@ -314,9 +273,13 @@ const HomeScreen = () => {
           onDragEnd={({data}: any) => {
             data.forEach((item: CategoryType, index: number) => {
               realm.write(() => {
-                realm.create('CategoryList', {createTime: item.createTime, id: index + 1}, UpdateMode.Modified);
+                realm.create<any>('CategoryList', {createTime: item.createTime, id: index + 1}, UpdateMode.Modified);
               });
             });
+            const CategoryData = realm.objects('CategoryList');
+            const SortCategoryDate = CategoryData.sorted('id');
+            dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
+            dispatch(RESET_INPUT_DATA());
           }}
           keyExtractor={(item: any, index: number) => '#' + index}
           renderItem={renderItem}

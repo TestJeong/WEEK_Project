@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Modal from 'react-native-modal';
 import styled from 'styled-components/native';
 
@@ -10,6 +10,7 @@ import {Category_Notif} from './Category_Notif';
 import {UpdateMode} from 'realm';
 import {REQUEST_CATEGORY_DATA} from './CategorySlice';
 import {CategoryModalType} from './categoryType';
+import {useEffect} from 'react';
 
 const ModalView = styled.View`
   /* 모달창 크기 조절 */
@@ -61,8 +62,14 @@ const Hoper = styled.View`
 `;
 
 const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) => {
-  const [categoryTitle, setcategoryTitle] = useState(categoryItem ? categoryItem.title : '');
-  const [paletteColor, setPaletteColor] = useState(categoryItem ? categoryItem.color : '#c2c8c5');
+  const [categoryTitle, setcategoryTitle] = useState('');
+  const [paletteColor, setPaletteColor] = useState('');
+
+  useEffect(() => {
+    console.log('categoryItem => ', categoryItem ? categoryItem.title : '11', categoryTitle);
+    setcategoryTitle(categoryItem ? categoryItem.title : '');
+    setPaletteColor(categoryItem ? categoryItem.color : '#c2c8c5');
+  }, [isOpen]);
 
   const dispatch = useDispatch();
 
@@ -93,14 +100,14 @@ const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) =
             createTime: date,
             title: categoryTitle,
             color: paletteColor,
-            id: CategoryData.length + 1,
+            id: categoryItem ? categoryItem.id : CategoryData.length + 1,
           },
           UpdateMode.Modified,
         );
         changeToDoItem();
       });
 
-      const SortCategoryDate = CategoryData.sorted('createTime');
+      const SortCategoryDate = CategoryData.sorted('id');
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       close();
       // 카테고리를 만들고 다시 카테고리를 만들경우 색상이랑 타이틀이 남아있음

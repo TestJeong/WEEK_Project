@@ -16,7 +16,6 @@ import PushNotification from 'react-native-push-notification';
 import {REQEUST_TODO_ITEM_SAVE, RESET_INPUT_DATA, SELECTED_TODOLIST_DATA} from './todoSlice';
 import Priority from '@homeScreen/components/Priority';
 import DetailButton from '@homeScreen/components/DetailButton';
-import {UpdateMode} from 'realm';
 import {useNavigation} from '@react-navigation/native';
 
 const Text_View = styled.View`
@@ -80,8 +79,6 @@ const ToDoItemDetail = () => {
   }, []);
 
   const SaveBtn = () => {
-    // REALM_TodoDataList
-
     const TodoList_View = realm.objects<any>('TodoDataList');
     const TodoList_View_Data = TodoList_View.filtered('createTime == $0', todoData.createTime);
 
@@ -89,46 +86,16 @@ const ToDoItemDetail = () => {
     const listContent = TodoList_View_Data[0].listContent;
     const listTime = twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data;
     const listDay = onClickDay ? onClickDay : todoData.listDay;
-    dispatch(REQEUST_TODO_ITEM_SAVE({todoTitle, todoMemo, isEnableds}));
-    // realm.write(() => {
-    //   let city = realm.create<ToDoType>(
-    //     'TodoDataList',
-    //     {
-    //       createTime: todoData.createTime,
-    //       categoryTitle: inputCategoryData ? inputCategoryData.title : todoData.categoryTitle,
-    //       listContent: todoTitle,
-    //       listMemo: todoMemo,
-    //       listEnabled: isEnableds,
-    //       listTime: twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : null,
-    //       listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : todoData.listDay ? todoData.listDay : null,
-    //       listPriority: onClickPriority ? onClickPriority : todoData.listPriority ? todoData.listPriority : null,
-    //       listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data ? todoData.listTime_Data : null,
-    //     },
-    //     UpdateMode.Modified,
-    //   );
-    //   if (inputCategoryData) {
-    //     let user = realm.create<CategoryType>('CategoryList', {createTime: inputCategoryData ? inputCategoryData.createTime : todoData.createTime}, UpdateMode.Modified);
-    //     let categorys = realm.create<CategoryType>('CategoryList', {createTime: selectedCategory.createTime}, UpdateMode.Modified);
-
-    //     const filterT = categorys.todoData.filter((data) => {
-    //       return data.createTime !== todoData.createTime;
-    //     });
-
-    //     categorys.todoData = [];
-    //     filterT.forEach((item) => {
-    //       categorys.todoData.push(item);
-    //     });
-
-    //     user.todoData.unshift(city);
-    //   }
-    // });
+    dispatch(REQEUST_TODO_ITEM_SAVE({todoTitle, todoMemo, isEnableds, selectedCategory}));
 
     if (twenty_Four_HoursTime || onClickDay || inputCategoryData || listContent !== todoTitle || isEnableds) {
-      let hey = new Date(IOS_Notif(listDay, listTime)) > new Date();
+      let CompareDate = new Date(IOS_Notif(listDay, listTime)) > new Date();
 
-      console.log('!00700', new Date(IOS_Notif(listDay, listTime)));
-      if (todoData.listDay && todoData.listTime_Data && Platform.OS === 'ios' && hey && isEnableds) {
-        Schedule_Notif(listDay, listTime, todoTitle, todoData.id, categoryTitle, counter);
+      console.log('!00700', new Date());
+      console.log('시간 설정 => ', todoData.listDay, todoData.listTime_Data, Platform.OS === 'ios', CompareDate, isEnableds);
+      console.log('!!!!!! => ', IOS_Notif(listDay, listTime), new Date(IOS_Notif(listDay, listTime)));
+      if (todoData.listDay && todoData.listTime_Data && Platform.OS === 'ios' && CompareDate && isEnableds) {
+        Schedule_Notif({onClickDay: listDay, timeString: listTime, todoContents: todoTitle, NotifID: todoData.id, categoryTitle: categoryTitle, num: counter});
       } else if (
         todoData.listDay &&
         todoData.listTime_Data &&
@@ -136,7 +103,7 @@ const ToDoItemDetail = () => {
         new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
         isEnableds
       ) {
-        Schedule_Notif(listDay, listTime, todoTitle, todoData.id, categoryTitle, counter);
+        Schedule_Notif({onClickDay: listDay, timeString: listTime, todoContents: todoTitle, NotifID: todoData.id, categoryTitle: categoryTitle, num: counter});
       } else {
         console.warn('[ToDoList_Detail.js] => 디테일 부분 수정에서 아무 조건식에 걸리지 않음');
       }
@@ -149,7 +116,6 @@ const ToDoItemDetail = () => {
     }
     dispatch(SELECTED_TODOLIST_DATA(TodoList_View_Data));
     dispatch(RESET_INPUT_DATA());
-
     navigation.goBack();
   };
 

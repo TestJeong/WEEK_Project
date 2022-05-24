@@ -13,7 +13,7 @@ export const helperTodoItemDelete = (term: any) => {
 export const helperTodoItemSave = (state: any, payload: aq) => {
   const {todoData, twelve_HoursTime, onClickDay, onClickPriority, twenty_Four_HoursTime, inputCategoryData} = state;
   realm.write(() => {
-    let city = realm.create<ToDoType>(
+    realm.create<ToDoType>(
       'TodoDataList',
       {
         createTime: todoData.createTime,
@@ -31,20 +31,15 @@ export const helperTodoItemSave = (state: any, payload: aq) => {
 
     // 투두 디테일에서 카테고리 변경시 실행할 함수
 
-    // if (inputCategoryData) {
-    //   let user = realm.create<CategoryType>('CategoryList', {createTime: inputCategoryData ? inputCategoryData.createTime : todoData.createTime}, UpdateMode.Modified);
-    //   let categorys = realm.create<CategoryType>('CategoryList', {createTime: selectedCategory.createTime}, UpdateMode.Modified);
-
-    //   const filterT = categorys.todoData.filter((data) => {
-    //     return data.createTime !== todoData.createTime;
-    //   });
-
-    //   categorys.todoData = [];
-    //   filterT.forEach((item) => {
-    //     categorys.todoData.push(item);
-    //   });
-
-    //   user.todoData.unshift(city);
-    // }
+    if (inputCategoryData) {
+      realm.create<ToDoType>(
+        'TodoDataList',
+        {
+          createTime: todoData.createTime,
+          categoryTitle: inputCategoryData.title,
+        },
+        UpdateMode.Modified,
+      );
+    }
   });
 };

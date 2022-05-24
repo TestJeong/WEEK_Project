@@ -32,8 +32,8 @@ const Icon_View = styled.View`
 
   width: 25%;
 `;
-
-const Detail_Priorty = ({hideActionSheet}: {hideActionSheet: () => boolean}) => {
+// boolean 하니 ToDoItemDeail 타입 위반
+const Detail_Priorty = ({hideActionSheet}: {hideActionSheet: () => void}) => {
   const dispatch = useDispatch();
 
   const Highest_Priority = () => {

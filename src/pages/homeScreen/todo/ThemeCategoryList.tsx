@@ -42,7 +42,8 @@ const List_Btn = styled.TouchableOpacity`
 `;
 
 // 투두 디테일 페이지에서 카테고리 리스트
-const ThemeCategoryList = ({hideActionSheet}: {hideActionSheet: () => boolean}) => {
+// boolean 하니 ToDoItemDetail 타입위반
+const ThemeCategoryList = ({hideActionSheet}: {hideActionSheet: () => void}) => {
   const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
   const dispatch = useDispatch();
 

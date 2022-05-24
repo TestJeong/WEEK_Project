@@ -23,6 +23,7 @@ export interface aq {
   isEnableds: boolean;
   todoMemo: string;
   todoTitle: string;
+  selectedCategory: any;
 }
 
 // ----------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import React, {useLayoutEffect, useState, useEffect} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image, SafeAreaView, Keyboard} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Keyboard} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import ToDoInputModal from './ToDoInputModal';
 import {useSelector} from 'react-redux';
@@ -9,6 +9,7 @@ import styled from 'styled-components/native';
 
 import ToDoItem from './ToDoItem';
 import {Edit_Schedule_Notif} from './ToDo_Notification';
+import realm from '@/db';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -20,8 +21,15 @@ const ToDoList = ({route}: any) => {
   const navigation = useNavigation();
 
   const [isModalVisible, setModalVisible] = useState(false);
+  const [todoDataItem, setTodoDataItem] = useState<any>([]);
   const {categoryList, selectedCategory} = useSelector((state: any) => state.CATEGORY_DATA);
   const {todoData} = useSelector((state: any) => state.TODO_DATA);
+
+  useEffect(() => {
+    const TodoDataList = realm.objects('TodoDataList');
+    const FilterTodoDataList = TodoDataList.filtered('categoryTitle == $0', categoryName);
+    setTodoDataItem(FilterTodoDataList);
+  }, []);
 
   useEffect(() => {
     Edit_Schedule_Notif();
@@ -49,7 +57,7 @@ const ToDoList = ({route}: any) => {
     <>
       <ToDoInputModal isOpen={isModalVisible} close={closeModal} categoryName={categoryName} categoryTime={categoryTime} />
       <View>
-        <FlatListView keyExtractor={(item, index) => '#' + index} data={selectedCategory.todoData} renderItem={(item) => <ToDoItem data={item} listName={false} />} />
+        <FlatListView keyExtractor={(item, index) => '#' + index} data={todoDataItem} renderItem={(item) => <ToDoItem data={item} listName={false} />} />
       </View>
       <TouchableOpacity hitSlop={{top: 5, bottom: 5, left: 5, right: 5}} activeOpacity={0.5} onPress={opneModal} style={[styles.touchableOpacityStyle, {backgroundColor: selectedCategory.color}]}>
         <Icon name="plus" color={'white'} size={30} />
