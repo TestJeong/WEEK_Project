@@ -35,6 +35,9 @@ struct WidgetSmallF: View {
                 .frame(width: 12, height: 12)
                 .cornerRadius(3)
               Text(todoTitle)
+                .font(.system(size:12))
+                .lineLimit(1)
+                .truncationMode(.tail )
             }
             
             Spacer()

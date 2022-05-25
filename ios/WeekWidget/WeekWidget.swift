@@ -57,7 +57,7 @@ struct Provider: IntentTimelineProvider {
           
           if let dates = _provider!["todoData"] as? [[String:Any]],
             let _ = dates.first {
-            let indexCount = [0,1,2]
+            let indexCount = [0,1,2,3,4]
             for index in indexCount {
               if(index >= dates.startIndex && index < dates.endIndex) {
                 let clear = dates[index]["listClear"] as! Int
