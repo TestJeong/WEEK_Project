@@ -11,6 +11,7 @@ import DateTimePicke from '../homeScreen/todo/DateTimePicke';
 import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../homeScreen/todo/todoSlice';
 import {IcalendarModalType} from './calendarType';
 import {useEffect} from 'react';
+import {Today} from '@/utils/Day';
 
 const Modal_Container = styled(Modal as any)`
   flex: 1;
@@ -71,7 +72,7 @@ const CalendarModal = ({openModal, closeModal, InputData}: IcalendarModalType) =
   var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
   var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
 
-  const [clickDay, setClickDay] = useState(tey);
+  const [clickDay, setClickDay] = useState(Today());
   const [isEnabled, setIsEnabled] = useState(false);
 
   const SaveCalendar = () => {

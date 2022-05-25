@@ -151,9 +151,9 @@ const HomeScreen = () => {
       }
     });
 
-    PushNotification.getScheduledLocalNotifications((notif) => {
-      console.log('예약 알림 => ', notif);
-    });
+    // PushNotification.getScheduledLocalNotifications((notif) => {
+    //   console.log('예약 알림 => ', notif);
+    // });
 
     Edit_Schedule_Notif();
 

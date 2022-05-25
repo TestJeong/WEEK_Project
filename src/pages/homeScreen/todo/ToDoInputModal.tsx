@@ -126,6 +126,7 @@ const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoI
         categoryTitle: inputCategoryData ? inputCategoryData.title : categoryName,
         listContent: todoContents,
         listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : day && Number(day.replace(/-/g, '')),
+        //listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : day && Number(day.replace(/-/g, '')),
         listTime: twelve_HoursTime ? twelve_HoursTime : null,
         listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : null,
         listPriority: onClickPriority ? onClickPriority : 4,

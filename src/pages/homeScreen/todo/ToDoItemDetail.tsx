@@ -85,24 +85,17 @@ const ToDoItemDetail = () => {
     const categoryTitle = inputCategoryData ? inputCategoryData.title : todoData.categoryTitle;
     const listContent = TodoList_View_Data[0].listContent;
     const listTime = twenty_Four_HoursTime ? twenty_Four_HoursTime : todoData.listTime_Data;
-    const listDay = onClickDay ? onClickDay : todoData.listDay;
+    const listDay = onClickDay ? onClickDay : Today(todoData.listDay);
     dispatch(REQEUST_TODO_ITEM_SAVE({todoTitle, todoMemo, isEnableds, selectedCategory}));
 
+    // 바뀐 것이 있는지 확인하는 조건문
     if (twenty_Four_HoursTime || onClickDay || inputCategoryData || listContent !== todoTitle || isEnableds) {
-      let CompareDate = new Date(IOS_Notif(listDay, listTime)) > new Date();
+      let CompareDateIos = new Date(IOS_Notif(listDay, listTime)) > new Date();
+      let CompareDateAndroid = new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() > new Date(Notif_Day()).toLocaleString();
 
-      console.log('!00700', new Date());
-      console.log('시간 설정 => ', todoData.listDay, todoData.listTime_Data, Platform.OS === 'ios', CompareDate, isEnableds);
-      console.log('!!!!!! => ', IOS_Notif(listDay, listTime), new Date(IOS_Notif(listDay, listTime)));
-      if (todoData.listDay && todoData.listTime_Data && Platform.OS === 'ios' && CompareDate && isEnableds) {
+      if (todoData.listDay && todoData.listTime_Data && Platform.OS === 'ios' && CompareDateIos && isEnableds) {
         Schedule_Notif({onClickDay: listDay, timeString: listTime, todoContents: todoTitle, NotifID: todoData.id, categoryTitle: categoryTitle, num: counter});
-      } else if (
-        todoData.listDay &&
-        todoData.listTime_Data &&
-        Platform.OS === 'android' &&
-        new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
-        isEnableds
-      ) {
+      } else if (todoData.listDay && todoData.listTime_Data && Platform.OS === 'android' && CompareDateAndroid && isEnableds) {
         Schedule_Notif({onClickDay: listDay, timeString: listTime, todoContents: todoTitle, NotifID: todoData.id, categoryTitle: categoryTitle, num: counter});
       } else {
         console.warn('[ToDoList_Detail.js] => 디테일 부분 수정에서 아무 조건식에 걸리지 않음');
@@ -118,6 +111,10 @@ const ToDoItemDetail = () => {
     dispatch(RESET_INPUT_DATA());
     navigation.goBack();
   };
+
+  const a = () => {};
+  const AndroidNotification = () => {};
+  const IosNotification = () => {};
 
   useLayoutEffect(() => {
     navigation.setOptions({

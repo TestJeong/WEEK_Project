@@ -66,7 +66,6 @@ const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) =
   const [paletteColor, setPaletteColor] = useState('');
 
   useEffect(() => {
-    console.log('categoryItem => ', categoryItem ? categoryItem.title : '11', categoryTitle);
     setcategoryTitle(categoryItem ? categoryItem.title : '');
     setPaletteColor(categoryItem ? categoryItem.color : '#c2c8c5');
   }, [isOpen]);

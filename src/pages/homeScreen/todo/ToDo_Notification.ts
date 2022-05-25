@@ -5,7 +5,7 @@ import {IOS_Notif} from '../../../utils/Day';
 import {InotifType} from './todoType';
 
 export const Schedule_Notif = ({onClickDay, timeString, todoContents, NotifID, categoryTitle, num}: InotifType) => {
-  console.log('알람 테스트', onClickDay, timeString, todoContents, NotifID, categoryTitle, num);
+  //console.log('알람 테스트', onClickDay, timeString, todoContents, NotifID, categoryTitle, num);
   PushNotification.configure({
     onRegister: function (token) {
       console.log('TOKEN:', token);

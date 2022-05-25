@@ -1,5 +1,5 @@
 import React, {useLayoutEffect, useState, useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity, Keyboard} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Keyboard} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import ToDoInputModal from './ToDoInputModal';
 import {useSelector} from 'react-redux';
@@ -10,6 +10,7 @@ import styled from 'styled-components/native';
 import ToDoItem from './ToDoItem';
 import {Edit_Schedule_Notif} from './ToDo_Notification';
 import realm from '@/db';
+import {Day} from '@/utils/Day';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -27,7 +28,8 @@ const ToDoList = ({route}: any) => {
 
   useEffect(() => {
     const TodoDataList = realm.objects('TodoDataList');
-    const FilterTodoDataList = TodoDataList.filtered('categoryTitle == $0', categoryName);
+    const SortTodoList = TodoDataList.sorted('createTime', true);
+    const FilterTodoDataList = SortTodoList.filtered('categoryTitle == $0', categoryName);
     setTodoDataItem(FilterTodoDataList);
   }, []);
 

@@ -120,7 +120,6 @@ const Category_List_View = ({data, drag}: any) => {
         <List_Item>
           <View style={{height: 20, width: 20, borderRadius: 20, backgroundColor: data.color, marginRight: 15}} />
           <List_Text style={{includeFontPadding: false}}>{data.title}</List_Text>
-          <List_Text style={{includeFontPadding: false}}>{data.id}</List_Text>
         </List_Item>
 
         <Icon name="right" size={15} style={{marginRight: 15}} />
