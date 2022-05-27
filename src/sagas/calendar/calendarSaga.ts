@@ -1,36 +1,30 @@
-import realm from '@/db';
+import realm, {CategoryType, ToDoType} from '@/db';
 
-export const Agenda_Call_Data = (term) => {
-  // const timeToString = (time) => {
-  //   const date = new Date(time);
+interface CustomTodoType extends ToDoType {
+  colors: string;
+}
 
-  //   const dates = new Date(date - date.getTimezoneOffset() * 60000).toISOString().split('T')[0];
-
-  //   return dates;
-  // };
-  const AgendaData = realm.objects<any>('TodoDataList');
-  const CategoryData = realm.objects<any>('CategoryList');
+export const helperAgendaRequest = (payload: any) => {
+  const TodoData = realm.objects<ToDoType>('TodoDataList');
+  const CategoryData = realm.objects<CategoryType>('CategoryList');
 
   let items = [];
 
   for (let i = 0; i < 7; i++) {
-    // const time = new Date().getTime() + i * 24 * 60 * 60 * 1000; // 157625342
-    // const strTime = timeToString(term !== null ? term + i * 24 * 60 * 60 * 1000 : time);
-    // const intTime = Number(strTime.replace(/-/g, ''));
-    const ho = new Date(term).getTime();
+    const CurrentWeekMonday = new Date(payload).getTime();
 
-    const date = new Date(ho + 864e5 * i); // 864e5 == 86400000 == 24*60*60*1000 현재일로 부터 다음날
+    const date = new Date(CurrentWeekMonday + 864e5 * i); // 864e5 == 86400000 == 24*60*60*1000 현재일로 부터 다음날
     const dateString = date.toISOString().split('T')[0];
     const intTime = Number(dateString.replace(/-/g, ''));
 
-    const TodoData_Day = AgendaData.filtered('listDay == $0', intTime);
-    const TodoData_Day_Sort = TodoData_Day.sorted('createTime');
+    const FindTodoData = TodoData.filtered('listDay == $0', intTime);
+    const SortTodoData = FindTodoData.sorted('createTime');
 
-    if (TodoData_Day_Sort.length === 0) {
+    if (SortTodoData.length === 0) {
       items.push({title: dateString, data: [{}]});
     } else {
-      let todoDataArray = [];
-      TodoData_Day_Sort.map((date) => {
+      let todoDataArray: CustomTodoType[] = [];
+      SortTodoData.map((date) => {
         const Category = CategoryData.filtered('title == $0', date.categoryTitle);
         todoDataArray.push({
           createTime: date.createTime,

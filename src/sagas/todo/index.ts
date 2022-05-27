@@ -27,7 +27,7 @@ export interface aq {
 }
 
 // ----------------------------------------------------------------------------------
-
+// 투두 아이템 삭제
 function* todoItemDelete(action: PayloadAction<aa>) {
   try {
     yield call(helperTodoItemDelete, action.payload.data);
@@ -37,7 +37,7 @@ function* todoItemDelete(action: PayloadAction<aa>) {
     yield put({type: ERROR_TODO_ITEM_DELETE, data: e, error: true});
   }
 }
-
+// 투두 아이템 저장
 function* todoItemSave({payload}: PayloadAction<aq>) {
   const state: initType = yield select(({TODO_DATA}) => TODO_DATA);
   try {

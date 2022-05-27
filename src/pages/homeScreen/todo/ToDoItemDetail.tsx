@@ -93,9 +93,13 @@ const ToDoItemDetail = () => {
       let CompareDateIos = new Date(IOS_Notif(listDay, listTime)) > new Date();
       let CompareDateAndroid = new Date(ANDROID_Notif(listDay, listTime)).toLocaleString() > new Date(Notif_Day()).toLocaleString();
 
-      if (todoData.listDay && todoData.listTime_Data && Platform.OS === 'ios' && CompareDateIos && isEnableds) {
+      const ConditionIos = todoData.listDay && todoData.listTime_Data && Platform.OS === 'ios' && CompareDateIos && isEnableds;
+      const ConditionAndroid = todoData.listDay && todoData.listTime_Data && Platform.OS === 'android' && CompareDateAndroid && isEnableds;
+      // os가 뭔지 확인
+      // 비교 함수 실행
+      if (ConditionIos) {
         Schedule_Notif({onClickDay: listDay, timeString: listTime, todoContents: todoTitle, NotifID: todoData.id, categoryTitle: categoryTitle, num: counter});
-      } else if (todoData.listDay && todoData.listTime_Data && Platform.OS === 'android' && CompareDateAndroid && isEnableds) {
+      } else if (ConditionAndroid) {
         Schedule_Notif({onClickDay: listDay, timeString: listTime, todoContents: todoTitle, NotifID: todoData.id, categoryTitle: categoryTitle, num: counter});
       } else {
         console.warn('[ToDoList_Detail.js] => 디테일 부분 수정에서 아무 조건식에 걸리지 않음');
@@ -111,10 +115,6 @@ const ToDoItemDetail = () => {
     dispatch(RESET_INPUT_DATA());
     navigation.goBack();
   };
-
-  const a = () => {};
-  const AndroidNotification = () => {};
-  const IosNotification = () => {};
 
   useLayoutEffect(() => {
     navigation.setOptions({

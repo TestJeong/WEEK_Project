@@ -1,10 +1,16 @@
 import {AGENDA_DATA_SUCCESS, AGENDA_DATA_ERROR, AGENDA_DATA_REQUEST} from '@/pages/calendarScreen/CalendarSlice';
+import {PayloadAction} from '@reduxjs/toolkit';
 import {takeEvery, put, call, all, fork} from 'redux-saga/effects';
-import {Agenda_Call_Data} from './calendarSaga';
+import {helperAgendaRequest} from './calendarSaga';
 
-function* Agenda_DATA_ToDo(action: any) {
+interface DateType {
+  payload: string; // 2022-05-23 해당 주의 월요일
+}
+
+function* agendaData(action: PayloadAction<DateType>) {
   try {
-    const result: {title: string; data: any} = yield call(Agenda_Call_Data, action.payload);
+    const {payload} = action;
+    const result: {title: string; data: any} = yield call(helperAgendaRequest, payload);
     yield put(AGENDA_DATA_SUCCESS(result));
   } catch (e) {
     console.error(e);
@@ -12,10 +18,10 @@ function* Agenda_DATA_ToDo(action: any) {
   }
 }
 
-function* Agenda_DATA_INF() {
-  yield takeEvery(AGENDA_DATA_REQUEST, Agenda_DATA_ToDo);
+function* requestAgendaData() {
+  yield takeEvery(AGENDA_DATA_REQUEST, agendaData);
 }
 
 export default function* calendarSaga() {
-  yield all([fork(Agenda_DATA_INF)]);
+  yield all([fork(requestAgendaData)]);
 }

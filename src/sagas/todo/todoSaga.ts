@@ -30,7 +30,6 @@ export const helperTodoItemSave = (state: any, payload: aq) => {
     );
 
     // 투두 디테일에서 카테고리 변경시 실행할 함수
-
     if (inputCategoryData) {
       realm.create<ToDoType>(
         'TodoDataList',

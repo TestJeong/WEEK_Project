@@ -124,30 +124,17 @@ const ExpandableCalendarScreen = () => {
       date={today}
       onDateChanged={onDateChanged}
       showTodayButton={false} // "오늘" 이라는 버튼 표시 여부
-      disabledOpacity={0.6}
-      // theme={this.todayBtnTheme}
-      // todayBottomMargin={16}
-    >
+      disabledOpacity={0.6}>
       <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
         <ExpandableCalendar
           allowShadow={false}
           testID={testIDs.expandableCalendar.CONTAINER}
-          // horizontal={false}
-          // hideArrows
-          // disablePan
-          // hideKnob
-          // initialPosition={ExpandableCalendar.positions.OPEN}
-          // calendarStyle={styles.calendar}
-          // headerStyle={styles.calendar} // for horizontal only
-          // disableWeekScroll
           theme={theme}
-          // disableAllTouchEventsForDisabledDays
           firstDay={1}
           markedDates={marked}
           enableSwipeMonths={false}
           leftArrowImageSource={leftArrowIcon}
           rightArrowImageSource={rightArrowIcon}
-          // animateScroll
         />
 
         <AgendaList

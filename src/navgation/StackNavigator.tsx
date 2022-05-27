@@ -70,10 +70,8 @@ const ToDoStackNavigator = () => {
         options={{
           headerTitle: '상세정보',
           headerTitleStyle: {
-            //letterSpacing: 0.5,
             color: 'black',
             fontSize: 17,
-            // lineHeight: 20,
             fontFamily: 'NotoSansKR-Bold',
           },
         }}
