@@ -4,8 +4,8 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {IOS_Notif} from './Day';
 import {InotifType} from '../pages/homeScreen/todo/todoType';
 
-export const changeSchedule_Notif = ({date, todoContents, NotifID, categoryTitle, num}: InotifType) => {
-  //console.log('알람 테스트', onClickDay, timeString, todoContents, NotifID, categoryTitle, num);
+export const changeSchedule_Notif = ({date, todoContents, NotifID, categoryTitle, num}: any) => {
+  console.log('알람 테스트', date, todoContents, NotifID, categoryTitle, num);
   PushNotification.configure({
     onRegister: function (token) {
       console.log('TOKEN:', token);
@@ -161,22 +161,21 @@ export const Edit_Schedule_Notif = () => {
   }
   // 현재 알림 리스트
   PushNotification.getScheduledLocalNotifications((notif: PushNotificationScheduledLocalObject[]) => {
-    let Edit_lastID = 1;
-    const Schedule_sort: IcustomNotifType[] = notif.sort((a: any, b: any) => {
-      return a.date - b.date;
-    });
-
-    for (let data of Schedule_sort) {
-      let tests = Edit_lastID++;
-      PushNotification.localNotificationSchedule({
-        channelId: 'load-channel-id',
-        id: data.id,
-        title: data.title,
-        message: data.message,
-        date: new Date(data.date),
-        allowWhileIdle: false,
-        number: tests,
-      });
-    }
+    // let Edit_lastID = 1;
+    // const Schedule_sort: IcustomNotifType[] = notif.sort((a: any, b: any) => {
+    //   return a.date - b.date;
+    // });
+    // for (let data of Schedule_sort) {
+    //   let tests = Edit_lastID++;
+    //   PushNotification.localNotificationSchedule({
+    //     channelId: 'load-channel-id',
+    //     id: data.id,
+    //     title: data.title,
+    //     message: data.message,
+    //     date: new Date(data.date),
+    //     allowWhileIdle: false,
+    //     number: tests,
+    //   });
+    // }
   });
 };

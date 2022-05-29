@@ -63,6 +63,8 @@ const Hoper = styled.View`
   border-radius: 50px;
 `;
 
+let name: string;
+
 const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) => {
   const [categoryTitle, setcategoryTitle] = useState('');
   const [paletteColor, setPaletteColor] = useState('');
@@ -92,7 +94,7 @@ const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) =
   const onPressSaveBtn = () => {
     const CategoryData = realm.objects('CategoryList');
     const date = categoryItem ? categoryItem.createTime : new Date().getTime();
-    let as = categoryItem.title;
+    name = categoryItem.title;
 
     if (categoryTitle !== '') {
       realm.write(() => {
@@ -109,10 +111,9 @@ const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) =
         changeToDoItem();
         PushNotification.getScheduledLocalNotifications((notif) => {
           const notifData = notif.filter((i) => {
-            return i.title === as;
+            return i.title === name;
           });
           notifData.map((a) => {
-            console.log('?A', a);
             changeSchedule_Notif({date: a.date, todoContents: a.message, NotifID: a.id, categoryTitle: categoryTitle, num: a.number});
           });
         });
