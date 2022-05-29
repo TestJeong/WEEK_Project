@@ -11,11 +11,12 @@ import realm, {CategoryType} from '../../db';
 import Category_List_View from './category/Category_List_View';
 import Category_Modal_View from './category/Category_Modal_View';
 import PushNotification from 'react-native-push-notification';
-import {Edit_Schedule_Notif} from './todo/ToDo_Notification';
+import {Edit_Schedule_Notif} from '../../utils/notificationHelper';
 import {REQUEST_CATEGORY_DATA, RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './category/CategorySlice';
 import {LogBox} from 'react-native';
 import {UpdateMode} from 'realm';
 import {RESET_INPUT_DATA} from './todo/todoSlice';
+import {widgetRefresh} from '@/utils/widgetHelper';
 
 LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!"]);
 
@@ -88,6 +89,8 @@ const group = 'group.com.week.ReactNativeWidget';
 const SharedStorage = NativeModules.SharedStorage;
 
 const {WeekWidgetModule} = NativeModules;
+const CategoryA = realm.objects('CategoryList');
+const testa = JSON.stringify(CategoryA);
 
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -151,9 +154,9 @@ const HomeScreen = () => {
       }
     });
 
-    // PushNotification.getScheduledLocalNotifications((notif) => {
-    //   console.log('예약 알림 => ', notif);
-    // });
+    PushNotification.getScheduledLocalNotifications((notif) => {
+      console.log('예약 알림 => ', notif);
+    });
 
     Edit_Schedule_Notif();
 
@@ -166,7 +169,6 @@ const HomeScreen = () => {
     const Priority_List_View_Data = TodoList_View.filtered('listPriority != $0 AND listClear == $1', 4, false);
     const All_List_View_Data = TodoList_View.filtered('listClear == $0', false);
 
-    handleSubmit();
     setToday_ToDo(Today_List_View_Data.length);
     setWill_ToDo(Will_List_View_Data.length);
     setPriority_ToDo(Priority_List_View_Data.length);

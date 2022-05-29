@@ -10,14 +10,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import PushNotification from 'react-native-push-notification';
 
 import realm, {ToDoType} from '../../../db';
-import {Schedule_Notif} from './ToDo_Notification';
-import {ANDROID_Notif, IOS_Notif, Notif_Day} from '../../../utils/Day';
+import {Schedule_Notif} from '../../../utils/notificationHelper';
+import {IOS_Notif, Notif_Day} from '../../../utils/Day';
 import {REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './todoSlice';
 import {ItodoListType} from './todoType';
 import {UpdateMode} from 'realm';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
-import {TodoDataType} from '@homeScreen/category/categoryType';
+import {widgetRefresh} from '@/utils/widgetHelper';
 
 const List_Item = styled.View`
   height: 40px;
@@ -72,6 +72,8 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
   }, [data.item, categoryList]);
 
   useEffect(() => {
+    widgetRefresh();
+
     if (data.item.listDay === null) {
       setListDay(null);
     } else {
@@ -94,7 +96,7 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
       const Notif_ID = data.item.id;
       const Sring_ID = String(Notif_ID);
       PushNotification.cancelLocalNotification(Sring_ID); //{id: String_ID}
-      console.log('12312312312', data);
+      // WeekWidgetModule.refreshAllWidgets();
       dispatch(REQEUST_TODO_ITEM_DELETE({data}));
       close();
     };
@@ -158,17 +160,7 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
       data.item.listDay &&
       data.item.listTime_Data &&
       onToggle_List === true &&
-      Platform.OS === 'ios' &&
       new Date(IOS_Notif(data.item.listDay, data.item.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
-      data.item.listEnabled
-    ) {
-      Schedule_Notif({onClickDay: data.item.listDay, timeString: data.item.listTime_Data, todoContents: data.item.listContent, NotifID: Number(String_ID), categoryTitle: data.item.categoryTitle});
-    } else if (
-      data.item.listDay &&
-      data.item.listTime_Data &&
-      onToggle_List === true &&
-      Platform.OS === 'android' &&
-      new Date(ANDROID_Notif(data.item.listDay, data.item.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
       data.item.listEnabled
     ) {
       Schedule_Notif({onClickDay: data.item.listDay, timeString: data.item.listTime_Data, todoContents: data.item.listContent, NotifID: Number(String_ID), categoryTitle: data.item.categoryTitle});

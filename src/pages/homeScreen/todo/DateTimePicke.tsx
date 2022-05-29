@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useDispatch} from 'react-redux';
 import {SELECTED_TIME} from './todoSlice';

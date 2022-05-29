@@ -11,7 +11,7 @@ import CalendarModal from '../../calendarScreen/CalendarModal';
 import PriorityModal from './PriorityModal';
 import {Day, IOS_Notif, IOS_today} from '../../../utils/Day';
 import Category_Modal from '../category/Category_Modal';
-import {Schedule_Notif} from './ToDo_Notification';
+import {Schedule_Notif} from '../../../utils/notificationHelper';
 import {REQUEST_CATEGORY_DATA} from '../category/CategorySlice';
 import {RESET_INPUT_DATA} from './todoSlice';
 import {ItodoInputModalType} from './todoType';
@@ -114,6 +114,7 @@ const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoI
       addNotification(NotifID);
 
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
+      dispatch(RESET_INPUT_DATA());
       setTodoContents('');
     }
   };
@@ -126,7 +127,6 @@ const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoI
         categoryTitle: inputCategoryData ? inputCategoryData.title : categoryName,
         listContent: todoContents,
         listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : day && Number(day.replace(/-/g, '')),
-        //listDay: onClickDay ? Number(onClickDay.replace(/-/g, '')) : day && Number(day.replace(/-/g, '')),
         listTime: twelve_HoursTime ? twelve_HoursTime : null,
         listTime_Data: twenty_Four_HoursTime ? twenty_Four_HoursTime : null,
         listPriority: onClickPriority ? onClickPriority : 4,

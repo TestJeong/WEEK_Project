@@ -8,9 +8,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
 import ToDoItem from './ToDoItem';
-import {Edit_Schedule_Notif} from './ToDo_Notification';
+import {Edit_Schedule_Notif} from '../../../utils/notificationHelper';
 import realm from '@/db';
-import {Day} from '@/utils/Day';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;

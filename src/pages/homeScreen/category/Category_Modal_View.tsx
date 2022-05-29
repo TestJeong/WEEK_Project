@@ -11,6 +11,8 @@ import {UpdateMode} from 'realm';
 import {REQUEST_CATEGORY_DATA} from './CategorySlice';
 import {CategoryModalType} from './categoryType';
 import {useEffect} from 'react';
+import {changeSchedule_Notif, Edit_Schedule_Notif} from '@/utils/notificationHelper';
+import PushNotification from 'react-native-push-notification';
 
 const ModalView = styled.View`
   /* 모달창 크기 조절 */
@@ -90,6 +92,7 @@ const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) =
   const onPressSaveBtn = () => {
     const CategoryData = realm.objects('CategoryList');
     const date = categoryItem ? categoryItem.createTime : new Date().getTime();
+    let as = categoryItem.title;
 
     if (categoryTitle !== '') {
       realm.write(() => {
@@ -104,11 +107,22 @@ const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) =
           UpdateMode.Modified,
         );
         changeToDoItem();
+        PushNotification.getScheduledLocalNotifications((notif) => {
+          const notifData = notif.filter((i) => {
+            return i.title === as;
+          });
+          notifData.map((a) => {
+            console.log('?A', a);
+            changeSchedule_Notif({date: a.date, todoContents: a.message, NotifID: a.id, categoryTitle: categoryTitle, num: a.number});
+          });
+        });
       });
 
       const SortCategoryDate = CategoryData.sorted('id');
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       close();
+
+      //Edit_Schedule_Notif();
       // 카테고리를 만들고 다시 카테고리를 만들경우 색상이랑 타이틀이 남아있음
       categoryItem ? null : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
     } else {

@@ -1,8 +1,70 @@
 import {Platform} from 'react-native';
 import PushNotification, {PushNotificationScheduledLocalObject} from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {IOS_Notif} from '../../../utils/Day';
-import {InotifType} from './todoType';
+import {IOS_Notif} from './Day';
+import {InotifType} from '../pages/homeScreen/todo/todoType';
+
+export const changeSchedule_Notif = ({date, todoContents, NotifID, categoryTitle, num}: InotifType) => {
+  //console.log('알람 테스트', onClickDay, timeString, todoContents, NotifID, categoryTitle, num);
+  PushNotification.configure({
+    onRegister: function (token) {
+      console.log('TOKEN:', token);
+    },
+
+    onNotification: function (notification) {
+      console.log('NOTIFICATION1:', notification);
+
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
+    },
+
+    onAction: function (notification) {
+      console.log('ACTION:', notification.action);
+      console.log('NOTIFICATION2:', notification);
+    },
+
+    onRegistrationError: function (err) {
+      console.error(err.message, err);
+    },
+
+    permissions: {
+      alert: true,
+      badge: true,
+      sound: true,
+    },
+
+    popInitialNotification: true,
+
+    requestPermissions: Platform.OS === 'ios',
+  });
+
+  PushNotification.createChannel(
+    {
+      channelId: 'load-channel-id',
+      channelName: `Default channel`,
+      channelDescription: 'A default channel',
+      soundName: 'default',
+      importance: 4,
+      vibrate: true,
+    },
+    (created) => console.log(`createChannel 'default-channel-id' returned '${created}'`),
+  );
+
+  //const Platform_Date = Platform.OS === 'ios' ? IOS_Notif(onClickDay, timeString) : ANDROID_Notif(onClickDay, timeString);
+
+  const ScheduleNotif = () => {
+    PushNotification.localNotificationSchedule({
+      channelId: 'load-channel-id',
+      id: NotifID,
+      title: categoryTitle,
+      message: todoContents,
+      date: date,
+      allowWhileIdle: false,
+      number: num ? num : 1,
+    });
+  };
+
+  return ScheduleNotif();
+};
 
 export const Schedule_Notif = ({onClickDay, timeString, todoContents, NotifID, categoryTitle, num}: InotifType) => {
   //console.log('알람 테스트', onClickDay, timeString, todoContents, NotifID, categoryTitle, num);

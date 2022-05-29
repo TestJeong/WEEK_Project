@@ -1,11 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
 const List_Text_Value = styled.Text`
   font-family: 'NotoSansKR-Medium';
   font-size: 16px;
+  align-items: center;
 `;
 
 const Priority = (onClickPriority: number) => {

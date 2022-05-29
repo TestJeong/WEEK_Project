@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, Platform, Switch} from 'react-native';
+import {TouchableOpacity, Platform, Switch, View} from 'react-native';
 
 import {Calendar} from 'react-native-calendars';
 import Modal from 'react-native-modal';
@@ -8,7 +8,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import DateTimePicke from '../homeScreen/todo/DateTimePicke';
-import {GET_DAY, GET_NOTIFICATION_ENABLED} from '../homeScreen/todo/todoSlice';
+import {GET_DAY, GET_NOTIFICATION_ENABLED, RESET_INPUT_DATA} from '../homeScreen/todo/todoSlice';
 import {IcalendarModalType} from './calendarType';
 import {useEffect} from 'react';
 import {Today} from '@/utils/Day';
@@ -32,7 +32,7 @@ const Time_Input_Container = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 10px;
+  flex: 1;
 `;
 
 const Time_Icon_Container = styled.View`
@@ -104,6 +104,10 @@ const CalendarModal = ({openModal, closeModal, InputData}: IcalendarModalType) =
     return Mark;
   };
 
+  const onPressDeleteTime = () => {
+    dispatch(RESET_INPUT_DATA());
+  };
+
   return (
     <Modal_Container useNativeDriverForBackdrop={true} isVisible={openModal} onBackdropPress={closeModal} backdropOpacity={0.2}>
       <DateTimePicke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
@@ -141,27 +145,33 @@ const CalendarModal = ({openModal, closeModal, InputData}: IcalendarModalType) =
           }}
         />
         {InputData ? (
-          <Time_Input_Container onPress={showDatePicker}>
-            <Time_Icon_Container>
-              <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
-              <Time_Text style={{includeFontPadding: false}}>시간</Time_Text>
-            </Time_Icon_Container>
-            <Time_Value style={{includeFontPadding: false}}>
-              {twelve_HoursTime ? twelve_HoursTime : '없음'}&nbsp; &nbsp;
-              <Icon name="right" size={15} />
-            </Time_Value>
-          </Time_Input_Container>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10}}>
+            <Time_Input_Container onPress={showDatePicker}>
+              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1}}>
+                <Time_Icon_Container>
+                  <Icon name="clockcircleo" size={23} color={'#b9cc95'} />
+                  <Time_Text style={{includeFontPadding: false}}>시간</Time_Text>
+                </Time_Icon_Container>
+                <Time_Value style={{includeFontPadding: false}}>{twelve_HoursTime ? twelve_HoursTime : '없음'}&nbsp; &nbsp;</Time_Value>
+              </View>
+            </Time_Input_Container>
+            <TouchableOpacity onPress={onPressDeleteTime}>{twelve_HoursTime ? <Icon name="close" size={19} color="red" /> : <Icon name="right" size={15} />}</TouchableOpacity>
+          </View>
         ) : null}
         {InputData ? (
-          <Time_Input_Container onPress={showDatePicker}>
-            <Time_Icon_Container>
-              <Icon name="bells" size={23} color={'#b9cc95'} />
-              <Time_Text style={{includeFontPadding: false}}>알람 설정</Time_Text>
-            </Time_Icon_Container>
-            <Time_Value>
-              <Switch onValueChange={setIsEnabled} value={isEnabled} />
-            </Time_Value>
-          </Time_Input_Container>
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 10}}>
+            <Time_Input_Container onPress={showDatePicker}>
+              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1}}>
+                <Time_Icon_Container>
+                  <Icon name="bells" size={23} color={'#b9cc95'} />
+                  <Time_Text style={{includeFontPadding: false}}>알람 설정</Time_Text>
+                </Time_Icon_Container>
+              </View>
+              <Time_Value>
+                <Switch onValueChange={setIsEnabled} value={isEnabled} />
+              </Time_Value>
+            </Time_Input_Container>
+          </View>
         ) : null}
 
         <Button_View>

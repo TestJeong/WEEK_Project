@@ -58,12 +58,14 @@ export const ANDROID_Notif = (onClickDay, timeString) => {
   const ClickTime = onClickDay;
   const Change_String = String(ClickTime);
   const years = Change_String.substring(0, 4); // 0,4
-  const month = Change_String.substring(4, 6); // 5,7
-  const day = Change_String.substring(6, 8); // 8,10
+  const month = Change_String.substring(5, 7); // 5,7
+  const day = Change_String.substring(8, 10); // 8,10
 
   const allDay = years + '/' + month + '/' + day;
   const StringTime = timeString;
   const Alls = allDay + ' ' + StringTime;
+
+  console.log('ANDROID_Notif =>', allDay, onClickDay, timeString);
 
   return Alls;
 };

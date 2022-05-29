@@ -8,7 +8,7 @@ import styled from 'styled-components/native';
 import ToDoItem from '../todo/ToDoItem';
 import {Today} from '@/utils/Day';
 import {RootStackParamList} from '@/navgation/StackNavigator';
-import {Edit_Schedule_Notif} from '@homeScreen/todo/ToDo_Notification';
+import {Edit_Schedule_Notif} from '@/utils/notificationHelper';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
