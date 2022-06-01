@@ -1,6 +1,5 @@
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 import ExpandableCalendarScreen from '../pages/calendarScreen';
@@ -8,6 +7,7 @@ import ToDo_List from '@homeScreen/todo/ToDoList';
 import Category_ToDo_List from '@homeScreen/category/Category_ToDo_List';
 import HomeScreen from '@homeScreen/index';
 import ToDoItemDetail from '@homeScreen/todo/ToDoItemDetail';
+import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -18,11 +18,10 @@ export type RootStackParamList = {
   Agenda: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
+const Stack = createStackNavigator<RootStackParamList>();
 const screenOptionStyle: any = {
   headerTitleAlign: 'center',
-  /*   headerTitleStyle: {fontWeight: 400}, */
+  cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
 };
 
 const ToDoStackNavigator = () => {

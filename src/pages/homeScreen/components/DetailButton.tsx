@@ -4,21 +4,10 @@ import {TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
-const Time_Input_Container = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 10px;
-  background-color: white;
-  margin-bottom: 30px;
-  border-radius: 20px;
-`;
-
 const Time_Input_Containera = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 10px;
   background-color: white;
   margin-bottom: 30px;
   border-radius: 20px;
@@ -42,11 +31,12 @@ const List_Text_Value = styled.Text`
   padding: 0;
 `;
 
-// 함수
-// 아이콘
-// 타이틀
-// 내용
-// 화살표 여부
+const Detail_Button = styled.TouchableOpacity`
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+  padding: 20px 10px;
+`;
 
 const checkIcon = (iconName: string) => {
   switch (iconName) {
@@ -68,8 +58,8 @@ const checkIcon = (iconName: string) => {
 
 export const DetailButton = ({onPressBtn, title, iconName, isArrow = true, children}: any) => {
   return (
-    <Time_Input_Containera>
-      <TouchableOpacity style={{flexDirection: 'row', flex: 1, alignItems: 'center', height: '100%'}} onPress={onPressBtn}>
+    <Time_Input_Containera onPress={onPressBtn}>
+      <Detail_Button>
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1}}>
           <Time_Icon_Container>
             {checkIcon(iconName)}
@@ -77,8 +67,8 @@ export const DetailButton = ({onPressBtn, title, iconName, isArrow = true, child
           </Time_Icon_Container>
           <List_Text_Value style={{includeFontPadding: false}}> {children} &nbsp;</List_Text_Value>
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity>
+      </Detail_Button>
+      <TouchableOpacity style={{paddingRight: 10}}>
         <Icon name="right" size={15} />
       </TouchableOpacity>
     </Time_Input_Containera>
@@ -88,7 +78,7 @@ export const DetailButton = ({onPressBtn, title, iconName, isArrow = true, child
 export const DetailTimeButton = ({onPressBtn, title, iconName, children, timeSheet, deleteFunc}: any) => {
   return (
     <Time_Input_Containera>
-      <TouchableOpacity style={{flexDirection: 'row', flex: 1, alignItems: 'center', height: '100%'}} onPress={onPressBtn}>
+      <Detail_Button onPress={onPressBtn}>
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1}}>
           <Time_Icon_Container>
             {checkIcon(iconName)}
@@ -96,8 +86,10 @@ export const DetailTimeButton = ({onPressBtn, title, iconName, children, timeShe
           </Time_Icon_Container>
           <List_Text_Value style={{includeFontPadding: false}}> {children} &nbsp;</List_Text_Value>
         </View>
+      </Detail_Button>
+      <TouchableOpacity style={{paddingRight: 10, height: '100%'}} onPress={deleteFunc}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>{timeSheet ? <Icon name="close" size={19} color="red" /> : <Icon name="right" size={15} />}</View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={deleteFunc}>{timeSheet ? <Icon name="close" size={19} color="red" /> : <Icon name="right" size={15} />}</TouchableOpacity>
     </Time_Input_Containera>
   );
 };

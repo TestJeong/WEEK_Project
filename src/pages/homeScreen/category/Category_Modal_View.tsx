@@ -94,7 +94,7 @@ const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) =
   const onPressSaveBtn = () => {
     const CategoryData = realm.objects('CategoryList');
     const date = categoryItem ? categoryItem.createTime : new Date().getTime();
-    name = categoryItem.title;
+    let name = categoryItem !== undefined ? categoryItem.title : categoryTitle;
 
     if (categoryTitle !== '') {
       realm.write(() => {
@@ -123,7 +123,6 @@ const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) =
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       close();
 
-      //Edit_Schedule_Notif();
       // 카테고리를 만들고 다시 카테고리를 만들경우 색상이랑 타이틀이 남아있음
       categoryItem ? null : (setPaletteColor('#c2c8c5'), setcategoryTitle(''));
     } else {

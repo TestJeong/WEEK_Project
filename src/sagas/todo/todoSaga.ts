@@ -1,4 +1,4 @@
-import realm, {CategoryType, ToDoType} from '@/db';
+import realm, {ToDoType} from '@/db';
 import {UpdateMode} from 'realm';
 import {aq} from '.';
 

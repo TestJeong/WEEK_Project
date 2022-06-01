@@ -1,14 +1,12 @@
-import {useIsFocused} from '@react-navigation/native';
-import React, {useCallback, useEffect} from 'react';
+import React from 'react';
 import {Platform, StyleSheet, Alert, View, Text, TouchableOpacity, Button, ViewStyle} from 'react-native';
 import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar, LocaleConfig} from 'react-native-calendars';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
+import realm from '@/db';
 import Agenda_List from './Agenda_List';
 import testIDs from '../../Components/testIDs';
 import {AGENDA_DATA_REQUEST} from './CalendarSlice';
-import {useState} from 'react';
-import realm from '../../db';
 import {Today} from '../../utils/Day';
 import {RootState} from '../../store/configureStore';
 import {ItodoType, MarkedDate} from './CalendarType';
@@ -80,15 +78,7 @@ const getTheme = () => {
 
 const ExpandableCalendarScreen = () => {
   const dispatch = useDispatch();
-  const [onPressDay, setonPressDay] = useState('');
   const {Agenda_DATA} = useSelector((state: RootState) => state.CALENDAR_DATA);
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    if (isFocused) {
-      dispatch(AGENDA_DATA_REQUEST(onPressDay === '' ? tey : onPressDay));
-    }
-  }, [isFocused]);
 
   const getMarkedDates = () => {
     const TodoList_View = realm.objects('TodoDataList');
@@ -111,7 +101,6 @@ const ExpandableCalendarScreen = () => {
     var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
     var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
     getMarkedDates();
-    setonPressDay(tey);
     dispatch(AGENDA_DATA_REQUEST(tey));
   };
 
@@ -150,50 +139,9 @@ const ExpandableCalendarScreen = () => {
 };
 
 const styles = StyleSheet.create<any>({
-  calendar: {
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
   section: {
     color: 'black',
     textTransform: 'capitalize',
-  },
-  item: {
-    padding: 20,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: 'lightgrey',
-    flexDirection: 'row',
-  },
-  itemHourText: {
-    color: 'black',
-  },
-  itemDurationText: {
-    color: 'grey',
-    fontSize: 12,
-    marginTop: 4,
-    marginLeft: 4,
-  },
-  itemTitleText: {
-    color: 'black',
-    marginLeft: 16,
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  itemButtonContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
-  },
-  emptyItem: {
-    paddingLeft: 20,
-    height: 52,
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: 'lightgrey',
-  },
-  emptyItemText: {
-    color: 'lightgrey',
-    fontSize: 14,
   },
 });
 

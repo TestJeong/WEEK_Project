@@ -25,6 +25,7 @@ const initialState: initType = {
     createTime: 0, // 2022-1-25-22-48-51
     title: '',
     todoData: [],
+    id: 0,
   },
   mainCategoryData: [],
   closeInputModal: [],
@@ -60,6 +61,7 @@ export const CategoryState = createSlice({
         createTime: 0, // 2022-1-25-22-48-51
         title: '',
         todoData: [],
+        id: 0,
       };
     },
     CATEGORY_DELETE_REQUEST: (state, action) => {

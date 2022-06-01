@@ -5,7 +5,6 @@ import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
-import SharedGroupPreferences from 'react-native-shared-group-preferences';
 import DraggableFlatList, {RenderItemParams} from 'react-native-draggable-flatlist';
 import realm, {CategoryType} from '../../db';
 import Category_List_View from './category/Category_List_View';
@@ -16,7 +15,7 @@ import {REQUEST_CATEGORY_DATA, RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA
 import {LogBox} from 'react-native';
 import {UpdateMode} from 'realm';
 import {RESET_INPUT_DATA} from './todo/todoSlice';
-import {widgetRefresh} from '@/utils/widgetHelper';
+import {All_ListData, Priority_ListData, Today_ListData, Will_ListData} from '@/utils/widgetHelper';
 
 LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!"]);
 
@@ -36,10 +35,6 @@ const PlusText = styled.Text`
   font-size: 15px;
   font-family: 'NotoSansKR-Bold';
   margin-left: 10px;
-`;
-
-const Main_Container = styled.View`
-  justify-content: flex-end;
 `;
 
 const Column_View = styled.View`
@@ -85,12 +80,7 @@ const Main_Title_Text = styled.Text`
   padding-bottom: 10px;
 `;
 
-const group = 'group.com.week.ReactNativeWidget';
-const SharedStorage = NativeModules.SharedStorage;
-
-const {WeekWidgetModule} = NativeModules;
-const CategoryA = realm.objects('CategoryList');
-const testa = JSON.stringify(CategoryA);
+const TodoList_View = realm.objects('TodoDataList');
 
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -99,7 +89,11 @@ const HomeScreen = () => {
   const [priority_ToDo, setPriority_ToDo] = useState(0);
   const [all_ToDo, setAll_ToDo] = useState(0);
 
-  const {categoryList, widgetCategory} = useSelector((state: any) => state.CATEGORY_DATA);
+  const navigation = useNavigation<any>();
+  const isFocused = useIsFocused();
+
+  const dispatch = useDispatch();
+  const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
@@ -107,38 +101,8 @@ const HomeScreen = () => {
   const string_Local_Time = timezoneDate.toISOString().substring(0, 10);
   const int_Local_Time = Number(string_Local_Time.replace(/-/g, ''));
 
-  const TodoList_View = realm.objects('TodoDataList');
-  const CategoryL = realm.objects('CategoryList');
-
-  const widgetData = {
-    today: today_ToDo,
-    willToDo: will_ToDo,
-    priorityToDo: priority_ToDo,
-    allToDo: all_ToDo,
-  };
-
-  const test = JSON.stringify(CategoryL);
-
-  const handleSubmit = async () => {
-    try {
-      // iOS
-      await SharedGroupPreferences.setItem('widgetKey', widgetData, group);
-      WeekWidgetModule.refreshAllWidgets();
-      WeekWidgetModule.setWidgetData(JSON.parse(test));
-      WeekWidgetModule.testget();
-    } catch (error) {
-      //console.log({error});
-    }
-    // Android
-    //SharedStorage.set(JSON.stringify('Asdf'));
-  };
-
-  const isFocused = useIsFocused();
-
   useEffect(() => {
-    if (isFocused) {
-      dispatch(RESET_CATEGORYT_DATA());
-    }
+    if (isFocused) dispatch(RESET_CATEGORYT_DATA());
   }, [isFocused]);
 
   useEffect(() => {
@@ -164,19 +128,12 @@ const HomeScreen = () => {
     //   console.log('Realm is located at: ' + realm.path.toString());
     // });
 
-    const Today_List_View_Data = TodoList_View.filtered('listDay == $0 AND listClear == $1', int_Local_Time, false);
-    const Will_List_View_Data = TodoList_View.filtered('listDay > $0 AND listClear == $1', int_Local_Time, false);
-    const Priority_List_View_Data = TodoList_View.filtered('listPriority != $0 AND listClear == $1', 4, false);
-    const All_List_View_Data = TodoList_View.filtered('listClear == $0', false);
-
-    setToday_ToDo(Today_List_View_Data.length);
-    setWill_ToDo(Will_List_View_Data.length);
-    setPriority_ToDo(Priority_List_View_Data.length);
-    setAll_ToDo(All_List_View_Data.length);
+    setToday_ToDo(Today_ListData.length);
+    setWill_ToDo(Will_ListData.length);
+    setPriority_ToDo(Priority_ListData.length);
+    setAll_ToDo(All_ListData.length);
   }, [TodoList_View, categoryList]);
 
-  const navigation = useNavigation<any>();
-  const dispatch = useDispatch();
   const opneModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -236,6 +193,7 @@ const HomeScreen = () => {
             <Main_Title_Number_Text style={{includeFontPadding: false}}>{today_ToDo}</Main_Title_Number_Text>
           </Main_Title_Number>
         </Column_Btn>
+
         <Column_Btn onPress={will_ToDo_Data} style={{backgroundColor: '#ccabd8'}}>
           <Main_Title_View>
             <Main_Title_Text style={{includeFontPadding: false}}>예정</Main_Title_Text>
