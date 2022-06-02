@@ -6,7 +6,7 @@ import store from './src/store/configureStore';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import realm, {IsystemType} from './src/db';
 import {UpdateMode} from 'realm';
-import {NativeModules} from 'react-native';
+import {NativeModules, View} from 'react-native';
 import TapNavigator from '@/navgation/TapNavigator';
 import {AGENDA_DATA_REQUEST} from './src/pages/calendarScreen/CalendarSlice';
 
