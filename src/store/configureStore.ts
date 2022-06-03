@@ -17,7 +17,6 @@ const store = configureStore({
   middleware: [...middlewares],
 });
 // configureStore
-
 // const store = createStore(
 //   rootReducer, // 리듀서 연결
 //   composeWithDevTools(applyMiddleware(...middlewares)),

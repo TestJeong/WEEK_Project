@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "typeRoots": ["./@type"],
     "experimentalDecorators": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
@@ -15,6 +16,7 @@
     "strictNullChecks": false,
     "baseUrl": "./src",
     "declaration": false,
+    "noImplicitAny": false,
     "paths": {
       "@homeScreen/*": ["pages/homeScreen/*"],
       "@calendarScreen/*": ["pages/calendarScreen/*"],

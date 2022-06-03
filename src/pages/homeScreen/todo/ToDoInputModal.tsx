@@ -14,8 +14,8 @@ import Category_Modal from '../category/Category_Modal';
 import {Schedule_Notif} from '../../../utils/notificationHelper';
 import {REQUEST_CATEGORY_DATA} from '../category/CategorySlice';
 import {RESET_INPUT_DATA} from './todoSlice';
-import {ItodoInputModalType} from './todoType';
 import {UpdateMode} from 'realm';
+import {ItodoInputModalType} from './todoType';
 
 const Modal_Container = styled(Modal as any)`
   flex: 1;
