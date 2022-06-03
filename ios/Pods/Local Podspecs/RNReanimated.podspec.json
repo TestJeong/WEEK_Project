@@ -1,6 +1,6 @@
 {
   "name": "RNReanimated",
-  "version": "2.8.0",
+  "version": "2.2.4",
   "summary": "More powerful alternative to Animated library for React Native.",
   "description": "RNReanimated",
   "homepage": "https://github.com/software-mansion/react-native-reanimated",
@@ -14,7 +14,7 @@
   },
   "source": {
     "git": "https://github.com/software-mansion/react-native-reanimated.git",
-    "tag": "2.8.0"
+    "tag": "2.2.4"
   },
   "source_files": [
     "ios/**/*.{mm,h,m}",
@@ -36,7 +36,7 @@
   },
   "requires_arc": true,
   "dependencies": {
-    "React-Core": [
+    "React": [
 
     ],
     "FBLazyVector": [
@@ -49,6 +49,9 @@
 
     ],
     "RCTTypeSafety": [
+
+    ],
+    "React-Core": [
 
     ],
     "React-CoreModules": [
@@ -76,6 +79,9 @@
 
     ],
     "React-RCTText": [
+
+    ],
+    "React-RCTVibration": [
 
     ],
     "React-RCTImage": [
