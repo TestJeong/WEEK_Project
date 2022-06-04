@@ -152,7 +152,7 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
         UpdateMode.Modified,
       );
     });
-    dispatch(SELECTED_TODOLIST_DATA(data.item));
+    //dispatch(SELECTED_TODOLIST_DATA(data.item));
 
     if (data.item.listDay && data.item.listTime_Data && onToggle_List === false) {
       PushNotification.cancelLocalNotification(String_ID); //{id: String_ID}

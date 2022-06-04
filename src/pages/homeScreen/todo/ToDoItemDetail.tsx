@@ -47,7 +47,6 @@ const Memo_Text = styled.TextInput`
 
 const actionSheetRef = createRef<any>();
 const Category_actionSheetRef = createRef<any>();
-const BookMarkD = realm.objects('TodoDataList');
 
 const ToDoItemDetail = () => {
   const navigation = useNavigation();

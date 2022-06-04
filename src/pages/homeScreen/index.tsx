@@ -16,6 +16,7 @@ import {LogBox} from 'react-native';
 import {UpdateMode} from 'realm';
 import {RESET_INPUT_DATA} from './todo/todoSlice';
 import {All_ListData, Priority_ListData, Today_ListData, Will_ListData} from '@/utils/widgetHelper';
+import {Realm_TodoDataList} from '@/utils/realmHelper';
 
 LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!"]);
 
@@ -80,8 +81,6 @@ const Main_Title_Text = styled.Text`
   padding-bottom: 10px;
 `;
 
-const TodoList_View = realm.objects('TodoDataList');
-
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [today_ToDo, setToday_ToDo] = useState(0);
@@ -132,7 +131,7 @@ const HomeScreen = () => {
     setWill_ToDo(Will_ListData.length);
     setPriority_ToDo(Priority_ListData.length);
     setAll_ToDo(All_ListData.length);
-  }, [TodoList_View, categoryList]);
+  }, [Realm_TodoDataList, categoryList]);
 
   const opneModal = () => {
     setModalVisible(!isModalVisible);
@@ -142,38 +141,34 @@ const HomeScreen = () => {
     setModalVisible(false);
   };
 
-  const Today_ToDo_Data = useCallback(() => {
-    const TodoList_View_Data = TodoList_View.filtered('listDay == $0', int_Local_Time);
+  const Today_ToDo_Data = () => {
+    const TodoList_View_Data = Realm_TodoDataList.filtered('listDay == $0', int_Local_Time);
 
     navigation.navigate('Category_ToDoList', {header_Name: '오늘의 일정'});
     dispatch(SELETED_THEMA_CATEGORY_DATA(TodoList_View_Data));
-  }, []);
+  };
 
-  const will_ToDo_Data = useCallback(() => {
-    const TodoList_View_Data = TodoList_View.filtered('listDay >  $0', int_Local_Time);
-
+  const will_ToDo_Data = () => {
+    const TodoList_View_Data = Realm_TodoDataList.filtered('listDay >  $0', int_Local_Time);
     const Sort_TodoList_View = TodoList_View_Data.sorted('listDay');
 
     navigation.navigate('Category_ToDoList', {header_Name: '예정된 일정'});
     dispatch(SELETED_THEMA_CATEGORY_DATA(Sort_TodoList_View));
-  }, []);
+  };
 
-  const Priority_ToDo_Data = useCallback(() => {
-    const TodoList_View_Data = TodoList_View.filtered('listPriority != $0', 4);
-
+  const Priority_ToDo_Data = () => {
+    const TodoList_View_Data = Realm_TodoDataList.filtered('listPriority != $0', 4);
     navigation.navigate('Category_ToDoList', {header_Name: '중요한 일정'});
     dispatch(SELETED_THEMA_CATEGORY_DATA(TodoList_View_Data));
-  }, []);
+  };
 
-  const All_ToDo_Data = useCallback(() => {
+  const All_ToDo_Data = () => {
     const All_TodoList_View = realm.objects('TodoDataList');
     const Sort_All_TodoList_View = All_TodoList_View.sorted('listDay');
 
-    navigation.navigate('Category_ToDoList', {
-      header_Name: '전체 일정',
-    });
+    navigation.navigate('Category_ToDoList', {header_Name: '전체 일정'});
     dispatch(SELETED_THEMA_CATEGORY_DATA(Sort_All_TodoList_View));
-  }, []);
+  };
 
   const renderItem = useCallback(({item, index, drag, isActive}: RenderItemParams<any>) => {
     return <Category_List_View data={item} drag={drag} />;
@@ -183,6 +178,7 @@ const HomeScreen = () => {
     <SafeAreaView style={{flex: 1, margin: 15}}>
       <Category_Modal_View isOpen={isModalVisible} close={closeModal} />
       <TitleText style={{includeFontPadding: false}}>MY WEEK</TitleText>
+
       <Column_View style={{marginBottom: 10}}>
         <Column_Btn onPress={Today_ToDo_Data} style={{backgroundColor: '#fa897b'}}>
           <Main_Title_View>
@@ -204,6 +200,7 @@ const HomeScreen = () => {
           </Main_Title_Number>
         </Column_Btn>
       </Column_View>
+
       <Column_View>
         <Column_Btn onPress={Priority_ToDo_Data} style={{backgroundColor: '#d0e6a5'}}>
           <Main_Title_View>
@@ -214,6 +211,7 @@ const HomeScreen = () => {
             <Main_Title_Number_Text style={{includeFontPadding: false}}>{priority_ToDo}</Main_Title_Number_Text>
           </Main_Title_Number>
         </Column_Btn>
+
         <Column_Btn onPress={All_ToDo_Data} style={{backgroundColor: '#a2b9ee'}}>
           <Main_Title_View>
             <Main_Title_Text style={{includeFontPadding: false}}>전체</Main_Title_Text>
@@ -224,6 +222,7 @@ const HomeScreen = () => {
           </Main_Title_Number>
         </Column_Btn>
       </Column_View>
+
       <CategoryTitleText style={{includeFontPadding: false}}>CATEGORY</CategoryTitleText>
       <View style={styles.container}>
         <DraggableFlatList

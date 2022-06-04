@@ -1,10 +1,10 @@
 import realm, {ToDoType} from '@/db';
+import {Realm_TodoDataList} from '@/utils/realmHelper';
 import {UpdateMode} from 'realm';
 import {aq} from '.';
 
 export const helperTodoItemDelete = (term: any) => {
-  const BookMarkD = realm.objects('TodoDataList');
-  const BookMarkaa = BookMarkD.filtered('listContent == $0', term.item.listContent);
+  const BookMarkaa = Realm_TodoDataList.filtered('listContent == $0', term.item.listContent);
   realm.write(() => {
     realm.delete(BookMarkaa);
   });
