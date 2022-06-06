@@ -8,16 +8,17 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import E_Icon from 'react-native-vector-icons/Feather';
 import {useDispatch, useSelector} from 'react-redux';
 import PushNotification from 'react-native-push-notification';
-
-import realm, {ToDoType} from '../../../db';
-import {Schedule_Notif} from '../../../utils/notificationHelper';
-import {IOS_Notif, Notif_Day} from '../../../utils/Day';
-import {REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './todoSlice';
-import {ItodoListType} from './todoType';
 import {UpdateMode} from 'realm';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
+
+import {IOS_Notif, Notif_Day} from '../../../utils/Day';
+import {REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './todoSlice';
+import {ItodoListType} from './todoType';
 import {widgetRefresh} from '@/utils/widgetHelper';
+import {Realm_TodoDataList} from '@/utils/realmHelper';
+import realm, {ToDoType} from '@/db';
+import {Schedule_Notif} from '@/utils/notificationHelper';
 
 const List_Item = styled.View`
   height: 40px;
@@ -56,20 +57,18 @@ const List_Title_Content = styled.View`
 `;
 
 const ToDoItem = ({data, listName}: ItodoListType) => {
-  const swiper = useRef<any>();
+  const TodoItem: {} = Realm_TodoDataList.filtered('id == $0', data.item.id);
+  const swiper = useRef<Swipeable>();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ToDoListDetail'>>();
   const dispatch = useDispatch();
 
-  const TodoList_View = realm.objects('TodoDataList');
-  const TodoList_View_Data: any = TodoList_View.filtered('createTime == $0', data.item.createTime);
-
   const [ListDay, setListDay] = useState(null);
-  const [onToggle_List, setOnToggle_List] = useState(TodoList_View_Data[0].listClear);
+  const [onToggle_List, setOnToggle_List] = useState(TodoItem[0].listClear);
+  const [todoItem, setTodoItem] = useState<ToDoType>({});
 
-  const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
-  useLayoutEffect(() => {
-    setOnToggle_List(data.item.listClear);
-  }, [data.item, categoryList]);
+  useEffect(() => {
+    setTodoItem(TodoItem[0]);
+  }, []);
 
   useEffect(() => {
     widgetRefresh();
@@ -96,7 +95,6 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
       const Notif_ID = data.item.id;
       const Sring_ID = String(Notif_ID);
       PushNotification.cancelLocalNotification(Sring_ID); //{id: String_ID}
-      // WeekWidgetModule.refreshAllWidgets();
       dispatch(REQEUST_TODO_ITEM_DELETE({data}));
       close();
     };
@@ -136,7 +134,7 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
     dispatch(SELECTED_TODOLIST_DATA(data.item));
   };
 
-  const Toggle = () => {
+  const onPressToggleToDo = () => {
     const Notif_ID = data.item.id;
     const String_ID = String(Notif_ID);
 
@@ -146,13 +144,13 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
       realm.create<ToDoType>(
         'TodoDataList',
         {
-          createTime: data.item.createTime,
-          listClear: !onToggle_List,
+          createTime: todoItem.createTime,
+          listClear: !todoItem.listClear,
         },
         UpdateMode.Modified,
       );
     });
-    //dispatch(SELECTED_TODOLIST_DATA(data.item));
+    dispatch(SELECTED_TODOLIST_DATA(data.item));
 
     if (data.item.listDay && data.item.listTime_Data && onToggle_List === false) {
       PushNotification.cancelLocalNotification(String_ID); //{id: String_ID}
@@ -173,38 +171,37 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
         <TouchableOpacity onPress={goToList}>
           <List_Item>
             <List_Title_View>
-              <TouchableOpacity hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} onPress={Toggle}>
-                {onToggle_List ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
+              <TouchableOpacity hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} onPress={onPressToggleToDo}>
+                {todoItem.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
               </TouchableOpacity>
-
               <List_Title_Content>
-                <List_Text style={onToggle_List ? styles.strikeText : styles.defaultText} numberOfLines={1}>
-                  {data.item.listContent}
+                <List_Text style={todoItem.listClear ? styles.strikeText : styles.defaultText} numberOfLines={1}>
+                  {todoItem.listContent}
                 </List_Text>
                 {ListDay ? (
-                  <List_Clock_Text style={onToggle_List ? styles.strikeText : styles.defaultDayText}>
+                  <List_Clock_Text style={todoItem.listClear ? styles.strikeText : styles.defaultDayText}>
                     {ListDay}
-                    {data.item.listTime ? <Icon name="bells" size={12} color={'orange'} /> : null}
+                    {todoItem.listTime ? <Icon name="bells" size={12} color={'orange'} /> : null}
                   </List_Clock_Text>
                 ) : null}
               </List_Title_Content>
             </List_Title_View>
 
             {(function () {
-              if (data.item.listPriority === 1)
+              if (todoItem.listPriority === 1)
+                return (
+                  <View>
+                    <Icon name="star" size={12} color={todoItem.listClear ? '#bbb' : 'pink'} />
+                  </View>
+                );
+              if (todoItem.listPriority === 2)
                 return (
                   <View>
                     <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-                  </View>
-                );
-              if (data.item.listPriority === 2)
-                return (
-                  <View>
-                    <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
                     <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
                   </View>
                 );
-              if (data.item.listPriority === 3)
+              if (todoItem.listPriority === 3)
                 return (
                   <View>
                     <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />

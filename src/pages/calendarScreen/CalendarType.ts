@@ -13,3 +13,7 @@ export interface IcalendarModalType {
   closeModal: () => void;
   InputData: boolean;
 }
+
+export interface CustomTodoType extends ToDoType {
+  colors?: string;
+}

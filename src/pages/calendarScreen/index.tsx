@@ -14,6 +14,7 @@ import {useEffect} from 'react';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
 import {useIsFocused} from '@react-navigation/native';
 import {useState} from 'react';
+import {useCallback} from 'react';
 
 LocaleConfig.locales['kr'] = {
   monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -97,11 +98,11 @@ const ExpandableCalendarScreen = () => {
   const marked = getMarkedDates();
   const theme: any = getTheme();
 
-  useEffect(() => {
-    if (isFocused) {
-      dispatch(AGENDA_DATA_REQUEST(onPressDay === '' ? tey : onPressDay));
-    }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     dispatch(AGENDA_DATA_REQUEST(onPressDay === '' ? tey : onPressDay));
+  //   }
+  // }, [isFocused]);
 
   const onDateChanged = (date: string) => {
     var paramDate = new Date(date); // new Date('2021-06-08'): 화요일
@@ -113,9 +114,9 @@ const ExpandableCalendarScreen = () => {
     dispatch(AGENDA_DATA_REQUEST(tey));
   };
 
-  const renderItem = ({item}: ItodoType) => {
+  const renderItem = useCallback(({item}: ItodoType) => {
     return <Agenda_List item={item} />;
-  };
+  }, []);
 
   return (
     <CalendarProvider

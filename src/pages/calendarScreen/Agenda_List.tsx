@@ -4,13 +4,16 @@ import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
-
-import realm, {ToDoType} from '../../db';
-import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/todoSlice';
 import {isEmpty} from 'lodash';
 import {UpdateMode} from 'realm';
+
+import realm, {CategoryType, ToDoType} from '../../db';
+import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/todoSlice';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
+import {Realm_TodoDataList} from '@/utils/realmHelper';
+import {useCallback} from 'react';
+import {CustomTodoType} from './CalendarType';
 
 interface Props {
   color: string;
@@ -37,33 +40,36 @@ const List_View = styled.View`
 const ListText_View = styled.View`
   margin-left: 17px;
 `;
-const Agenda_List = ({item}: any) => {
+const Agenda_List = ({item}: {item: CustomTodoType}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ToDoListDetail'>>();
   const [onToggle, setOnToggle] = useState(item.listClear);
+  const [todoItem, setTodoItem] = useState<ToDoType>({});
+  const [categoryColor, setCategoryColor] = useState('');
 
   useEffect(() => {
-    setOnToggle(item.listClear);
-  }, [item]);
+    const TodoItem: {} = Realm_TodoDataList.filtered('id == $0', item.id);
+    setTodoItem(TodoItem[0]);
+  }, [onToggle]);
 
-  const goToList = () => {
-    navigation.navigate('ToDoListDetail');
+  const goToList = useCallback(() => {
     dispatch(SELECTED_TODOLIST_DATA(item));
-  };
+    navigation.navigate('ToDoListDetail');
+  }, []);
 
-  const Toggle = () => {
+  const onPressToggle = () => {
     setOnToggle(!onToggle);
     realm.write(() => {
       realm.create<ToDoType>(
         'TodoDataList',
         {
-          createTime: item.createTime,
-          listClear: !onToggle,
+          createTime: todoItem.createTime,
+          listClear: !todoItem.listClear,
         },
         UpdateMode.Modified,
       );
     });
-    dispatch(SELECTED_TODOLIST_DATA(item));
+    dispatch(SELECTED_TODOLIST_DATA(item)); 
   };
 
   if (isEmpty(item)) {
@@ -78,13 +84,15 @@ const Agenda_List = ({item}: any) => {
       <View style={{marginTop: 12, marginBottom: 0}}>
         <Render_View style={styles.container} color={item.colors}>
           <List_View>
-            <TouchableOpacity onPress={Toggle}>{onToggle ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
+            <TouchableOpacity onPress={onPressToggle}>
+              {todoItem.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
+            </TouchableOpacity>
             <ListText_View>
-              <Text style={onToggle ? styles.strikeTitleText : styles.defaultTitleText}>{item.listContent}</Text>
-              <Text style={onToggle ? styles.strikeText : styles.defaultText}>{item.categoryTitle}</Text>
+              <Text style={todoItem.listClear ? styles.strikeTitleText : styles.defaultTitleText}>{todoItem.listContent}</Text>
+              <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{todoItem.categoryTitle}</Text>
             </ListText_View>
           </List_View>
-          <Text style={onToggle ? styles.strikeText : styles.defaultText}>{item.listTime}</Text>
+          <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{todoItem.listTime}</Text>
         </Render_View>
       </View>
     </TouchableOpacity>

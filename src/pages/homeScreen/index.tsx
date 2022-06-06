@@ -131,7 +131,7 @@ const HomeScreen = () => {
     setWill_ToDo(Will_ListData.length);
     setPriority_ToDo(Priority_ListData.length);
     setAll_ToDo(All_ListData.length);
-  }, [Realm_TodoDataList, categoryList]);
+  }, [categoryList]);
 
   const opneModal = () => {
     setModalVisible(!isModalVisible);

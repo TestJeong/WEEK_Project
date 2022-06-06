@@ -49,7 +49,7 @@ export const Category: Realm.ObjectSchema = {
   },
 };
 
-export const TodoData: Realm.ObjectSchema = {
+export const TodoData = {
   name: 'TodoDataList',
   primaryKey: 'createTime',
   properties: {

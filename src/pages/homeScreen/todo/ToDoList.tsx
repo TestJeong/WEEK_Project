@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Keyboard} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import ToDoInputModal from './ToDoInputModal';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -10,6 +10,8 @@ import styled from 'styled-components/native';
 import ToDoItem from './ToDoItem';
 import realm from '@/db';
 import {Edit_Schedule_Notif} from '@/utils/notificationHelper';
+import {useCallback} from 'react';
+import {Realm_TodoDataList} from '@/utils/realmHelper';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -18,6 +20,8 @@ const FlatListView = styled.FlatList`
 
 const ToDoList = ({route}: any) => {
   const {categoryName, categoryTime} = route.params;
+  const IsFocuse = useIsFocused();
+
   const navigation = useNavigation();
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -26,14 +30,16 @@ const ToDoList = ({route}: any) => {
   const {todoData} = useSelector((state: any) => state.TODO_DATA);
 
   useEffect(() => {
-    const TodoDataList = realm.objects('TodoDataList');
-    const SortTodoList = TodoDataList.sorted('createTime', true);
-    const FilterTodoDataList = SortTodoList.filtered('categoryTitle == $0', categoryName);
-    setTodoDataItem(FilterTodoDataList);
-  }, []);
+    if (IsFocuse) {
+      const FilterTodoDataList = Realm_TodoDataList.filtered('categoryTitle == $0', categoryName);
+      const SortTodoList = FilterTodoDataList.sorted('createTime', true);
+      setTodoDataItem(SortTodoList);
+      console.log('??1121', IsFocuse);
+    }
+  }, [IsFocuse, categoryList]);
 
   useEffect(() => {
-    Edit_Schedule_Notif;
+    Edit_Schedule_Notif();
   }, [categoryList, todoData]);
 
   useLayoutEffect(() => {

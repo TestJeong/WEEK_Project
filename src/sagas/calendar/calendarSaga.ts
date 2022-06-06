@@ -1,8 +1,5 @@
 import realm, {CategoryType, ToDoType} from '@/db';
-
-interface CustomTodoType extends ToDoType {
-  colors: string;
-}
+import {CustomTodoType} from '@calendarScreen/CalendarType';
 
 export const helperAgendaRequest = (payload: any) => {
   const TodoData = realm.objects<ToDoType>('TodoDataList');
@@ -27,6 +24,7 @@ export const helperAgendaRequest = (payload: any) => {
       SortTodoData.map((date) => {
         const Category = CategoryData.filtered('title == $0', date.categoryTitle);
         todoDataArray.push({
+          id: date.id,
           createTime: date.createTime,
           listContent: date.listContent,
           categoryTitle: date.categoryTitle,
