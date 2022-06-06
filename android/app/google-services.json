@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "458605028543",
+    "firebase_url": "https://week-cd9e6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "week-cd9e6",
+    "storage_bucket": "week-cd9e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458605028543:android:1ef2ee025fb1ed9f39920a",
+        "android_client_info": {
+          "package_name": "com.todoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458605028543-1npr6iqs392h204gmrbf3rp0r351pvag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMDToCnT1L2SOz_tkUXbj14Sf5vb_-0W8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458605028543-1npr6iqs392h204gmrbf3rp0r351pvag.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

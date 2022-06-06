@@ -12,6 +12,7 @@ import realm from '@/db';
 import {Edit_Schedule_Notif} from '@/utils/notificationHelper';
 import {useCallback} from 'react';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
+import {firebase_db} from '@/../service/firebaseConfig';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -30,6 +31,13 @@ const ToDoList = ({route}: any) => {
   const {todoData} = useSelector((state: any) => state.TODO_DATA);
 
   useEffect(() => {
+    firebase_db
+      .ref('/hey')
+      .once('value')
+      .then((snapshot) => {
+        console.log('User data: ', snapshot.val());
+      });
+
     if (IsFocuse) {
       const FilterTodoDataList = Realm_TodoDataList.filtered('categoryTitle == $0', categoryName);
       const SortTodoList = FilterTodoDataList.sorted('createTime', true);
