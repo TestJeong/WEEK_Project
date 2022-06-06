@@ -13,7 +13,7 @@ import {Day, IOS_Notif, IOS_today} from '../../../utils/Day';
 import Category_Modal from '../category/Category_Modal';
 import {Schedule_Notif} from '../../../utils/notificationHelper';
 import {REQUEST_CATEGORY_DATA} from '../category/CategorySlice';
-import {RESET_INPUT_DATA} from './todoSlice';
+import {RESET_INPUT_DATA} from './ToDoSlice';
 import {UpdateMode} from 'realm';
 import {ItodoInputModalType} from './todoType';
 

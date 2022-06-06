@@ -8,7 +8,7 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import DateTimePicke from '../homeScreen/todo/DateTimePicke';
-import {GET_DAY, GET_NOTIFICATION_ENABLED, RESET_INPUT_DATA} from '../homeScreen/todo/todoSlice';
+import {GET_DAY, GET_NOTIFICATION_ENABLED, RESET_INPUT_DATA} from '../homeScreen/todo/ToDoSlice';
 import {IcalendarModalType} from './calendarType';
 import {useEffect} from 'react';
 import {Today} from '@/utils/Day';

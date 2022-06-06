@@ -14,7 +14,7 @@ import {Edit_Schedule_Notif} from '../../utils/notificationHelper';
 import {REQUEST_CATEGORY_DATA, RESET_CATEGORYT_DATA, SELETED_THEMA_CATEGORY_DATA} from './category/CategorySlice';
 import {LogBox} from 'react-native';
 import {UpdateMode} from 'realm';
-import {RESET_INPUT_DATA} from './todo/todoSlice';
+import {RESET_INPUT_DATA} from './todo/ToDoSlice';
 import {All_ListData, Priority_ListData, Today_ListData, Will_ListData} from '@/utils/widgetHelper';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
 

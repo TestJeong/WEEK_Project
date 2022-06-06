@@ -7,7 +7,7 @@ import {
   REQEUST_TODO_ITEM_SAVE,
   TODO_DATA,
   initType,
-} from '../../pages/homeScreen/todo/todoSlice';
+} from '../../pages/homeScreen/todo/ToDoSlice';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {takeEvery, put, call, all, fork, select} from 'redux-saga/effects';
 import {helperTodoItemDelete, helperTodoItemSave} from './todoSaga';

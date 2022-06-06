@@ -13,7 +13,7 @@ import ThemeCategoryList from './ThemeCategoryList';
 import {Schedule_Notif} from '../../../utils/notificationHelper';
 import {Today, Notif_Day, IOS_Notif} from '../../../utils/Day';
 import PushNotification from 'react-native-push-notification';
-import {GET_DAY, REQEUST_TODO_ITEM_SAVE, RESET_INPUT_DATA, SELECTED_TIME, SELECTED_TODOLIST_DATA} from './todoSlice';
+import {GET_DAY, REQEUST_TODO_ITEM_SAVE, RESET_INPUT_DATA, SELECTED_TIME, SELECTED_TODOLIST_DATA} from './ToDoSlice';
 import Priority from '@homeScreen/components/Priority';
 import {DetailButton, DetailTimeButton} from '@homeScreen/components/DetailButton';
 import {useNavigation} from '@react-navigation/native';

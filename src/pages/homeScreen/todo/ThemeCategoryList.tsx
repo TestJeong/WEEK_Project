@@ -6,7 +6,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import styled from 'styled-components/native';
 import {CategoryListType} from '../category/categoryType';
-import {GET_CATEGORY_DATA} from './todoSlice';
+import {GET_CATEGORY_DATA} from './ToDoSlice';
 
 const Container = styled.View`
   border-radius: 10px;

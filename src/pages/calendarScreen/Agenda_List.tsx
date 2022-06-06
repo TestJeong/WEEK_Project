@@ -8,7 +8,7 @@ import {isEmpty} from 'lodash';
 import {UpdateMode} from 'realm';
 
 import realm, {CategoryType, ToDoType} from '../../db';
-import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/todoSlice';
+import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/ToDoSlice';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
@@ -69,7 +69,7 @@ const Agenda_List = ({item}: {item: CustomTodoType}) => {
         UpdateMode.Modified,
       );
     });
-    dispatch(SELECTED_TODOLIST_DATA(item)); 
+    dispatch(SELECTED_TODOLIST_DATA(item));
   };
 
   if (isEmpty(item)) {

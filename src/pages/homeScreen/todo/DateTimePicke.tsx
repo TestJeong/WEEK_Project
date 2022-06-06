@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useDispatch} from 'react-redux';
-import {SELECTED_TIME} from './todoSlice';
+import {SELECTED_TIME} from './ToDoSlice';
 import {IdateTimeType} from './todoType';
 
 const DateTimePicke = ({hideDatePicker, isDatePickerVisible}: IdateTimeType) => {

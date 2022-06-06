@@ -13,7 +13,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
 
 import {IOS_Notif, Notif_Day} from '../../../utils/Day';
-import {REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './todoSlice';
+import {REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './ToDoSlice';
 import {ItodoListType} from './todoType';
 import {widgetRefresh} from '@/utils/widgetHelper';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
