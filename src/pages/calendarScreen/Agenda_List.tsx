@@ -69,7 +69,7 @@ const Agenda_List = ({item}: {item: CustomTodoType}) => {
         UpdateMode.Modified,
       );
     });
-    dispatch(SELECTED_TODOLIST_DATA(item));
+    // dispatch(SELECTED_TODOLIST_DATA(item));
   };
 
   if (isEmpty(item)) {
@@ -84,15 +84,15 @@ const Agenda_List = ({item}: {item: CustomTodoType}) => {
       <View style={{marginTop: 12, marginBottom: 0}}>
         <Render_View style={styles.container} color={item.colors}>
           <List_View>
-            <TouchableOpacity onPress={onPressToggle}>
+            {/* <TouchableOpacity onPress={onPressToggle}>
               {todoItem.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <ListText_View>
-              <Text style={todoItem.listClear ? styles.strikeTitleText : styles.defaultTitleText}>{todoItem.listContent}</Text>
-              <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{todoItem.categoryTitle}</Text>
+              <Text style={styles.defaultTitleText}>{item.listContent}</Text>
+              {/* <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{todoItem.categoryTitle}</Text> */}
             </ListText_View>
           </List_View>
-          <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{todoItem.listTime}</Text>
+          {/* <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{todoItem.listTime}</Text> */}
         </Render_View>
       </View>
     </TouchableOpacity>

@@ -31,7 +31,7 @@ const List_Text_Value = styled.Text`
   padding: 0;
 `;
 
-const Detail_Button = styled.TouchableOpacity`
+const Detail_Button = styled.View`
   flex-direction: row;
   flex: 1;
   align-items: center;

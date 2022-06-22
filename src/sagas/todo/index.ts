@@ -7,6 +7,9 @@ import {
   REQEUST_TODO_ITEM_SAVE,
   TODO_DATA,
   initType,
+  REQEUST_TODO_ITEM_ADD,
+  ERROR_TODO_ITEM_ADD,
+  SUCCESS_TODO_ITEM_ADD,
 } from '../../pages/homeScreen/todo/ToDoSlice';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {takeEvery, put, call, all, fork, select} from 'redux-saga/effects';
@@ -48,6 +51,14 @@ function* todoItemSave({payload}: PayloadAction<aq>) {
     yield put({type: ERROR_TODO_ITEM_SAVE, data: e, error: true});
   }
 }
+//투두 아이템 생성
+function* todoItemAdd() {
+  try {
+    yield put(SUCCESS_TODO_ITEM_ADD());
+  } catch (error) {
+    yield put({type: ERROR_TODO_ITEM_ADD, data: error, error: true});
+  }
+}
 
 // ----------------------------------------------------------------------------------
 
@@ -59,8 +70,12 @@ function* requestTodoItemSave() {
   yield takeEvery(REQEUST_TODO_ITEM_SAVE, todoItemSave);
 }
 
+function* requestTodoItemAdd() {
+  yield takeEvery(REQEUST_TODO_ITEM_ADD, todoItemAdd);
+}
+
 // ----------------------------------------------------------------------------------
 
 export default function* todoSaga() {
-  yield all([fork(requestTodoItemDelete), fork(requestTodoItemSave)]);
+  yield all([fork(requestTodoItemDelete), fork(requestTodoItemSave), fork(requestTodoItemAdd)]);
 }

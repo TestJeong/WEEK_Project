@@ -16,6 +16,7 @@ import {REQUEST_CATEGORY_DATA} from '../category/CategorySlice';
 import {RESET_INPUT_DATA} from './ToDoSlice';
 import {UpdateMode} from 'realm';
 import {ItodoInputModalType} from './todoType';
+import {AGENDA_DATA_REQUEST} from '../../calendarScreen/CalendarSlice';
 
 const Modal_Container = styled(Modal as any)`
   flex: 1;
@@ -102,7 +103,7 @@ const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoI
   };
 
   // todo 추가
-  const onPressEnter = () => {
+  const onPressEnter = async () => {
     const NotifID = Math.floor(Math.random() * 100000);
     const CategoryData = realm.objects('CategoryList');
     const SortCategoryDate = CategoryData.sorted('id');
@@ -110,8 +111,8 @@ const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoI
     if (!inputCategoryData && !categoryName) {
       alert('카테고리를 설정 해주세요!');
     } else {
-      addToDoItem(NotifID);
-      addNotification(NotifID);
+      await addToDoItem(NotifID);
+      await addNotification(NotifID);
 
       dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       dispatch(RESET_INPUT_DATA());
@@ -142,6 +143,8 @@ const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoI
       );
       categoryItem.todoData.unshift(todoItem);
     });
+    dispatch(AGENDA_DATA_REQUEST(onClickDay ? onClickDay : day));
+    console.log('addToDoItem =====>', onClickDay ? onClickDay : day);
   };
 
   // notification 추가

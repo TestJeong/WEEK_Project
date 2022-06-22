@@ -17,6 +17,10 @@ export interface initType {
   todoItemSaveLoading: boolean;
   todoItemSaveDone: boolean;
   todoItemSaveError: Error;
+
+  todoItemAddLoading: boolean;
+  todoItemAddDone: boolean;
+  todoItemAddError: Error;
 }
 
 const initialState: initType = {
@@ -47,6 +51,10 @@ const initialState: initType = {
   todoItemSaveLoading: true,
   todoItemSaveDone: false,
   todoItemSaveError: null,
+
+  todoItemAddLoading: true,
+  todoItemAddDone: false,
+  todoItemAddError: null,
 };
 
 export const ToDoState = createSlice({
@@ -118,10 +126,29 @@ export const ToDoState = createSlice({
     GET_NOTIFICATION_ENABLED: (state, action) => {
       state.isNotificationEnabled = action.payload;
     },
+    // 투두 아이템 생성
+    REQEUST_TODO_ITEM_ADD: (state, _action) => {
+      state.todoItemAddLoading = true;
+      state.todoItemAddDone = false;
+      state.todoItemAddError = null;
+    },
+    SUCCESS_TODO_ITEM_ADD: (state) => {
+      state.todoItemAddLoading = false;
+      state.todoItemAddDone = true;
+      state.todoItemAddError = null;
+    },
+    ERROR_TODO_ITEM_ADD: (state, action) => {
+      state.todoItemAddLoading = false;
+      state.todoItemAddDone = false;
+      state.todoItemAddError = action.payload;
+    },
   },
 });
 
 export const {
+  REQEUST_TODO_ITEM_ADD,
+  SUCCESS_TODO_ITEM_ADD,
+  ERROR_TODO_ITEM_ADD,
   REQEUST_TODO_ITEM_SAVE,
   SUCCESS_TODO_ITEM_SAVE,
   ERROR_TODO_ITEM_SAVE,

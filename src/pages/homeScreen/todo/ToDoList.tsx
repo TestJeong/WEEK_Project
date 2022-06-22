@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Keyboard} from 'react-native';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import ToDoInputModal from './ToDoInputModal';
 import {useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -8,11 +8,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 
 import ToDoItem from './ToDoItem';
-import realm from '@/db';
 import {Edit_Schedule_Notif} from '@/utils/notificationHelper';
-import {useCallback} from 'react';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
-import {firebase_db} from '@/../service/firebaseConfig';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -21,7 +18,9 @@ const FlatListView = styled.FlatList`
 
 const ToDoList = ({route}: any) => {
   const {categoryName, categoryTime} = route.params;
-  const IsFocuse = useIsFocused();
+
+  const FilterTodoDataList = Realm_TodoDataList.filtered('categoryTitle == $0', categoryName);
+  const SortTodoList = FilterTodoDataList.sorted('createTime', true);
 
   const navigation = useNavigation();
 
@@ -31,20 +30,14 @@ const ToDoList = ({route}: any) => {
   const {todoData} = useSelector((state: any) => state.TODO_DATA);
 
   useEffect(() => {
-    firebase_db
-      .ref('/hey')
-      .once('value')
-      .then((snapshot) => {
-        console.log('User data: ', snapshot.val());
-      });
+    SortTodoList.addListener(() => {
+      setTodoDataItem([...SortTodoList]);
+    });
 
-    if (IsFocuse) {
-      const FilterTodoDataList = Realm_TodoDataList.filtered('categoryTitle == $0', categoryName);
-      const SortTodoList = FilterTodoDataList.sorted('createTime', true);
-      setTodoDataItem(SortTodoList);
-      console.log('??1121', IsFocuse);
-    }
-  }, [IsFocuse, categoryList]);
+    return () => {
+      SortTodoList.removeAllListeners();
+    };
+  }, []);
 
   useEffect(() => {
     Edit_Schedule_Notif();

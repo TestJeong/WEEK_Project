@@ -3,7 +3,7 @@ import {Platform, StyleSheet, Alert, View, Text, TouchableOpacity, Button, ViewS
 import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar, LocaleConfig} from 'react-native-calendars';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
-import realm from '@/db';
+import realm, {ToDoType} from '@/db';
 import Agenda_List from './Agenda_List';
 import testIDs from '../../Components/testIDs';
 import {AGENDA_DATA_REQUEST} from './CalendarSlice';
@@ -11,10 +11,10 @@ import {Today} from '../../utils/Day';
 import {RootState} from '../../store/configureStore';
 import {ItodoType, MarkedDate} from './CalendarType';
 import {useEffect} from 'react';
-import {Realm_TodoDataList} from '@/utils/realmHelper';
 import {useIsFocused} from '@react-navigation/native';
 import {useState} from 'react';
 import {useCallback} from 'react';
+import {Realm_TodoDataList} from '@/utils/realmHelper';
 
 LocaleConfig.locales['kr'] = {
   monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -98,18 +98,21 @@ const ExpandableCalendarScreen = () => {
   const marked = getMarkedDates();
   const theme: any = getTheme();
 
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     dispatch(AGENDA_DATA_REQUEST(onPressDay === '' ? tey : onPressDay));
-  //   }
-  // }, [isFocused]);
+  useEffect(() => {
+    Realm_TodoDataList.addListener(() => {
+      dispatch(AGENDA_DATA_REQUEST(onPressDay === '' ? tey : onPressDay));
+    });
+
+    return () => {
+      Realm_TodoDataList.removeAllListeners();
+    };
+  }, []);
 
   const onDateChanged = (date: string) => {
     var paramDate = new Date(date); // new Date('2021-06-08'): 화요일
     var day = paramDate.getDay();
     var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
     var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
-    setOnPressDay(date);
     getMarkedDates();
     dispatch(AGENDA_DATA_REQUEST(tey));
   };

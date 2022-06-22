@@ -67,10 +67,6 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
   const [todoItem, setTodoItem] = useState<ToDoType>({});
 
   useEffect(() => {
-    setTodoItem(TodoItem[0]);
-  }, []);
-
-  useEffect(() => {
     widgetRefresh();
 
     if (data.item.listDay === null) {
@@ -96,7 +92,7 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
       const Sring_ID = String(Notif_ID);
       PushNotification.cancelLocalNotification(Sring_ID); //{id: String_ID}
       dispatch(REQEUST_TODO_ITEM_DELETE({data}));
-      close();
+      swipeClose();
     };
 
     return (
@@ -125,11 +121,11 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
     </View>
   );
 
-  const close = () => {
+  const swipeClose = () => {
     swiper.current.close();
   };
 
-  const goToList = () => {
+  const onPressDetail = () => {
     navigation.navigate('ToDoListDetail', {listName: listName});
     dispatch(SELECTED_TODOLIST_DATA(data.item));
   };
@@ -168,40 +164,31 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
   return (
     <View style={styles.container}>
       <Swipeable ref={swiper} friction={2} rightThreshold={40} renderRightActions={renderRightActions}>
-        <TouchableOpacity onPress={goToList}>
+        <TouchableOpacity onPress={onPressDetail}>
           <List_Item>
             <List_Title_View>
-              <TouchableOpacity hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} onPress={onPressToggleToDo}>
-                {todoItem.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
-              </TouchableOpacity>
               <List_Title_Content>
-                <List_Text style={todoItem.listClear ? styles.strikeText : styles.defaultText} numberOfLines={1}>
-                  {todoItem.listContent}
+                <List_Text style={styles.defaultText} numberOfLines={1}>
+                  {data.item.listContent}
                 </List_Text>
-                {ListDay ? (
-                  <List_Clock_Text style={todoItem.listClear ? styles.strikeText : styles.defaultDayText}>
-                    {ListDay}
-                    {todoItem.listTime ? <Icon name="bells" size={12} color={'orange'} /> : null}
-                  </List_Clock_Text>
-                ) : null}
               </List_Title_Content>
             </List_Title_View>
 
             {(function () {
-              if (todoItem.listPriority === 1)
+              if (data.item.listPriority === 1)
                 return (
                   <View>
-                    <Icon name="star" size={12} color={todoItem.listClear ? '#bbb' : 'pink'} />
+                    <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
                   </View>
                 );
-              if (todoItem.listPriority === 2)
+              if (data.item.listPriority === 2)
                 return (
                   <View>
                     <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
                     <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
                   </View>
                 );
-              if (todoItem.listPriority === 3)
+              if (data.item.listPriority === 3)
                 return (
                   <View>
                     <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
@@ -213,6 +200,14 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
           </List_Item>
         </TouchableOpacity>
       </Swipeable>
+    </View>
+  );
+};
+
+const StartComp = () => {
+  return (
+    <View>
+      <Icon name="star" size={12} color={todoItem.listClear ? '#bbb' : 'pink'} />
     </View>
   );
 };
