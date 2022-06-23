@@ -19,6 +19,9 @@ import {widgetRefresh} from '@/utils/widgetHelper';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
 import realm, {ToDoType} from '@/db';
 import {Schedule_Notif} from '@/utils/notificationHelper';
+import {helperTodoItemDelete} from '@/sagas/todo/todoSaga';
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const List_Item = styled.View`
   height: 40px;
@@ -56,15 +59,15 @@ const List_Title_Content = styled.View`
   width: 100%;
 `;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const ToDoItem = ({data, listName}: ItodoListType) => {
-  const TodoItem: {} = Realm_TodoDataList.filtered('id == $0', data.item.id);
   const swiper = useRef<Swipeable>();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ToDoListDetail'>>();
   const dispatch = useDispatch();
 
   const [ListDay, setListDay] = useState(null);
-  const [onToggle_List, setOnToggle_List] = useState(TodoItem[0].listClear);
-  const [todoItem, setTodoItem] = useState<ToDoType>({});
+  const [isToggle, setToggle] = useState(data.item.listClear);
 
   useEffect(() => {
     widgetRefresh();
@@ -91,7 +94,7 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
       const Notif_ID = data.item.id;
       const Sring_ID = String(Notif_ID);
       PushNotification.cancelLocalNotification(Sring_ID); //{id: String_ID}
-      dispatch(REQEUST_TODO_ITEM_DELETE({data}));
+      helperTodoItemDelete(data);
       swipeClose();
     };
 
@@ -134,31 +137,31 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
     const Notif_ID = data.item.id;
     const String_ID = String(Notif_ID);
 
-    setOnToggle_List(!onToggle_List);
+    setToggle(!data.item.listClear);
 
     realm.write(() => {
       realm.create<ToDoType>(
         'TodoDataList',
         {
-          createTime: todoItem.createTime,
-          listClear: !todoItem.listClear,
+          createTime: data.item.createTime,
+          listClear: !data.item.listClear,
         },
         UpdateMode.Modified,
       );
     });
-    dispatch(SELECTED_TODOLIST_DATA(data.item));
+    // dispatch(SELECTED_TODOLIST_DATA(data.item));
 
-    if (data.item.listDay && data.item.listTime_Data && onToggle_List === false) {
-      PushNotification.cancelLocalNotification(String_ID); //{id: String_ID}
-    } else if (
-      data.item.listDay &&
-      data.item.listTime_Data &&
-      onToggle_List === true &&
-      new Date(IOS_Notif(data.item.listDay, data.item.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
-      data.item.listEnabled
-    ) {
-      Schedule_Notif({onClickDay: data.item.listDay, timeString: data.item.listTime_Data, todoContents: data.item.listContent, NotifID: Number(String_ID), categoryTitle: data.item.categoryTitle});
-    }
+    // if (data.item.listDay && data.item.listTime_Data && onToggle_List === false) {
+    //   PushNotification.cancelLocalNotification(String_ID); //{id: String_ID}
+    // } else if (
+    //   data.item.listDay &&
+    //   data.item.listTime_Data &&
+    //   onToggle_List === true &&
+    //   new Date(IOS_Notif(data.item.listDay, data.item.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
+    //   data.item.listEnabled
+    // ) {
+    //   Schedule_Notif({onClickDay: data.item.listDay, timeString: data.item.listTime_Data, todoContents: data.item.listContent, NotifID: Number(String_ID), categoryTitle: data.item.categoryTitle});
+    // }
   };
 
   return (
@@ -167,36 +170,22 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
         <TouchableOpacity onPress={onPressDetail}>
           <List_Item>
             <List_Title_View>
+              <TouchableOpacity hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} onPress={onPressToggleToDo}>
+                {data.item.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
+              </TouchableOpacity>
               <List_Title_Content>
-                <List_Text style={styles.defaultText} numberOfLines={1}>
+                <List_Text style={data.item.listClear ? styles.strikeText : styles.defaultText} numberOfLines={1}>
                   {data.item.listContent}
                 </List_Text>
+                {ListDay ? (
+                  <List_Clock_Text style={data.item.listClear ? styles.strikeText : styles.defaultDayText}>
+                    {ListDay}
+                    {data.item.listTime ? <Icon name="bells" size={12} color={'orange'} /> : null}
+                  </List_Clock_Text>
+                ) : null}
               </List_Title_Content>
             </List_Title_View>
-
-            {(function () {
-              if (data.item.listPriority === 1)
-                return (
-                  <View>
-                    <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-                  </View>
-                );
-              if (data.item.listPriority === 2)
-                return (
-                  <View>
-                    <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-                    <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-                  </View>
-                );
-              if (data.item.listPriority === 3)
-                return (
-                  <View>
-                    <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-                    <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-                    <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-                  </View>
-                );
-            })()}
+            {StartComp(data.item.listPriority, true)}
           </List_Item>
         </TouchableOpacity>
       </Swipeable>
@@ -204,13 +193,35 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
   );
 };
 
-const StartComp = () => {
-  return (
-    <View>
-      <Icon name="star" size={12} color={todoItem.listClear ? '#bbb' : 'pink'} />
-    </View>
-  );
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const StartComp = (listPriority, onToggle_List) => {
+  switch (listPriority) {
+    case 1:
+      return (
+        <View>
+          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
+        </View>
+      );
+    case 2:
+      return (
+        <View>
+          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
+          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
+        </View>
+      );
+    case 3:
+      return (
+        <View>
+          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
+          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
+          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
+        </View>
+      );
+  }
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const styles = StyleSheet.create({
   strikeText: {

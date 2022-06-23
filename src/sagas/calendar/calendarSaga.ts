@@ -1,5 +1,5 @@
 import realm, {CategoryType, ToDoType} from '@/db';
-import {CustomTodoType} from '@calendarScreen/CalendarType';
+import {CustomTodoType} from '@homeScreen/todo/todoType';
 
 export const helperAgendaRequest = (payload: any) => {
   const TodoData = realm.objects<ToDoType>('TodoDataList');

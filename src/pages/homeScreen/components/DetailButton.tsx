@@ -31,7 +31,14 @@ const List_Text_Value = styled.Text`
   padding: 0;
 `;
 
-const Detail_Button = styled.View`
+const Detail_Button = styled.TouchableOpacity`
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+  padding: 20px 10px;
+`;
+
+const Detail_View = styled.View`
   flex-direction: row;
   flex: 1;
   align-items: center;
@@ -59,7 +66,7 @@ const checkIcon = (iconName: string) => {
 export const DetailButton = ({onPressBtn, title, iconName, isArrow = true, children}: any) => {
   return (
     <Time_Input_Containera onPress={onPressBtn}>
-      <Detail_Button>
+      <Detail_View>
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1}}>
           <Time_Icon_Container>
             {checkIcon(iconName)}
@@ -67,7 +74,7 @@ export const DetailButton = ({onPressBtn, title, iconName, isArrow = true, child
           </Time_Icon_Container>
           <List_Text_Value style={{includeFontPadding: false}}> {children} &nbsp;</List_Text_Value>
         </View>
-      </Detail_Button>
+      </Detail_View>
       <TouchableOpacity style={{paddingRight: 10}}>
         <Icon name="right" size={15} />
       </TouchableOpacity>

@@ -77,6 +77,8 @@ var day = paramDate.getDay();
 var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
 var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const ExpandableCalendarScreen = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -97,16 +99,6 @@ const ExpandableCalendarScreen = () => {
 
   const marked = getMarkedDates();
   const theme: any = getTheme();
-
-  useEffect(() => {
-    Realm_TodoDataList.addListener(() => {
-      dispatch(AGENDA_DATA_REQUEST(onPressDay === '' ? tey : onPressDay));
-    });
-
-    return () => {
-      Realm_TodoDataList.removeAllListeners();
-    };
-  }, []);
 
   const onDateChanged = (date: string) => {
     var paramDate = new Date(date); // new Date('2021-06-08'): 화요일
@@ -150,6 +142,8 @@ const ExpandableCalendarScreen = () => {
     </CalendarProvider>
   );
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const styles = StyleSheet.create<any>({
   section: {

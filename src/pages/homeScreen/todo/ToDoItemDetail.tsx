@@ -169,6 +169,7 @@ const ToDoItemDetail = () => {
   };
 
   const IsCheckTime = twelve_HoursTime ? true : todoData.listTime ? true : false;
+
   const deleteClickTime = () => {
     dispatch(SELECTED_TIME({twelve_HoursTime: '', twenty_Four_HoursTime: ''}));
     realm.write(() => {

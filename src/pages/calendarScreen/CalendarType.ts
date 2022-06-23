@@ -14,6 +14,3 @@ export interface IcalendarModalType {
   InputData: boolean;
 }
 
-export interface CustomTodoType extends ToDoType {
-  colors?: string;
-}

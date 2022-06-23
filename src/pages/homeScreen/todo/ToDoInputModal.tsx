@@ -114,7 +114,7 @@ const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoI
       await addToDoItem(NotifID);
       await addNotification(NotifID);
 
-      dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
+      //dispatch(REQUEST_CATEGORY_DATA(SortCategoryDate));
       dispatch(RESET_INPUT_DATA());
       setTodoContents('');
     }
@@ -143,7 +143,7 @@ const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoI
       );
       categoryItem.todoData.unshift(todoItem);
     });
-    dispatch(AGENDA_DATA_REQUEST(onClickDay ? onClickDay : day));
+    //dispatch(AGENDA_DATA_REQUEST(onClickDay ? onClickDay : day));
     console.log('addToDoItem =====>', onClickDay ? onClickDay : day);
   };
 

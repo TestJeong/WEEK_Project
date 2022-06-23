@@ -1,3 +1,5 @@
+import {ToDoType} from '@/db';
+
 export interface InotifType {
   onClickDay?: number;
   timeString?: string;
@@ -21,6 +23,14 @@ export interface ItodoInputModalType {
 }
 
 export interface ItodoListType {
-  data: any;
+  data: {item: TodoType};
   listName: boolean;
+}
+
+export interface TodoType extends ToDoType {
+  separators: any;
+}
+
+export interface CustomTodoType extends ToDoType {
+  colors?: string;
 }

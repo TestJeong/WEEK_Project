@@ -11,9 +11,9 @@ import realm, {CategoryType, ToDoType} from '../../db';
 import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/ToDoSlice';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
-import {Realm_TodoDataList} from '@/utils/realmHelper';
 import {useCallback} from 'react';
-import {CustomTodoType} from './CalendarType';
+import {Realm_TodoDataList} from '@/utils/realmHelper';
+import {CustomTodoType} from '@homeScreen/todo/todoType';
 
 interface Props {
   color: string;
@@ -40,30 +40,36 @@ const List_View = styled.View`
 const ListText_View = styled.View`
   margin-left: 17px;
 `;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const Agenda_List = ({item}: {item: CustomTodoType}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ToDoListDetail'>>();
-  const [onToggle, setOnToggle] = useState(item.listClear);
-  const [todoItem, setTodoItem] = useState<ToDoType>({});
-  const [categoryColor, setCategoryColor] = useState('');
+  const [todoItem, setTodoItem] = useState<CustomTodoType>({});
 
   useEffect(() => {
-    const TodoItem: {} = Realm_TodoDataList.filtered('id == $0', item.id);
-    setTodoItem(TodoItem[0]);
-  }, [onToggle]);
+    Realm_TodoDataList.addListener(() => {
+      const FilterTodoDataList: {} = Realm_TodoDataList.filtered('id == $0', item.id);
+      setTodoItem(FilterTodoDataList[0]);
+    });
 
-  const goToList = useCallback(() => {
+    return () => {
+      Realm_TodoDataList.removeAllListeners();
+    };
+  }, []);
+
+  const onPressDetail = useCallback(() => {
     dispatch(SELECTED_TODOLIST_DATA(item));
     navigation.navigate('ToDoListDetail');
   }, []);
 
   const onPressToggle = () => {
-    setOnToggle(!onToggle);
     realm.write(() => {
       realm.create<ToDoType>(
         'TodoDataList',
         {
-          createTime: todoItem.createTime,
+          createTime: item.createTime,
           listClear: !todoItem.listClear,
         },
         UpdateMode.Modified,
@@ -80,24 +86,26 @@ const Agenda_List = ({item}: {item: CustomTodoType}) => {
     );
   }
   return (
-    <TouchableOpacity onPress={goToList} style={{marginLeft: 20, marginRight: 20, marginTop: 5, paddingBottom: 10}}>
+    <TouchableOpacity onPress={onPressDetail} style={{marginLeft: 20, marginRight: 20, marginTop: 5, paddingBottom: 10}}>
       <View style={{marginTop: 12, marginBottom: 0}}>
         <Render_View style={styles.container} color={item.colors}>
           <List_View>
-            {/* <TouchableOpacity onPress={onPressToggle}>
+            <TouchableOpacity onPress={onPressToggle}>
               {todoItem.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <ListText_View>
-              <Text style={styles.defaultTitleText}>{item.listContent}</Text>
-              {/* <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{todoItem.categoryTitle}</Text> */}
+              <Text style={todoItem.listClear ? styles.strikeTitleText : styles.defaultTitleText}>{item.listContent}</Text>
+              <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{item.categoryTitle}</Text>
             </ListText_View>
           </List_View>
-          {/* <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{todoItem.listTime}</Text> */}
+          <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{item.listTime}</Text>
         </Render_View>
       </View>
     </TouchableOpacity>
   );
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const styles = StyleSheet.create({
   container: {
