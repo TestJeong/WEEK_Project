@@ -12,7 +12,7 @@ import {UpdateMode} from 'realm';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
 
-import {IOS_Notif, Notif_Day} from '../../../utils/Day';
+import {IOS_Notif, LIST_DAY_CHANGE_KO, Notif_Day} from '../../../utils/Day';
 import {REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './ToDoSlice';
 import {ItodoListType} from './todoType';
 import {widgetRefresh} from '@/utils/widgetHelper';
@@ -75,11 +75,7 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
     if (data.item.listDay === null) {
       setListDay(null);
     } else {
-      const String_ListDay = String(data.item.listDay);
-      const ListDay_Month = Number(String_ListDay.substring(4, 6)) >= 10 ? String_ListDay.substring(4, 6) : String_ListDay.substring(5, 6);
-      const ListDay_Day = String_ListDay.substring(6, 8);
-      const ListDay_Total = ListDay_Month + '월' + ' ' + ListDay_Day + '일 ';
-      setListDay(ListDay_Total);
+      setListDay(LIST_DAY_CHANGE_KO(data.item.listDay));
     }
   }, [data.item]);
 

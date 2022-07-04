@@ -81,3 +81,12 @@ export const Notif_Day = () => {
 
   return day;
 };
+
+export const LIST_DAY_CHANGE_KO = (day) => {
+  const String_ListDay = String(day);
+  const ListDay_Month = Number(String_ListDay.substring(4, 6)) >= 10 ? String_ListDay.substring(4, 6) : String_ListDay.substring(5, 6);
+  const ListDay_Day = String_ListDay.substring(6, 8);
+  const ListDay_Total = ListDay_Month + '월' + ' ' + ListDay_Day + '일 ';
+
+  return ListDay_Total;
+};

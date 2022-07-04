@@ -12,7 +12,6 @@ import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/ToDoSlice';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
 import {useCallback} from 'react';
-import {Realm_TodoDataList} from '@/utils/realmHelper';
 import {CustomTodoType} from '@homeScreen/todo/todoType';
 
 interface Props {
@@ -46,18 +45,6 @@ const ListText_View = styled.View`
 const Agenda_List = ({item}: {item: CustomTodoType}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ToDoListDetail'>>();
-  const [todoItem, setTodoItem] = useState<CustomTodoType>({});
-
-  useEffect(() => {
-    Realm_TodoDataList.addListener(() => {
-      const FilterTodoDataList: {} = Realm_TodoDataList.filtered('id == $0', item.id);
-      setTodoItem(FilterTodoDataList[0]);
-    });
-
-    return () => {
-      Realm_TodoDataList.removeAllListeners();
-    };
-  }, []);
 
   const onPressDetail = useCallback(() => {
     dispatch(SELECTED_TODOLIST_DATA(item));
@@ -70,12 +57,11 @@ const Agenda_List = ({item}: {item: CustomTodoType}) => {
         'TodoDataList',
         {
           createTime: item.createTime,
-          listClear: !todoItem.listClear,
+          listClear: !item.listClear,
         },
         UpdateMode.Modified,
       );
     });
-    // dispatch(SELECTED_TODOLIST_DATA(item));
   };
 
   if (isEmpty(item)) {
@@ -90,15 +76,13 @@ const Agenda_List = ({item}: {item: CustomTodoType}) => {
       <View style={{marginTop: 12, marginBottom: 0}}>
         <Render_View style={styles.container} color={item.colors}>
           <List_View>
-            <TouchableOpacity onPress={onPressToggle}>
-              {todoItem.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
-            </TouchableOpacity>
+            <TouchableOpacity onPress={onPressToggle}>{item.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
             <ListText_View>
-              <Text style={todoItem.listClear ? styles.strikeTitleText : styles.defaultTitleText}>{item.listContent}</Text>
-              <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{item.categoryTitle}</Text>
+              <Text style={item.listClear ? styles.strikeTitleText : styles.defaultTitleText}>{item.listContent}</Text>
+              <Text style={item.listClear ? styles.strikeText : styles.defaultText}>{item.categoryTitle}</Text>
             </ListText_View>
           </List_View>
-          <Text style={todoItem.listClear ? styles.strikeText : styles.defaultText}>{item.listTime}</Text>
+          <Text style={item.listClear ? styles.strikeText : styles.defaultText}>{item.listTime}</Text>
         </Render_View>
       </View>
     </TouchableOpacity>

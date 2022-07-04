@@ -143,8 +143,8 @@ const ToDoInputModal = ({isOpen, close, categoryName, categoryTime, day}: ItodoI
       );
       categoryItem.todoData.unshift(todoItem);
     });
-    //dispatch(AGENDA_DATA_REQUEST(onClickDay ? onClickDay : day));
-    console.log('addToDoItem =====>', onClickDay ? onClickDay : day);
+    dispatch(AGENDA_DATA_REQUEST(onClickDay ? onClickDay : day));
+    console.log('addToDoItem =====>', onClickDay);
   };
 
   // notification 추가

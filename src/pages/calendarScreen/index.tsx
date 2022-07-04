@@ -10,11 +10,7 @@ import {AGENDA_DATA_REQUEST} from './CalendarSlice';
 import {Today} from '../../utils/Day';
 import {RootState} from '../../store/configureStore';
 import {ItodoType, MarkedDate} from './CalendarType';
-import {useEffect} from 'react';
-import {useIsFocused} from '@react-navigation/native';
-import {useState} from 'react';
 import {useCallback} from 'react';
-import {Realm_TodoDataList} from '@/utils/realmHelper';
 
 LocaleConfig.locales['kr'] = {
   monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -81,9 +77,7 @@ var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
 
 const ExpandableCalendarScreen = () => {
   const dispatch = useDispatch();
-  const isFocused = useIsFocused();
   const {Agenda_DATA} = useSelector((state: RootState) => state.CALENDAR_DATA);
-  const [onPressDay, setOnPressDay] = useState('');
 
   const getMarkedDates = () => {
     const TodoList_View = realm.objects('TodoDataList');

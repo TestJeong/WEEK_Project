@@ -62,14 +62,26 @@ export const TodoData = {
     listTime_Data: 'string?',
     listPriority: 'int?',
     listMemo: 'string?',
+    color: 'string?',
     listClear: {type: 'bool', default: false},
     listEnabled: {type: 'bool', default: false},
   },
 };
 
+export const CalenarTodoData = {
+  name: 'CalenarTodoData',
+  primaryKey: 'createTime',
+  properties: {
+    createTime: 'int',
+    id: 'int',
+    title: 'string',
+    data: {type: 'list', objectType: 'TodoDataList'},
+  },
+};
+
 let realm = new Realm({
   schema: [Category, TodoData, System],
-  schemaVersion: 21,
+  schemaVersion: 22,
   migration: (oldRealm, newRealm) => {
     // only apply this change if upgrading to schemaVersion 1
     if (oldRealm.schemaVersion < 1) {
