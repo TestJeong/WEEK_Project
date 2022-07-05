@@ -1,4 +1,4 @@
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import codePush from 'react-native-code-push';
 import {Provider, useDispatch} from 'react-redux';
@@ -8,6 +8,7 @@ import realm, {IsystemType} from './src/db';
 import {UpdateMode} from 'realm';
 import TapNavigator from '@/navgation/TapNavigator';
 import {AGENDA_DATA_REQUEST} from './src/pages/calendarScreen/CalendarSlice';
+import {SafeAreaView} from 'react-native';
 
 const today = new Date().toISOString().split('T')[0];
 
@@ -20,10 +21,16 @@ var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
 const App = () => {
   const dispatch = useDispatch();
   const firstCheck = realm.objects('System');
-  //const {WeekWidgetModule} = NativeModules;
+
+  const navTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'transparent',
+    },
+  };
 
   useEffect(() => {
-    //WeekWidgetModule.setWidgetData(hoho);
     if (firstCheck.length <= 0) {
       realm.write(() => {
         realm.create<any>('CategoryList', {});
@@ -34,18 +41,18 @@ const App = () => {
   }, []);
 
   return (
-    <NavigationContainer>
-      <TapNavigator />
-    </NavigationContainer>
+    <SafeAreaView style={{flex: 1}}>
+      <NavigationContainer theme={navTheme}>
+        <TapNavigator />
+      </NavigationContainer>
+    </SafeAreaView>
   );
 };
 
 export default codePush()(() => {
   return (
-    <SafeAreaProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
   );
 });

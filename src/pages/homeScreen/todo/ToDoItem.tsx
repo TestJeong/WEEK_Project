@@ -1,12 +1,12 @@
-import React, {useRef, useEffect, useState, useLayoutEffect} from 'react';
-import {View, Text, Animated, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import React, {useRef, useEffect, useState} from 'react';
+import {View, Text, Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {RectButton} from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import E_Icon from 'react-native-vector-icons/Feather';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import PushNotification from 'react-native-push-notification';
 import {UpdateMode} from 'realm';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -16,10 +16,8 @@ import {IOS_Notif, LIST_DAY_CHANGE_KO, Notif_Day} from '../../../utils/Day';
 import {REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './ToDoSlice';
 import {ItodoListType} from './todoType';
 import {widgetRefresh} from '@/utils/widgetHelper';
-import {Realm_TodoDataList} from '@/utils/realmHelper';
 import realm, {ToDoType} from '@/db';
 import {Schedule_Notif} from '@/utils/notificationHelper';
-import {helperTodoItemDelete} from '@/sagas/todo/todoSaga';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -67,7 +65,6 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
   const dispatch = useDispatch();
 
   const [ListDay, setListDay] = useState(null);
-  const [isToggle, setToggle] = useState(data.item.listClear);
 
   useEffect(() => {
     widgetRefresh();
@@ -79,7 +76,7 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
     }
   }, [data.item]);
 
-  const Delete_List_Action = (text: React.ReactNode, color: string, x: number, progress: any) => {
+  const deleteListAction = (text: React.ReactNode, color: string, x: number, progress: any) => {
     const trans = progress.interpolate({
       inputRange: [0, 1],
       outputRange: [x, 0],
@@ -87,22 +84,12 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
     });
 
     const pressHandler = () => {
-      const Notif_ID = data.item.id;
-      const Sring_ID = String(Notif_ID);
-      PushNotification.cancelLocalNotification(Sring_ID); //{id: String_ID}
-      helperTodoItemDelete(data);
+      dispatch(REQEUST_TODO_ITEM_DELETE({data}));
       swipeClose();
     };
 
     return (
-      <Animated.View
-        style={{
-          overflow: 'hidden',
-          borderTopRightRadius: 10,
-          borderBottomRightRadius: 10,
-          flex: 1,
-          transform: [{translateX: trans}],
-        }}>
+      <Animated.View style={[styles.animatedView, {transform: [{translateX: trans}]}]}>
         <RectButton onPress={pressHandler} style={[styles.rightAction, {backgroundColor: color}]}>
           <Text style={styles.actionText}>{text}</Text>
         </RectButton>
@@ -110,15 +97,7 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
     );
   };
 
-  const renderRightActions = (progress: any) => (
-    <View
-      style={{
-        width: 60,
-        flexDirection: 'row',
-      }}>
-      {Delete_List_Action(<E_Icon name="trash-2" size={25} />, '#dd2c00', 128, progress)}
-    </View>
-  );
+  const renderRightActions = (progress: any) => <View style={styles.swipeRightView}>{deleteListAction(<E_Icon name="trash-2" size={25} />, '#dd2c00', 128, progress)}</View>;
 
   const swipeClose = () => {
     swiper.current.close();
@@ -133,8 +112,6 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
     const Notif_ID = data.item.id;
     const String_ID = String(Notif_ID);
 
-    setToggle(!data.item.listClear);
-
     realm.write(() => {
       realm.create<ToDoType>(
         'TodoDataList',
@@ -145,19 +122,18 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
         UpdateMode.Modified,
       );
     });
-    // dispatch(SELECTED_TODOLIST_DATA(data.item));
 
-    // if (data.item.listDay && data.item.listTime_Data && onToggle_List === false) {
-    //   PushNotification.cancelLocalNotification(String_ID); //{id: String_ID}
-    // } else if (
-    //   data.item.listDay &&
-    //   data.item.listTime_Data &&
-    //   onToggle_List === true &&
-    //   new Date(IOS_Notif(data.item.listDay, data.item.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
-    //   data.item.listEnabled
-    // ) {
-    //   Schedule_Notif({onClickDay: data.item.listDay, timeString: data.item.listTime_Data, todoContents: data.item.listContent, NotifID: Number(String_ID), categoryTitle: data.item.categoryTitle});
-    // }
+    if (data.item.listDay && data.item.listTime_Data && data.item.listClear === true) {
+      PushNotification.cancelLocalNotification(String_ID); //{id: String_ID}
+    } else if (
+      data.item.listDay &&
+      data.item.listTime_Data &&
+      data.item.listClear === false &&
+      new Date(IOS_Notif(data.item.listDay, data.item.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
+      data.item.listEnabled
+    ) {
+      Schedule_Notif({onClickDay: data.item.listDay, timeString: data.item.listTime_Data, todoContents: data.item.listContent, NotifID: Number(String_ID), categoryTitle: data.item.categoryTitle});
+    }
   };
 
   return (
@@ -220,6 +196,17 @@ const StartComp = (listPriority, onToggle_List) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const styles = StyleSheet.create({
+  swipeRightView: {
+    width: 60,
+    flexDirection: 'row',
+  },
+  animatedView: {
+    overflow: 'hidden',
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    flex: 1,
+  },
+
   strikeText: {
     color: '#bbb',
     textDecorationLine: 'line-through',

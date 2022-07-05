@@ -1,12 +1,15 @@
 import realm, {ToDoType} from '@/db';
+import PushNotification from 'react-native-push-notification';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
 import {UpdateMode} from 'realm';
 import {aq} from '.';
 
-export const helperTodoItemDelete = (term: any) => {
-  const BookMarkaa = Realm_TodoDataList.filtered('listContent == $0', term.item.listContent);
+export const helperTodoItemDelete = (term: {item: ToDoType}) => {
+  const deleteTodoItem = Realm_TodoDataList.filtered('listContent == $0', term.item.listContent);
+  const notificationID = String(term.item.id);
+  PushNotification.cancelLocalNotification(notificationID); //{id: String_ID}
   realm.write(() => {
-    realm.delete(BookMarkaa);
+    realm.delete(deleteTodoItem);
   });
 };
 

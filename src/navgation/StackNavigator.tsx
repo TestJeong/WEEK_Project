@@ -22,6 +22,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const screenOptionStyle: any = {
   headerTitleAlign: 'center',
   cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+  headerShown: false,
 };
 
 const ToDoStackNavigator = () => {

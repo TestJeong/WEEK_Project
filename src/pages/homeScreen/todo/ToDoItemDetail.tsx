@@ -18,6 +18,7 @@ import Priority from '@homeScreen/components/Priority';
 import {DetailButton, DetailTimeButton} from '@homeScreen/components/DetailButton';
 import {useNavigation} from '@react-navigation/native';
 import {UpdateMode} from 'realm';
+import {Realm_TodoDataList} from '@/utils/realmHelper';
 
 const Text_View = styled.View`
   background-color: white;
@@ -79,9 +80,8 @@ const ToDoItemDetail = () => {
     });
   }, []);
 
-  const SaveBtn = () => {
-    const TodoList_View = realm.objects<any>('TodoDataList');
-    const TodoList_View_Data = TodoList_View.filtered('createTime == $0', todoData.createTime);
+  const onPressSave = () => {
+    const TodoList_View_Data = Realm_TodoDataList.filtered('createTime == $0', todoData.createTime);
 
     const categoryTitle = inputCategoryData ? inputCategoryData.title : todoData.categoryTitle;
     const listContent = TodoList_View_Data[0].listContent;
@@ -109,22 +109,22 @@ const ToDoItemDetail = () => {
     navigation.goBack();
   };
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: '상세정보',
-      headerRightContainerStyle: {marginRight: 10},
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginLeft: 20}}>
-          <Icon name="left" size={20} />
-        </TouchableOpacity>
-      ),
-      headerRight: () => (
-        <TouchableOpacity onPress={SaveBtn} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginRight: 20}}>
-          <Icon name="save" size={23} />
-        </TouchableOpacity>
-      ),
-    });
-  }, [onClickDay, twelve_HoursTime, onClickPriority, todoTitle, todoMemo, inputCategoryData, isEnableds]);
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     title: '상세정보',
+  //     headerRightContainerStyle: {marginRight: 10},
+  //     headerLeft: () => (
+  //       <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginLeft: 20}}>
+  //         <Icon name="left" size={20} />
+  //       </TouchableOpacity>
+  //     ),
+  //     headerRight: () => (
+  //       <TouchableOpacity onPress={onPressSave} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} style={{marginRight: 20}}>
+  //         <Icon name="save" size={23} />
+  //       </TouchableOpacity>
+  //     ),
+  //   });
+  // }, [onClickDay, twelve_HoursTime, onClickPriority, todoTitle, todoMemo, inputCategoryData, isEnableds]);
 
   const unsubscribe = () => {
     navigation.addListener('blur', () => {
