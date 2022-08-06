@@ -13,6 +13,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
 import {useCallback} from 'react';
 import {CustomTodoType} from '@homeScreen/todo/todoType';
+import ToDoItems from '@homeScreen/components/ToDoItem';
 
 interface Props {
   color: string;
@@ -75,13 +76,12 @@ const Agenda_List = ({item}: {item: CustomTodoType}) => {
     <TouchableOpacity onPress={onPressDetail} style={{marginLeft: 20, marginRight: 20, marginTop: 5, paddingBottom: 10}}>
       <View style={{marginTop: 12, marginBottom: 0}}>
         <Render_View style={styles.container} color={item.colors}>
-          <List_View>
-            <TouchableOpacity onPress={onPressToggle}>{item.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
+          {/* <TouchableOpacity onPress={onPressToggle}>{item.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
             <ListText_View>
               <Text style={item.listClear ? styles.strikeTitleText : styles.defaultTitleText}>{item.listContent}</Text>
               <Text style={item.listClear ? styles.strikeText : styles.defaultText}>{item.categoryTitle}</Text>
-            </ListText_View>
-          </List_View>
+            </ListText_View> */}
+          <ToDoItems data={item} />
           <Text style={item.listClear ? styles.strikeText : styles.defaultText}>{item.listTime}</Text>
         </Render_View>
       </View>

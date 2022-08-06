@@ -5,15 +5,17 @@ import {
   ERROR_TODO_ITEM_SAVE,
   SUCCESS_TODO_ITEM_SAVE,
   REQEUST_TODO_ITEM_SAVE,
-  TODO_DATA,
   initType,
   REQEUST_TODO_ITEM_ADD,
   ERROR_TODO_ITEM_ADD,
   SUCCESS_TODO_ITEM_ADD,
+  REQEUST_TODO_ITEM_CLEAR,
+  SUCCESS_TODO_ITEM_CLEAR,
+  ERROR_TODO_ITEM_CLEAR,
 } from '../../pages/homeScreen/todo/ToDoSlice';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {takeEvery, put, call, all, fork, select} from 'redux-saga/effects';
-import {helperTodoItemDelete, helperTodoItemSave} from './todoSaga';
+import {helperTodoClear, helperTodoItemDelete, helperTodoItemSave} from './todoSaga';
 
 interface aa {
   data: {
@@ -31,7 +33,7 @@ export interface aq {
 
 // ----------------------------------------------------------------------------------
 // 투두 아이템 삭제
-function* todoItemDelete(action: PayloadAction<aa>) {
+function* todoItemDelete(action) {
   try {
     yield call(helperTodoItemDelete, action.payload.data);
     yield put(SUCCESS_TODO_ITEM_DELETE());
@@ -59,6 +61,15 @@ function* todoItemAdd() {
     yield put({type: ERROR_TODO_ITEM_ADD, data: error, error: true});
   }
 }
+// 투두 아이템 토글 변경
+function* todoClearToggle(action) {
+  try {
+    yield call(helperTodoClear, action.payload.data);
+    yield put(SUCCESS_TODO_ITEM_CLEAR());
+  } catch (error) {
+    yield put({type: ERROR_TODO_ITEM_CLEAR, data: error, error: true});
+  }
+}
 
 // ----------------------------------------------------------------------------------
 
@@ -74,8 +85,12 @@ function* requestTodoItemAdd() {
   yield takeEvery(REQEUST_TODO_ITEM_ADD, todoItemAdd);
 }
 
+function* requestTodoClearToggle() {
+  yield takeEvery(REQEUST_TODO_ITEM_CLEAR, todoClearToggle);
+}
+
 // ----------------------------------------------------------------------------------
 
 export default function* todoSaga() {
-  yield all([fork(requestTodoItemDelete), fork(requestTodoItemSave), fork(requestTodoItemAdd)]);
+  yield all([fork(requestTodoItemDelete), fork(requestTodoItemSave), fork(requestTodoItemAdd), fork(requestTodoClearToggle)]);
 }

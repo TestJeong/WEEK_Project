@@ -19,6 +19,7 @@ import {DetailButton, DetailTimeButton} from '@homeScreen/components/DetailButto
 import {useNavigation} from '@react-navigation/native';
 import {UpdateMode} from 'realm';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
+import Header from '@/components/layout/header';
 
 const Text_View = styled.View`
   background-color: white;
@@ -187,56 +188,59 @@ const ToDoItemDetail = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <ScrollView style={{padding: 15}}>
-        <ActionSheet ref={actionSheetRef}>
-          <Detail_Priorty hideActionSheet={hideActionSheet} />
-        </ActionSheet>
+    <>
+      <Header title={'상세정보'} saveIcon={true} />
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <ScrollView style={{padding: 15}}>
+          <ActionSheet ref={actionSheetRef}>
+            <Detail_Priorty hideActionSheet={hideActionSheet} />
+          </ActionSheet>
 
-        <ActionSheet ref={Category_actionSheetRef}>
-          <ThemeCategoryList hideActionSheet={Category_hide_Action} />
-        </ActionSheet>
+          <ActionSheet ref={Category_actionSheetRef}>
+            <ThemeCategoryList hideActionSheet={Category_hide_Action} />
+          </ActionSheet>
 
-        <DateTimePicke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
-        <CalendarModal openModal={calendarModalVisible} closeModal={closeCalendarModal} InputData={false} />
-        <Text_View>
-          <Title_Text style={{includeFontPadding: false}} value={todoTitle} onChangeText={setToDoTitle} />
-          <Memo_Text style={{includeFontPadding: false}} value={todoMemo} onChangeText={setToDoMemo} multiline={true} textAlignVertical={'top'} placeholder="메모" />
-        </Text_View>
-        <View>
-          <DetailButton
-            onPressBtn={() => {
-              Category_actionSheetRef.current?.setModalVisible();
-            }}
-            title={'카테고리'}
-            iconName={'bars'}>
-            {inputCategoryData ? inputCategoryData.title : todoData.categoryTitle}
-          </DetailButton>
+          <DateTimePicke hideDatePicker={hideDatePicker} isDatePickerVisible={isDatePickerVisible} />
+          <CalendarModal openModal={calendarModalVisible} closeModal={closeCalendarModal} InputData={false} />
+          <Text_View>
+            <Title_Text style={{includeFontPadding: false}} value={todoTitle} onChangeText={setToDoTitle} />
+            <Memo_Text style={{includeFontPadding: false}} value={todoMemo} onChangeText={setToDoMemo} multiline={true} textAlignVertical={'top'} placeholder="메모" />
+          </Text_View>
+          <View>
+            <DetailButton
+              onPressBtn={() => {
+                Category_actionSheetRef.current?.setModalVisible();
+              }}
+              title={'카테고리'}
+              iconName={'bars'}>
+              {inputCategoryData ? inputCategoryData.title : todoData.categoryTitle}
+            </DetailButton>
 
-          <DetailTimeButton onPressBtn={openCalendar} title={'날짜'} iconName={'calendar'} timeSheet={IsCheckDay} deleteFunc={deleteClickDay}>
-            {onClickDay ? onClickDay : todoData.listDay ? Today(todoData.listDay) : '없음'}
-          </DetailTimeButton>
+            <DetailTimeButton onPressBtn={openCalendar} title={'날짜'} iconName={'calendar'} timeSheet={IsCheckDay} deleteFunc={deleteClickDay}>
+              {onClickDay ? onClickDay : todoData.listDay ? Today(todoData.listDay) : '없음'}
+            </DetailTimeButton>
 
-          <DetailTimeButton onPressBtn={showDatePicker} title={'시간'} iconName={'clockcircleo'} timeSheet={IsCheckTime} deleteFunc={deleteClickTime}>
-            {twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : '없음'}
-          </DetailTimeButton>
+            <DetailTimeButton onPressBtn={showDatePicker} title={'시간'} iconName={'clockcircleo'} timeSheet={IsCheckTime} deleteFunc={deleteClickTime}>
+              {twelve_HoursTime ? twelve_HoursTime : todoData.listTime ? todoData.listTime : '없음'}
+            </DetailTimeButton>
 
-          <DetailButton
-            onPressBtn={() => {
-              actionSheetRef.current?.setModalVisible();
-            }}
-            isArrow={true}
-            title={'우선순위'}
-            iconName={'staro'}>
-            {onClickPriority ? Priority(onClickPriority) : todoData.listPriority ? Priority(todoData.listPriority) : '없음'}
-          </DetailButton>
+            <DetailButton
+              onPressBtn={() => {
+                actionSheetRef.current?.setModalVisible();
+              }}
+              isArrow={true}
+              title={'우선순위'}
+              iconName={'staro'}>
+              {onClickPriority ? Priority(onClickPriority) : todoData.listPriority ? Priority(todoData.listPriority) : '없음'}
+            </DetailButton>
 
-          <DetailButton title={'알람허용'} iconName={'notification'} isArrow={false}>
-            <Switch onValueChange={setIsEnableds} value={isEnableds} />
-          </DetailButton>
-        </View>
-      </ScrollView>
-    </TouchableWithoutFeedback>
+            <DetailButton title={'알람허용'} iconName={'notification'} isArrow={false}>
+              <Switch onValueChange={setIsEnableds} value={isEnableds} />
+            </DetailButton>
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </>
   );
 };
 

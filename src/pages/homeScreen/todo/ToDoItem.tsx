@@ -7,17 +7,14 @@ import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import E_Icon from 'react-native-vector-icons/Feather';
 import {useDispatch} from 'react-redux';
-import PushNotification from 'react-native-push-notification';
-import {UpdateMode} from 'realm';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
 
-import {IOS_Notif, LIST_DAY_CHANGE_KO, Notif_Day} from '../../../utils/Day';
-import {REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './ToDoSlice';
+import {LIST_DAY_CHANGE_KO} from '../../../utils/Day';
+import {REQEUST_TODO_ITEM_CLEAR, REQEUST_TODO_ITEM_DELETE, SELECTED_TODOLIST_DATA} from './ToDoSlice';
 import {ItodoListType} from './todoType';
 import {widgetRefresh} from '@/utils/widgetHelper';
-import realm, {ToDoType} from '@/db';
-import {Schedule_Notif} from '@/utils/notificationHelper';
+import ToDoItems from '@homeScreen/components/ToDoItem';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -64,17 +61,17 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ToDoListDetail'>>();
   const dispatch = useDispatch();
 
-  const [ListDay, setListDay] = useState(null);
+  const [monthAndDay, setMonthAndDay] = useState(null);
 
   useEffect(() => {
     widgetRefresh();
 
-    if (data.item.listDay === null) {
-      setListDay(null);
+    if (data.listDay === null) {
+      setMonthAndDay(null);
     } else {
-      setListDay(LIST_DAY_CHANGE_KO(data.item.listDay));
+      setMonthAndDay(LIST_DAY_CHANGE_KO(data.listDay));
     }
-  }, [data.item]);
+  }, [data]);
 
   const deleteListAction = (text: React.ReactNode, color: string, x: number, progress: any) => {
     const trans = progress.interpolate({
@@ -105,35 +102,11 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
 
   const onPressDetail = () => {
     navigation.navigate('ToDoListDetail', {listName: listName});
-    dispatch(SELECTED_TODOLIST_DATA(data.item));
+    dispatch(SELECTED_TODOLIST_DATA(data));
   };
 
   const onPressToggleToDo = () => {
-    const Notif_ID = data.item.id;
-    const String_ID = String(Notif_ID);
-
-    realm.write(() => {
-      realm.create<ToDoType>(
-        'TodoDataList',
-        {
-          createTime: data.item.createTime,
-          listClear: !data.item.listClear,
-        },
-        UpdateMode.Modified,
-      );
-    });
-
-    if (data.item.listDay && data.item.listTime_Data && data.item.listClear === true) {
-      PushNotification.cancelLocalNotification(String_ID); //{id: String_ID}
-    } else if (
-      data.item.listDay &&
-      data.item.listTime_Data &&
-      data.item.listClear === false &&
-      new Date(IOS_Notif(data.item.listDay, data.item.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
-      data.item.listEnabled
-    ) {
-      Schedule_Notif({onClickDay: data.item.listDay, timeString: data.item.listTime_Data, todoContents: data.item.listContent, NotifID: Number(String_ID), categoryTitle: data.item.categoryTitle});
-    }
+    dispatch(REQEUST_TODO_ITEM_CLEAR({data}));
   };
 
   return (
@@ -141,23 +114,24 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
       <Swipeable ref={swiper} friction={2} rightThreshold={40} renderRightActions={renderRightActions}>
         <TouchableOpacity onPress={onPressDetail}>
           <List_Item>
-            <List_Title_View>
+            <ToDoItems data={data} />
+            {/* <List_Title_View>
               <TouchableOpacity hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} onPress={onPressToggleToDo}>
-                {data.item.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
+                {data.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
               </TouchableOpacity>
               <List_Title_Content>
-                <List_Text style={data.item.listClear ? styles.strikeText : styles.defaultText} numberOfLines={1}>
-                  {data.item.listContent}
+                <List_Text style={data.listClear ? styles.strikeText : styles.defaultText} numberOfLines={1}>
+                  {data.listContent}
                 </List_Text>
-                {ListDay ? (
-                  <List_Clock_Text style={data.item.listClear ? styles.strikeText : styles.defaultDayText}>
-                    {ListDay}
-                    {data.item.listTime ? <Icon name="bells" size={12} color={'orange'} /> : null}
+                {monthAndDay ? (
+                  <List_Clock_Text style={data.listClear ? styles.strikeText : styles.defaultDayText}>
+                    {monthAndDay}
+                    {data.listTime ? <Icon name="bells" size={12} color={'orange'} /> : null}
                   </List_Clock_Text>
                 ) : null}
               </List_Title_Content>
             </List_Title_View>
-            {StartComp(data.item.listPriority, true)}
+            {StartComp(data.listPriority, true)} */}
           </List_Item>
         </TouchableOpacity>
       </Swipeable>

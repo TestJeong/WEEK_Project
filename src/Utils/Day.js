@@ -90,3 +90,14 @@ export const LIST_DAY_CHANGE_KO = (day) => {
 
   return ListDay_Total;
 };
+
+// 해당일의 주에서 월요일을 찾는다
+export const MONDAY_OF_DAY = (date) => {
+  const today = new Date().toISOString().split('T')[0];
+  const paramDate = new Date(date || today); // new Date('2021-06-08'): 화요일
+  const day = paramDate.getDay();
+  const diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
+  const mondayDate = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
+
+  return mondayDate;
+};

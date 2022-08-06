@@ -23,7 +23,7 @@ export interface ItodoInputModalType {
 }
 
 export interface ItodoListType {
-  data: {item: TodoType};
+  data: TodoType;
   listName: boolean;
 }
 

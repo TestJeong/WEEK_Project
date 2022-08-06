@@ -3,10 +3,12 @@ import PushNotification from 'react-native-push-notification';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
 import {UpdateMode} from 'realm';
 import {aq} from '.';
+import {IOS_Notif, Notif_Day} from '@/utils/Day';
+import {Schedule_Notif} from '@/utils/notificationHelper';
 
-export const helperTodoItemDelete = (term: {item: ToDoType}) => {
-  const deleteTodoItem = Realm_TodoDataList.filtered('listContent == $0', term.item.listContent);
-  const notificationID = String(term.item.id);
+export const helperTodoItemDelete = (data: ToDoType) => {
+  const deleteTodoItem = Realm_TodoDataList.filtered('listContent == $0', data.listContent);
+  const notificationID = String(data.id);
   PushNotification.cancelLocalNotification(notificationID); //{id: String_ID}
   realm.write(() => {
     realm.delete(deleteTodoItem);
@@ -45,6 +47,34 @@ export const helperTodoItemSave = (state: any, payload: aq) => {
     }
   });
   //
+};
+
+export const helperTodoClear = (data: ToDoType) => {
+  const Notif_ID = data.id;
+  const String_ID = String(Notif_ID);
+
+  realm.write(() => {
+    realm.create<ToDoType>(
+      'TodoDataList',
+      {
+        createTime: data.createTime,
+        listClear: !data.listClear,
+      },
+      UpdateMode.Modified,
+    );
+  });
+
+  if (data.listDay && data.listTime_Data && data.listClear === true) {
+    PushNotification.cancelLocalNotification(String_ID); //{id: String_ID}
+  } else if (
+    data.listDay &&
+    data.listTime_Data &&
+    data.listClear === false &&
+    new Date(IOS_Notif(data.listDay, data.listTime_Data)).toLocaleString() > new Date(Notif_Day()).toLocaleString() &&
+    data.listEnabled
+  ) {
+    Schedule_Notif({onClickDay: data.listDay, timeString: data.listTime_Data, todoContents: data.listContent, NotifID: Number(String_ID), categoryTitle: data.categoryTitle});
+  }
 };
 
 export const helperTodoNotification = () => {};

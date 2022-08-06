@@ -3,11 +3,11 @@ import {Platform, StyleSheet, Alert, View, Text, TouchableOpacity, Button, ViewS
 import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar, LocaleConfig} from 'react-native-calendars';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
-import realm, {ToDoType} from '@/db';
+import realm from '@/db';
 import Agenda_List from './Agenda_List';
-import testIDs from '../../Components/testIDs';
+import testIDs from '../../components/testIDs';
 import {AGENDA_DATA_REQUEST} from './CalendarSlice';
-import {Today} from '../../utils/Day';
+import {MONDAY_OF_DAY, Today} from '../../utils/Day';
 import {RootState} from '../../store/configureStore';
 import {ItodoType, MarkedDate} from './CalendarType';
 import {useCallback} from 'react';
@@ -95,17 +95,16 @@ const ExpandableCalendarScreen = () => {
   const theme: any = getTheme();
 
   const onDateChanged = (date: string) => {
-    var paramDate = new Date(date); // new Date('2021-06-08'): 화요일
-    var day = paramDate.getDay();
-    var diff = paramDate.getDate() - day + (day == 0 ? -6 : 1);
-    var tey = new Date(paramDate.setDate(diff)).toISOString().substring(0, 10);
     getMarkedDates();
-    dispatch(AGENDA_DATA_REQUEST(tey));
+    dispatch(AGENDA_DATA_REQUEST(MONDAY_OF_DAY(date)));
   };
 
-  const renderItem = useCallback(({item}: ItodoType) => {
-    return <Agenda_List item={item} />;
-  }, []);
+  const renderItem = useCallback(
+    ({item}: ItodoType) => {
+      return <Agenda_List item={item} />;
+    },
+    [Agenda_DATA],
+  );
 
   return (
     <CalendarProvider

@@ -6,6 +6,7 @@ export interface initType {
   Agenda_DATA_loading: boolean;
   Agenda_DATA_done: boolean;
   Agenda_DATA_error: any;
+  Agenda_ClickDay: string;
 }
 
 const initialState: initType = {
@@ -14,6 +15,7 @@ const initialState: initType = {
   Agenda_DATA_loading: false,
   Agenda_DATA_done: false,
   Agenda_DATA_error: null,
+  Agenda_ClickDay: '',
 };
 
 export const CalendarState = createSlice({
@@ -28,6 +30,7 @@ export const CalendarState = createSlice({
       state.Agenda_DATA_loading = true;
       state.Agenda_DATA_done = false;
       state.Agenda_DATA_error = null;
+      state.Agenda_ClickDay = action.payload;
     },
     AGENDA_DATA_SUCCESS: (state, action) => {
       state.Agenda_DATA_loading = false;

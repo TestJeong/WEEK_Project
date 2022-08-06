@@ -21,6 +21,10 @@ export interface initType {
   todoItemAddLoading: boolean;
   todoItemAddDone: boolean;
   todoItemAddError: Error;
+
+  todoItemClearLoading: boolean;
+  todoItemClearDone: boolean;
+  todoItemClearError: Error;
 }
 
 const initialState: initType = {
@@ -55,6 +59,10 @@ const initialState: initType = {
   todoItemAddLoading: true,
   todoItemAddDone: false,
   todoItemAddError: null,
+
+  todoItemClearLoading: true,
+  todoItemClearDone: false,
+  todoItemClearError: null,
 };
 
 export const ToDoState = createSlice({
@@ -142,10 +150,29 @@ export const ToDoState = createSlice({
       state.todoItemAddDone = false;
       state.todoItemAddError = action.payload;
     },
+    // 투두 아이템 토글 변경
+    REQEUST_TODO_ITEM_CLEAR: (state, _action) => {
+      state.todoItemAddLoading = true;
+      state.todoItemAddDone = false;
+      state.todoItemAddError = null;
+    },
+    SUCCESS_TODO_ITEM_CLEAR: (state) => {
+      state.todoItemAddLoading = false;
+      state.todoItemAddDone = true;
+      state.todoItemAddError = null;
+    },
+    ERROR_TODO_ITEM_CLEAR: (state, action) => {
+      state.todoItemClearLoading = false;
+      state.todoItemClearDone = false;
+      state.todoItemClearError = action.payload;
+    },
   },
 });
 
 export const {
+  REQEUST_TODO_ITEM_CLEAR,
+  SUCCESS_TODO_ITEM_CLEAR,
+  ERROR_TODO_ITEM_CLEAR,
   REQEUST_TODO_ITEM_ADD,
   SUCCESS_TODO_ITEM_ADD,
   ERROR_TODO_ITEM_ADD,
