@@ -105,66 +105,17 @@ const ToDoItem = ({data, listName}: ItodoListType) => {
     dispatch(SELECTED_TODOLIST_DATA(data));
   };
 
-  const onPressToggleToDo = () => {
-    dispatch(REQEUST_TODO_ITEM_CLEAR({data}));
-  };
-
   return (
     <View style={styles.container}>
       <Swipeable ref={swiper} friction={2} rightThreshold={40} renderRightActions={renderRightActions}>
         <TouchableOpacity onPress={onPressDetail}>
           <List_Item>
             <ToDoItems data={data} />
-            {/* <List_Title_View>
-              <TouchableOpacity hitSlop={{top: 25, bottom: 25, left: 25, right: 25}} onPress={onPressToggleToDo}>
-                {data.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}
-              </TouchableOpacity>
-              <List_Title_Content>
-                <List_Text style={data.listClear ? styles.strikeText : styles.defaultText} numberOfLines={1}>
-                  {data.listContent}
-                </List_Text>
-                {monthAndDay ? (
-                  <List_Clock_Text style={data.listClear ? styles.strikeText : styles.defaultDayText}>
-                    {monthAndDay}
-                    {data.listTime ? <Icon name="bells" size={12} color={'orange'} /> : null}
-                  </List_Clock_Text>
-                ) : null}
-              </List_Title_Content>
-            </List_Title_View>
-            {StartComp(data.listPriority, true)} */}
           </List_Item>
         </TouchableOpacity>
       </Swipeable>
     </View>
   );
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-const StartComp = (listPriority, onToggle_List) => {
-  switch (listPriority) {
-    case 1:
-      return (
-        <View>
-          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-        </View>
-      );
-    case 2:
-      return (
-        <View>
-          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-        </View>
-      );
-    case 3:
-      return (
-        <View>
-          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-          <Icon name="star" size={12} color={onToggle_List ? '#bbb' : 'pink'} />
-        </View>
-      );
-  }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

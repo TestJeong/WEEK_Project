@@ -9,6 +9,7 @@ import ToDoItem from '../todo/ToDoItem';
 import {Today} from '@/utils/Day';
 import {RootStackParamList} from '@/navgation/StackNavigator';
 import {Edit_Schedule_Notif} from '@/utils/notificationHelper';
+import Header from '@/components/layout/header';
 
 const FlatListView = styled.FlatList`
   padding: 5px 0px 20px 0px;
@@ -46,9 +47,10 @@ const Category_ToDo_List = () => {
 
   return (
     <>
+      <Header title={route.params.header_Name} />
       <ToDoInputModal isOpen={isModalVisible} close={closeModal} categoryName={null} categoryTime={null} day={today} />
       <View>
-        <FlatListView keyExtractor={(item, index) => '#' + index} data={mainCategoryData} renderItem={(item) => <ToDoItem data={item} listName={true} />} />
+        <FlatListView keyExtractor={(item, index) => '#' + index} data={mainCategoryData} renderItem={(item) => <ToDoItem data={item.item} listName={true} />} />
       </View>
       <TouchableOpacity activeOpacity={0.5} onPress={opneModal} style={[styles.touchableOpacityStyle, {backgroundColor: 'blue'}]}>
         <Icon name="plus" color={'white'} size={30} />

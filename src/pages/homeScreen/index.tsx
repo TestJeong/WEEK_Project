@@ -17,6 +17,7 @@ import {UpdateMode} from 'realm';
 import {RESET_INPUT_DATA} from './todo/ToDoSlice';
 import {All_ListData, Priority_ListData, Today_ListData, Will_ListData} from '@/utils/widgetHelper';
 import {Realm_TodoDataList} from '@/utils/realmHelper';
+import {RootState} from '@/store/configureStore';
 
 LogBox.ignoreLogs(["[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!"]);
 
@@ -83,16 +84,13 @@ const Main_Title_Text = styled.Text`
 
 const HomeScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [today_ToDo, setToday_ToDo] = useState(0);
-  const [will_ToDo, setWill_ToDo] = useState(0);
-  const [priority_ToDo, setPriority_ToDo] = useState(0);
-  const [all_ToDo, setAll_ToDo] = useState(0);
 
   const navigation = useNavigation<any>();
   const isFocused = useIsFocused();
 
   const dispatch = useDispatch();
-  const {categoryList} = useSelector((state: any) => state.CATEGORY_DATA);
+  const {categoryList} = useSelector((state: RootState) => state.CATEGORY_DATA);
+  const {Agenda_DATA} = useSelector((state: RootState) => state.CALENDAR_DATA);
 
   const timezoneOffset = new Date().getTimezoneOffset() * 60000;
   const timezoneDate = new Date(Date.now() - timezoneOffset);
@@ -122,16 +120,10 @@ const HomeScreen = () => {
     });
 
     Edit_Schedule_Notif();
-
     // Realm.open({}).then((realm) => {
     //   console.log('Realm is located at: ' + realm.path.toString());
     // });
-
-    setToday_ToDo(Today_ListData.length);
-    setWill_ToDo(Will_ListData.length);
-    setPriority_ToDo(Priority_ListData.length);
-    setAll_ToDo(All_ListData.length);
-  }, [categoryList]);
+  }, [Realm_TodoDataList, All_ListData]);
 
   const opneModal = () => {
     setModalVisible(!isModalVisible);
@@ -186,7 +178,7 @@ const HomeScreen = () => {
             <Main_Title_Text style={{includeFontPadding: false}}>⏰</Main_Title_Text>
           </Main_Title_View>
           <Main_Title_Number>
-            <Main_Title_Number_Text style={{includeFontPadding: false}}>{today_ToDo}</Main_Title_Number_Text>
+            <Main_Title_Number_Text style={{includeFontPadding: false}}>{Today_ListData.length}</Main_Title_Number_Text>
           </Main_Title_Number>
         </Column_Btn>
 
@@ -196,7 +188,7 @@ const HomeScreen = () => {
             <Main_Title_Text style={{includeFontPadding: false}}>🛎</Main_Title_Text>
           </Main_Title_View>
           <Main_Title_Number>
-            <Main_Title_Number_Text style={{includeFontPadding: false}}>{will_ToDo}</Main_Title_Number_Text>
+            <Main_Title_Number_Text style={{includeFontPadding: false}}>{Will_ListData.length}</Main_Title_Number_Text>
           </Main_Title_Number>
         </Column_Btn>
       </Column_View>
@@ -208,7 +200,7 @@ const HomeScreen = () => {
             <Main_Title_Text style={{includeFontPadding: false}}>💡</Main_Title_Text>
           </Main_Title_View>
           <Main_Title_Number>
-            <Main_Title_Number_Text style={{includeFontPadding: false}}>{priority_ToDo}</Main_Title_Number_Text>
+            <Main_Title_Number_Text style={{includeFontPadding: false}}>{Priority_ListData.length}</Main_Title_Number_Text>
           </Main_Title_Number>
         </Column_Btn>
 
@@ -218,7 +210,7 @@ const HomeScreen = () => {
             <Main_Title_Text style={{includeFontPadding: false}}>📅</Main_Title_Text>
           </Main_Title_View>
           <Main_Title_Number>
-            <Main_Title_Number_Text style={{includeFontPadding: false}}>{all_ToDo}</Main_Title_Number_Text>
+            <Main_Title_Number_Text style={{includeFontPadding: false}}>{All_ListData.length}</Main_Title_Number_Text>
           </Main_Title_Number>
         </Column_Btn>
       </Column_View>

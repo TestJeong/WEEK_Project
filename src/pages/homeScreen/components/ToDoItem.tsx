@@ -15,7 +15,7 @@ const ToDoItems = ({data}) => {
     } else {
       setMonthAndDay(LIST_DAY_CHANGE_KO(data.listDay));
     }
-  }, []);
+  }, [data.listDay]);
 
   const onPressToggleToDo = () => {
     dispatch(REQEUST_TODO_ITEM_CLEAR({data}));

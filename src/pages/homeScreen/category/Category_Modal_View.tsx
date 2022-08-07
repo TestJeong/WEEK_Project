@@ -142,7 +142,7 @@ const Category_Modal_View = ({isOpen, close, categoryItem}: CategoryModalType) =
           <TouchableOpacity onPress={onPressCloseBtn} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>닫기</Text_Close>
           </TouchableOpacity>
-          <Modal_Title style={{includeFontPadding: false}}>MY CATEGORY</Modal_Title>
+          <Modal_Title style={{includeFontPadding: false}}>카테고리 추가</Modal_Title>
           <TouchableOpacity onPress={onPressSaveBtn} hitSlop={{top: 25, bottom: 25, left: 25, right: 25}}>
             <Text_Close style={{color: '#2653af'}}>완료</Text_Close>
           </TouchableOpacity>
