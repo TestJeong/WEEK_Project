@@ -1,7 +1,6 @@
-import React, {useState, useLayoutEffect, useEffect, createRef} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import {Text, View, TouchableOpacity, Keyboard, TextInput, TouchableWithoutFeedback, ScrollView, Button, Platform, Switch} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import Icon from 'react-native-vector-icons/AntDesign';
 import styled from 'styled-components/native';
 import ActionSheet from 'react-native-actions-sheet';
 
@@ -189,7 +188,7 @@ const ToDoItemDetail = () => {
 
   return (
     <>
-      <Header title={'상세정보'} saveIcon={true} />
+      <Header title={'상세정보'} saveIcon={true} onClickRight={onPressSave} />
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <ScrollView style={{padding: 15}}>
           <ActionSheet ref={actionSheetRef}>

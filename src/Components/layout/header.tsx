@@ -26,7 +26,7 @@ const Title__Text = styled.Text`
   font-size: 20px;
 `;
 
-const Header = ({title, color, saveIcon = false}: any) => {
+const Header = ({title, color, saveIcon = false, onClickRight}: any) => {
   const navigation = useNavigation();
   const onPressBack = () => {
     navigation.goBack();
@@ -42,7 +42,7 @@ const Header = ({title, color, saveIcon = false}: any) => {
               <Icon name="left" size={20} />
             </Arrow__Button__Container>
             <Title__Text>{title}</Title__Text>
-            <Arrow__Button__Container>
+            <Arrow__Button__Container onPress={onClickRight}>
               <Icon name="save" size={24} color={saveIcon ? 'black' : 'transparent'} />
             </Arrow__Button__Container>
           </Header__Content>

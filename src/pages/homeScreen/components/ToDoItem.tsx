@@ -38,8 +38,11 @@ const ToDoItems = ({data}) => {
             </Text>
           ) : null}
         </View>
+        <View style={styles.timeContent}>
+          <Text style={data.listClear ? styles.strikeText : styles.defaultText}>{data.listTime}</Text>
+          {StartComp(data.listPriority, data.listClear)}
+        </View>
       </View>
-      {StartComp(data.listPriority, true)}
     </View>
   );
 };
@@ -79,8 +82,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 15,
-    marginRight: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -88,11 +89,12 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '95%',
+    width: '100%',
+    justifyContent: 'space-between',
   },
   titleContent: {
     marginLeft: 17,
-    width: '100%',
+    flex: 1,
   },
   titleText: {
     fontFamily: 'notoSansKR-Medium',
@@ -107,13 +109,23 @@ const styles = StyleSheet.create({
     paddingTop: 7,
   },
 
+  timeContent: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
   strikeText: {
     color: '#bbb',
+    fontWeight: '600',
+    marginRight: 15,
     textDecorationLine: 'line-through',
   },
 
   defaultText: {
     color: 'black',
+    fontWeight: '600',
+    marginRight: 15,
   },
 
   defaultDayText: {

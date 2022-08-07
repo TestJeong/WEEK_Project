@@ -1,13 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Text, SafeAreaView, StyleSheet} from 'react-native';
+import React from 'react';
+import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch} from 'react-redux';
 import {isEmpty} from 'lodash';
-import {UpdateMode} from 'realm';
 
-import realm, {CategoryType, ToDoType} from '../../db';
 import {SELECTED_TODOLIST_DATA} from '../homeScreen/todo/ToDoSlice';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/navgation/StackNavigator';
@@ -32,15 +29,6 @@ const Render_View = styled.View<Props>`
   border-top-color: ${(props) => props.color};
 `;
 
-const List_View = styled.View`
-  flex-direction: row;
-  align-items: center;
-`;
-
-const ListText_View = styled.View`
-  margin-left: 17px;
-`;
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const Agenda_List = ({item}: {item: CustomTodoType}) => {
@@ -51,19 +39,6 @@ const Agenda_List = ({item}: {item: CustomTodoType}) => {
     dispatch(SELECTED_TODOLIST_DATA(item));
     navigation.navigate('ToDoListDetail');
   }, []);
-
-  const onPressToggle = () => {
-    realm.write(() => {
-      realm.create<ToDoType>(
-        'TodoDataList',
-        {
-          createTime: item.createTime,
-          listClear: !item.listClear,
-        },
-        UpdateMode.Modified,
-      );
-    });
-  };
 
   if (isEmpty(item)) {
     return (
@@ -76,13 +51,7 @@ const Agenda_List = ({item}: {item: CustomTodoType}) => {
     <TouchableOpacity onPress={onPressDetail} style={{marginLeft: 20, marginRight: 20, marginTop: 5, paddingBottom: 10}}>
       <View style={{marginTop: 12, marginBottom: 0}}>
         <Render_View style={styles.container} color={item.colors}>
-          {/* <TouchableOpacity onPress={onPressToggle}>{item.listClear ? <Icon name="checkcircleo" size={30} color="#bbb" /> : <Icon name="checkcircleo" size={30} color="black" />}</TouchableOpacity>
-            <ListText_View>
-              <Text style={item.listClear ? styles.strikeTitleText : styles.defaultTitleText}>{item.listContent}</Text>
-              <Text style={item.listClear ? styles.strikeText : styles.defaultText}>{item.categoryTitle}</Text>
-            </ListText_View> */}
           <ToDoItems data={item} />
-          <Text style={item.listClear ? styles.strikeText : styles.defaultText}>{item.listTime}</Text>
         </Render_View>
       </View>
     </TouchableOpacity>

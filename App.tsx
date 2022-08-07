@@ -7,7 +7,6 @@ import realm, {IsystemType} from './src/db';
 import {UpdateMode} from 'realm';
 import TapNavigator from '@/navgation/TapNavigator';
 import {AGENDA_DATA_REQUEST} from './src/pages/calendarScreen/CalendarSlice';
-import {SafeAreaView} from 'react-native';
 import {MONDAY_OF_DAY} from '@/utils/Day';
 
 const App = () => {
